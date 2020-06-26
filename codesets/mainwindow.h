@@ -16,8 +16,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void showVersion();
+    void actionSets();
 
 private:
     Ui::MainWindow *ui;
+
+
+private slots:
+    void proc_action_codeFormat_trigger();
 };
 #endif // MAINWINDOW_H

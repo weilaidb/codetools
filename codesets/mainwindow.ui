@@ -14,8 +14,29 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAyStle">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_codeFormat"/>
+   </widget>
+   <addaction name="menuAyStle"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_codeFormat">
+   <property name="text">
+    <string>代码格式化</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
