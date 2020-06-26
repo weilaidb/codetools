@@ -2409,11 +2409,11 @@ void ASConsole::processOptions(const vector<string>& argvOptions)
 		}
 	}
 
-    int lp = 0;
-    cout << "fileNameVector size:" << fileNameVector.size();
-    for (lp = 0; lp < fileNameVector.size();lp++) {
-        cout << "fileName:" << fileNameVector[lp];
-    }
+//    int lp = 0;
+//    cout << "fileNameVector size:" << fileNameVector.size();
+//    for (lp = 0; lp < fileNameVector.size();lp++) {
+//        cout << "fileName:" << fileNameVector[lp] << endl;
+//    }
 
 	// get option file path and name
 	if (shouldParseOptionFile)

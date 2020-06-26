@@ -24,6 +24,7 @@ private:
     void initVars();
     WORD32 getAstyleFmt(QStringList filelist);
     void getAstyleConfig();
+    void getAstyleOrgConfig();
     void freeArgv();
     void procAstyleInstance(QStringList filelist);
     void showStatus(QString msg);

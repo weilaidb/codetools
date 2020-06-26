@@ -82,7 +82,7 @@ void MainWindow::proc_action_codeFormat_Auto_trigger(QAction *action)
 void MainWindow::proc_action_codeFormat_Directory_trigger()
 {
     QStringList autolist;
-//    debugApp() << "proc_action_codeFormat_Directory_trigger";
+    //    debugApp() << "proc_action_codeFormat_Directory_trigger";
     proc_action_codeFormat_Pub_trigger(TYPE_DIR,autolist);
 }
 
@@ -93,7 +93,7 @@ void MainWindow::proc_action_codeFormat_Directory_trigger()
 void MainWindow::proc_action_codeFormat_File_trigger()
 {
     QStringList autolist;
-//    debugApp() << "proc_action_codeFormat_File_trigger";
+    //    debugApp() << "proc_action_codeFormat_File_trigger";
     proc_action_codeFormat_Pub_trigger(TYPE_FILES,autolist);
 }
 
@@ -195,7 +195,7 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
         recentfiles.append(item);
     }
 
-//    CPrintPub::printArray((char **)m_argvp, listAstyleArgv.size());
+    //    CPrintPub::printArray((char **)m_argvp, listAstyleArgv.size());
     addMenuCodeFormatRecent();
 
     return listAstyleArgv.size();
@@ -276,7 +276,9 @@ void MainWindow::getAstyleConfig()
         }
         listAstyleArgv = CStringPub::toStringList(file.readAll().split(SIGNENTERS));
         file.close();
-
+        /**
+  ** 内容为空时，无法正常工作，使用原始配置
+  **/
         if(0 == listAstyleArgv.size())
         {
             listAstyleArgv = CStringPub::toStringList(CFilePub::readFileAll(cfgAstyleNameOrg).toLocal8Bit().split(SIGNENTERS));
@@ -284,39 +286,42 @@ void MainWindow::getAstyleConfig()
     }
     else
     {
-        listAstyleArgv.clear();
-        listAstyleArgv << ("app.exe");
-        listAstyleArgv << ("--style=allman");
-        listAstyleArgv << ("--style=ansi");
-        listAstyleArgv << ("--style=bsd");
-        listAstyleArgv << ("--style=break");
-        listAstyleArgv << ("-A1");
-        listAstyleArgv << ("-s4");
-        listAstyleArgv << ("-S");
-        listAstyleArgv << ("-N");
-        listAstyleArgv << ("-L");
-        listAstyleArgv << ("-m0");
-        listAstyleArgv << ("-M40");
-        listAstyleArgv << ("--convert-tabs");
-        listAstyleArgv << ("--suffix=.pre");
-        listAstyleArgv << ("--indent-switches");
-        listAstyleArgv << ("--pad-return-type");
-        listAstyleArgv << ("-xq");
-        listAstyleArgv << ("--keep-one-line-statements");
-        listAstyleArgv << ("--indent-preproc-block");
-        //        listAstyleArgv << ("-xW ");
-        //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
-
         QString result("");
+        getAstyleOrgConfig();
         foreach (QString item, listAstyleArgv) {
             result += item + SIGNENTER;
         }
-
         CFilePub::writeFileOnlly(cfgAstyleNameOrg,result);
         CFilePub::writeFileOnlly(cfgAstyleName,result);
     }
 }
 
+void MainWindow::getAstyleOrgConfig()
+{
+    listAstyleArgv.clear();
+    listAstyleArgv << ("app.exe");
+    listAstyleArgv << ("--style=allman");
+    listAstyleArgv << ("--style=ansi");
+    listAstyleArgv << ("--style=bsd");
+    listAstyleArgv << ("--style=break");
+    listAstyleArgv << ("-A1");
+    listAstyleArgv << ("-s4");
+    listAstyleArgv << ("-S");
+    listAstyleArgv << ("-N");
+    listAstyleArgv << ("-L");
+    listAstyleArgv << ("-m0");
+    listAstyleArgv << ("-M40");
+    listAstyleArgv << ("--convert-tabs");
+    listAstyleArgv << ("--suffix=.pre");
+    listAstyleArgv << ("--indent-switches");
+    listAstyleArgv << ("--pad-return-type");
+    listAstyleArgv << ("-xq");
+    listAstyleArgv << ("--keep-one-line-statements");
+    listAstyleArgv << ("--indent-preproc-block");
+    //        listAstyleArgv << ("-xW ");
+    //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
+
+}
 
 void MainWindow::getNameFilter()
 {
@@ -351,7 +356,7 @@ void MainWindow::addMenuCodeFormatRecent()
         if(CFilePub::fileExist(item))
         {
             QAction *pAction = new QAction(item);
-//            QObject::connect(pAction, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
+            //            QObject::connect(pAction, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
             ui->menu_codeFormat_Recent->addAction(pAction);
             dwLp++;
         }
