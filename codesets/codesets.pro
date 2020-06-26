@@ -16,15 +16,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AStyle_3_1_windows/AStyle/src/ASBeautifier.cpp \
+    AStyle_3_1_windows/AStyle/src/ASEnhancer.cpp \
+    AStyle_3_1_windows/AStyle/src/ASFormatter.cpp \
+    AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
+    AStyle_3_1_windows/AStyle/src/ASResource.cpp \
+    AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
+    AStyle_3_1_windows/AStyle/src/astyle.h \
+    AStyle_3_1_windows/AStyle/src/astyle_main.h \
     mainwindow.h \
     version.h
 
 FORMS += \
     mainwindow.ui
+
+INCLUDEPATH += AStyle_3_1_windows/AStyle/src
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
