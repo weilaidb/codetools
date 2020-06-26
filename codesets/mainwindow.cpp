@@ -49,6 +49,7 @@ void MainWindow::actionSets()
     QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
+    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
 }
 
 /**
@@ -95,6 +96,11 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
     showStatus("删除Asytle配置成功");
 }
 
+void MainWindow::proc_action_about_trigger()
+{
+    showStatus(QString("当前版本是:") + APP_VERSION);
+}
+
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
 {
@@ -127,6 +133,9 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
         openDirPath += "/";
         openDirPathRecent = openDirPath;
         debugApp() << "Open Dir:" << openDirPath;
+        getNameFilter();
+        QStringList openfiles = CFilePub::getFileAbsoluteNames(nameFilters, openDirPath);
+        procAstyleInstance(openfiles);
     }
         break;
 
@@ -143,6 +152,7 @@ void MainWindow::initVars()
     logAstyleName = "astyle.log";
     cfgAstyleName = "astyle.conf";
     cfgAstyleNameOrg = cfgAstyleName + ".org";
+    nameFilters.clear();
 }
 
 
@@ -181,6 +191,11 @@ void MainWindow::freeArgv()
 
 void MainWindow::procAstyleInstance(QStringList filelist)
 {
+    if(0 == filelist.size())
+    {
+        showStatus("文件数量为空，不处理");
+        return;
+    }
     CPrintPub::printToFile(logAstyleName);
 
     dwArgc = getAstyleFmt(filelist);
@@ -249,7 +264,7 @@ void MainWindow::getAstyleConfig()
         listAstyleArgv << ("-xq");
         listAstyleArgv << ("--keep-one-line-statements");
         listAstyleArgv << ("--indent-preproc-block");
-        listAstyleArgv << ("-xW ");
+//        listAstyleArgv << ("-xW ");
         //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
 
         QString result("");
@@ -260,4 +275,16 @@ void MainWindow::getAstyleConfig()
         CFilePub::writeFileOnlly(cfgAstyleNameOrg,result);
         CFilePub::writeFileOnlly(cfgAstyleName,result);
     }
+}
+
+
+void MainWindow::getNameFilter()
+{
+    nameFilters.clear();
+    nameFilters << "*.c";
+    nameFilters << "*.cpp";
+    nameFilters << "*.cxx";
+    nameFilters << "*.h";
+    nameFilters << "*.hpp";
+    nameFilters << "*.java";
 }

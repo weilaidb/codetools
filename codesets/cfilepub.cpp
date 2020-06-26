@@ -1,6 +1,7 @@
 #include "cfilepub.h"
 
 #include <QFile>
+#include <QDir>
 
 CFilePub::CFilePub()
 {
@@ -79,6 +80,27 @@ QString CFilePub::deleteFile(QString filename)
     file.close();
 
     return result;
+}
+
+
+QStringList CFilePub::getFileNames(QStringList nameFilters, const QString path)
+{
+    QDir dir(path);
+    QStringList files = dir.entryList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
+    return files;
+}
+
+
+QStringList CFilePub::getFileAbsoluteNames(QStringList nameFilters, const QString path)
+{
+    QDir dir(path);
+    QStringList files;
+    files.clear();
+    QFileInfoList infolist = dir.entryInfoList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
+    foreach (QFileInfo info, infolist) {
+        files += info.absolutePath() + QDir::separator() + info.fileName();
+    }
+    return files;
 }
 
 

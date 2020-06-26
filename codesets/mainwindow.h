@@ -29,6 +29,7 @@ private:
     void showStatus(QString msg);
     void showTextBrower(QString msg);
     void showTextBrowerAppend(QString msg);
+    void getNameFilter();
 
 public:
     enum{
@@ -50,6 +51,8 @@ private:
     QString cfgAstyleName;
     QString cfgAstyleNameOrg;
 
+    QStringList nameFilters;
+
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
@@ -57,5 +60,6 @@ private slots:
     void proc_action_codeFormat_Edit_Config_trigger();
     void proc_action_codeFormat_Save_Config_trigger();
     void proc_action_codeFormat_Del_Config_trigger();
+    void proc_action_about_trigger();
 };
 #endif // MAINWINDOW_H
