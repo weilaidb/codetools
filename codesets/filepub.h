@@ -1,0 +1,9 @@
+#ifndef FILEPUB_H
+#define FILEPUB_H
+
+#define FILENAMEMAX (1024)
+#define ARGVROWS (30)
+
+#define FILENAMEBINDMAX (FILENAMEMAX * 10)
+
+#endif // FILEPUB_H

@@ -2317,7 +2317,7 @@ void ASConsole::processOptions(const vector<string>& argvOptions)
 	{
 		arg = argvOptions[i];
 
-        cout << "arg:" << arg;
+      //  cout << "arg:" << arg << endl;
 
 		if (isOption(arg, "-I")
 		        || isOption(arg, "--ascii"))
@@ -2404,7 +2404,7 @@ void ASConsole::processOptions(const vector<string>& argvOptions)
 		else // file-name
 		{
 			standardizePath(arg);
-            cout << "file-name:" << arg;
+           // cout << "file-name:" << arg;
 			fileNameVector.emplace_back(arg);
 		}
 	}

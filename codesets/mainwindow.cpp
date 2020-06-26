@@ -3,6 +3,9 @@
 #include "astyle_main.h"
 #include "debugApp.h"
 #include "basepub.h"
+#include "filepub.h"
+#include "carraypub.h"
+#include "signpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -75,27 +78,15 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
             return;
         }
         debugApp() << "Open Files:" << openfiles;
+        QString filenames_str("");
         foreach (QString item, openfiles) {
             debugApp() << "AyStyle:" << item;
-#define FILENAMEMAX (1024)
-            char filebuf[FILENAMEMAX] = {0};
-            snprintf(filebuf, sizeof(filebuf), "%s", item.toLocal8Bit().data());
-//            char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
-            char *argv[] = {"app.exe"
-                            , "--style=ansi"
-                            , "-s4"
-                            , "-S"
-                            , "-N"
-                            , "-L"
-                            , "-m0"
-                            , "-M40"
-                            , "--convert-tabs"
-                            , "--suffix=.pre "
-                            , filebuf
-                           };
-            int argc = ARRAYSIZE(argv);
-            AyStyleMain(argc, argv);
+            filenames_str = item + SIGNENTER;
         }
+
+        getAstyleFmt(filenames_str);
+        int argc = getAstyleArgc();
+        AyStyleMain(argc, m_argvp);
     }
         break;
     case TYPE_DIR:
@@ -125,6 +116,60 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
 void MainWindow::initVars()
 {
     openDirPathRecent = "/";
+    memset(filebuf, 0, sizeof(filebuf));
 }
 
 
+void MainWindow::getAstyleFmt(QString item)
+{
+#define ARGVITEM(STR)  strcpy(m_argv[lp++], STR);
+
+    memset(m_argv,0, sizeof (m_argv));
+    memset(m_argvp,0, sizeof (m_argvp));
+
+    snprintf(filebuf, sizeof(filebuf), "%s", item.toLocal8Bit().data());
+
+    int lp=0;
+    ARGVITEM("app.exe");
+    ARGVITEM( "--style=ansi");
+    ARGVITEM( "-s4");
+    ARGVITEM( "-S");
+    ARGVITEM( "-N");
+    ARGVITEM( "-L");
+    ARGVITEM( "-m0");
+    ARGVITEM( "-M40");
+    ARGVITEM( "--convert-tabs");
+    ARGVITEM( "--suffix=.pre");
+    ARGVITEM( filebuf);
+
+    int i = 0;
+    for (i = 0; i < ARGVROWS;i ++) {
+        if('\0' == m_argv[i][0])
+        {
+            break;
+        }
+        m_argvp[i] = (char *)m_argv[i];
+    }
+
+    CArrayPub::printArray(m_argv);
+
+//            char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
+
+
+}
+
+
+UINT32 MainWindow::getAstyleArgc()
+{
+    UINT32 dwCnt = 0;
+    int i = 0;
+    for (i = 0; i < ARGVROWS;i ++) {
+        if(nullptr == m_argvp[i])
+        {
+           break;
+        }
+        dwCnt++;
+    }
+
+    return dwCnt;
+}

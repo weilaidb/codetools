@@ -22,6 +22,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    carraypub.cpp \
     main.cpp \
     mainwindow.cpp \
     testastyle.cpp
@@ -31,8 +32,11 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
     basepub.h \
+    carraypub.h \
     debugApp.h \
+    filepub.h \
     mainwindow.h \
+    signpub.h \
     version.h
 
 FORMS += \
