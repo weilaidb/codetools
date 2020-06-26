@@ -54,3 +54,6 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images/app.qrc
