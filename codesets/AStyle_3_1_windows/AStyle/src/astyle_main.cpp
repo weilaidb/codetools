@@ -4284,6 +4284,29 @@ extern "C" EXPORT const char* STDCALL AStyleGetVersion(void)
 // ASTYLECON_LIB is defined to exclude "main" from the test programs
 #elif !defined(ASTYLECON_LIB)
 
+#if 1
+int AyStyleMain(int argc, char** argv)
+{
+    // create objects
+    ASFormatter formatter;
+    unique_ptr<ASConsole> console(new ASConsole(formatter));
+
+    // process command line and option files
+    // build the vectors fileNameVector, optionsVector, and fileOptionsVector
+    vector<string> argvOptions;
+    argvOptions = console->getArgvOptions(argc, argv);
+    console->processOptions(argvOptions);
+
+    // if no files have been given, use cin for input and cout for output
+    if (!console->fileNameVectorIsEmpty())
+        console->processFiles();
+    else
+        console->formatCinToCout();
+
+    return EXIT_SUCCESS;
+}
+
+#else
 //----------------------------------------------------------------------------
 // main function for ASConsole build
 //----------------------------------------------------------------------------
@@ -4308,5 +4331,7 @@ int main(int argc, char** argv)
 
 	return EXIT_SUCCESS;
 }
+
+#endif
 
 #endif	// ASTYLE_LIB
