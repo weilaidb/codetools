@@ -23,9 +23,12 @@ private:
     void actionSets();
     void initVars();
     WORD32 getAstyleFmt(QStringList filelist);
+    void getAstyleConfig();
     void freeArgv();
     void procAstyleInstance(QStringList filelist);
     void showStatus(QString msg);
+    void showTextBrower(QString msg);
+    void showTextBrowerAppend(QString msg);
 
 public:
     enum{
@@ -44,10 +47,12 @@ private:
     WORD32 dwArgc;
     QStringList listAstyleArgv;
     QString logAstyleName;
+    QString cfgAstyleName;
 
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
     void proc_action_codeFormat_Pub_trigger(int openType);
+    void proc_action_codeFormat_Edit_Config_trigger();
 };
 #endif // MAINWINDOW_H

@@ -7,6 +7,7 @@
 #include "carraypub.h"
 #include "signpub.h"
 #include "cprintpub.h"
+#include "cstringpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -44,6 +45,7 @@ void MainWindow::actionSets()
 {
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
     QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory_trigger()));
+    QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config_trigger()));
 }
 
 /**
@@ -65,6 +67,11 @@ void MainWindow::proc_action_codeFormat_File_trigger()
 {
     debugApp() << "proc_action_codeFormat_File_trigger";
     proc_action_codeFormat_Pub_trigger(TYPE_FILES);
+}
+
+void MainWindow::proc_action_codeFormat_Edit_Config_trigger()
+{
+
 }
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
@@ -112,26 +119,18 @@ void MainWindow::initVars()
 {
     openDirPathRecent = "/";
     logAstyleName = "astyle.log";
+    cfgAstyleName = "astyle.conf";
 }
 
 
 WORD32 MainWindow::getAstyleFmt(QStringList filelist)
 {
-    listAstyleArgv.clear();
-
-    listAstyleArgv << ("app.exe");
-    listAstyleArgv << ("--style=ansi");
-    listAstyleArgv << ("-s4");
-    listAstyleArgv << ("-S");
-    listAstyleArgv << ("-N");
-    listAstyleArgv << ("-L");
-    listAstyleArgv << ("-m0");
-    listAstyleArgv << ("-M40");
-    listAstyleArgv << ("--convert-tabs");
-    listAstyleArgv << ("--suffix=.pre");
+    getAstyleConfig();
     listAstyleArgv << (filelist);
 
+
     m_argvp = new char*[listAstyleArgv.size()];
+//    debugApp() << "listAstyleArgv:" << listAstyleArgv;
 
     int i = 0;
     foreach (QString item, listAstyleArgv) {
@@ -142,7 +141,7 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
         m_argvp[i++] = p;
     }
 
-    CArrayPub::printArray((char **)m_argvp, listAstyleArgv.size());
+//    CArrayPub::printArray((char **)m_argvp, listAstyleArgv.size());
 
     //            char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
 
@@ -161,14 +160,6 @@ void MainWindow::freeArgv()
 
 void MainWindow::procAstyleInstance(QStringList filelist)
 {
-    //    QProcess *pro_;
-    //    pro_=new QProcess(this);
-    //    pro_->start(command,params);
-    //    //建立与外部子模块标准输出的连接
-    ////        connect(process_, SIGNAL(readyRead()), this, SLOT(output()));
-    //    pro_->waitForFinished(-1);
-    //    delete pro_;
-
     CPrintPub::printToFile(logAstyleName);
 
     dwArgc = getAstyleFmt(filelist);
@@ -177,12 +168,66 @@ void MainWindow::procAstyleInstance(QStringList filelist)
     freeArgv();
     CPrintPub::canclePrintToFile();
 
-    showStatus("deal done! " + filelist.at(0));
-
+    showStatus("deal done! etc" + filelist.at(0));
+    showTextBrower("Astyle following files deal done!" SIGNENTER + CStringPub::stringList2String(listAstyleArgv,SIGNENTER));
 }
 
 
 void MainWindow::showStatus(QString msg)
 {
     ui->statusbar->showMessage(msg);
+}
+
+void MainWindow::showTextBrower(QString msg)
+{
+    ui->textBrowser->setText(msg);
+}
+
+void MainWindow::showTextBrowerAppend(QString msg)
+{
+    ui->textBrowser->append(msg);
+}
+
+
+void MainWindow::getAstyleConfig()
+{
+    QFile file(cfgAstyleName);
+    if(file.exists())
+    {
+        if(!file.open(QIODevice::ReadOnly))
+        {
+            return;
+        }
+        listAstyleArgv = CStringPub::toStringList(file.readAll().split(SIGNENTERS));
+    }
+    else
+    {
+        listAstyleArgv.clear();
+        listAstyleArgv << ("app.exe");
+        listAstyleArgv << ("--style=allman");
+        listAstyleArgv << ("--style=ansi");
+        listAstyleArgv << ("--style=bsd");
+        listAstyleArgv << ("--style=break");
+        listAstyleArgv << ("-A1");
+        listAstyleArgv << ("-s4");
+        listAstyleArgv << ("-S");
+        listAstyleArgv << ("-N");
+        listAstyleArgv << ("-L");
+        listAstyleArgv << ("-m0");
+        listAstyleArgv << ("-M40");
+        listAstyleArgv << ("--convert-tabs");
+        listAstyleArgv << ("--suffix=.pre");
+
+        QString result("");
+        foreach (QString item, listAstyleArgv) {
+            result += item + SIGNENTER;
+        }
+
+        if(!file.open(QIODevice::WriteOnly))
+        {
+            return;
+        }
+        file.write(result.toLocal8Bit().data());
+        file.close();
+    }
 }

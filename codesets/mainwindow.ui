@@ -14,16 +14,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>230</y>
-      <width>771</width>
-      <height>331</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QTextBrowser" name="textBrowser"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QTextEdit" name="textEdit"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -44,6 +42,7 @@
      </property>
      <addaction name="action_codeFormat_File"/>
      <addaction name="action_codeFormat_Directory"/>
+     <addaction name="action_codeFormat_Edit_Config"/>
     </widget>
     <addaction name="menu"/>
    </widget>
@@ -58,6 +57,11 @@
   <action name="action_codeFormat_Directory">
    <property name="text">
     <string>Directory</string>
+   </property>
+  </action>
+  <action name="action_codeFormat_Edit_Config">
+   <property name="text">
+    <string>Edit Config</string>
    </property>
   </action>
  </widget>
