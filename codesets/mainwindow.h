@@ -17,12 +17,25 @@ public:
     ~MainWindow();
     void showVersion();
     void actionSets();
+    void initVars();
+
+
+public:
+    enum{
+        TYPE_FILE,
+        TYPE_FILES,
+        TYPE_DIR,
+    };
 
 private:
     Ui::MainWindow *ui;
 
+private:
+    QString openDirPathRecent;
 
 private slots:
-    void proc_action_codeFormat_trigger();
+    void proc_action_codeFormat_File_trigger();
+    void proc_action_codeFormat_Directory_trigger();
+    void proc_action_codeFormat_Pub_trigger(int openType);
 };
 #endif // MAINWINDOW_H

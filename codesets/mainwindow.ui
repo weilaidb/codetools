@@ -27,14 +27,26 @@
     <property name="title">
      <string>工具</string>
     </property>
-    <addaction name="action_codeFormat"/>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>代码格式化</string>
+     </property>
+     <addaction name="action_codeFormat_File"/>
+     <addaction name="action_codeFormat_Directory"/>
+    </widget>
+    <addaction name="menu"/>
    </widget>
    <addaction name="menuAyStle"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_codeFormat">
+  <action name="action_codeFormat_File">
    <property name="text">
-    <string>代码格式化</string>
+    <string>File</string>
+   </property>
+  </action>
+  <action name="action_codeFormat_Directory">
+   <property name="text">
+    <string>Directory</string>
    </property>
   </action>
  </widget>

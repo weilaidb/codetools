@@ -23,12 +23,15 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    testastyle.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
+    basepub.h \
+    debugApp.h \
     mainwindow.h \
     version.h
 

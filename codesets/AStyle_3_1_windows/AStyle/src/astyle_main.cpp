@@ -2317,6 +2317,8 @@ void ASConsole::processOptions(const vector<string>& argvOptions)
 	{
 		arg = argvOptions[i];
 
+        cout << "arg:" << arg;
+
 		if (isOption(arg, "-I")
 		        || isOption(arg, "--ascii"))
 		{
@@ -2402,9 +2404,16 @@ void ASConsole::processOptions(const vector<string>& argvOptions)
 		else // file-name
 		{
 			standardizePath(arg);
+            cout << "file-name:" << arg;
 			fileNameVector.emplace_back(arg);
 		}
 	}
+
+    int lp = 0;
+    cout << "fileNameVector size:" << fileNameVector.size();
+    for (lp = 0; lp < fileNameVector.size();lp++) {
+        cout << "fileName:" << fileNameVector[lp];
+    }
 
 	// get option file path and name
 	if (shouldParseOptionFile)
