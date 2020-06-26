@@ -23,6 +23,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     carraypub.cpp \
+    cfilepub.cpp \
     cprintpub.cpp \
     cstringpub.cpp \
     main.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
     basepub.h \
     carraypub.h \
+    cfilepub.h \
     cprintpub.h \
     cstringpub.h \
     debugApp.h \

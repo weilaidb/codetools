@@ -43,6 +43,8 @@
      <addaction name="action_codeFormat_File"/>
      <addaction name="action_codeFormat_Directory"/>
      <addaction name="action_codeFormat_Edit_Config"/>
+     <addaction name="action_codeFormat_Save_Config"/>
+     <addaction name="action_codeFormat_Del_Config"/>
     </widget>
     <addaction name="menu"/>
    </widget>
@@ -62,6 +64,16 @@
   <action name="action_codeFormat_Edit_Config">
    <property name="text">
     <string>Edit Config</string>
+   </property>
+  </action>
+  <action name="action_codeFormat_Save_Config">
+   <property name="text">
+    <string>Save Config</string>
+   </property>
+  </action>
+  <action name="action_codeFormat_Del_Config">
+   <property name="text">
+    <string>Del Config</string>
    </property>
   </action>
  </widget>

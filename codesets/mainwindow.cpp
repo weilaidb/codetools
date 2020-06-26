@@ -8,6 +8,7 @@
 #include "signpub.h"
 #include "cprintpub.h"
 #include "cstringpub.h"
+#include "cfilepub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -46,6 +47,8 @@ void MainWindow::actionSets()
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
     QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory_trigger()));
     QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config_trigger()));
+    QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
+    QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
 }
 
 /**
@@ -71,8 +74,27 @@ void MainWindow::proc_action_codeFormat_File_trigger()
 
 void MainWindow::proc_action_codeFormat_Edit_Config_trigger()
 {
-
+    ui->textEdit->setText(CFilePub::readFileAll(cfgAstyleName));
+    showStatus("编译Asytle配置....");
 }
+
+void MainWindow::proc_action_codeFormat_Save_Config_trigger()
+{
+    QString result = ui->textEdit->toPlainText();
+    if(result.trimmed().isEmpty())
+    {
+        showStatus("内容为空，不允许!!");
+        return;
+    }
+    CFilePub::writeFileOnlly(cfgAstyleName, result);
+    showStatus("保存Asytle配置成功");
+}
+void MainWindow::proc_action_codeFormat_Del_Config_trigger()
+{
+    CFilePub::deleteFile(cfgAstyleName);
+    showStatus("删除Asytle配置成功");
+}
+
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
 {
@@ -120,6 +142,7 @@ void MainWindow::initVars()
     openDirPathRecent = "/";
     logAstyleName = "astyle.log";
     cfgAstyleName = "astyle.conf";
+    cfgAstyleNameOrg = cfgAstyleName + ".org";
 }
 
 
@@ -142,8 +165,6 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
     }
 
 //    CArrayPub::printArray((char **)m_argvp, listAstyleArgv.size());
-
-    //            char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
 
     return listAstyleArgv.size();
 }
@@ -199,6 +220,12 @@ void MainWindow::getAstyleConfig()
             return;
         }
         listAstyleArgv = CStringPub::toStringList(file.readAll().split(SIGNENTERS));
+        file.close();
+
+        if(0 == listAstyleArgv.size())
+        {
+            listAstyleArgv = CStringPub::toStringList(CFilePub::readFileAll(cfgAstyleNameOrg).toLocal8Bit().split(SIGNENTERS));
+        }
     }
     else
     {
@@ -217,17 +244,20 @@ void MainWindow::getAstyleConfig()
         listAstyleArgv << ("-M40");
         listAstyleArgv << ("--convert-tabs");
         listAstyleArgv << ("--suffix=.pre");
+        listAstyleArgv << ("--indent-switches");
+        listAstyleArgv << ("--pad-return-type");
+        listAstyleArgv << ("-xq");
+        listAstyleArgv << ("--keep-one-line-statements");
+        listAstyleArgv << ("--indent-preproc-block");
+        listAstyleArgv << ("-xW ");
+        //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
 
         QString result("");
         foreach (QString item, listAstyleArgv) {
             result += item + SIGNENTER;
         }
 
-        if(!file.open(QIODevice::WriteOnly))
-        {
-            return;
-        }
-        file.write(result.toLocal8Bit().data());
-        file.close();
+        CFilePub::writeFileOnlly(cfgAstyleNameOrg,result);
+        CFilePub::writeFileOnlly(cfgAstyleName,result);
     }
 }
