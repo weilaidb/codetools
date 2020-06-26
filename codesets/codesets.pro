@@ -22,34 +22,33 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
-    carraypub.cpp \
-    cfilepub.cpp \
-    cprintpub.cpp \
-    cstringpub.cpp \
+    base/source/cfilepub.cpp \
+    base/source/cprintpub.cpp \
+    base/source/cstringpub.cpp \
     main.cpp \
-    mainwindow.cpp \
-    testastyle.cpp
+    mainwindow.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
-    basepub.h \
-    carraypub.h \
-    cfilepub.h \
-    cprintpub.h \
-    cstringpub.h \
-    debugApp.h \
-    expresspub.h \
-    filepub.h \
+    base/include/cfilepub.h \
+    base/include/cprintpub.h \
+    base/include/cstringpub.h \
     mainwindow.h \
-    signpub.h \
+    public/include/basepub.h \
+    public/include/debugApp.h \
+    public/include/expresspub.h \
+    public/include/filepub.h \
+    public/include/signpub.h \
     version.h
 
 FORMS += \
     mainwindow.ui
 
-INCLUDEPATH += AStyle_3_1_windows/AStyle/src
+INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
+    public/include/ \
+    base/include/
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

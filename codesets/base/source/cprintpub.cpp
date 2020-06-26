@@ -5,6 +5,11 @@
 #include <QDateTime>
 #include <QFile>
 #include <QDebug>
+#include <iostream>
+
+using namespace std;
+
+
 
 QString CPrintPub::m_filename = "";
 
@@ -71,3 +76,18 @@ void CPrintPub::canclePrintToFile()
 {
     qInstallMessageHandler(nullptr);
 }
+
+
+void CPrintPub::printArray(char **argv, int size)
+{
+    int i = 0;
+    for(i= 0; i < size; i++)
+    {
+        if(nullptr == argv[i])
+        {
+            continue;
+        }
+        cout <<"No:" << i << ", " << argv[i] << endl;
+    }
+}
+

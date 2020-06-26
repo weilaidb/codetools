@@ -30,12 +30,14 @@ private:
     void showTextBrower(QString msg);
     void showTextBrowerAppend(QString msg);
     void getNameFilter();
+    void addMenuCodeFormatRecent();
 
 public:
     enum{
         TYPE_FILE,
         TYPE_FILES,
         TYPE_DIR,
+        TYPE_AUTO,
     };
 
 private:
@@ -43,7 +45,6 @@ private:
 
 private:
     QString openDirPathRecent;
-    char m_argv[ARGVROWS][FILENAMEMAX];
     char **m_argvp;
     WORD32 dwArgc;
     QStringList listAstyleArgv;
@@ -52,11 +53,13 @@ private:
     QString cfgAstyleNameOrg;
 
     QStringList nameFilters;
+    QStringList recentfiles;
 
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
-    void proc_action_codeFormat_Pub_trigger(int openType);
+    void proc_action_codeFormat_Pub_trigger(int openType, QStringList autolist);
+    void proc_action_codeFormat_Auto_trigger(QAction *action);
     void proc_action_codeFormat_Edit_Config_trigger();
     void proc_action_codeFormat_Save_Config_trigger();
     void proc_action_codeFormat_Del_Config_trigger();

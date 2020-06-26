@@ -48,10 +48,15 @@
       <addaction name="action_codeFormat_Save_Config"/>
       <addaction name="action_codeFormat_Del_Config"/>
      </widget>
+     <widget class="QMenu" name="menu_codeFormat_Recent">
+      <property name="title">
+       <string>最近打开</string>
+      </property>
+     </widget>
      <addaction name="action_codeFormat_File"/>
      <addaction name="action_codeFormat_Directory"/>
      <addaction name="menuConfig"/>
-     <addaction name="actionRecent_2"/>
+     <addaction name="menu_codeFormat_Recent"/>
     </widget>
     <addaction name="menu"/>
    </widget>
@@ -95,14 +100,14 @@
     <string>OpenFiles</string>
    </property>
   </action>
-  <action name="actionRecent_2">
-   <property name="text">
-    <string>最近打开</string>
-   </property>
-  </action>
   <action name="action_about">
    <property name="text">
     <string>关于</string>
+   </property>
+  </action>
+  <action name="actionfd">
+   <property name="text">
+    <string>fd</string>
    </property>
   </action>
  </widget>

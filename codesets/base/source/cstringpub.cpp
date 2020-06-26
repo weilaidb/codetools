@@ -35,3 +35,28 @@ QStringList CStringPub::stringSplit(const QString str , const char sign)
 {
     return  str.split(sign);
 }
+
+QStringList CStringPub::stringUniqueSort(QStringList lists)
+{
+    lists.removeDuplicates();
+    lists.sort();
+    return lists;
+}
+
+QStringList CStringPub::stringUniqueSortReverse(QStringList lists)
+{
+    QStringList reverse;
+    reverse.clear();
+    lists.removeDuplicates();
+    lists.sort();
+
+    QVector<QString> list = lists.toVector();
+    QVectorIterator<QString> iterator(list);
+
+    //从结尾开始逆向遍历
+    while(iterator.hasPrevious()){
+        reverse.append(iterator.previous());
+    }
+
+    return lists;
+}

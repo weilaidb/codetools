@@ -15,6 +15,8 @@ public:
     static void printToFile(QString fileName);
     static void canclePrintToFile();
 
+    static void printArray(char **argv, int size);
+
 private:
     static QString m_filename;
 };

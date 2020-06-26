@@ -4,7 +4,6 @@
 #include "debugApp.h"
 #include "basepub.h"
 #include "filepub.h"
-#include "carraypub.h"
 #include "signpub.h"
 #include "cprintpub.h"
 #include "cstringpub.h"
@@ -43,6 +42,7 @@ void MainWindow::showVersion()
     ui->statusbar->showMessage(APP_VERSION);
 }
 
+
 void MainWindow::actionSets()
 {
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
@@ -51,8 +51,29 @@ void MainWindow::actionSets()
     QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
+    QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
+    addMenuCodeFormatRecent();
 }
 
+
+void MainWindow::initVars()
+{
+    openDirPathRecent = "/";
+    logAstyleName = "astyle.log";
+    cfgAstyleName = "astyle.conf";
+    cfgAstyleNameOrg = cfgAstyleName + ".org";
+    nameFilters.clear();
+    recentfiles.clear();
+}
+
+
+void MainWindow::proc_action_codeFormat_Auto_trigger(QAction *action)
+{
+    QStringList autolist;
+    autolist.append(action->iconText());
+    debugApp() << "actionname:" << action->iconText();
+    proc_action_codeFormat_Pub_trigger(TYPE_AUTO,autolist);
+}
 /**
  * @brief MainWindow::proc_action_codeFormat_Directory_trigger
  * 代码格式化，如何处理呢
@@ -60,8 +81,9 @@ void MainWindow::actionSets()
  */
 void MainWindow::proc_action_codeFormat_Directory_trigger()
 {
-    debugApp() << "proc_action_codeFormat_Directory_trigger";
-    proc_action_codeFormat_Pub_trigger(TYPE_DIR);
+    QStringList autolist;
+//    debugApp() << "proc_action_codeFormat_Directory_trigger";
+    proc_action_codeFormat_Pub_trigger(TYPE_DIR,autolist);
 }
 
 /**
@@ -70,8 +92,9 @@ void MainWindow::proc_action_codeFormat_Directory_trigger()
  */
 void MainWindow::proc_action_codeFormat_File_trigger()
 {
-    debugApp() << "proc_action_codeFormat_File_trigger";
-    proc_action_codeFormat_Pub_trigger(TYPE_FILES);
+    QStringList autolist;
+//    debugApp() << "proc_action_codeFormat_File_trigger";
+    proc_action_codeFormat_Pub_trigger(TYPE_FILES,autolist);
 }
 
 void MainWindow::proc_action_codeFormat_Edit_Config_trigger()
@@ -103,7 +126,7 @@ void MainWindow::proc_action_about_trigger()
 }
 
 
-void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
+void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)
 {
     debugApp() << "proc_action_codeFormat_Pub_trigger";
 
@@ -139,7 +162,15 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
         procAstyleInstance(openfiles);
     }
         break;
-
+    case TYPE_AUTO:
+    {
+        getNameFilter();
+        QStringList openfiles;
+        openfiles.clear();
+        openfiles.append(autolist);
+        procAstyleInstance(openfiles);
+    }
+        break;
     default:
         break;
     }
@@ -147,25 +178,12 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
 }
 
 
-void MainWindow::initVars()
-{
-    openDirPathRecent = "/";
-    logAstyleName = "astyle.log";
-    cfgAstyleName = "astyle.conf";
-    cfgAstyleNameOrg = cfgAstyleName + ".org";
-    nameFilters.clear();
-}
-
 
 WORD32 MainWindow::getAstyleFmt(QStringList filelist)
 {
     getAstyleConfig();
     listAstyleArgv << (filelist);
-
-
     m_argvp = new char*[listAstyleArgv.size()];
-//    debugApp() << "listAstyleArgv:" << listAstyleArgv;
-
     int i = 0;
     foreach (QString item, listAstyleArgv) {
         WORD32 dwLen = strlen(item.toLocal8Bit().data());
@@ -173,9 +191,12 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
         memset(p,0,dwLen + 1);
         strcpy(p, item.toLocal8Bit().data());
         m_argvp[i++] = p;
+
+        recentfiles.append(item);
     }
 
-//    CArrayPub::printArray((char **)m_argvp, listAstyleArgv.size());
+//    CPrintPub::printArray((char **)m_argvp, listAstyleArgv.size());
+    addMenuCodeFormatRecent();
 
     return listAstyleArgv.size();
 }
@@ -283,7 +304,7 @@ void MainWindow::getAstyleConfig()
         listAstyleArgv << ("-xq");
         listAstyleArgv << ("--keep-one-line-statements");
         listAstyleArgv << ("--indent-preproc-block");
-//        listAstyleArgv << ("-xW ");
+        //        listAstyleArgv << ("-xW ");
         //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
 
         QString result("");
@@ -306,4 +327,33 @@ void MainWindow::getNameFilter()
     nameFilters << "*.h";
     nameFilters << "*.hpp";
     nameFilters << "*.java";
+}
+
+
+void MainWindow::addMenuCodeFormatRecent()
+{
+    recentfiles = CStringPub::stringUniqueSortReverse(recentfiles);
+
+    //先删除当前节点
+    QList<QAction*> listActions = ui->menu_codeFormat_Recent->actions();
+    foreach (QAction *action, listActions) {
+        delete action;
+    }
+    ui->menu_codeFormat_Recent->clear();
+
+    WORD32 dwLp = 0;
+    foreach (QString item, recentfiles) {
+        if(dwLp > FILES_ASTYLE_RECENT_MAX)
+        {
+            break;
+        }
+
+        if(CFilePub::fileExist(item))
+        {
+            QAction *pAction = new QAction(item);
+//            QObject::connect(pAction, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
+            ui->menu_codeFormat_Recent->addAction(pAction);
+            dwLp++;
+        }
+    }
 }

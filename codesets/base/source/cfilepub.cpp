@@ -9,6 +9,16 @@ CFilePub::CFilePub()
 
 }
 
+int CFilePub::fileExist(QString filename)
+{
+    QFile file(filename);
+    if(file.exists())
+    {
+        return true;
+    }
+    return false;
+}
+
 QString CFilePub::readFileAll(QString filename)
 {
     QString result("");

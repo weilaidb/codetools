@@ -10,6 +10,7 @@ class CFilePub
 {
 public:
     CFilePub();
+    static int fileExist(QString filename);
     static QString readFileAll(QString filename);
     static QString writeFileOnlly(QString filename, QString msg);
     static QString writeFileAppend(QString filename, QString msg);

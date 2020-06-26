@@ -10,6 +10,8 @@ public:
     static QStringList toStringList(const QList<QByteArray> list);
     static QString stringList2String(const QStringList list, const char *pSign);
     static QStringList stringSplit(const QString str , const char sign);
+    static QStringList stringUniqueSort(QStringList recentfiles);
+    static QStringList stringUniqueSortReverse(QStringList recentfiles);
 };
 
 #endif // CSTRINGPUB_H
