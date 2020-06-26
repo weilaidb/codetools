@@ -22,8 +22,10 @@ private:
     void showVersion();
     void actionSets();
     void initVars();
-    void getAstyleFmt(QString item);
-    UINT32 getAstyleArgc();
+    WORD32 getAstyleFmt(QStringList filelist);
+    void freeArgv();
+    void procAstyleInstance(QStringList filelist);
+    void showStatus(QString msg);
 
 public:
     enum{
@@ -37,10 +39,11 @@ private:
 
 private:
     QString openDirPathRecent;
-    char filebuf[FILENAMEBINDMAX];
     char m_argv[ARGVROWS][FILENAMEMAX];
-    char *m_argvp[ARGVROWS];
-
+    char **m_argvp;
+    WORD32 dwArgc;
+    QStringList listAstyleArgv;
+    QString logAstyleName;
 
 private slots:
     void proc_action_codeFormat_File_trigger();

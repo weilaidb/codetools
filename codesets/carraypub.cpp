@@ -8,13 +8,12 @@ CArrayPub::CArrayPub()
 
 }
 
-void CArrayPub::printArray(char argv[ARGVROWS][FILENAMEMAX])
+void CArrayPub::printArray(char **argv, int size)
 {
     int i = 0;
-    int j = 0;
-    for(i= 0; i < ARGVROWS; i++)
+    for(i= 0; i < size; i++)
     {
-        if('\0' == argv[i][0])
+        if(nullptr == argv[i])
         {
             continue;
         }

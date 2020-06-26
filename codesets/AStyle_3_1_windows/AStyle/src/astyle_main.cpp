@@ -482,7 +482,7 @@ FileEncoding ASConsole::detectEncoding(const char* data, size_t dataSize) const
 void ASConsole::error() const
 {
 	(*errorStream) << _("Artistic Style has terminated\n") << endl;
-	exit(EXIT_FAILURE);
+//	exit(EXIT_FAILURE);
 }
 
 // error exit with a message

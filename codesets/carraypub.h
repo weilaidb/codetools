@@ -9,7 +9,7 @@ class CArrayPub
 public:
     CArrayPub();
 
-    static void printArray(char argv[ARGVROWS][FILENAMEMAX]);
+    static void printArray(char **argv, int size);
 
 };
 
