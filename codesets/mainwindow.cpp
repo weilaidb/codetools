@@ -13,6 +13,7 @@
 #include <QDesktopServices>
 #include <QException>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QProcess>
 
 
@@ -134,7 +135,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType)
         openDirPathRecent = openDirPath;
         debugApp() << "Open Dir:" << openDirPath;
         getNameFilter();
-        QStringList openfiles = CFilePub::getFileAbsoluteNames(nameFilters, openDirPath);
+        QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         procAstyleInstance(openfiles);
     }
         break;
@@ -196,6 +197,24 @@ void MainWindow::procAstyleInstance(QStringList filelist)
         showStatus("文件数量为空，不处理");
         return;
     }
+
+    if(filelist.size() > ASTYLE_PROC_FILES_MAX)
+    {
+        showStatus("文件数量较多，建议不处理");
+        int result = QMessageBox::warning(NULL, "warning", QString("文件数量较多 %1，是否继续处理?").arg(filelist.size()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        switch (result)
+        {
+        case QMessageBox::Yes:
+            break;
+        case QMessageBox::No:
+            return;
+            break;
+        default:
+            return;
+            break;
+        }
+    }
+
     CPrintPub::printToFile(logAstyleName);
 
     dwArgc = getAstyleFmt(filelist);

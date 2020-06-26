@@ -2,6 +2,8 @@
 #define CFILEPUB_H
 
 #include <QStringList>
+#include <QFile>
+#include <QDir>
 
 
 class CFilePub
@@ -15,6 +17,8 @@ public:
     static QString deleteFile(QString filename);
     static QStringList getFileNames(QStringList nameFilters, const QString path);
     static QStringList getFileAbsoluteNames(QStringList nameFilters, const QString path);
+    static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);
+    static QFileInfoList getAllFileList(QStringList nameFilters, QString path);
 };
 
 #endif // CFILEPUB_H

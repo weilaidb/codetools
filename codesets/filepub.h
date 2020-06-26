@@ -6,4 +6,6 @@
 
 #define FILENAMEBINDMAX (FILENAMEMAX * 10)
 
+#define ASTYLE_PROC_FILES_MAX (100)
+
 #endif // FILEPUB_H
