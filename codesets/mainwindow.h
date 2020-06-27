@@ -41,12 +41,15 @@ public:
         TYPE_FILES,
         TYPE_DIR,
         TYPE_AUTO,
+        TYPE_FILES_NOUI,
+        TYPE_DIR_NOUI,
     };
 
 private:
     Ui::MainWindow *ui;
 
 private:
+    QString openFilePathRecent;
     QString openDirPathRecent;
     char **m_argvp;
     WORD32 dwArgc;

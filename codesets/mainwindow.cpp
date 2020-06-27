@@ -62,6 +62,7 @@ void MainWindow::actionSets()
 void MainWindow::initVars()
 {
     openDirPathRecent = "/";
+    openFilePathRecent = "/";
     logAstyleName = "astyle.log";
     cfgAstyleName = "astyle.conf";
     cfgAstyleNameOrg = cfgAstyleName + ".org";
@@ -138,21 +139,30 @@ void MainWindow::proc_action_about_trigger()
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)
 {
     debugApp() << "proc_action_codeFormat_Pub_trigger";
+    getNameFilter();
 
     switch (openType) {
     case TYPE_FILES:
     {
         /*打开一个dialog对话框，选择一个文件*/
-        getNameFilter();
-        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", "/", CStringPub::getOpenFileNamesFilter(nameFilters));
+        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", openFilePathRecent, CStringPub::getOpenFileNamesFilter(nameFilters));
         if(openfiles.isEmpty())
         {
             return;
         }
         debugApp() << "Open Files:" << openfiles;
-        procAstyleInstance(openfiles);
+        openFilePathRecent = openfiles.at(0);
         recentfiles.append(openfiles);
+        procAstyleInstance(openfiles);
 
+    }
+        break;
+    case TYPE_FILES_NOUI:
+    {
+        /*打开一个dialog对话框，选择一个文件*/
+        debugApp() << "Open Files:" << autolist;
+        procAstyleInstance(autolist);
+        recentfiles.append(autolist);
     }
         break;
     case TYPE_DIR:
@@ -169,7 +179,24 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         openDirPath += "/";
         openDirPathRecent = openDirPath;
         debugApp() << "Open Dir:" << openDirPath;
-        getNameFilter();
+        recentfiles.append(openDirPath);
+        QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
+        procAstyleInstance(openfiles);
+    }
+        break;
+    case TYPE_DIR_NOUI:
+    {
+        if(autolist.size() == 0)
+        {
+            return;
+        }
+        //文件夹路径
+        QString openDirPath = autolist.at(0);
+        if (openDirPath.isEmpty())
+        {
+            return;
+        }
+        debugApp() << "Open Dir:" << openDirPath;
         recentfiles.append(openDirPath);
         QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         procAstyleInstance(openfiles);
@@ -177,16 +204,15 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         break;
     case TYPE_AUTO:
     {
-        getNameFilter();
         recentfiles.append(autolist);
         foreach (QString item, autolist) {
             if(true == CFilePub::isFile(item))
             {
-                proc_action_codeFormat_Pub_trigger(TYPE_FILE, autolist);
+                proc_action_codeFormat_Pub_trigger(TYPE_FILES_NOUI, autolist);
             }
             else if(true == CFilePub::isDir(item))
             {
-                proc_action_codeFormat_Pub_trigger(TYPE_DIR, autolist);
+                proc_action_codeFormat_Pub_trigger(TYPE_DIR_NOUI, autolist);
             }
         }
     }
