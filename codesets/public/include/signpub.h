@@ -4,7 +4,7 @@
 #define SIGNENTER         "\n"
 #define SIGNSPACE         "  "
 #define SIGNDOUBLEFENHAO  ";;"
-
+#define SIGNDOUHAO  ","
 
 
 #define SIGNENTERS '\n'

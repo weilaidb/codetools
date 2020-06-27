@@ -113,3 +113,9 @@ void CUIPub::clearMenu(QMenu *pMenu)
     }
     pMenu->clear();
 }
+
+void CUIPub::addMenu(QMenu *pMenu, QString item)
+{
+    QAction *pAction = new QAction(item);
+    pMenu->addAction(pAction);
+}

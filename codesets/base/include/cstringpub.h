@@ -12,7 +12,7 @@ public:
     static QStringList stringSplit(const QString str , const char sign);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
-    static QString getOpenFileNamesFilter(QStringList filters);
+    static QString getOpenFileNamesFilter(QStringList filters, QString sign);
 };
 
 #endif // CSTRINGPUB_H

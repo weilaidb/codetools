@@ -146,7 +146,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     case TYPE_FILES:
     {
         /*打开一个dialog对话框，选择一个文件*/
-        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", openFilePathRecent, CStringPub::getOpenFileNamesFilter(nameFilters));
+        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", openFilePathRecent, CStringPub::getOpenFileNamesFilter(nameFilters, SIGNDOUHAO));
         if(openfiles.isEmpty())
         {
             return;
@@ -408,9 +408,7 @@ void MainWindow::addMenuCodeFormatRecent()
 
         if(CFilePub::fileExist(item))
         {
-            QAction *pAction = new QAction(item);
-            //            QObject::connect(pAction, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
-            ui->menu_codeFormat_Recent->addAction(pAction);
+            CUIPub::addMenu(ui->menu_codeFormat_Recent, item);
             dwLp++;
         }
     }

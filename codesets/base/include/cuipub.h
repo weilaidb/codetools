@@ -17,6 +17,7 @@ public:
 
 
     static void clearMenu(QMenu *pMenu);
+    static void addMenu(QMenu *pMenu,QString item);
 };
 
 #endif // CUIPUB_H

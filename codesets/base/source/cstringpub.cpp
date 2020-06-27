@@ -61,12 +61,13 @@ QStringList CStringPub::stringUniqueSortReverse(QStringList lists)
     return lists;
 }
 
-QString CStringPub::getOpenFileNamesFilter(QStringList filters)
+QString CStringPub::getOpenFileNamesFilter(QStringList filters, QString sign)
 {
     QString result("");
     foreach (QString item, filters) {
-        result += item + SIGNDOUBLEFENHAO;
+        result += item + sign;
     }
     return result;
-
 }
+
+
