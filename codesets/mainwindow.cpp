@@ -146,7 +146,9 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     case TYPE_FILES:
     {
         /*打开一个dialog对话框，选择一个文件*/
-        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", openFilePathRecent, CStringPub::getOpenFileNamesFilter(nameFilters, SIGNDOUHAO));
+        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件"
+                , openFilePathRecent
+                , CStringPub::getOpenFileNamesFilter(nameFilters, SIGNFENHAO) + SIGNFENHAO + "*.*");
         if(openfiles.isEmpty())
         {
             return;
