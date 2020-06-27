@@ -3,6 +3,7 @@
 
 #include <QSettings>
 #include <QMap>
+#include <QMenu>
 
 class CUIPub
 {
@@ -13,6 +14,9 @@ public:
     void ReadHistorySettings(QString &organization, const QString &application);
     void WriteCurrentSettings(QString &organization,
                               const QString &application);
+
+
+    static void clearMenu(QMenu *pMenu);
 };
 
 #endif // CUIPUB_H

@@ -103,3 +103,13 @@ void CUIPub::WriteCurrentSettings(QString &organization,
 
 //    m_settings.setValue("Cmdserver", this->saveGeometry());
 }
+
+void CUIPub::clearMenu(QMenu *pMenu)
+{
+    //先删除当前节点
+    QList<QAction*> listActions = pMenu->actions();
+    foreach (QAction *action, listActions) {
+        delete action;
+    }
+    pMenu->clear();
+}

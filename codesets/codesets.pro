@@ -22,6 +22,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    base/dialog/cdialogpub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
+    base/dialog/cdialogpub.h \
     base/include/cfilepub.h \
     base/include/cprintpub.h \
     base/include/cstringpub.h \

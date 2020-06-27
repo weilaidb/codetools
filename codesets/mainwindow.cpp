@@ -10,6 +10,7 @@
 #include "cfilepub.h"
 #include "cmsgtips.h"
 #include "looppub.h"
+#include "cuipub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -396,11 +397,7 @@ void MainWindow::addMenuCodeFormatRecent()
     recentfiles = CStringPub::stringUniqueSortReverse(recentfiles);
 
     //先删除当前节点
-    QList<QAction*> listActions = ui->menu_codeFormat_Recent->actions();
-    foreach (QAction *action, listActions) {
-        delete action;
-    }
-    ui->menu_codeFormat_Recent->clear();
+    CUIPub::clearMenu(ui->menu_codeFormat_Recent);
 
     WORD32 dwLp = 0;
     foreach (QString item, recentfiles) {
