@@ -70,5 +70,10 @@ private slots:
     void proc_action_codeFormat_Save_Config_trigger();
     void proc_action_codeFormat_Del_Config_trigger();
     void proc_action_about_trigger();
+
+    //mysql
+    void proc_action_mysql_testdatabase_trigger();
+
+
 };
 #endif // MAINWINDOW_H

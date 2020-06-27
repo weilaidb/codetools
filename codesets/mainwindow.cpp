@@ -11,6 +11,7 @@
 #include "cmsgtips.h"
 #include "looppub.h"
 #include "cuipub.h"
+#include "csqlpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -57,6 +58,10 @@ void MainWindow::actionSets()
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
     QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
     addMenuCodeFormatRecent();
+
+
+    //mysql
+    QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
 }
 
 
@@ -414,4 +419,24 @@ void MainWindow::addMenuCodeFormatRecent()
             dwLp++;
         }
     }
+}
+
+
+
+
+void MainWindow::proc_action_mysql_testdatabase_trigger()
+{
+    QString hostName;
+    QString dbName;
+    QString userName;
+    QString password;
+//    QSqlDatabase dbconn;
+
+    hostName = "localhost";   // 主机名
+    dbName = "alldb";   // 数据库名称
+    userName = "root";   // 用户名
+    password = "Zzerp123";   // 密码
+
+    CSqlPub::openDb(hostName, dbName, userName, password);
+
 }

@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +25,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     base/dialog/cdialogpub.cpp \
     base/msgtips/cmsgtips.cpp \
+    base/mysql/csqlpub.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
@@ -41,6 +43,7 @@ HEADERS += \
     base/include/cstringpub.h \
     base/include/cuipub.h \
     base/msgtips/cmsgtips.h \
+    base/mysql/csqlpub.h \
     mainwindow.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
@@ -57,6 +60,8 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
     base/include/ \
     base/msgtips/ \
+    base/mysql/ \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
