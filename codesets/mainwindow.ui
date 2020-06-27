@@ -79,8 +79,16 @@
     </property>
     <addaction name="action_mysql_testdatabase"/>
    </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>文档</string>
+    </property>
+    <addaction name="action_office_open"/>
+    <addaction name="action_office_search"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -137,7 +145,17 @@
   </action>
   <action name="action_mysql_testdatabase">
    <property name="text">
-    <string>testdatabase</string>
+    <string>测试</string>
+   </property>
+  </action>
+  <action name="action_office_open">
+   <property name="text">
+    <string>打开</string>
+   </property>
+  </action>
+  <action name="action_office_search">
+   <property name="text">
+    <string>查找</string>
    </property>
   </action>
  </widget>

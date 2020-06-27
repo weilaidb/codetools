@@ -12,6 +12,7 @@
 #include "looppub.h"
 #include "cuipub.h"
 #include "csqlpub.h"
+#include "cofficepub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -62,6 +63,11 @@ void MainWindow::actionSets()
 
     //mysql
     QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
+
+
+    //office
+    QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
+
 }
 
 
@@ -438,5 +444,20 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
     password = "Zzerp123";   // 密码
 
     CSqlPub::openDb(hostName, dbName, userName, password);
+
+}
+
+
+void MainWindow::proc_action_office_open_trigger()
+{
+    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
+    QStringList list = CFilePub::getOpenDiagFiles("/",filter);
+    if(list.size() == 0)
+    {
+        return;
+    }
+
+    COfficePub *pObjOffice = new COfficePub();
+    pObjOffice->openFile(list.at(0));
 
 }

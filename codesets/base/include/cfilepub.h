@@ -22,6 +22,8 @@ public:
     static QStringList getFileAbsoluteNames(QStringList nameFilters, const QString path);
     static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);
     static QFileInfoList getAllFileList(QStringList nameFilters, QString path);
+//file dialog
+    static QStringList getOpenDiagFiles(QString openFilePathRecent, QString filter);
 };
 
 #endif // CFILEPUB_H

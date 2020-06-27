@@ -1,6 +1,7 @@
 #ifndef CUIPUB_H
 #define CUIPUB_H
 
+#include "basetypepub.h"
 #include <QSettings>
 #include <QMap>
 #include <QMenu>
@@ -18,6 +19,10 @@ public:
 
     static void clearMenu(QMenu *pMenu);
     static void addMenu(QMenu *pMenu,QString item);
+
+    static int deskWidth();
+    static int deskHeigth();
+    static void widgetXYsetDesktop_center(QWidget *widget, int width, int height);
 };
 
 #endif // CUIPUB_H

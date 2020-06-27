@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QDir>
+#include <QFileDialog>
 #include "debugApp.h"
 
 CFilePub::CFilePub()
@@ -185,4 +186,18 @@ QFileInfoList CFilePub::getAllFileList(QStringList nameFilters, QString path)
     return file_list;
 }
 
+QStringList CFilePub::getOpenDiagFiles(QString openFilePathRecent,QString filter)
+{
+    QStringList openfiles;
+    /*打开一个dialog对话框，选择一个文件*/
+    openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择文件"
+            , openFilePathRecent
+            , filter);
+    if(openfiles.isEmpty())
+    {
+        return openfiles;
+    }
+    debugApp() << "Open Files:" << openfiles;
+    return  openfiles;
+}
 

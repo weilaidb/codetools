@@ -1,5 +1,6 @@
 QT       += core gui
 QT       += sql
+QT       += axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,6 +27,7 @@ SOURCES += \
     base/dialog/cdialogpub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
+    base/office/cofficepub.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
@@ -44,6 +46,7 @@ HEADERS += \
     base/include/cuipub.h \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \
+    base/office/cofficepub.h \
     mainwindow.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
@@ -61,6 +64,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/include/ \
     base/msgtips/ \
     base/mysql/ \
+    base/office/ \
 
 
 # Default rules for deployment.
