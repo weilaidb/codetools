@@ -143,13 +143,16 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     case TYPE_FILES:
     {
         /*打开一个dialog对话框，选择一个文件*/
-        QStringList openfiles = QFileDialog::getOpenFileNames();
+        getNameFilter();
+        QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件", "/", CStringPub::getOpenFileNamesFilter(nameFilters));
         if(openfiles.isEmpty())
         {
             return;
         }
         debugApp() << "Open Files:" << openfiles;
         procAstyleInstance(openfiles);
+        recentfiles.append(openfiles);
+
     }
         break;
     case TYPE_DIR:
@@ -157,7 +160,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         /*打开一个dialog对话框，选择一个文件夹*/
         //文件夹路径
         QString openDirPath = QFileDialog::getExistingDirectory(
-                    this, "choose Directory",
+                    this, "请选择格式化的文件夹",
                     openDirPathRecent);
         if (openDirPath.isEmpty())
         {
@@ -167,6 +170,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         openDirPathRecent = openDirPath;
         debugApp() << "Open Dir:" << openDirPath;
         getNameFilter();
+        recentfiles.append(openDirPath);
         QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         procAstyleInstance(openfiles);
     }
@@ -174,10 +178,17 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     case TYPE_AUTO:
     {
         getNameFilter();
-        QStringList openfiles;
-        openfiles.clear();
-        openfiles.append(autolist);
-        procAstyleInstance(openfiles);
+        recentfiles.append(autolist);
+        foreach (QString item, autolist) {
+            if(true == CFilePub::isFile(item))
+            {
+                proc_action_codeFormat_Pub_trigger(TYPE_FILE, autolist);
+            }
+            else if(true == CFilePub::isDir(item))
+            {
+                proc_action_codeFormat_Pub_trigger(TYPE_DIR, autolist);
+            }
+        }
     }
         break;
     default:
@@ -200,8 +211,6 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
         memset(p,0,dwLen + 1);
         strcpy(p, item.toLocal8Bit().data());
         m_argvp[i++] = p;
-
-        recentfiles.append(item);
     }
 
     //    CPrintPub::printArray((char **)m_argvp, listAstyleArgv.size());

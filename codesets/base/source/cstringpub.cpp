@@ -1,5 +1,5 @@
 #include "cstringpub.h"
-
+#include "signpub.h"
 #include <QStringList>
 
 CStringPub::CStringPub()
@@ -59,4 +59,14 @@ QStringList CStringPub::stringUniqueSortReverse(QStringList lists)
     }
 
     return lists;
+}
+
+QString CStringPub::getOpenFileNamesFilter(QStringList filters)
+{
+    QString result("");
+    foreach (QString item, filters) {
+        result += item + SIGNDOUBLEFENHAO;
+    }
+    return result;
+
 }

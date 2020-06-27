@@ -9,6 +9,28 @@ CFilePub::CFilePub()
 
 }
 
+int CFilePub::isFile(QString filename)
+{
+    QFileInfo fileinfo(filename);
+    if(fileinfo.isFile())
+    {
+        return true;
+    }
+    return false;
+}
+
+int CFilePub::isDir(QString filename)
+{
+    QFileInfo fileinfo(filename);
+    if(fileinfo.isDir())
+    {
+        return true;
+    }
+    return false;
+}
+
+
+
 int CFilePub::fileExist(QString filename)
 {
     QFile file(filename);
