@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>代码集</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="images/app.qrc">
-    <normaloff>:/App.ico</normaloff>:/App.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
@@ -115,8 +111,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="images/app.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

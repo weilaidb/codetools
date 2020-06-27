@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     showVersion();
     actionSets();
     initVars();
+    initUiOther();
 
 
 }
@@ -64,6 +65,11 @@ void MainWindow::initVars()
     cfgAstyleNameOrg = cfgAstyleName + ".org";
     nameFilters.clear();
     recentfiles.clear();
+}
+
+void MainWindow::initUiOther()
+{
+//    this->setWindowIcon();
 }
 
 

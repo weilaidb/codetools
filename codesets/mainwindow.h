@@ -22,6 +22,7 @@ private:
     void showVersion();
     void actionSets();
     void initVars();
+    void initUiOther();
     WORD32 getAstyleFmt(QStringList filelist);
     void getAstyleConfig();
     void getAstyleOrgConfig();
