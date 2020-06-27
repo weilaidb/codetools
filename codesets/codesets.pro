@@ -25,6 +25,7 @@ SOURCES += \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
+    base/source/cuipub.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -35,6 +36,7 @@ HEADERS += \
     base/include/cfilepub.h \
     base/include/cprintpub.h \
     base/include/cstringpub.h \
+    base/include/cuipub.h \
     mainwindow.h \
     public/include/basepub.h \
     public/include/debugApp.h \
