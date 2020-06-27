@@ -22,6 +22,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    base/msgtips/cmsgtips.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
@@ -37,11 +38,13 @@ HEADERS += \
     base/include/cprintpub.h \
     base/include/cstringpub.h \
     base/include/cuipub.h \
+    base/msgtips/cmsgtips.h \
     mainwindow.h \
-    public/include/basepub.h \
+    public/include/basetypepub.h \
     public/include/debugApp.h \
     public/include/expresspub.h \
     public/include/filepub.h \
+    public/include/looppub.h \
     public/include/signpub.h \
     version.h
 
@@ -50,7 +53,8 @@ FORMS += \
 
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
-    base/include/
+    base/include/ \
+    base/msgtips/ \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

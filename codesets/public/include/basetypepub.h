@@ -1,5 +1,5 @@
-#ifndef BASEPUB_H
-#define BASEPUB_H
+#ifndef BASETYPEPUB_H
+#define BASETYPEPUB_H
 
 #define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
 
@@ -14,4 +14,4 @@ typedef unsigned short WORD;
 typedef unsigned int   WORD32;
 typedef unsigned long long WORD64;
 
-#endif // BASEPUB_H
+#endif // BASETYPEPUB_H

@@ -2,12 +2,14 @@
 #include "ui_mainwindow.h"
 #include "astyle_main.h"
 #include "debugApp.h"
-#include "basepub.h"
+#include "basetypepub.h"
 #include "filepub.h"
 #include "signpub.h"
 #include "cprintpub.h"
 #include "cstringpub.h"
 #include "cfilepub.h"
+#include "cmsgtips.h"
+#include "looppub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -129,6 +131,7 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
 void MainWindow::proc_action_about_trigger()
 {
     showStatus(QString("当前版本是:") + APP_VERSION);
+    showStatusTimer(QString("当前版本是:") + APP_VERSION);
 }
 
 
@@ -258,6 +261,18 @@ void MainWindow::procAstyleInstance(QStringList filelist)
 void MainWindow::showStatus(QString msg)
 {
     ui->statusbar->showMessage(msg);
+}
+
+void MainWindow::showStatusTimer(QString msg)
+{
+#if 0
+    /**
+     * @brief EXECLOOP 测试内存泄漏
+     */
+    EXECLOOP(ShowTipsInfoWithShowTime(msg, 2000), 100);
+#else
+    ShowTipsInfoWithShowTime(msg, 2000);
+#endif
 }
 
 void MainWindow::showTextBrower(QString msg)

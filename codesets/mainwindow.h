@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "version.h"
 #include "filepub.h"
-#include "basepub.h"
+#include "basetypepub.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +29,7 @@ private:
     void freeArgv();
     void procAstyleInstance(QStringList filelist);
     void showStatus(QString msg);
+    void showStatusTimer(QString msg);
     void showTextBrower(QString msg);
     void showTextBrowerAppend(QString msg);
     void getNameFilter();
