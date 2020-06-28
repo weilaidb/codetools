@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     showVersion();
-    actionSets();
+    initactionSets();
     initVars();
     initUiOther();
 
@@ -52,7 +52,7 @@ void MainWindow::showVersion()
 }
 
 
-void MainWindow::actionSets()
+void MainWindow::initactionSets()
 {
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
     QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory_trigger()));
@@ -61,8 +61,6 @@ void MainWindow::actionSets()
     QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
     QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
-    addMenuCodeFormatRecent();
-
 
     //mysql
     QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
@@ -84,7 +82,8 @@ void MainWindow::initVars()
     cfgAstyleName = "astyle.conf";
     cfgAstyleNameOrg = cfgAstyleName + ".org";
     nameFilters.clear();
-    recentfiles.clear();
+    recentfiles_codeformat.clear();
+    recentfiles_document.clear();
     m_organization = "weilaidb";
     m_application = "codesets";
     m_pSettings = nullptr;
@@ -99,13 +98,15 @@ void MainWindow::readSetting()
 {
     readHistorySetting();
     addMenuCodeFormatRecent();
+    addMenuDocumentRecent();
 }
 
 void MainWindow::readHistorySetting()
 {
     quint8 ucType = CUIPub::TYPE_READ;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), ucType);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
 }
 
 
@@ -113,7 +114,8 @@ void MainWindow::writeHistorySetting()
 {
     quint8 ucType = CUIPub::TYPE_WRITE;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), ucType);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
 }
 
 
@@ -194,7 +196,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         }
         debugApp() << "Open Files:" << openfiles;
         openFilePathRecent = openfiles.at(0);
-        recentfiles.append(openfiles);
+        recentfiles_codeformat.append(openfiles);
         procAstyleInstance(openfiles);
 
     }
@@ -204,7 +206,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         /*打开一个dialog对话框，选择一个文件*/
         debugApp() << "Open Files:" << autolist;
         procAstyleInstance(autolist);
-        recentfiles.append(autolist);
+        recentfiles_codeformat.append(autolist);
     }
         break;
     case TYPE_DIR:
@@ -221,7 +223,7 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         openDirPath += "/";
         openDirPathRecent = openDirPath;
         debugApp() << "Open Dir:" << openDirPath;
-        recentfiles.append(openDirPath);
+        recentfiles_codeformat.append(openDirPath);
         QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         procAstyleInstance(openfiles);
     }
@@ -239,14 +241,14 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
             return;
         }
         debugApp() << "Open Dir:" << openDirPath;
-        recentfiles.append(openDirPath);
+        recentfiles_codeformat.append(openDirPath);
         QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         procAstyleInstance(openfiles);
     }
         break;
     case TYPE_AUTO:
     {
-        recentfiles.append(autolist);
+        recentfiles_codeformat.append(autolist);
         foreach (QString item, autolist) {
             if(true == CFilePub::isFile(item))
             {
@@ -262,9 +264,6 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     default:
         break;
     }
-
-    writeHistorySetting();
-
 }
 
 
@@ -435,16 +434,15 @@ void MainWindow::getNameFilter()
     nameFilters << "*.java";
 }
 
-
-void MainWindow::addMenuCodeFormatRecent()
+void MainWindow::addMenuRecent(QStringList recent, QMenu *pMenu)
 {
-    recentfiles = CStringPub::stringUniqueSortReverse(recentfiles);
+    recent = CStringPub::stringUniqueSortReverse(recent);
 
     //先删除当前节点
-    CUIPub::clearMenu(ui->menu_codeFormat_Recent);
+    CUIPub::clearMenu(pMenu);
 
     WORD32 dwLp = 0;
-    foreach (QString item, recentfiles) {
+    foreach (QString item, recent) {
         if(dwLp > FILES_ASTYLE_RECENT_MAX)
         {
             break;
@@ -452,14 +450,22 @@ void MainWindow::addMenuCodeFormatRecent()
 
         if(CFilePub::fileExist(item))
         {
-            CUIPub::addMenu(ui->menu_codeFormat_Recent, item);
+            CUIPub::addMenu(pMenu, item);
             dwLp++;
         }
     }
 }
 
 
+void MainWindow::addMenuCodeFormatRecent()
+{
+    addMenuRecent(recentfiles_codeformat, ui->menu_codeFormat_Recent);
+}
 
+void MainWindow::addMenuDocumentRecent()
+{
+    addMenuRecent(recentfiles_document, ui->menu_document_recent);
+}
 
 void MainWindow::proc_action_mysql_testdatabase_trigger()
 {
@@ -490,15 +496,15 @@ void MainWindow::proc_action_office_open_trigger()
     }
 
     COfficePub *pObjOffice = new COfficePub();
-    ui->textBrowser->setText(pObjOffice->readWord(list.at(0)));
-
+    setRightTextEdit(pObjOffice->readWord(list.at(0)));
+    updateRecent(recentfiles_document, list.at(0), ui->menu_document_recent);
     showStatus("打开文档成功!" + list.at(0));
 }
 
 
 void MainWindow::proc_action_office_search_trigger()
 {
-    QString findtext = getWordFindText();
+    QString findtext = getDialogFindText();
     //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
     QString filter = ";*.doc;*.docx;";
     QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
@@ -510,12 +516,13 @@ void MainWindow::proc_action_office_search_trigger()
     COfficePub *pObjOffice = new COfficePub(findtext);
     setLeftTextEdit(findtext);
     setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
+    updateRecent(recentfiles_document, list.at(0), ui->menu_document_recent);
     showStatus("查找文档结束!" + list.at(0));
 }
 
 
 
-QString MainWindow::getWordFindText()
+QString MainWindow::getDialogFindText()
 {
     QString result("");
     //模态对话框，动态创建，用过后删除
@@ -559,3 +566,15 @@ void MainWindow::clearRightTextEdit()
     ui->textBrowser->setText("");
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    debugApp() << "closeEvent";
+    writeHistorySetting();
+    event->accept();
+}
+
+void MainWindow::updateRecent(QStringList list, QString name, QMenu *pMenu)
+{
+    list.append(name);
+    addMenuRecent(list,pMenu);
+}

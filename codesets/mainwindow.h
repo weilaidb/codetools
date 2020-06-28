@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include <QCloseEvent>
 #include "version.h"
 #include "filepub.h"
 #include "basetypepub.h"
@@ -19,10 +20,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void closeEvent(QCloseEvent *event);
 
 private:
     void showVersion();
-    void actionSets();
+    void initactionSets();
     void initVars();
     void initUiOther();
     void readSetting();
@@ -38,8 +40,12 @@ private:
     void showTextBrower(QString msg);
     void showTextBrowerAppend(QString msg);
     void getNameFilter();
+    void addMenuRecent(QStringList recent, QMenu *pMenu);
     void addMenuCodeFormatRecent();
-    QString getWordFindText();
+    void addMenuDocumentRecent();
+    void updateRecent(QStringList list, QString name, QMenu *pMenu);
+    //获取对话框输入的文字
+    QString getDialogFindText();
     void setLeftTextEdit(QString str);
     void clearLeftTextEdit();
     void setRightTextEdit(QString str);
@@ -68,7 +74,8 @@ private:
     QString cfgAstyleNameOrg;
 
     QStringList nameFilters;
-    QStringList recentfiles;
+    QStringList recentfiles_codeformat;
+    QStringList recentfiles_document;
 
     QString m_organization;
     QString m_application;
