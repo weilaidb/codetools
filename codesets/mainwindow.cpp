@@ -35,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     initVars();
     initUiOther();
 
-    readHistorySetting();
-    addMenuCodeFormatRecent();
+    readSetting();
+
 }
 
 MainWindow::~MainWindow()
@@ -92,12 +92,19 @@ void MainWindow::initUiOther()
     //    this->setWindowIcon();
 }
 
+void MainWindow::readSetting()
+{
+    readHistorySetting();
+    addMenuCodeFormatRecent();
+}
+
 void MainWindow::readHistorySetting()
 {
     quint8 ucType = CUIPub::TYPE_READ;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), ucType);
 }
+
 
 void MainWindow::writeHistorySetting()
 {
@@ -163,7 +170,6 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
 void MainWindow::proc_action_about_trigger()
 {
     showStatus(QString("当前版本是:") + APP_VERSION);
-    showStatusTimer(QString("当前版本是:") + APP_VERSION);
 }
 
 
@@ -331,6 +337,7 @@ void MainWindow::procAstyleInstance(QStringList filelist)
 void MainWindow::showStatus(QString msg)
 {
     ui->statusbar->showMessage(msg);
+    showStatusTimer(msg);
 }
 
 void MainWindow::showStatusTimer(QString msg)
