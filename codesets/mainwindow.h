@@ -23,6 +23,8 @@ private:
     void actionSets();
     void initVars();
     void initUiOther();
+    void readHistorySetting();
+    void writeHistorySetting();
     WORD32 getAstyleFmt(QStringList filelist);
     void getAstyleConfig();
     void getAstyleOrgConfig();
@@ -61,6 +63,8 @@ private:
     QStringList nameFilters;
     QStringList recentfiles;
 
+    QString m_organization;
+    QString m_application;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();

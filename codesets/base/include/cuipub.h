@@ -10,13 +10,12 @@ class CUIPub
 {
 public:
     CUIPub();
-    void Var2Map(QSettings &sets, QString envkey, QMap<QString, QStringList> &outmap);
-    QMap<QString, QVariant> Map2Var(QMap<QString, QStringList> &inmap);
-    void ReadHistorySettings(QString &organization, const QString &application);
-    void WriteCurrentSettings(QString &organization,
+    static void Var2Map(QSettings &sets, QString envkey, QMap<QString, QStringList> &outmap);
+    static QMap<QString, QVariant> Map2Var(QMap<QString, QStringList> &inmap);
+
+    static void readHistorySettings(QString &organization, const QString &application);
+    static void writeCurrentSettings(QString &organization,
                               const QString &application);
-
-
     static void clearMenu(QMenu *pMenu);
     static void addMenu(QMenu *pMenu,QString item);
 

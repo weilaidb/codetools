@@ -45,7 +45,7 @@ QMap<QString, QVariant> CUIPub::Map2Var(QMap<QString, QStringList> &inmap)
 /**
  * @brief CUIPub::ReadHistorySettings
  */
-void CUIPub::ReadHistorySettings(QString &organization,
+void CUIPub::readHistorySettings(QString &organization,
                                  const QString &application)
 {
     QSettings m_settings(organization, application);
@@ -75,7 +75,7 @@ void CUIPub::ReadHistorySettings(QString &organization,
 /**
  * @brief CUIPub::WriteCurrentSettings
  */
-void CUIPub::WriteCurrentSettings(QString &organization,
+void CUIPub::writeCurrentSettings(QString &organization,
                                   const QString &application)
 {
     QSettings m_settings(organization, application);

@@ -80,11 +80,23 @@ void MainWindow::initVars()
     cfgAstyleNameOrg = cfgAstyleName + ".org";
     nameFilters.clear();
     recentfiles.clear();
+    m_organization = "weilaidb";
+    m_application = "codesets";
 }
 
 void MainWindow::initUiOther()
 {
 //    this->setWindowIcon();
+}
+
+void MainWindow::readHistorySetting()
+{
+    CUIPub::readHistorySettings(m_organization,m_application);
+}
+
+void MainWindow::writeHistorySetting()
+{
+    CUIPub::writeCurrentSettings(m_organization,m_application);
 }
 
 
