@@ -94,14 +94,16 @@ void MainWindow::initUiOther()
 
 void MainWindow::readHistorySetting()
 {
+    quint8 ucType = CUIPub::TYPE_READ;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), CUIPub::TYPE_READ);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), ucType);
 }
 
 void MainWindow::writeHistorySetting()
 {
+    quint8 ucType = CUIPub::TYPE_WRITE;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), CUIPub::TYPE_WRITE);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), ucType);
 }
 
 
