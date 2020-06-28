@@ -13,6 +13,7 @@
 #include "cuipub.h"
 #include "csqlpub.h"
 #include "cofficepub.h"
+#include "expresspub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -94,36 +95,13 @@ void MainWindow::initUiOther()
 void MainWindow::readHistorySetting()
 {
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    recentfiles = m_pSettings->value("recentfiles").toStringList();
-
-//    QSettings m_settings(m_organization,m_application);
-//    //    ui->comboBox->addItems(m_settings.value("ComBoxIPList").toStringList());
-//    //    ComBoxIPList = m_settings.value("ComBoxIPList").toStringList();
-//    //    ui->comboBox->setEditText(m_settings.value("curkey").toString());
-//    //    curmodeldir = m_settings.value("curmodeldir").toString();
-//    //    //    show_cmdlist.clear();
-
-//    //    Var2Map(m_settings, "map_showcmd", map_showcmd);
-//    //    Var2Map(m_settings, "map_commonuselist", map_commonuselist);
-
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), CUIPub::TYPE_READ);
 }
 
 void MainWindow::writeHistorySetting()
 {
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    m_pSettings->setValue("recentfiles",recentfiles);
-
-//    //    CUIPub::writeCurrentSettings(m_organization,m_application);
-//    CUIPub::readHistorySettings(m_organization,m_application);
-//    QSettings m_settings(m_organization,m_application);
-//    //    ui->comboBox->addItems(m_settings.value("ComBoxIPList").toStringList());
-//    //    ComBoxIPList = m_settings.value("ComBoxIPList").toStringList();
-//    //    ui->comboBox->setEditText(m_settings.value("curkey").toString());
-//    //    curmodeldir = m_settings.value("curmodeldir").toString();
-//    //    //    show_cmdlist.clear();
-//    m_settings.setValue("recentfiles",recentfiles);
-//    //    Var2Map(m_settings, "map_showcmd", map_showcmd);
-//    //    Var2Map(m_settings, "map_commonuselist", map_commonuselist);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles), CUIPub::TYPE_WRITE);
 }
 
 

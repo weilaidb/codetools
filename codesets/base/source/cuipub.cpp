@@ -12,9 +12,9 @@ CUIPub::CUIPub()
 
 
 
-void CUIPub::Var2Map(QSettings &sets, QString envkey, QMap<QString, QStringList> &outmap)
+void CUIPub::Var2Map(QSettings *pSets, QString envkey, QMap<QString, QStringList> &outmap)
 {
-    QMap<QString, QVariant> maptmp = sets.value(envkey).toMap();
+    QMap<QString, QVariant> maptmp = pSets->value(envkey).toMap();
 
     //map_showcmd
     QMapIterator<QString, QVariant> i(maptmp);
@@ -26,7 +26,7 @@ void CUIPub::Var2Map(QSettings &sets, QString envkey, QMap<QString, QStringList>
     }
 }
 
-QMap<QString, QVariant> CUIPub::Map2Var(QMap<QString, QStringList> &inmap)
+void CUIPub::Map2Var(QSettings *pSetting,QString envkey,  QMap<QString, QStringList> &inmap)
 {
     QMap<QString, QVariant> maptmp;
     maptmp.clear();
@@ -37,7 +37,8 @@ QMap<QString, QVariant> CUIPub::Map2Var(QMap<QString, QStringList> &inmap)
         QVariant val = i.value();
         maptmp.insert(key, val);
     }
-    return maptmp;
+
+    pSetting->setValue(envkey, maptmp);
 }
 
 
@@ -47,6 +48,61 @@ QString CUIPub::bindKey(QString &organization,
 {
     return organization + application;
 }
+
+void CUIPub::procStringList(QSettings *pSetting, QString name, QStringList &list, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        list = pSetting->value(name).toStringList();
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(name,list);
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void CUIPub::procString(QSettings *pSetting, QString name, QString &str, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        str = pSetting->value(name).toString();
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(name,str);
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        Var2Map(pSetting, name, map);
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        Map2Var(pSetting, name, map);
+    }
+        break;
+    default:
+        break;
+    }
+}
+
 
 /**
  * @brief CUIPub::ReadHistorySettings
@@ -101,14 +157,14 @@ int CUIPub::deskWidth()
 {
     QDesktopWidget *desk=QApplication::desktop();
     int wd=desk->width();
-    int ht=desk->height();
+//    int ht=desk->height();
     return wd;
 }
 
 int CUIPub::deskHeigth()
 {
     QDesktopWidget *desk=QApplication::desktop();
-    int wd=desk->width();
+//    int wd=desk->width();
     int ht=desk->height();
     return ht;
 }
