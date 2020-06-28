@@ -1,5 +1,6 @@
 #include "cstringpub.h"
 #include "signpub.h"
+#include "debugApp.h"
 #include <QStringList>
 
 CStringPub::CStringPub()
@@ -36,7 +37,7 @@ QStringList CStringPub::stringSplit(const QString str , const char sign)
     return  str.split(sign);
 }
 
-QString CStringPub::stringSplitFindText(const QString str , const char sign, QString findtext)
+QString CStringPub::stringSplitFindText(const QString str , const char sign,QString signadd, QString findtext)
 {
     QString result("");
     QStringList list = stringSplit(str, sign);
@@ -45,7 +46,7 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign, QSt
         {
             continue;
         }
-        result += item + sign;
+        result += item + signadd;
     }
     return result;
 }
@@ -90,4 +91,16 @@ QStringList CStringPub::emptyStringList()
     QStringList list;
     list.clear();
     return list;
+}
+QString CStringPub::emptyString()
+{
+    return QString("");
+}
+
+QStringList CStringPub::actionNameList(QAction *action)
+{
+    QStringList autolist;
+    autolist.append(action->iconText());
+    debugApp() << "actionname:" << action->iconText();
+    return autolist;
 }

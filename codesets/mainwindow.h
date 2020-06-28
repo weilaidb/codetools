@@ -43,7 +43,8 @@ private:
     void getNameFilter();
     void addMenuRecent(QStringList recent, QMenu *pMenu);
     void addMenuCodeFormatRecent();
-    void addMenuDocumentRecent();
+    void addMenuDocumentOpenRecent();
+    void addMenuDocumentSearchRecent();
     void updateRecent(QStringList &list, QString name, QMenu *pMenu);
     //获取对话框输入的文字
     QString getDialogFindText();
@@ -66,6 +67,10 @@ public:
         OPENTYPE_NO,
     };
 
+    enum{
+        ACTIONTYPE_OPEN,
+        ACTIONTYPE_SEARCH,
+    };
 
 
 private:
@@ -104,10 +109,14 @@ private slots:
     //mysql
     void proc_action_mysql_testdatabase_trigger();
     //office
-    void proc_action_office_open_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    QStringList proc_action_office_auto_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    void proc_action_office_open_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    void proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext);
     void proc_action_office_open_trigger();
+    void proc_action_office_search_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
     void proc_action_office_search_trigger();
-    void proc_menu_document_recent_trigger(QAction *action);
+    void proc_menu_document_open_recent_trigger(QAction *action);
+    void proc_menu_document_search_recent_trigger(QAction *action);
 
 
 };

@@ -69,7 +69,8 @@ void MainWindow::initactionSets()
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
     QObject::connect(ui->action_office_search, SIGNAL(triggered()), this, SLOT(proc_action_office_search_trigger()));
-    QObject::connect(ui->menu_document_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_recent_trigger(QAction *)));
+    QObject::connect(ui->menu_document_open_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_open_recent_trigger(QAction *)));
+    QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent_trigger(QAction *)));
 
 }
 
@@ -99,7 +100,8 @@ void MainWindow::readSetting()
 {
     readHistorySetting();
     addMenuCodeFormatRecent();
-    addMenuDocumentRecent();
+    addMenuDocumentOpenRecent();
+    addMenuDocumentSearchRecent();
 }
 
 void MainWindow::pubHistorySetting(int type)
@@ -127,9 +129,8 @@ void MainWindow::writeHistorySetting()
 
 void MainWindow::proc_menu_codeFormat_Recent_trigger(QAction *action)
 {
-    QStringList autolist;
-    autolist.append(action->iconText());
-    debugApp() << "actionname:" << action->iconText();
+    QStringList autolist = CStringPub::actionNameList(action);
+    CHECKSIZEZERORETURN(autolist);
     proc_action_codeFormat_Pub_trigger(TYPE_AUTO,autolist);
 }
 /**
@@ -468,10 +469,16 @@ void MainWindow::addMenuCodeFormatRecent()
     addMenuRecent(recentfiles_codeformat, ui->menu_codeFormat_Recent);
 }
 
-void MainWindow::addMenuDocumentRecent()
+void MainWindow::addMenuDocumentOpenRecent()
 {
-    addMenuRecent(recentfiles_document, ui->menu_document_recent);
+    addMenuRecent(recentfiles_document, ui->menu_document_open_recent);
 }
+
+void MainWindow::addMenuDocumentSearchRecent()
+{
+    addMenuRecent(recentfiles_document, ui->menu_document_search_recent);
+}
+
 
 void MainWindow::proc_action_mysql_testdatabase_trigger()
 {
@@ -490,8 +497,7 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
 
 }
 
-
-void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString openRecent,quint8 openDiagFlag, QStringList openfilelist)
+QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist)
 {
     QStringList list;
     switch (openDiagFlag) {
@@ -500,7 +506,7 @@ void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString ope
         list = CFilePub::getOpenDiagFilesRecent(openRecent,filter);
         if(list.size() == 0)
         {
-            return;
+            return CStringPub::emptyStringList();
         }
     }
         break;
@@ -512,32 +518,63 @@ void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString ope
     default:
         break;
     }
-
-    COfficePub *pObjOffice = new COfficePub();
-    setRightTextEdit(pObjOffice->readWord(list.at(0)));
-    updateRecent(recentfiles_document, list.at(0), ui->menu_document_recent);
-    showStatus("打开文档成功!" + list.at(0));
+    return list;
 }
 
+
+
+void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
+{
+    switch (ucActionType) {
+    case ACTIONTYPE_OPEN:
+    {
+        COfficePub *pObjOffice = new COfficePub();
+        setRightTextEdit(pObjOffice->readWord(list.at(0)));
+        updateRecent(recentfiles_document, list.at(0), ui->menu_document_open_recent);
+        showStatus("打开文档成功!" + list.at(0));
+    }
+        break;
+    case ACTIONTYPE_SEARCH:
+    {
+        COfficePub *pObjOffice = new COfficePub(findtext);
+        setLeftTextEdit(findtext);
+        setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
+        updateRecent(recentfiles_document, list.at(0), ui->menu_document_search_recent);
+        showStatus("查找文档结束!" + list.at(0));
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+/**
+ * @brief MainWindow::proc_action_office_open_pub_trigger
+ * @param filter
+ * @param openRecent
+ * @param openDiagFlag 是否打开对话框
+ * @param openfilelist
+ */
+void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString &openRecent,quint8 openDiagFlag, QStringList openfilelist)
+{
+    QStringList list = proc_action_office_auto_pub_trigger(filter, openRecent, openDiagFlag, openfilelist);
+    CHECKSIZEZERORETURN(list);
+    proc_action_office_action_pub_trigger(ACTIONTYPE_OPEN, list, CStringPub::emptyString());
+}
+
+
+void MainWindow::proc_action_office_search_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
+{
+    QString findtext = getDialogFindText();
+    QStringList list = proc_action_office_auto_pub_trigger(filter, openRecent, openDiagFlag, openfilelist);
+    CHECKSIZEZERORETURN(list);
+    proc_action_office_action_pub_trigger(ACTIONTYPE_SEARCH, list, findtext);
+}
 
 void MainWindow::proc_action_office_search_trigger()
 {
-    QString findtext = getDialogFindText();
-    QString filter = FILTERWORD;
-    QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
-    if(list.size() == 0)
-    {
-        return;
-    }
-
-    COfficePub *pObjOffice = new COfficePub(findtext);
-    setLeftTextEdit(findtext);
-    setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
-    updateRecent(recentfiles_document, list.at(0), ui->menu_document_recent);
-    showStatus("查找文档结束!" + list.at(0));
+    proc_action_office_search_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_YES, CStringPub::emptyStringList());
 }
-
-
 
 QString MainWindow::getDialogFindText()
 {
@@ -602,10 +639,16 @@ void MainWindow::proc_action_office_open_trigger()
     proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_YES, CStringPub::emptyStringList());
 }
 
-void MainWindow::proc_menu_document_recent_trigger(QAction *action)
+void MainWindow::proc_menu_document_open_recent_trigger(QAction *action)
 {
-    QStringList autolist;
-    autolist.append(action->iconText());
-    debugApp() << "actionname:" << action->iconText();
+    QStringList autolist = CStringPub::actionNameList(action);
+    CHECKSIZEZERORETURN(autolist);
     proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_NO, autolist);
+}
+
+void MainWindow::proc_menu_document_search_recent_trigger(QAction *action)
+{
+    QStringList autolist = CStringPub::actionNameList(action);
+    CHECKSIZEZERORETURN(autolist);
+    proc_action_office_search_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_NO, autolist);
 }
