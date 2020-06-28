@@ -34,7 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     initVars();
     initUiOther();
 
-
+    readHistorySetting();
+    addMenuCodeFormatRecent();
 }
 
 MainWindow::~MainWindow()
@@ -86,17 +87,38 @@ void MainWindow::initVars()
 
 void MainWindow::initUiOther()
 {
-//    this->setWindowIcon();
+    //    this->setWindowIcon();
 }
 
 void MainWindow::readHistorySetting()
 {
-    CUIPub::readHistorySettings(m_organization,m_application);
+    //    CUIPub::readHistorySettings(m_organization,m_application);
+    QSettings m_settings(m_organization,m_application);
+    //    ui->comboBox->addItems(m_settings.value("ComBoxIPList").toStringList());
+    //    ComBoxIPList = m_settings.value("ComBoxIPList").toStringList();
+    //    ui->comboBox->setEditText(m_settings.value("curkey").toString());
+    //    curmodeldir = m_settings.value("curmodeldir").toString();
+    //    //    show_cmdlist.clear();
+    recentfiles = m_settings.value("recentfiles").toStringList();
+
+    //    Var2Map(m_settings, "map_showcmd", map_showcmd);
+    //    Var2Map(m_settings, "map_commonuselist", map_commonuselist);
+
 }
 
 void MainWindow::writeHistorySetting()
 {
-    CUIPub::writeCurrentSettings(m_organization,m_application);
+    //    CUIPub::writeCurrentSettings(m_organization,m_application);
+    //    CUIPub::readHistorySettings(m_organization,m_application);
+    QSettings m_settings(m_organization,m_application);
+    //    ui->comboBox->addItems(m_settings.value("ComBoxIPList").toStringList());
+    //    ComBoxIPList = m_settings.value("ComBoxIPList").toStringList();
+    //    ui->comboBox->setEditText(m_settings.value("curkey").toString());
+    //    curmodeldir = m_settings.value("curmodeldir").toString();
+    //    //    show_cmdlist.clear();
+    m_settings.setValue("recentfiles",recentfiles);
+    //    Var2Map(m_settings, "map_showcmd", map_showcmd);
+    //    Var2Map(m_settings, "map_commonuselist", map_commonuselist);
 }
 
 
@@ -170,8 +192,8 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     {
         /*打开一个dialog对话框，选择一个文件*/
         QStringList openfiles = QFileDialog::getOpenFileNames(nullptr, "请选择格式化的文件"
-                , openFilePathRecent
-                , CStringPub::getOpenFileNamesFilter(nameFilters, SIGNFENHAO) + SIGNFENHAO + "*.*");
+                                                              , openFilePathRecent
+                                                              , CStringPub::getOpenFileNamesFilter(nameFilters, SIGNFENHAO) + SIGNFENHAO + "*.*");
         if(openfiles.isEmpty())
         {
             return;
@@ -246,6 +268,8 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     default:
         break;
     }
+
+    writeHistorySetting();
 
 }
 
@@ -448,7 +472,7 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
     QString dbName;
     QString userName;
     QString password;
-//    QSqlDatabase dbconn;
+    //    QSqlDatabase dbconn;
 
     hostName = "localhost";   // 主机名
     dbName = "alldb";   // 数据库名称
