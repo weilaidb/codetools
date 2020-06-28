@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
 #include "version.h"
 #include "filepub.h"
 #include "basetypepub.h"
@@ -65,6 +66,8 @@ private:
 
     QString m_organization;
     QString m_application;
+
+    QSettings *m_pSettings;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
