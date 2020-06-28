@@ -78,6 +78,7 @@ void MainWindow::initVars()
 {
     openDirPathRecent = "/";
     openFilePathRecent = "/";
+    openWordFilePathRecent = "/";
     logAstyleName = "astyle.log";
     cfgAstyleName = "astyle.conf";
     cfgAstyleNameOrg = cfgAstyleName + ".org";
@@ -481,7 +482,7 @@ void MainWindow::proc_action_office_open_trigger()
 {
     //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
     QString filter = ";*.doc;*.docx;";
-    QStringList list = CFilePub::getOpenDiagFiles("/",filter);
+    QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
     if(list.size() == 0)
     {
         return;
@@ -490,6 +491,7 @@ void MainWindow::proc_action_office_open_trigger()
     COfficePub *pObjOffice = new COfficePub();
     ui->textBrowser->setText(pObjOffice->readWord(list.at(0)));
 
+    showStatus("打开文档成功!" + list.at(0));
 }
 
 
@@ -497,7 +499,7 @@ void MainWindow::proc_action_office_search_trigger()
 {
     //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
     QString filter = ";*.doc;*.docx;";
-    QStringList list = CFilePub::getOpenDiagFiles("/",filter);
+    QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
     if(list.size() == 0)
     {
         return;

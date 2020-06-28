@@ -69,6 +69,8 @@ private:
     QString m_application;
 
     QSettings *m_pSettings;
+
+    QString openWordFilePathRecent;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
