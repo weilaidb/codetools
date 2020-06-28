@@ -85,3 +85,9 @@ QString CStringPub::getOpenFileNamesFilter(QStringList filters, QString sign)
 }
 
 
+QStringList CStringPub::emptyStringList()
+{
+    QStringList list;
+    list.clear();
+    return list;
+}

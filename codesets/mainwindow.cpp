@@ -60,7 +60,7 @@ void MainWindow::initactionSets()
     QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
-    QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_codeFormat_Auto_trigger(QAction *)));
+    QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_codeFormat_Recent_trigger(QAction *)));
 
     //mysql
     QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
@@ -69,6 +69,7 @@ void MainWindow::initactionSets()
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
     QObject::connect(ui->action_office_search, SIGNAL(triggered()), this, SLOT(proc_action_office_search_trigger()));
+    QObject::connect(ui->menu_document_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_recent_trigger(QAction *)));
 
 }
 
@@ -124,7 +125,7 @@ void MainWindow::writeHistorySetting()
 }
 
 
-void MainWindow::proc_action_codeFormat_Auto_trigger(QAction *action)
+void MainWindow::proc_menu_codeFormat_Recent_trigger(QAction *action)
 {
     QStringList autolist;
     autolist.append(action->iconText());
@@ -490,14 +491,26 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
 }
 
 
-void MainWindow::proc_action_office_open_trigger()
+void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString openRecent,quint8 openDiagFlag, QStringList openfilelist)
 {
-    //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
-    QString filter = ";*.doc;*.docx;";
-    QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
-    if(list.size() == 0)
+    QStringList list;
+    switch (openDiagFlag) {
+    case OPENTYPE_YES:
     {
-        return;
+        list = CFilePub::getOpenDiagFilesRecent(openRecent,filter);
+        if(list.size() == 0)
+        {
+            return;
+        }
+    }
+        break;
+    case OPENTYPE_NO:
+    {
+        list.append(openfilelist);
+    }
+        break;
+    default:
+        break;
     }
 
     COfficePub *pObjOffice = new COfficePub();
@@ -510,8 +523,7 @@ void MainWindow::proc_action_office_open_trigger()
 void MainWindow::proc_action_office_search_trigger()
 {
     QString findtext = getDialogFindText();
-    //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
-    QString filter = ";*.doc;*.docx;";
+    QString filter = FILTERWORD;
     QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
     if(list.size() == 0)
     {
@@ -578,8 +590,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void MainWindow::updateRecent(QStringList list, QString name, QMenu *pMenu)
+void MainWindow::updateRecent(QStringList &list, QString name, QMenu *pMenu)
 {
     list.append(name);
     addMenuRecent(list,pMenu);
+}
+
+
+void MainWindow::proc_action_office_open_trigger()
+{
+    proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_YES, CStringPub::emptyStringList());
+}
+
+void MainWindow::proc_menu_document_recent_trigger(QAction *action)
+{
+    QStringList autolist;
+    autolist.append(action->iconText());
+    debugApp() << "actionname:" << action->iconText();
+    proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_NO, autolist);
 }

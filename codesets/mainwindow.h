@@ -44,7 +44,7 @@ private:
     void addMenuRecent(QStringList recent, QMenu *pMenu);
     void addMenuCodeFormatRecent();
     void addMenuDocumentRecent();
-    void updateRecent(QStringList list, QString name, QMenu *pMenu);
+    void updateRecent(QStringList &list, QString name, QMenu *pMenu);
     //获取对话框输入的文字
     QString getDialogFindText();
     void setLeftTextEdit(QString str);
@@ -60,6 +60,13 @@ public:
         TYPE_FILES_NOUI,
         TYPE_DIR_NOUI,
     };
+
+    enum{
+        OPENTYPE_YES,
+        OPENTYPE_NO,
+    };
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -88,7 +95,7 @@ private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
     void proc_action_codeFormat_Pub_trigger(int openType, QStringList autolist);
-    void proc_action_codeFormat_Auto_trigger(QAction *action);
+    void proc_menu_codeFormat_Recent_trigger(QAction *action);
     void proc_action_codeFormat_Edit_Config_trigger();
     void proc_action_codeFormat_Save_Config_trigger();
     void proc_action_codeFormat_Del_Config_trigger();
@@ -97,8 +104,10 @@ private slots:
     //mysql
     void proc_action_mysql_testdatabase_trigger();
     //office
+    void proc_action_office_open_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
     void proc_action_office_open_trigger();
     void proc_action_office_search_trigger();
+    void proc_menu_document_recent_trigger(QAction *action);
 
 
 };

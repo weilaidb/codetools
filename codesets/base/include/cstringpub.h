@@ -14,6 +14,7 @@ public:
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
     static QString getOpenFileNamesFilter(QStringList filters, QString sign);
+    static QStringList emptyStringList();
 };
 
 #endif // CSTRINGPUB_H
