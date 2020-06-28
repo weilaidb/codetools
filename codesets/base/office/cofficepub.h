@@ -25,6 +25,10 @@ public:
     void SaveAs(QString newFilePath);
 
 
+    //word
+    void testWord();
+    QString readWord(QString filepath);
+
 private:
     //文档打开控件
     QAxWidget* officeContent;

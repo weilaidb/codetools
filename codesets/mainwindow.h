@@ -83,6 +83,7 @@ private slots:
     void proc_action_mysql_testdatabase_trigger();
     //office
     void proc_action_office_open_trigger();
+    void proc_action_office_search_trigger();
 
 
 };

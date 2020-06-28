@@ -69,6 +69,7 @@ void MainWindow::actionSets()
 
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
+    QObject::connect(ui->action_office_search, SIGNAL(triggered()), this, SLOT(proc_action_office_search_trigger()));
 
 }
 
@@ -478,7 +479,8 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
 
 void MainWindow::proc_action_office_open_trigger()
 {
-    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
+    //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
+    QString filter = ";*.doc;*.docx;";
     QStringList list = CFilePub::getOpenDiagFiles("/",filter);
     if(list.size() == 0)
     {
@@ -486,6 +488,23 @@ void MainWindow::proc_action_office_open_trigger()
     }
 
     COfficePub *pObjOffice = new COfficePub();
-    pObjOffice->openFile(list.at(0));
+    ui->textBrowser->setText(pObjOffice->readWord(list.at(0)));
 
 }
+
+
+void MainWindow::proc_action_office_search_trigger()
+{
+    //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
+    QString filter = ";*.doc;*.docx;";
+    QStringList list = CFilePub::getOpenDiagFiles("/",filter);
+    if(list.size() == 0)
+    {
+        return;
+    }
+
+    COfficePub *pObjOffice = new COfficePub();
+    ui->textBrowser->setText(pObjOffice->readWord(list.at(0)));
+}
+
+
