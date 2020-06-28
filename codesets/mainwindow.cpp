@@ -101,21 +101,26 @@ void MainWindow::readSetting()
     addMenuDocumentRecent();
 }
 
-void MainWindow::readHistorySetting()
+void MainWindow::pubHistorySetting(int type)
 {
-    quint8 ucType = CUIPub::TYPE_READ;
+    quint8 ucType = type;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
+    CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
+    CUIPub::procString(m_pSettings, BINDSTRWORDS(openDirPathRecent), ucType);
+    CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
+}
+
+void MainWindow::readHistorySetting()
+{
+    pubHistorySetting(CUIPub::TYPE_READ);
 }
 
 
 void MainWindow::writeHistorySetting()
 {
-    quint8 ucType = CUIPub::TYPE_WRITE;
-    m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
+    pubHistorySetting(CUIPub::TYPE_WRITE);
 }
 
 

@@ -28,6 +28,7 @@ private:
     void initVars();
     void initUiOther();
     void readSetting();
+    void pubHistorySetting(int type);
     void readHistorySetting();
     void writeHistorySetting();
     WORD32 getAstyleFmt(QStringList filelist);
