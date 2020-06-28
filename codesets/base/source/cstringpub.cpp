@@ -36,6 +36,20 @@ QStringList CStringPub::stringSplit(const QString str , const char sign)
     return  str.split(sign);
 }
 
+QString CStringPub::stringSplitFindText(const QString str , const char sign, QString findtext)
+{
+    QString result("");
+    QStringList list = stringSplit(str, sign);
+    foreach (QString item, list) {
+        if(!item.contains(findtext))
+        {
+            continue;
+        }
+        result += item + sign;
+    }
+    return result;
+}
+
 QStringList CStringPub::stringUniqueSort(QStringList lists)
 {
     lists.removeDuplicates();

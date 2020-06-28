@@ -9,6 +9,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
+namespace Ui { class CDialogAskText; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -38,7 +39,11 @@ private:
     void showTextBrowerAppend(QString msg);
     void getNameFilter();
     void addMenuCodeFormatRecent();
-
+    QString getWordFindText();
+    void setLeftTextEdit(QString str);
+    void clearLeftTextEdit();
+    void setRightTextEdit(QString str);
+    void clearRightTextEdit();
 public:
     enum{
         TYPE_FILE,

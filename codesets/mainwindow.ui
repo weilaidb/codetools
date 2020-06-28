@@ -83,8 +83,14 @@
     <property name="title">
      <string>文档</string>
     </property>
+    <widget class="QMenu" name="menu_document_recent">
+     <property name="title">
+      <string>最近打开</string>
+     </property>
+    </widget>
     <addaction name="action_office_open"/>
     <addaction name="action_office_search"/>
+    <addaction name="menu_document_recent"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -156,6 +162,11 @@
   <action name="action_office_search">
    <property name="text">
     <string>查找</string>
+   </property>
+  </action>
+  <action name="actionfd_2">
+   <property name="text">
+    <string>fd</string>
    </property>
   </action>
  </widget>

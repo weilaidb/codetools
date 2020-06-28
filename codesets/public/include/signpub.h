@@ -9,5 +9,6 @@
 
 
 #define SIGNENTERS '\n'
+#define SIGNENTERSHUICHE '\r'
 
 #endif // SIGNPUB_H

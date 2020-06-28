@@ -32,6 +32,7 @@ SOURCES += \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
     base/source/cuipub.cpp \
+    cdialogasktext.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -47,6 +48,7 @@ HEADERS += \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \
     base/office/cofficepub.h \
+    cdialogasktext.h \
     mainwindow.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
@@ -57,6 +59,7 @@ HEADERS += \
     version.h
 
 FORMS += \
+    cdialogasktext.ui \
     mainwindow.ui
 
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \

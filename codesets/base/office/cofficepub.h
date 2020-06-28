@@ -13,6 +13,7 @@ class COfficePub
 {
 public:
     COfficePub();
+    COfficePub(QString text);
     ~COfficePub();
 public:
     //打开文件  ;*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;
@@ -28,12 +29,18 @@ public:
     //word
     void testWord();
     QString readWord(QString filepath);
+    QString readWordFindText(QString filepath);
 
 private:
     //文档打开控件
     QAxWidget* officeContent;
     //当前打开文件的路径
     QString currentFilePath;
+    //查找内容
+    QString findtext;
+    //默认查找word内容
+    QString filepath_word_default;
+
 
 };
 

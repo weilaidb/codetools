@@ -1,10 +1,20 @@
 #include "cofficepub.h"
 #include "cuipub.h"
 #include "debugApp.h"
+#include "cstringpub.h"
+#include "signpub.h"
 
 COfficePub::COfficePub()
 {
     officeContent = nullptr;
+    filepath_word_default = "D:\\test.docx";
+}
+
+COfficePub::COfficePub(QString text)
+{
+    officeContent = nullptr;
+    filepath_word_default = "D:\\test.docx";
+    findtext = text.trimmed();
 }
 
 COfficePub::~COfficePub()
@@ -135,7 +145,7 @@ QString COfficePub::readWord(QString filepath)
     QString docx_text_info;
     if(filepath.trimmed().isEmpty())
     {
-        filepath=("D:\\test.docx");
+        filepath=(filepath_word_default);
     }
     QAxWidget *m_word = new QAxWidget("Word.Application");
     m_word->setProperty("Visible",false);
@@ -156,6 +166,35 @@ QString COfficePub::readWord(QString filepath)
     delete m_word;
 
     return docx_text_info;
+}
+
+QString COfficePub::readWordFindText(QString filepath)
+{
+    QString docx_text_info;
+    if(filepath.trimmed().isEmpty())
+    {
+        filepath=(filepath_word_default);
+    }
+
+    QAxWidget *m_word = new QAxWidget("Word.Application");
+    m_word->setProperty("Visible",false);
+    QAxObject *m_document = m_word->querySubObject("Documents");
+    QAxObject *m_docx = m_document->querySubObject("Open(const QString&)",filepath);
+    QAxObject *m_pRange;
+    m_pRange=m_docx->querySubObject("Range()");
+    docx_text_info=m_pRange->property("Text").toString();
+    delete m_pRange;
+    //    debugApp()<<docx_text_info << endl;
+    //m_docx->dynamicCall("SaveAs(const QString&)", filepath);
+    //m_docx->dynamicCall("Save()");
+    m_docx->dynamicCall("Close()");
+    delete m_docx;
+    m_document->dynamicCall("Close()");
+    delete m_document;
+    m_word->clear();
+    delete m_word;
+
+    return CStringPub::stringSplitFindText(docx_text_info, SIGNENTERSHUICHE, findtext);
 }
 
 

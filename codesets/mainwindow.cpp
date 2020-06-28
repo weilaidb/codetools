@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "ui_cdialogasktext.h"
 #include "astyle_main.h"
 #include "debugApp.h"
 #include "basetypepub.h"
@@ -497,6 +498,7 @@ void MainWindow::proc_action_office_open_trigger()
 
 void MainWindow::proc_action_office_search_trigger()
 {
+    QString findtext = getWordFindText();
     //    QString filter = ";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*";
     QString filter = ";*.doc;*.docx;";
     QStringList list = CFilePub::getOpenDiagFilesRecent(openWordFilePathRecent,filter);
@@ -505,8 +507,55 @@ void MainWindow::proc_action_office_search_trigger()
         return;
     }
 
-    COfficePub *pObjOffice = new COfficePub();
-    ui->textBrowser->setText(pObjOffice->readWord(list.at(0)));
+    COfficePub *pObjOffice = new COfficePub(findtext);
+    setLeftTextEdit(findtext);
+    setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
+    showStatus("查找文档结束!" + list.at(0));
 }
 
+
+
+QString MainWindow::getWordFindText()
+{
+    QString result("");
+    //模态对话框，动态创建，用过后删除
+    Ui::CDialogAskText model;
+    QDialog *pDialog =  new QDialog(this);
+    model.setupUi(pDialog);
+
+
+    Qt::WindowFlags flags=pDialog->windowFlags();
+    pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
+    int ret=pDialog->exec () ;// 以模态方式显示对话框
+    if (ret==QDialog::Accepted)
+    { //OK按钮被按下，获取对话框上的输入，设置行数和列数
+        result = model.textEdit->toPlainText();
+    }
+    delete pDialog;
+
+    debugApp() << "Word Find Text:" << result;
+
+    return result;
+}
+
+
+void MainWindow::setLeftTextEdit(QString str)
+{
+    ui->textEdit->setText(str);
+}
+
+void MainWindow::clearLeftTextEdit()
+{
+    ui->textEdit->setText("");
+}
+
+void MainWindow::setRightTextEdit(QString str)
+{
+    ui->textBrowser->setText(str);
+}
+
+void MainWindow::clearRightTextEdit()
+{
+    ui->textBrowser->setText("");
+}
 
