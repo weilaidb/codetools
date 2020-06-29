@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QMap>
 #include <QMenu>
+#include <QProgressBar>
 
 class CUIPub
 {
@@ -27,6 +28,8 @@ public:
     static int deskWidth();
     static int deskHeigth();
     static void widgetXYsetDesktop_center(QWidget *widget, int width, int height);
+    static void progressBar(QProgressBar *pProgressBar, int current, int max);
+
 
 
 public:

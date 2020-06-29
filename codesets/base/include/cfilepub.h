@@ -25,6 +25,8 @@ public:
 //file dialog
     static QStringList getOpenDiagFiles(QString &openFilePathRecent, QString filter);
     static QStringList getOpenDiagFilesRecent(QString &openFilePathRecent, QString filter);
+    static QString getExistDir(QString tips, QString &recent);
+    static QStringList getExistDirAllFiles(QString tips, QString &recent, QStringList &recentlist, QStringList nameFilters);
 };
 
 #endif // CFILEPUB_H

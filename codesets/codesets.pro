@@ -68,6 +68,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/msgtips/ \
     base/mysql/ \
     base/office/ \
+    base/dialog/ \
 
 
 # Default rules for deployment.

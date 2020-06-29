@@ -2,6 +2,7 @@
 
 #include <QDesktopWidget>
 #include <QApplication>
+#include <QProgressBar>
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
 
@@ -175,5 +176,14 @@ void CUIPub::widgetXYsetDesktop_center(QWidget *widget, int width, int height)
     int wd=desk->width();
     int ht=desk->height();
     widget->move((wd - width/2)/2,(ht-height/2)/2);
+}
+
+void CUIPub::progressBar(QProgressBar *pProgressBar, int current, int max)
+{
+    pProgressBar->setOrientation(Qt::Horizontal);  // 水平方向
+    pProgressBar->setMinimum(0);  // 最小值
+    pProgressBar->setMaximum(100);  // 最大值
+    pProgressBar->setValue(current*100/max);  // 当前进度
+    pProgressBar->show();
 }
 

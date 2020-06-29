@@ -15,12 +15,14 @@
 #include "csqlpub.h"
 #include "cofficepub.h"
 #include "expresspub.h"
+#include "cdialogpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QProcess>
+#include <QProgressBar>
 
 
 extern int AyStyleMain(int argc, char** argv);
@@ -68,7 +70,8 @@ void MainWindow::initactionSets()
 
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
-    QObject::connect(ui->action_office_search, SIGNAL(triggered()), this, SLOT(proc_action_office_search_trigger()));
+    QObject::connect(ui->action_office_search_file, SIGNAL(triggered()), this, SLOT(proc_action_office_search_file_trigger()));
+    QObject::connect(ui->action_office_search_dir, SIGNAL(triggered()), this, SLOT(proc_action_office_search_dir_trigger()));
     QObject::connect(ui->menu_document_open_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_open_recent_trigger(QAction *)));
     QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent_trigger(QAction *)));
 
@@ -220,18 +223,11 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
     {
         /*打开一个dialog对话框，选择一个文件夹*/
         //文件夹路径
-        QString openDirPath = QFileDialog::getExistingDirectory(
-                    this, "请选择格式化的文件夹",
-                    openDirPathRecent);
-        if (openDirPath.isEmpty())
-        {
-            return;
-        }
-        openDirPath += "/";
-        openDirPathRecent = openDirPath;
-        debugApp() << "Open Dir:" << openDirPath;
-        recentfiles_codeformat.append(openDirPath);
-        QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
+        QStringList openfiles =CFilePub::getExistDirAllFiles("请选择格式化的文件夹",
+                                openDirPathRecent,
+                                recentfiles_codeformat,
+                                nameFilters
+                                );
         procAstyleInstance(openfiles);
     }
         break;
@@ -497,22 +493,30 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
 
 }
 
-QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist)
+QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist)
 {
     QStringList list;
     switch (openDiagFlag) {
-    case OPENTYPE_YES:
+    case OPENTYPE_YES_FILE:
     {
         list = CFilePub::getOpenDiagFilesRecent(openRecent,filter);
         if(list.size() == 0)
         {
             return CStringPub::emptyStringList();
         }
+        recentfiles.append(list.at(0));
+    }
+        break;
+
+    case OPENTYPE_YES_DIR:
+    {
+        list = CFilePub::getExistDirAllFiles(STRING_PLEASE_SELECT_DIR, openRecent, recentfiles, filterlist);
     }
         break;
     case OPENTYPE_NO:
     {
         list.append(openfilelist);
+        recentfiles.append(openfilelist);
     }
         break;
     default:
@@ -530,22 +534,40 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
     {
         COfficePub *pObjOffice = new COfficePub();
         setRightTextEdit(pObjOffice->readWord(list.at(0)));
-        updateRecent(recentfiles_document, list.at(0), ui->menu_document_open_recent);
         showStatus("打开文档成功!" + list.at(0));
     }
         break;
     case ACTIONTYPE_SEARCH:
     {
         COfficePub *pObjOffice = new COfficePub(findtext);
-        setLeftTextEdit(findtext);
         setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
-        updateRecent(recentfiles_document, list.at(0), ui->menu_document_search_recent);
+        setLeftTextEdit(findtext);
+        showStatus("查找文档结束!" + list.at(0));
+    }
+        break;
+    case ACTIONTYPE_SEARCH_ALLFILES:
+    {
+        QProgressBar *pProgressBar = new QProgressBar(this);
+        QString result("");
+        COfficePub *pObjOffice = new COfficePub(findtext);
+        int cur = 0;
+        foreach (QString item, list) {
+            debugApp() << "[OpenFile]" + item ;
+            result+="[OpenFile]" + item + SIGNENTER;
+            result+=pObjOffice->readWordFindText(item) + SIGNENTER;
+            cur++;
+            CUIPub::progressBar(pProgressBar,cur, list.size());
+        }
+        delete  pProgressBar;
+        setRightTextEdit(result);
+        setLeftTextEdit(findtext);
         showStatus("查找文档结束!" + list.at(0));
     }
         break;
     default:
         break;
     }
+    updateRecent(recentfiles_document,  ui->menu_document_search_recent);
 }
 
 /**
@@ -555,29 +577,49 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
  * @param openDiagFlag 是否打开对话框
  * @param openfilelist
  */
-void MainWindow::proc_action_office_open_pub_trigger(QString filter, QString &openRecent,quint8 openDiagFlag, QStringList openfilelist)
+void MainWindow::proc_action_office_open_pub_trigger(QString filter,QStringList filterlist,  QString &openRecent,quint8 openDiagFlag, QStringList openfilelist)
 {
-    QStringList list = proc_action_office_auto_pub_trigger(filter, openRecent, openDiagFlag, openfilelist);
+    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
     CHECKSIZEZERORETURN(list);
     proc_action_office_action_pub_trigger(ACTIONTYPE_OPEN, list, CStringPub::emptyString());
 }
 
 
-void MainWindow::proc_action_office_search_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
+void MainWindow::proc_action_office_search_file_pub_trigger(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
 {
-    QString findtext = getDialogFindText();
-    QStringList list = proc_action_office_auto_pub_trigger(filter, openRecent, openDiagFlag, openfilelist);
+    QString findtext;
+    CHECKFALSERETURN(getDialogFindText(findtext));
+    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
     CHECKSIZEZERORETURN(list);
     proc_action_office_action_pub_trigger(ACTIONTYPE_SEARCH, list, findtext);
 }
 
-void MainWindow::proc_action_office_search_trigger()
+void MainWindow::proc_action_office_search_dir_pub_trigger(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
 {
-    proc_action_office_search_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_YES, CStringPub::emptyStringList());
+    QString findtext;
+    CHECKFALSERETURN(getDialogFindText(findtext));
+    CHECKEMPTY_TIPS_RETURN(findtext,showStatus, STRING_INPUT_FIND_KEY_EMPTY);
+    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
+    CHECKSIZEZERO_TIPS_RETURN(list,showStatus, STRING_RES_FIND_FILES_EMPTY);
+    proc_action_office_action_pub_trigger(ACTIONTYPE_SEARCH_ALLFILES, list, findtext);
 }
 
-QString MainWindow::getDialogFindText()
+
+void MainWindow::proc_action_office_search_file_trigger()
 {
+    proc_action_office_search_file_pub_trigger(FILTERWORD, CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
+}
+
+void MainWindow::proc_action_office_search_dir_trigger()
+{
+    proc_action_office_search_dir_pub_trigger(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_YES_DIR, CStringPub::emptyStringList());
+}
+
+
+
+quint8 MainWindow::getDialogFindText(QString &findtext)
+{
+    quint8 ucresult = false;
     QString result("");
     //模态对话框，动态创建，用过后删除
     Ui::CDialogAskText model;
@@ -590,13 +632,14 @@ QString MainWindow::getDialogFindText()
     int ret=pDialog->exec () ;// 以模态方式显示对话框
     if (ret==QDialog::Accepted)
     { //OK按钮被按下，获取对话框上的输入，设置行数和列数
-        result = model.textEdit->toPlainText();
+        findtext = model.textEdit->toPlainText();
+        ucresult = true;
     }
     delete pDialog;
 
     debugApp() << "Word Find Text:" << result;
 
-    return result;
+    return ucresult;
 }
 
 
@@ -627,7 +670,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void MainWindow::updateRecent(QStringList &list, QString name, QMenu *pMenu)
+void MainWindow::updateRecent(QStringList &list, QMenu *pMenu)
+{
+    addMenuRecent(list,pMenu);
+}
+
+void MainWindow::updateRecentAppend(QStringList &list, QString name, QMenu *pMenu)
 {
     list.append(name);
     addMenuRecent(list,pMenu);
@@ -636,19 +684,19 @@ void MainWindow::updateRecent(QStringList &list, QString name, QMenu *pMenu)
 
 void MainWindow::proc_action_office_open_trigger()
 {
-    proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_YES, CStringPub::emptyStringList());
+    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
 }
 
 void MainWindow::proc_menu_document_open_recent_trigger(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_office_open_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_NO, autolist);
+    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_NO, autolist);
 }
 
 void MainWindow::proc_menu_document_search_recent_trigger(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_office_search_pub_trigger(FILTERWORD, openWordFilePathRecent, OPENTYPE_NO, autolist);
+    proc_action_office_search_file_pub_trigger(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO, autolist);
 }

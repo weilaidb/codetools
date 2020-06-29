@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include "debugApp.h"
+#include "cstringpub.h"
 
 CFilePub::CFilePub()
 {
@@ -215,5 +216,35 @@ QStringList CFilePub::getOpenDiagFilesRecent(QString &openFilePathRecent,QString
     openFilePathRecent = openfiles.at(0);
     debugApp() << "Open Files:" << openfiles;
     return  openfiles;
+}
+
+
+QString CFilePub::getExistDir(QString tips, QString &recent)
+{
+    QString openDirPath = QFileDialog::getExistingDirectory(
+                nullptr, tips,
+                recent);
+    if (openDirPath.isEmpty())
+    {
+        return CStringPub::emptyString();
+    }
+    recent = openDirPath;
+    openDirPath += "/";
+    return openDirPath;
+}
+
+
+QStringList CFilePub::getExistDirAllFiles(QString tips, QString &recent, QStringList &recentlist, QStringList nameFilters)
+{
+    QString  openDirPath = getExistDir(tips,recent);
+    if(openDirPath.trimmed().isEmpty())
+    {
+        return CStringPub::emptyStringList();
+    }
+    recent = openDirPath;
+    debugApp() << "Open Dir:" << openDirPath;
+    recentlist.append(openDirPath);
+    QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
+    return openfiles;
 }
 

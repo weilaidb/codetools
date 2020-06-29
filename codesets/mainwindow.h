@@ -45,9 +45,10 @@ private:
     void addMenuCodeFormatRecent();
     void addMenuDocumentOpenRecent();
     void addMenuDocumentSearchRecent();
-    void updateRecent(QStringList &list, QString name, QMenu *pMenu);
+    void updateRecent(QStringList &list, QMenu *pMenu);
+    void updateRecentAppend(QStringList &list, QString name, QMenu *pMenu);
     //获取对话框输入的文字
-    QString getDialogFindText();
+    quint8 getDialogFindText(QString &findtext);
     void setLeftTextEdit(QString str);
     void clearLeftTextEdit();
     void setRightTextEdit(QString str);
@@ -63,13 +64,15 @@ public:
     };
 
     enum{
-        OPENTYPE_YES,
+        OPENTYPE_YES_FILE,
+        OPENTYPE_YES_DIR,
         OPENTYPE_NO,
     };
 
     enum{
         ACTIONTYPE_OPEN,
         ACTIONTYPE_SEARCH,
+        ACTIONTYPE_SEARCH_ALLFILES,
     };
 
 
@@ -109,12 +112,14 @@ private slots:
     //mysql
     void proc_action_mysql_testdatabase_trigger();
     //office
-    QStringList proc_action_office_auto_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
-    void proc_action_office_open_pub_trigger(QString filter, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    QStringList proc_action_office_auto_pub_trigger(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist);
+    void proc_action_office_open_pub_trigger(QString filter, QStringList filterlist, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
     void proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext);
     void proc_action_office_open_trigger();
-    void proc_action_office_search_pub_trigger(QString filter, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
-    void proc_action_office_search_trigger();
+    void proc_action_office_search_file_pub_trigger(QString filter, QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    void proc_action_office_search_dir_pub_trigger(QString filter, QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist);
+    void proc_action_office_search_file_trigger();
+    void proc_action_office_search_dir_trigger();
     void proc_menu_document_open_recent_trigger(QAction *action);
     void proc_menu_document_search_recent_trigger(QAction *action);
 

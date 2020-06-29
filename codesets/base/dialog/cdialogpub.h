@@ -10,6 +10,7 @@ public:
     CDialogPub();
 //    explicit CDialogPub(QWidget *parent = 0);
 //    ~CDialogPub();
+
 private slots:
 private:
 

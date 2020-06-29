@@ -94,7 +94,8 @@
      </property>
     </widget>
     <addaction name="action_office_open"/>
-    <addaction name="action_office_search"/>
+    <addaction name="action_office_search_file"/>
+    <addaction name="action_office_search_dir"/>
     <addaction name="menu_document_open_recent"/>
     <addaction name="menu_document_search_recent"/>
    </widget>
@@ -165,9 +166,9 @@
     <string>打开</string>
    </property>
   </action>
-  <action name="action_office_search">
+  <action name="action_office_search_file">
    <property name="text">
-    <string>查找</string>
+    <string>查找文件</string>
    </property>
   </action>
   <action name="actionfd_2">
@@ -178,6 +179,11 @@
   <action name="action1">
    <property name="text">
     <string>1</string>
+   </property>
+  </action>
+  <action name="action_office_search_dir">
+   <property name="text">
+    <string>查找文件夹</string>
    </property>
   </action>
  </widget>

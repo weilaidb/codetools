@@ -12,4 +12,43 @@ do{  \
     } \
 }while(0)
 
+
+#define CHECKSIZEZERO_TIPS_RETURN(list, func, tips) \
+do{  \
+    if(0 == list.size()) \
+    { \
+        func(tips); \
+        return; \
+    } \
+}while(0)
+
+
+#define CHECKEMPTYRETURN(list) \
+do{  \
+    if(list.isEmpty()) \
+    { \
+        return; \
+    } \
+}while(0)
+
+#define CHECKEMPTY_TIPS_RETURN(list, func, tips) \
+do{  \
+    if(list.isEmpty()) \
+    { \
+        func(tips); \
+        return; \
+    } \
+}while(0)
+
+
+#define CHECKFALSERETURN(ret) \
+do{  \
+    if(false == ret) \
+    { \
+        return; \
+    } \
+}while(0)
+
+
+
 #endif // EXPRESSPUB_H

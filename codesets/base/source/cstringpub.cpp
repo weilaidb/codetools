@@ -8,6 +8,12 @@ CStringPub::CStringPub()
 
 }
 
+QStringList CStringPub::toStringListOnly(QString single)
+{
+    QStringList list;
+    list.append(single);
+    return list;
+}
 
 QStringList CStringPub::toStringList(const QList<QByteArray> list)
 {
@@ -103,4 +109,27 @@ QStringList CStringPub::actionNameList(QAction *action)
     autolist.append(action->iconText());
     debugApp() << "actionname:" << action->iconText();
     return autolist;
+}
+
+
+QStringList CStringPub::languageNameFilter()
+{
+    QStringList list;
+    list << "*.c";
+    list << "*.cpp";
+    list << "*.cxx";
+    list << "*.h";
+    list << "*.hpp";
+    list << "*.java";
+
+    return list;
+}
+
+QStringList CStringPub::wordNameFilter()
+{
+    QStringList list;
+    list << "*.doc";
+    list << "*.docx";
+
+    return list;
 }
