@@ -342,7 +342,10 @@ void MainWindow::procAstyleInstance(QStringList filelist)
 void MainWindow::showStatus(QString msg)
 {
     ui->statusbar->showMessage(msg);
-    showStatusTimer(msg);
+    if(1)
+    {
+        showStatusTimer(msg);
+    }
 }
 
 void MainWindow::showStatusTimer(QString msg)
@@ -532,10 +535,18 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
         list = CFilePub::getExistDirAllFiles(STRING_PLEASE_SELECT_DIR, openRecent, recentfiles, filterlist);
     }
         break;
-    case OPENTYPE_NO:
+    case OPENTYPE_NO_FILE:
     {
         list.append(openfilelist);
         recentfiles.append(openfilelist);
+    }
+        break;
+    case OPENTYPE_NO_DIR:
+    {
+//        list.append(openfilelist);
+//        CHECKSIZEZERORETURN(openfilelist);
+        list = CFilePub::getFileAllAbsoluteNames(filterlist, openfilelist.at(0));
+//        recentfiles.append(openfilelist);
     }
         break;
     default:
@@ -548,20 +559,35 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
 {
+    QString filename;
+    int ret =0;
     switch (ucActionType) {
     case ACTIONTYPE_OPEN:
     {
+        filename = list.at(0);
+
+        ret = CFilePub::isFile(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_DIR_NO_SUPPORT);
+
+        ret = CFilePub::fileExist(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+
         COfficePub *pObjOffice = new COfficePub();
-        setRightTextEdit(pObjOffice->readWord(list.at(0)));
-        showStatus("打开文档成功!" + list.at(0));
+        setRightTextEdit(pObjOffice->readWord(filename));
+        showStatus("打开文档成功!" + filename);
     }
         break;
     case ACTIONTYPE_SEARCH:
     {
+        filename = list.at(0);
+
+        ret = CFilePub::fileExist(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+
         COfficePub *pObjOffice = new COfficePub(findtext);
-        setRightTextEdit(pObjOffice->readWordFindText(list.at(0)));
+        setRightTextEdit(pObjOffice->readWordFindText(filename));
         setLeftTextEdit(findtext);
-        showStatus("查找文档结束!" + list.at(0));
+        showStatus("查找文档结束!" + filename);
     }
         break;
     case ACTIONTYPE_SEARCH_ALLFILES:
@@ -570,11 +596,17 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
         QString result("");
         COfficePub *pObjOffice = new COfficePub(findtext);
         int cur = 0;
+        QString singres("");
         foreach (QString item, list) {
             qApp->processEvents();
+            singres = pObjOffice->readWordFindText(item);
+            if(singres.trimmed().isEmpty())
+            {
+                continue;
+            }
             debugApp() << "[OpenFile]" + item ;
             result+="[OpenFile]" + item + SIGNENTER;
-            result+=pObjOffice->readWordFindText(item) + SIGNENTER;
+            result+=singres + SIGNENTER;
             cur++;
             CUIPub::progressBar(pProgressBar,cur, list.size());
         }
@@ -658,7 +690,8 @@ quint8 MainWindow::getDialogFindText(QString &findtext)
     }
     delete pDialog;
 
-    debugApp() << "Word Find Text:" << result;
+    debugApp() << "Word Find Text:" << findtext;
+    setLeftTextEdit("Word Find Text:" + findtext);
 
     return ucresult;
 }
@@ -687,14 +720,22 @@ void MainWindow::proc_menu_document_open_recent_trigger(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_NO, autolist);
+    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
 }
 
 void MainWindow::proc_menu_document_search_recent_trigger(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_office_search_file_pub_trigger(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO, autolist);
+
+    if(CFilePub::isDir(action->iconText()))
+    {
+        proc_action_office_search_dir_pub_trigger(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_NO_DIR, autolist);
+    }
+    else
+    {
+        proc_action_office_search_file_pub_trigger(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
+    }
 }
 
 

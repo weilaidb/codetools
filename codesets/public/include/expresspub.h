@@ -49,6 +49,15 @@ do{  \
     } \
 }while(0)
 
+#define CHECKFALSE_TIPS_RETURN(ret, func, tips) \
+do{  \
+    if(false == ret) \
+    { \
+        func(tips); \
+        return; \
+    } \
+}while(0)
+
 
 
 #endif // EXPRESSPUB_H

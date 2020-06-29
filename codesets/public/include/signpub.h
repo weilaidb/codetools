@@ -22,4 +22,7 @@
 #define STRING_RES_FIND_FILES_EMPTY    ("未找到文件")
 #define STRING_INPUT_FIND_KEY_EMPTY    ("输入关键字为空")
 
+#define STRING_TIPS_FILE_NO_EXIST    ("文件不存在")
+#define STRING_TIPS_DIR_NO_SUPPORT    ("文件夹不支持")
+
 #endif // SIGNPUB_H

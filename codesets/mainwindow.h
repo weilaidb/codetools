@@ -66,7 +66,8 @@ public:
     enum{
         OPENTYPE_YES_FILE,
         OPENTYPE_YES_DIR,
-        OPENTYPE_NO,
+        OPENTYPE_NO_FILE,
+        OPENTYPE_NO_DIR,
     };
 
     enum{
