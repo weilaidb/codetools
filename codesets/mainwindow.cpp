@@ -47,6 +47,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::initDialog()
+{
+    //模态对话框，动态创建，用过后删除
+    pDialog =  new QDialog(this);
+    uiDialog = new Ui::CDialogAskText();
+    uiDialog->setupUi(pDialog);
+    connect(uiDialog->pushButton, SIGNAL(clicked()),this, SLOT(clearDialogText()));
+    Qt::WindowFlags flags=pDialog->windowFlags();
+    pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
+}
 
 void MainWindow::showVersion()
 {
@@ -674,21 +684,16 @@ quint8 MainWindow::getDialogFindText(QString &findtext)
 {
     quint8 ucresult = false;
     QString result("");
-    //模态对话框，动态创建，用过后删除
-    Ui::CDialogAskText model;
-    QDialog *pDialog =  new QDialog(this);
-    model.setupUi(pDialog);
 
-
-    Qt::WindowFlags flags=pDialog->windowFlags();
-    pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
+    initDialog();
     int ret=pDialog->exec () ;// 以模态方式显示对话框
     if (ret==QDialog::Accepted)
     { //OK按钮被按下，获取对话框上的输入，设置行数和列数
-        findtext = model.textEdit->toPlainText();
+        findtext = uiDialog->textEdit->toPlainText();
         ucresult = true;
     }
     delete pDialog;
+    delete uiDialog;
 
     debugApp() << "Word Find Text:" << findtext;
     setLeftTextEdit("Word Find Text:" + findtext);
@@ -745,4 +750,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     debugApp() << "closeEvent";
     writeHistorySetting();
     event->accept();
+}
+
+
+void MainWindow::clearDialogText()
+{
+    uiDialog->textEdit->clear();
 }

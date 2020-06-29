@@ -24,6 +24,7 @@ public:
 
 private:
     void showVersion();
+    void initDialog();
     void initactionSets();
     void initVars();
     void initUiOther();
@@ -80,6 +81,10 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    //模态对话框，动态创建，用过后删除
+    Ui::CDialogAskText *uiDialog;
+    QDialog *pDialog;
+
 private:
     QString openFilePathRecent;
     QString openDirPathRecent;
@@ -123,6 +128,9 @@ private slots:
     void proc_action_office_search_dir_trigger();
     void proc_menu_document_open_recent_trigger(QAction *action);
     void proc_menu_document_search_recent_trigger(QAction *action);
+
+    //dialog ask text
+    void clearDialogText();
 
 
 };
