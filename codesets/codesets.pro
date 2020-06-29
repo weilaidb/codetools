@@ -12,6 +12,21 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+#添加外部的引用头文件和库文件
+INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
+    public/include/ \
+    base/include/ \
+    base/msgtips/ \
+    base/mysql/ \
+    base/office/ \
+    base/dialog/ \
+    base/net/zeromq/ \
+    libs/libzmq-v141-4_3_2 \
+
+#$$PWD指当前路径， -l指定的文件去掉 .lib 以及 lib替换为l
+LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
+
+
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -27,6 +42,7 @@ SOURCES += \
     base/dialog/cdialogpub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
+    base/net/zeromq/cnetpub.cpp \
     base/office/cofficepub.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
@@ -47,8 +63,10 @@ HEADERS += \
     base/include/cuipub.h \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \
+    base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
     cdialogasktext.h \
+    libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
@@ -61,14 +79,6 @@ HEADERS += \
 FORMS += \
     cdialogasktext.ui \
     mainwindow.ui
-
-INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
-    public/include/ \
-    base/include/ \
-    base/msgtips/ \
-    base/mysql/ \
-    base/office/ \
-    base/dialog/ \
 
 
 # Default rules for deployment.
@@ -86,4 +96,8 @@ RC_FILE = \
 
 
 DISTFILES += \
-    images/myapp.rc
+    images/myapp.rc \
+    libs/libzmq-v141-4_3_2/libsodium.dll \
+    libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
+    libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
+    libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib

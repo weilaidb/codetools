@@ -16,6 +16,7 @@
 #include "cofficepub.h"
 #include "expresspub.h"
 #include "cdialogpub.h"
+#include "cnetpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -85,6 +86,9 @@ void MainWindow::initactionSets()
     QObject::connect(ui->action_office_search_dir, SIGNAL(triggered()), this, SLOT(proc_action_office_search_dir_trigger()));
     QObject::connect(ui->menu_document_open_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_open_recent_trigger(QAction *)));
     QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent_trigger(QAction *)));
+
+    //net
+    QObject::connect(ui->action_net_testcs, SIGNAL(triggered()), this, SLOT(proc_action_net_testcs_trigger()));
 
 }
 
@@ -764,3 +768,10 @@ void MainWindow::pasteDialogText()
     uiDialog->textEdit->setText(CUIPub::getClipBoardText());
 }
 
+
+
+
+void MainWindow::proc_action_net_testcs_trigger()
+{
+    CNetPub::startServer();
+}

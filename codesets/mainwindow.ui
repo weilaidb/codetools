@@ -99,9 +99,16 @@
     <addaction name="menu_document_open_recent"/>
     <addaction name="menu_document_search_recent"/>
    </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>网络</string>
+    </property>
+    <addaction name="action_net_testcs"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
+   <addaction name="menu_5"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -184,6 +191,11 @@
   <action name="action_office_search_dir">
    <property name="text">
     <string>查找文件夹</string>
+   </property>
+  </action>
+  <action name="action_net_testcs">
+   <property name="text">
+    <string>测试发送接收</string>
    </property>
   </action>
  </widget>

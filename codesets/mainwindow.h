@@ -133,6 +133,7 @@ private slots:
     void clearDialogText();
     void pasteDialogText();
 
-
+    //network
+    void proc_action_net_testcs_trigger();
 };
 #endif // MAINWINDOW_H
