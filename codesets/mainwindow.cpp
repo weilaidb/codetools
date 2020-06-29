@@ -53,7 +53,8 @@ void MainWindow::initDialog()
     pDialog =  new QDialog(this);
     uiDialog = new Ui::CDialogAskText();
     uiDialog->setupUi(pDialog);
-    connect(uiDialog->pushButton, SIGNAL(clicked()),this, SLOT(clearDialogText()));
+    connect(uiDialog->pushButton_clear, SIGNAL(clicked()),this, SLOT(clearDialogText()));
+    connect(uiDialog->pushButton_paste, SIGNAL(clicked()),this, SLOT(pasteDialogText()));
     Qt::WindowFlags flags=pDialog->windowFlags();
     pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
 }
@@ -757,3 +758,9 @@ void MainWindow::clearDialogText()
 {
     uiDialog->textEdit->clear();
 }
+
+void MainWindow::pasteDialogText()
+{
+    uiDialog->textEdit->setText(CUIPub::getClipBoardText());
+}
+

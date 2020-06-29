@@ -30,6 +30,10 @@ public:
     static void widgetXYsetDesktop_center(QWidget *widget, int width, int height);
     static void progressBar(QProgressBar *pProgressBar, int current, int max);
 
+    //剪切板
+    static QString getClipBoardText();
+    static void setClipBoardText(QString setdata);
+    static void paste();
 
 
 public:

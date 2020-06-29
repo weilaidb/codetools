@@ -3,6 +3,8 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QProgressBar>
+#include <QClipboard>
+#include <QMimeData>
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
 
@@ -45,7 +47,7 @@ void CUIPub::Map2Var(QSettings *pSetting,QString envkey,  QMap<QString, QStringL
 
 
 QString CUIPub::bindKey(QString &organization,
-                                 const QString &application)
+                        const QString &application)
 {
     return organization + application;
 }
@@ -109,7 +111,7 @@ void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringLis
  * @brief CUIPub::ReadHistorySettings
  */
 QSettings * CUIPub::readHistorySettings(QString &organization,
-                                 const QString &application)
+                                        const QString &application)
 {
     auto find_index = m_settingMap.find(bindKey(organization, application));
     if(find_index == m_settingMap.end())
@@ -125,7 +127,7 @@ QSettings * CUIPub::readHistorySettings(QString &organization,
  * @brief CUIPub::WriteCurrentSettings
  */
 QSettings * CUIPub::writeCurrentSettings(QString &organization,
-                                  const QString &application)
+                                         const QString &application)
 {
     auto find_index = m_settingMap.find(bindKey(organization, application));
     if(find_index == m_settingMap.end())
@@ -158,14 +160,14 @@ int CUIPub::deskWidth()
 {
     QDesktopWidget *desk=QApplication::desktop();
     int wd=desk->width();
-//    int ht=desk->height();
+    //    int ht=desk->height();
     return wd;
 }
 
 int CUIPub::deskHeigth()
 {
     QDesktopWidget *desk=QApplication::desktop();
-//    int wd=desk->width();
+    //    int wd=desk->width();
     int ht=desk->height();
     return ht;
 }
@@ -187,3 +189,33 @@ void CUIPub::progressBar(QProgressBar *pProgressBar, int current, int max)
     pProgressBar->show();
 }
 
+
+QString CUIPub::getClipBoardText()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    return  clipboard->text();
+}
+
+void CUIPub::setClipBoardText(QString setdata)
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(setdata);
+}
+
+void CUIPub::paste()
+{
+    const QClipboard *clipboard = QApplication::clipboard();
+    const QMimeData *mimeData = clipboard->mimeData();
+
+    if (mimeData->hasImage()) {
+//        setPixmap(qvariant_cast<QPixmap>(mimeData->imageData()));
+    } else if (mimeData->hasHtml()) {
+//        setText(mimeData->html());
+//        setTextFormat(Qt::RichText);
+    } else if (mimeData->hasText()) {
+//        setText(mimeData->text());
+//        setTextFormat(Qt::PlainText);
+    } else {
+//        setText(tr("Cannot display data"));
+    }
+}

@@ -86,6 +86,7 @@ void COfficePub::openFile(QString filePath)
 
 void COfficePub::closeFile(bool isSave /*=false*/)
 {
+    isSave = isSave;
     if (officeContent)
     {
         if (currentFilePath.endsWith(".ppt") || currentFilePath.endsWith(".pptx") ||currentFilePath.endsWith(".pptm"))
@@ -110,7 +111,7 @@ void COfficePub::Save()
 
 void COfficePub::SaveAs( QString newFilePath )
 {
-
+    newFilePath = newFilePath;
 }
 
 

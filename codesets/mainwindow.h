@@ -131,6 +131,7 @@ private slots:
 
     //dialog ask text
     void clearDialogText();
+    void pasteDialogText();
 
 
 };
