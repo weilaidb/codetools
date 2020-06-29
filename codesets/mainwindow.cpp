@@ -475,6 +475,25 @@ void MainWindow::addMenuDocumentSearchRecent()
     addMenuRecent(recentfiles_document, ui->menu_document_search_recent);
 }
 
+void MainWindow::setLeftTextEdit(QString str)
+{
+    ui->textEdit->setText(str);
+}
+
+void MainWindow::clearLeftTextEdit()
+{
+    ui->textEdit->setText("");
+}
+
+void MainWindow::setRightTextEdit(QString str)
+{
+    ui->textBrowser->setText(str);
+}
+
+void MainWindow::clearRightTextEdit()
+{
+    ui->textBrowser->setText("");
+}
 
 void MainWindow::proc_action_mysql_testdatabase_trigger()
 {
@@ -552,6 +571,7 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
         COfficePub *pObjOffice = new COfficePub(findtext);
         int cur = 0;
         foreach (QString item, list) {
+            qApp->processEvents();
             debugApp() << "[OpenFile]" + item ;
             result+="[OpenFile]" + item + SIGNENTER;
             result+=pObjOffice->readWordFindText(item) + SIGNENTER;
@@ -568,6 +588,7 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
         break;
     }
     updateRecent(recentfiles_document,  ui->menu_document_search_recent);
+    updateRecent(recentfiles_document,  ui->menu_document_open_recent);
 }
 
 /**
@@ -643,32 +664,7 @@ quint8 MainWindow::getDialogFindText(QString &findtext)
 }
 
 
-void MainWindow::setLeftTextEdit(QString str)
-{
-    ui->textEdit->setText(str);
-}
 
-void MainWindow::clearLeftTextEdit()
-{
-    ui->textEdit->setText("");
-}
-
-void MainWindow::setRightTextEdit(QString str)
-{
-    ui->textBrowser->setText(str);
-}
-
-void MainWindow::clearRightTextEdit()
-{
-    ui->textBrowser->setText("");
-}
-
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    debugApp() << "closeEvent";
-    writeHistorySetting();
-    event->accept();
-}
 
 void MainWindow::updateRecent(QStringList &list, QMenu *pMenu)
 {
@@ -699,4 +695,13 @@ void MainWindow::proc_menu_document_search_recent_trigger(QAction *action)
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
     proc_action_office_search_file_pub_trigger(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO, autolist);
+}
+
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    debugApp() << "closeEvent";
+    writeHistorySetting();
+    event->accept();
 }

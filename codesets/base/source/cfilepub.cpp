@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
+#include <qapplication.h>
 #include "debugApp.h"
 #include "cstringpub.h"
 
@@ -179,6 +180,7 @@ QFileInfoList CFilePub::getAllFileList(QStringList nameFilters, QString path)
 
     for(int i = 0; i != folder_list.size(); i++)
     {
+        qApp->processEvents();
         QString name = folder_list.at(i).absoluteFilePath();
         QFileInfoList child_file_list = getAllFileList(nameFilters, name);
         file_list.append(child_file_list);
