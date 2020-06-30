@@ -1,7 +1,8 @@
 #include "cthreadpub.h"
 #include "debugApp.h"
 
-CThreadPub::CThreadPub()
+CThreadPub::CThreadPub(): QThread(nullptr)
+  ,m_runCount(20)
 {
 
 }
@@ -48,13 +49,18 @@ void CThreadPub::run()
         emit progress(((float)count / m_runCount) * 100);
         emit message(QString("CThreadPub::run times:%1").arg(count));
         doSomething();
-        debugApp() << "thread runing:" << count;
+//        debugApp() << "thread runing:" << count;
         if(m_runCount == count)
         {
             break;
         }
     }
+
+//    debugApp() << "quit:" << count;
+//    exit();
+    quit();
 }
+
 
 void CThreadPub::doSomething()
 {

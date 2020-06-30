@@ -769,14 +769,11 @@ void MainWindow::pasteDialogText()
     uiDialog->textEdit->setText(CUIPub::getClipBoardText());
 }
 
-
-
-
-void MainWindow::proc_action_net_testcs_trigger()
+void MainWindow::create_thread_network()
 {
     //    CNetPub::startServer();
     //全局线程的创建
-    m_thread = new CThreadPub(this);
+    m_thread = new CThreadPub();
 
     if(m_thread->isRunning())
     {
@@ -784,12 +781,32 @@ void MainWindow::proc_action_net_testcs_trigger()
     }
     m_thread->start();
 
-//    connect(m_thread,&CThreadPub::message
-//            ,this,&MainWindow::receiveMessage);
-//    connect(m_thread,&CThreadPub::progress
-//            ,this,&MainWindow::progress);
-//    connect(m_thread,&QThread::finished
-//            ,this,&MainWindow::onQThreadFinished);
+    connect(m_thread,&CThreadPub::message
+            ,this,&MainWindow::proc_threadmessage_trigger);
+    connect(m_thread,&CThreadPub::progress
+            ,this,&MainWindow::proc_threadprogress_trigger);
+    connect(m_thread,&CThreadPub::finished
+            ,this,&MainWindow::proc_threadfinished_trigger);
+
+}
 
 
+void MainWindow::proc_action_net_testcs_trigger()
+{
+    EXECLOOP(create_thread_network(),10);
+}
+
+void MainWindow::proc_threadmessage_trigger(const QString& info)
+{
+    debugApp() << "recv message:" << info;
+}
+
+void MainWindow::proc_threadprogress_trigger(int progress)
+{
+    debugApp() << "progress:" << progress;
+}
+
+void MainWindow::proc_threadfinished_trigger()
+{
+    debugApp() << "threadfinished:" ;
 }

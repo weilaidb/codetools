@@ -140,5 +140,9 @@ private slots:
 
     //network
     void proc_action_net_testcs_trigger();
+    void create_thread_network();
+    void proc_threadmessage_trigger(const QString &info);
+    void proc_threadprogress_trigger(int progress);
+    void proc_threadfinished_trigger();
 };
 #endif // MAINWINDOW_H
