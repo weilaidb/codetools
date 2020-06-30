@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QCloseEvent>
+#include "cthreadpub.h"
 #include "version.h"
 #include "filepub.h"
 #include "basetypepub.h"
@@ -105,6 +106,10 @@ private:
     QSettings *m_pSettings;
 
     QString openWordFilePathRecent;
+
+
+    //thread
+    CThreadPub *m_thread;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();

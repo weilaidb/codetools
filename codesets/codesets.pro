@@ -20,6 +20,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/mysql/ \
     base/office/ \
     base/dialog/ \
+    base/thread/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
 

@@ -17,6 +17,7 @@
 #include "expresspub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
+#include "cthreadpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -239,10 +240,10 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         /*打开一个dialog对话框，选择一个文件夹*/
         //文件夹路径
         QStringList openfiles =CFilePub::getExistDirAllFiles("请选择格式化的文件夹",
-                                openDirPathRecent,
-                                recentfiles_codeformat,
-                                nameFilters
-                                );
+                                                             openDirPathRecent,
+                                                             recentfiles_codeformat,
+                                                             nameFilters
+                                                             );
         procAstyleInstance(openfiles);
     }
         break;
@@ -558,10 +559,10 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
         break;
     case OPENTYPE_NO_DIR:
     {
-//        list.append(openfilelist);
-//        CHECKSIZEZERORETURN(openfilelist);
+        //        list.append(openfilelist);
+        //        CHECKSIZEZERORETURN(openfilelist);
         list = CFilePub::getFileAllAbsoluteNames(filterlist, openfilelist.at(0));
-//        recentfiles.append(openfilelist);
+        //        recentfiles.append(openfilelist);
     }
         break;
     default:
@@ -773,5 +774,22 @@ void MainWindow::pasteDialogText()
 
 void MainWindow::proc_action_net_testcs_trigger()
 {
-    CNetPub::startServer();
+    //    CNetPub::startServer();
+    //全局线程的创建
+    m_thread = new CThreadPub(this);
+
+    if(m_thread->isRunning())
+    {
+        return;
+    }
+    m_thread->start();
+
+//    connect(m_thread,&CThreadPub::message
+//            ,this,&MainWindow::receiveMessage);
+//    connect(m_thread,&CThreadPub::progress
+//            ,this,&MainWindow::progress);
+//    connect(m_thread,&QThread::finished
+//            ,this,&MainWindow::onQThreadFinished);
+
+
 }
