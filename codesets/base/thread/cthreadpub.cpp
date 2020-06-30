@@ -2,13 +2,13 @@
 #include "debugApp.h"
 
 CThreadPub::CThreadPub(): QThread(nullptr)
-  ,m_runCount(20)
+  ,m_runCount(10)
 {
 
 }
 
 CThreadPub::CThreadPub(QObject* par) : QThread(par)
-,m_runCount(20)
+,m_runCount(10)
 {
 
 }
