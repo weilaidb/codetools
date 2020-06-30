@@ -23,6 +23,8 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/thread/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
+    cppbase/string/ \
+    cppbase/include/ \
 
 #$$PWD指当前路径， -l指定的文件去掉 .lib 以及 lib替换为l
 LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
@@ -50,6 +52,8 @@ SOURCES += \
     base/source/cstringpub.cpp \
     base/source/cuipub.cpp \
     base/thread/cthreadpub.cpp \
+    cppbase/string/cstringpubcpp.cpp \
+    cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -67,6 +71,10 @@ HEADERS += \
     base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
     base/thread/cthreadpub.h \
+    cppbase/include/cppbasetype.h \
+    cppbase/include/readmacro.h \
+    cppbase/include/testcase.h \
+    cppbase/string/cstringpubcpp.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basetypepub.h \
