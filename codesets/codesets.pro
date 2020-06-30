@@ -48,6 +48,7 @@ SOURCES += \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
     base/source/cuipub.cpp \
+    base/thread/cthreadpub.cpp \
     cdialogasktext.cpp \
     main.cpp \
     mainwindow.cpp
@@ -65,6 +66,7 @@ HEADERS += \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
+    base/thread/cthreadpub.h \
     cdialogasktext.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \

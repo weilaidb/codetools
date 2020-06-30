@@ -219,3 +219,35 @@ void CUIPub::paste()
 //        setText(tr("Cannot display data"));
     }
 }
+
+
+
+void CUIPub::startProgress()
+{
+//    QProcess::start()
+//    特点：非阻塞、一体式
+
+//    void QProcess::start(const QString & program, const QStringList & arguments, OpenMode mode = ReadWrite)
+
+//    使用这样的启动方式之启动外部程序启动后，它会随着主程序的退出而退出。
+
+//    QProcess::startDetached()
+//    特点：分离式
+
+//    void QProcess::startDetached(const QString & program, const QStringList & arguments, const QString & workingDirectory = QString(), qint64 * pid = 0)
+
+//    外部程序启动后，当主程序退出时并不退出，而是继续运行。
+
+//    QProcess::execute()
+//    特点：阻塞
+
+//    获取返回值
+//    int QProcess::execute()
+//    int QProcess::exitCode()
+
+
+
+
+
+
+}

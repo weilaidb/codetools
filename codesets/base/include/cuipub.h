@@ -35,6 +35,8 @@ public:
     static void setClipBoardText(QString setdata);
     static void paste();
 
+    //进程
+    static void startProgress();
 
 public:
     enum{
