@@ -25,7 +25,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QProgressBar>
-
+#include <iostream>
 
 extern int AyStyleMain(int argc, char** argv);
 
@@ -773,8 +773,18 @@ void MainWindow::create_thread_network()
 {
     //    CNetPub::startServer();
     //全局线程的创建
-    m_thread = new CThreadPub();
 
+    try{
+
+        m_thread = new CThreadPub();
+
+        //其他代码
+
+    }catch( const std::bad_alloc& e ){
+
+        return;
+
+    }
     if(m_thread->isRunning())
     {
         return;
@@ -787,18 +797,19 @@ void MainWindow::create_thread_network()
             ,this,&MainWindow::proc_threadprogress_trigger);
     connect(m_thread,&CThreadPub::finished
             ,this,&MainWindow::proc_threadfinished_trigger);
+    connect(m_thread, SIGNAL(finished()), m_thread, SLOT(deleteLater())); //线程释放自己
 
 }
 
 
 void MainWindow::proc_action_net_testcs_trigger()
 {
-    EXECLOOP(create_thread_network(),10);
+    EXECLOOP(create_thread_network(),1000);
 }
 
 void MainWindow::proc_threadmessage_trigger(const QString& info)
 {
-    debugApp() << "recv message:" << info;
+    //    debugApp() << "recv message:" << info;
 }
 
 void MainWindow::proc_threadprogress_trigger(int progress)

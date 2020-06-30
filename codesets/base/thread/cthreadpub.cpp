@@ -57,8 +57,8 @@ void CThreadPub::run()
     }
 
 //    debugApp() << "quit:" << count;
-//    exit();
-    quit();
+    exit();
+//    quit();
 }
 
 

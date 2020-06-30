@@ -22,6 +22,7 @@ public:
     void doSomething();
 private:
     int m_runCount;
+    char name[1024 * 1024];
 
 
 };
