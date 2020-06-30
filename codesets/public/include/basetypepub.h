@@ -14,4 +14,7 @@ typedef unsigned short WORD;
 typedef unsigned int   WORD32;
 typedef unsigned long long WORD64;
 
+//函数指针
+typedef int (*handler_retint_nopara)(void);
+
 #endif // BASETYPEPUB_H

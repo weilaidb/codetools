@@ -4,10 +4,11 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QCloseEvent>
-#include "cthreadpub.h"
+#include "cnetthreadpub.h"
 #include "version.h"
 #include "filepub.h"
 #include "basetypepub.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -109,7 +110,8 @@ private:
 
 
     //thread
-    CThreadPub *m_thread;
+    CNetThreadPub *m_thread_server;
+    CNetThreadPub *m_thread_client;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
@@ -139,8 +141,9 @@ private slots:
     void pasteDialogText();
 
     //network
-    void proc_action_net_testcs_trigger();
-    void create_thread_network();
+    void proc_action_net_server_trigger();
+    void proc_action_net_client_trigger();
+    void create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander);
     void proc_threadmessage_trigger(const QString &info);
     void proc_threadprogress_trigger(int progress);
     void proc_threadfinished_trigger();

@@ -17,7 +17,6 @@
 #include "expresspub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
-#include "cthreadpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -89,7 +88,8 @@ void MainWindow::initactionSets()
     QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent_trigger(QAction *)));
 
     //net
-    QObject::connect(ui->action_net_testcs, SIGNAL(triggered()), this, SLOT(proc_action_net_testcs_trigger()));
+    QObject::connect(ui->action_net_server, SIGNAL(triggered()), this, SLOT(proc_action_net_server_trigger()));
+    QObject::connect(ui->action_net_client, SIGNAL(triggered()), this, SLOT(proc_action_net_client_trigger()));
 
 }
 
@@ -108,6 +108,9 @@ void MainWindow::initVars()
     m_organization = "weilaidb";
     m_application = "codesets";
     m_pSettings = nullptr;
+
+    m_thread_server = nullptr;
+    m_thread_client = nullptr;
 }
 
 void MainWindow::initUiOther()
@@ -769,47 +772,38 @@ void MainWindow::pasteDialogText()
     uiDialog->textEdit->setText(CUIPub::getClipBoardText());
 }
 
-void MainWindow::create_thread_network()
+void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander)
 {
-    //    CNetPub::startServer();
-    //全局线程的创建
-
-    try{
-
-        m_thread = new CThreadPub();
-
-        //其他代码
-
-    }catch( const std::bad_alloc& e ){
-
-        return;
-
-    }
-    if(m_thread->isRunning())
+    if(pTthread && pTthread->isRunning())
     {
         return;
     }
-    m_thread->start();
 
-    connect(m_thread,&CThreadPub::message
+    CHECKNEWMEMRETURN(pTthread = new CNetThreadPub(hander));
+    pTthread->start();
+
+    connect(pTthread,&CNetThreadPub::message
             ,this,&MainWindow::proc_threadmessage_trigger);
-    connect(m_thread,&CThreadPub::progress
+    connect(pTthread,&CNetThreadPub::progress
             ,this,&MainWindow::proc_threadprogress_trigger);
-    connect(m_thread,&CThreadPub::finished
+    connect(pTthread,&CNetThreadPub::finished
             ,this,&MainWindow::proc_threadfinished_trigger);
-    connect(m_thread, SIGNAL(finished()), m_thread, SLOT(deleteLater())); //线程释放自己
-
+    connect(pTthread, SIGNAL(finished()), pTthread, SLOT(deleteLater())); //线程释放自己
 }
 
 
-void MainWindow::proc_action_net_testcs_trigger()
+void MainWindow::proc_action_net_server_trigger()
 {
-    EXECLOOP(create_thread_network(),1000);
+#if UT_TESTCASE
+    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
+#else
+    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1);
+#endif
 }
 
 void MainWindow::proc_threadmessage_trigger(const QString& info)
 {
-    //    debugApp() << "recv message:" << info;
+        debugApp() << "recv message:" << info;
 }
 
 void MainWindow::proc_threadprogress_trigger(int progress)
@@ -821,3 +815,17 @@ void MainWindow::proc_threadfinished_trigger()
 {
     debugApp() << "threadfinished:" ;
 }
+
+
+
+
+void MainWindow::proc_action_net_client_trigger()
+{
+#if UT_TESTCASE
+    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
+#else
+    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
+#endif
+}
+
+

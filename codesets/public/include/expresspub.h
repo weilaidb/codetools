@@ -58,6 +58,15 @@ do{  \
     } \
 }while(0)
 
+#define CHECKNEWMEMRETURN(EXP) \
+do{  \
+    try{\
+        EXP;\
+    }catch( const std::bad_alloc& e ){\
+        return;\
+    }\
+}while(0)
+
 
 
 #endif // EXPRESSPUB_H

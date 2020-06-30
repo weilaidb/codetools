@@ -103,7 +103,14 @@
     <property name="title">
      <string>网络</string>
     </property>
-    <addaction name="action_net_testcs"/>
+    <widget class="QMenu" name="menu_6">
+     <property name="title">
+      <string>测试</string>
+     </property>
+     <addaction name="action_net_server"/>
+     <addaction name="action_net_client_2"/>
+    </widget>
+    <addaction name="menu_6"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -193,9 +200,19 @@
     <string>查找文件夹</string>
    </property>
   </action>
-  <action name="action_net_testcs">
+  <action name="action_net_client">
    <property name="text">
-    <string>测试发送接收</string>
+    <string>客户端</string>
+   </property>
+  </action>
+  <action name="action_net_client_2">
+   <property name="text">
+    <string>客户端</string>
+   </property>
+  </action>
+  <action name="action_net_server">
+   <property name="text">
+    <string>服务端</string>
    </property>
   </action>
  </widget>

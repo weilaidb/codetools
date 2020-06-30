@@ -51,6 +51,7 @@ SOURCES += \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
     base/source/cuipub.cpp \
+    base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     cppbase/string/cstringpubcpp.cpp \
     cppbase/string/testcase/cstringpubcpp_main.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
+    base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     cppbase/include/cppbasetype.h \
     cppbase/include/readmacro.h \
