@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     showVersion();
-    initactionSets();
+    initActionSets();
     initVars();
     initUiOther();
 
@@ -66,7 +66,7 @@ void MainWindow::showVersion()
 }
 
 
-void MainWindow::initactionSets()
+void MainWindow::initActionSets()
 {
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
     QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory_trigger()));
@@ -90,6 +90,8 @@ void MainWindow::initactionSets()
     //net
     QObject::connect(ui->action_net_server, SIGNAL(triggered()), this, SLOT(proc_action_net_server_trigger()));
     QObject::connect(ui->action_net_client, SIGNAL(triggered()), this, SLOT(proc_action_net_client_trigger()));
+    QObject::connect(ui->action_net_publish, SIGNAL(triggered()), this, SLOT(proc_action_net_publish_trigger()));
+    QObject::connect(ui->action_net_subscribe, SIGNAL(triggered()), this, SLOT(proc_action_net_subscribe_trigger()));
 
 }
 
@@ -111,6 +113,8 @@ void MainWindow::initVars()
 
     m_thread_server = nullptr;
     m_thread_client = nullptr;
+    m_thread_publish = nullptr;
+    m_thread_subscribe = nullptr;
 }
 
 void MainWindow::initUiOther()
@@ -827,6 +831,25 @@ void MainWindow::proc_action_net_client_trigger()
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
 #else
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
+#endif
+}
+
+void MainWindow::proc_action_net_publish_trigger()
+{
+#if UT_TESTCASE
+    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
+#else
+    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
+#endif
+}
+
+
+void MainWindow::proc_action_net_subscribe_trigger()
+{
+#if UT_TESTCASE
+    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
+#else
+    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe),1);
 #endif
 }
 

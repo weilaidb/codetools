@@ -11,6 +11,8 @@ public:
     static int startClient(const char *uri);
     static int startServer();
     static int startClient();
+    static int startPublish();
+    static int startSubscribe();
 
 };
 

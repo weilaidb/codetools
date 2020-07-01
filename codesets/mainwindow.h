@@ -27,7 +27,7 @@ public:
 private:
     void showVersion();
     void initDialog();
-    void initactionSets();
+    void initActionSets();
     void initVars();
     void initUiOther();
     void readSetting();
@@ -112,6 +112,8 @@ private:
     //thread
     CNetThreadPub *m_thread_server;
     CNetThreadPub *m_thread_client;
+    CNetThreadPub *m_thread_publish;
+    CNetThreadPub *m_thread_subscribe;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
@@ -143,6 +145,8 @@ private slots:
     //network
     void proc_action_net_server_trigger();
     void proc_action_net_client_trigger();
+    void proc_action_net_publish_trigger();
+    void proc_action_net_subscribe_trigger();
     void create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander);
     void proc_threadmessage_trigger(const QString &info);
     void proc_threadprogress_trigger(int progress);

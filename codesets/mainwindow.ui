@@ -110,7 +110,15 @@
      <addaction name="action_net_server"/>
      <addaction name="action_net_client"/>
     </widget>
+    <widget class="QMenu" name="menu_7">
+     <property name="title">
+      <string>发布/订阅</string>
+     </property>
+     <addaction name="action_net_publish"/>
+     <addaction name="action_net_subscribe"/>
+    </widget>
     <addaction name="menu_6"/>
+    <addaction name="menu_7"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -208,6 +216,16 @@
   <action name="action_net_server">
    <property name="text">
     <string>服务端</string>
+   </property>
+  </action>
+  <action name="action_net_publish">
+   <property name="text">
+    <string>发布</string>
+   </property>
+  </action>
+  <action name="action_net_subscribe">
+   <property name="text">
+    <string>订阅</string>
    </property>
   </action>
  </widget>
