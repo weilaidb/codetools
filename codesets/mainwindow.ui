@@ -108,7 +108,7 @@
       <string>测试</string>
      </property>
      <addaction name="action_net_server"/>
-     <addaction name="action_net_client_2"/>
+     <addaction name="action_net_client"/>
     </widget>
     <addaction name="menu_6"/>
    </widget>
@@ -201,11 +201,6 @@
    </property>
   </action>
   <action name="action_net_client">
-   <property name="text">
-    <string>客户端</string>
-   </property>
-  </action>
-  <action name="action_net_client_2">
    <property name="text">
     <string>客户端</string>
    </property>

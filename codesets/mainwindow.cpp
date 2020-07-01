@@ -776,9 +776,11 @@ void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_
 {
     if(pTthread && pTthread->isRunning())
     {
+        showStatus("正在运行中...");
         return;
     }
 
+    showStatus("开始运行");
     CHECKNEWMEMRETURN(pTthread = new CNetThreadPub(hander));
     pTthread->start();
 
