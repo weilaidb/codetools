@@ -776,9 +776,9 @@ void MainWindow::pasteDialogText()
     uiDialog->textEdit->setText(CUIPub::getClipBoardText());
 }
 
-void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander)
+void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander, qint8 checkrunning = true)
 {
-    if(pTthread && pTthread->isRunning())
+    if(checkrunning && pTthread && pTthread->isRunning())
     {
         showStatus("正在运行中...");
         return;
@@ -849,7 +849,7 @@ void MainWindow::proc_action_net_subscribe_trigger()
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
 #else
-    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe),1);
+    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
 #endif
 }
 

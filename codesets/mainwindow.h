@@ -147,7 +147,7 @@ private slots:
     void proc_action_net_client_trigger();
     void proc_action_net_publish_trigger();
     void proc_action_net_subscribe_trigger();
-    void create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander);
+    void create_thread_network(CNetThreadPub *&pTthread, handler_retint_nopara hander, qint8 checkrunning);
     void proc_threadmessage_trigger(const QString &info);
     void proc_threadprogress_trigger(int progress);
     void proc_threadfinished_trigger();
