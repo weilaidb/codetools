@@ -93,6 +93,20 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_net_publish, SIGNAL(triggered()), this, SLOT(proc_action_net_publish_trigger()));
     QObject::connect(ui->action_net_subscribe, SIGNAL(triggered()), this, SLOT(proc_action_net_subscribe_trigger()));
 
+    //generate
+    QObject::connect(ui->action_gen_Constructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Constructor()));
+    QObject::connect(ui->action_gen_Destructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Destructor()));
+    QObject::connect(ui->action_gen_Getter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Getter()));
+    QObject::connect(ui->action_gen_Setter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Setter()));
+    QObject::connect(ui->action_gen_Getter_and_Setter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Getter_and_Setter()));
+    QObject::connect(ui->action_gen_Equality_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Equality_Operators()));
+    QObject::connect(ui->action_gen_Relational_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Relational_Operators  ()));
+    QObject::connect(ui->action_gen_Stream_Output_Operator  , SIGNAL(triggered()), this, SLOT(proc_action_gen_Stream_Output_Operator()));
+    QObject::connect(ui->action_gen_Override_Functions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Override_Functions()));
+    QObject::connect(ui->action_gen_Implement_Functions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Implement_Functions()));
+    QObject::connect(ui->action_gen_Generate_Definitions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Generate_Definitions()));
+
+
 }
 
 
@@ -120,6 +134,27 @@ void MainWindow::initVars()
 void MainWindow::initUiOther()
 {
     //    this->setWindowIcon();
+    pRightMouse = NULL;
+    //QTextEdit 右键菜单
+    ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
+    QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu(QPoint)));
+}
+
+
+void MainWindow::slot_generate_menu(QPoint pos)
+{
+    Q_UNUSED(pos);
+    if(pRightMouse)
+    {
+        delete pRightMouse;
+    }
+    debugApp() << "right mouse clicked!!";
+
+    QCursor cur=this->cursor();
+    pRightMouse = new QMenu(this);
+    pRightMouse->addMenu(ui->menuGenerate);
+    pRightMouse->exec(cur.pos()); //关联到光标
+
 }
 
 void MainWindow::readSetting()
@@ -852,5 +887,65 @@ void MainWindow::proc_action_net_subscribe_trigger()
     EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
 #endif
 }
+
+
+
+
+
+void MainWindow::proc_action_gen_Constructor()
+{
+
+}
+
+void MainWindow::proc_action_gen_Destructor()
+{
+
+}
+
+void MainWindow::proc_action_gen_Getter()
+{
+
+}
+
+void MainWindow::proc_action_gen_Setter()
+{
+
+}
+
+void MainWindow::proc_action_gen_Getter_and_Setter()
+{
+
+}
+
+void MainWindow::proc_action_gen_Equality_Operators()
+{
+
+}
+
+void MainWindow::proc_action_gen_Relational_Operators()
+{
+
+}
+
+void MainWindow::proc_action_gen_Stream_Output_Operator()
+{
+
+}
+
+void MainWindow::proc_action_gen_Override_Functions()
+{
+
+}
+
+void MainWindow::proc_action_gen_Implement_Functions()
+{
+
+}
+
+void MainWindow::proc_action_gen_Generate_Definitions()
+{
+
+}
+
 
 

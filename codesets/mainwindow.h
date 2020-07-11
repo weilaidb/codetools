@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QCloseEvent>
+#include <QTextEdit>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "filepub.h"
@@ -87,6 +88,11 @@ private:
     Ui::CDialogAskText *uiDialog;
     QDialog *pDialog;
 
+
+    /* 右键菜单 */
+    QMenu *pRightMouse;
+
+
 private:
     QString openFilePathRecent;
     QString openDirPathRecent;
@@ -151,5 +157,23 @@ private slots:
     void proc_threadmessage_trigger(const QString &info);
     void proc_threadprogress_trigger(int progress);
     void proc_threadfinished_trigger();
+
+
+    //generate 添加右键菜单
+    void proc_action_gen_Constructor();
+    void proc_action_gen_Destructor();
+    void proc_action_gen_Getter();
+    void proc_action_gen_Setter();
+    void proc_action_gen_Getter_and_Setter();
+    void proc_action_gen_Equality_Operators();
+    void proc_action_gen_Relational_Operators();
+    void proc_action_gen_Stream_Output_Operator();
+    void proc_action_gen_Override_Functions();
+    void proc_action_gen_Implement_Functions();
+    void proc_action_gen_Generate_Definitions();
+
+
+    void slot_generate_menu(QPoint pos);
+
 };
 #endif // MAINWINDOW_H

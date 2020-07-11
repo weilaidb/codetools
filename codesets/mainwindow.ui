@@ -120,11 +120,28 @@
     <addaction name="menu_6"/>
     <addaction name="menu_7"/>
    </widget>
+   <widget class="QMenu" name="menuGenerate">
+    <property name="title">
+     <string>Generate</string>
+    </property>
+    <addaction name="action_gen_Constructor"/>
+    <addaction name="action_gen_Destructor"/>
+    <addaction name="action_gen_Getter"/>
+    <addaction name="action_gen_Setter"/>
+    <addaction name="action_gen_Getter_and_Setter"/>
+    <addaction name="action_gen_Equality_Operators"/>
+    <addaction name="action_gen_Relational_Operators"/>
+    <addaction name="action_gen_Stream_Output_Operator"/>
+    <addaction name="action_gen_Override_Functions"/>
+    <addaction name="action_gen_Implement_Functions"/>
+    <addaction name="action_gen_Generate_Definitions"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_2"/>
+   <addaction name="menuGenerate"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -226,6 +243,61 @@
   <action name="action_net_subscribe">
    <property name="text">
     <string>订阅</string>
+   </property>
+  </action>
+  <action name="action_gen_Constructor">
+   <property name="text">
+    <string>Constructor</string>
+   </property>
+  </action>
+  <action name="action_gen_Destructor">
+   <property name="text">
+    <string>Destructor</string>
+   </property>
+  </action>
+  <action name="action_gen_Getter">
+   <property name="text">
+    <string>Getter</string>
+   </property>
+  </action>
+  <action name="action_gen_Setter">
+   <property name="text">
+    <string>Setter</string>
+   </property>
+  </action>
+  <action name="action_gen_Getter_and_Setter">
+   <property name="text">
+    <string>Getter and Setter</string>
+   </property>
+  </action>
+  <action name="action_gen_Equality_Operators">
+   <property name="text">
+    <string>Equality Operators</string>
+   </property>
+  </action>
+  <action name="action_gen_Relational_Operators">
+   <property name="text">
+    <string>Relational Operators</string>
+   </property>
+  </action>
+  <action name="action_gen_Stream_Output_Operator">
+   <property name="text">
+    <string>Stream Output Operator</string>
+   </property>
+  </action>
+  <action name="action_gen_Override_Functions">
+   <property name="text">
+    <string>Override Functions...</string>
+   </property>
+  </action>
+  <action name="action_gen_Implement_Functions">
+   <property name="text">
+    <string>Implement Functions...</string>
+   </property>
+  </action>
+  <action name="action_gen_Generate_Definitions">
+   <property name="text">
+    <string>Generate Definitions...</string>
    </property>
   </action>
  </widget>
