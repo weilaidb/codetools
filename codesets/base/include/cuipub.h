@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QMenu>
 #include <QProgressBar>
+#include <QTextEdit>
 
 class CUIPub
 {
@@ -37,6 +38,11 @@ public:
 
     //进程
     static void startProgress();
+
+    //获取选中文本
+    static QString getSelectTextEdit(QTextEdit *pEdit);
+    static QString getSelectLineTextEdit(QTextEdit *pEdit);
+    static int getSelectLine(QTextEdit *pEdit);
 
 public:
     enum{

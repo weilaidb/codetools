@@ -5,6 +5,9 @@
 #include <QProgressBar>
 #include <QClipboard>
 #include <QMimeData>
+#include <QTextLayout>
+#include <QTextBlock>
+#include "debugApp.h"
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
 
@@ -251,3 +254,54 @@ void CUIPub::startProgress()
 
 
 }
+
+
+
+QString CUIPub::getSelectTextEdit(QTextEdit *pEdit)
+{
+    return pEdit->textCursor().selectedText();
+}
+
+int CUIPub::getSelectLine(QTextEdit *pTextEdit)
+{
+    //当前光标
+    QTextCursor tc = pTextEdit->textCursor();
+    QTextLayout *pLayout = tc.block().layout();
+    //当前光标在本BLOCK内的相对位置
+    int nCurpos = tc.position() - tc.block().position();
+    int nTextline = pLayout->lineForTextPosition(nCurpos).lineNumber() + tc.block().firstLineNumber();
+//    qDebug()<<nTextline<<endl;           //可以看到行号随着光标的改变而改变
+    return nTextline;
+}
+
+QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
+{
+//    debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
+    return pEdit->document()->findBlockByLineNumber(getSelectLine(pEdit)).text();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

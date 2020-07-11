@@ -21,6 +21,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/office/ \
     base/dialog/ \
     base/thread/ \
+    base/regexp/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
     cppbase/string/ \
@@ -47,6 +48,7 @@ SOURCES += \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/office/cofficepub.cpp \
+    base/regexp/regexppub.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
     base/source/cstringpub.cpp \
@@ -71,6 +73,7 @@ HEADERS += \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
+    base/regexp/regexppub.h \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     cppbase/include/cppbasetype.h \

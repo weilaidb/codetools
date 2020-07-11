@@ -17,6 +17,7 @@
 #include "expresspub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
+#include "regexppub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -892,6 +893,11 @@ void MainWindow::proc_action_net_subscribe_trigger()
 
 
 
+void MainWindow::proc_action_gen_pub()
+{
+
+}
+
 void MainWindow::proc_action_gen_Constructor()
 {
 
@@ -904,6 +910,12 @@ void MainWindow::proc_action_gen_Destructor()
 
 void MainWindow::proc_action_gen_Getter()
 {
+    QString keyword = CUIPub::getSelectTextEdit(ui->textEdit);
+    QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
+
+    debugApp() << "keyword:" << keyword;
+    debugApp() << "linewords:" << linewords;
+
 
 }
 
