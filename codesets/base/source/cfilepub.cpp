@@ -44,6 +44,26 @@ int CFilePub::fileExist(QString filename)
     return false;
 }
 
+bool CFilePub::createFileNoExist(QString filename)
+{
+    if(fileExist(filename))
+    {
+        return true;
+    }
+
+    QDir dir(filename);
+    bool ok =  createDirNoExist(dir.dirName());
+    writeFileOnlly(filename, CStringPub::emptyString());
+    return ok;
+}
+
+bool CFilePub::createDirNoExist(QString dirname)
+{
+    QDir dir(dirname);
+    bool ok = dir.mkpath(dirname);//创建多级目录
+    return ok;
+}
+
 QString CFilePub::readFileAll(QString filename)
 {
     QString result("");

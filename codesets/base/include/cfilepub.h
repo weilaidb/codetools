@@ -13,6 +13,8 @@ public:
     static int isFile(QString filename);
     static int isDir(QString filename);
     static int fileExist(QString filename);
+    static bool createFileNoExist(QString filename);
+    static bool createDirNoExist(QString dirname);
     static QString readFileAll(QString filename);
     static QString writeFileOnlly(QString filename, QString msg);
     static QString writeFileAppend(QString filename, QString msg);

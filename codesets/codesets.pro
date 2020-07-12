@@ -24,6 +24,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/regexp/ \
     base/express/ \
     base/return/ \
+    base/define/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
     cppbase/string/ \
@@ -45,6 +46,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    base/define/cdefinepub.cpp \
     base/dialog/cdialogpub.cpp \
     base/express/cexpresspub.cpp \
     base/msgtips/cmsgtips.cpp \
@@ -68,6 +70,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
+    base/define/cdefinepub.h \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \
     base/include/cfilepub.h \

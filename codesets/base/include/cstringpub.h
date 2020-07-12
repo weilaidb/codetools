@@ -4,6 +4,9 @@
 #include <QStringList>
 #include <QAction>
 
+//数组大小
+#define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
+
 class CStringPub
 {
 public:
