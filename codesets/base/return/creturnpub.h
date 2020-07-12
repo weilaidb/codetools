@@ -9,6 +9,7 @@ public:
     CReturnPub();
 
     static QString strError();
+    static QString strConfigFileNoExist();
 };
 
 #endif // CRETURNPUB_H

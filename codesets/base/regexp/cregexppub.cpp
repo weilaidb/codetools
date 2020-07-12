@@ -105,7 +105,7 @@ QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
     QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
     if(CExpressPub::isZero(regexpsbef.length()))
     {
-        return CReturnPub::strError();
+        return CReturnPub::strConfigFileNoExist();
     }
 
     if(CExpressPub::isZero(regexpsaft.length()))
