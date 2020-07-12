@@ -4,6 +4,7 @@
 
 #include <QRegExp>
 #include "basetypepub.h"
+#include "cfilepub.h"
 
 typedef struct T_GenCode{
     WORD32 dwRet;    /* 数据量变更 */
@@ -15,6 +16,18 @@ class RegExpPub
 {
 public:
     RegExpPub();
+
+    static QString getRegExpFileNameBefore(QString filename);
+    static QString getRegExpFileNameAfter(QString filename);
+    static QString getRegExpByFile(QString filename);
+    static QStringList getRegExpsByFile(QString filename);
+    static QString procTextByRegExpList(QString filename, QString text);
+
+
+
+public:
+    static QString beforename;
+    static QString aftername;
 };
 
 

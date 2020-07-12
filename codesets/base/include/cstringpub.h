@@ -11,7 +11,12 @@ public:
     static QStringList toStringList(const QList<QByteArray> list);
     static QStringList toStringListOnly(QString single);
     static QString stringList2String(const QStringList list, const char *pSign);
+    //return list by sign
     static QStringList stringSplit(const QString str , const char sign);
+    //return list by \n
+    static QStringList stringSplitbyNewLine(const QString str);
+    //return list by \n, filter a line with nothing
+    static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);

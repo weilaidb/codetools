@@ -43,6 +43,29 @@ QStringList CStringPub::stringSplit(const QString str , const char sign)
     return  str.split(sign);
 }
 
+QStringList CStringPub::stringSplitbyNewLine(const QString str)
+{
+    const char sign = '\n';
+    return  str.split(sign);
+}
+
+QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
+{
+    QStringList result;
+    const char sign = '\n';
+    QStringList strlist = str.split(sign);
+    foreach (QString item, strlist) {
+        if(item.simplified().isEmpty())
+        {
+            continue;
+        }
+        result.append(item);
+    }
+
+    return result;
+}
+
+
 QString CStringPub::stringSplitFindText(const QString str , const char sign,QString signadd, QString findtext)
 {
     QString result("");

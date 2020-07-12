@@ -22,6 +22,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/dialog/ \
     base/thread/ \
     base/regexp/ \
+    base/express/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
     cppbase/string/ \
@@ -44,6 +45,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     base/dialog/cdialogpub.cpp \
+    base/express/cexpresspub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
@@ -65,6 +67,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
     base/dialog/cdialogpub.h \
+    base/express/cexpresspub.h \
     base/include/cfilepub.h \
     base/include/cprintpub.h \
     base/include/cstringpub.h \
@@ -110,6 +113,7 @@ RC_FILE = \
 
 
 DISTFILES += \
+    doc/代码替换说明.txt \
     images/myapp.rc \
     libs/libzmq-v141-4_3_2/libsodium.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
