@@ -169,3 +169,9 @@ QStringList CStringPub::wordNameFilter()
 
     return list;
 }
+
+
+int CStringPub::strSimLen(QString str)
+{
+    return str.simplified().length();
+}

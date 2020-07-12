@@ -53,7 +53,7 @@ SOURCES += \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/office/cofficepub.cpp \
-    base/regexp/regexppub.cpp \
+    base/regexp/cregexppub.cpp \
     base/return/creturnpub.cpp \
     base/source/cfilepub.cpp \
     base/source/cprintpub.cpp \
@@ -81,7 +81,7 @@ HEADERS += \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
     base/office/cofficepub.h \
-    base/regexp/regexppub.h \
+    base/regexp/cregexppub.h \
     base/return/creturnpub.h \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \

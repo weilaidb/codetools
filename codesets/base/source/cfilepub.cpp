@@ -6,6 +6,7 @@
 #include <qapplication.h>
 #include "debugApp.h"
 #include "cstringpub.h"
+#include "cexpresspub.h"
 
 CFilePub::CFilePub()
 {
@@ -44,24 +45,59 @@ int CFilePub::fileExist(QString filename)
     return false;
 }
 
+QString CFilePub::baseName(QString filename)
+{
+    QStringList list = filename.split(QRegExp(".*/"));
+    if(list.length())
+    {
+        return list.at(0);
+    }
+    return CStringPub::emptyString();
+}
+
+QString CFilePub::dirName(QString filename)
+{
+    QStringList list = filename.split(QRegExp("[^/]*$"));
+    if(list.length())
+    {
+        return list.at(0);
+    }
+    return CStringPub::emptyString();
+}
+
+
 bool CFilePub::createFileNoExist(QString filename)
 {
     if(fileExist(filename))
     {
         return true;
     }
+    bool ok =  createDirNoExist(dirName(filename));
+    if(CExpressPub::isFalse(ok))
+    {
+        return false;
+    }
+    debugApp() << "create dirName          :" << dirName(filename);
+    debugApp() << "writeFileOnlly filename :" << filename;
 
-    QDir dir(filename);
-    bool ok =  createDirNoExist(dir.dirName());
     writeFileOnlly(filename, CStringPub::emptyString());
+    return ok;
+}
+
+bool CFilePub::createDirExt(QString dirname)
+{
+    QDir dir;
+    bool ok = dir.mkpath(dirname);//mkpath创建多级目录, mkdir创建一级目录
     return ok;
 }
 
 bool CFilePub::createDirNoExist(QString dirname)
 {
-    QDir dir(dirname);
-    bool ok = dir.mkpath(dirname);//创建多级目录
-    return ok;
+    if(CExpressPub::isZero(CStringPub::strSimLen(dirname)))
+    {
+        return false;
+    }
+    return createDirExt(dirname);
 }
 
 QString CFilePub::readFileAll(QString filename)

@@ -1,5 +1,5 @@
-#ifndef REGEXPPUB_H
-#define REGEXPPUB_H
+#ifndef CREGEXPPUB_H
+#define CREGEXPPUB_H
 
 
 #include <QRegExp>
@@ -30,27 +30,27 @@ enum EUM_CLASSTYPE{
 
 
 
-class RegExpPub
+class CRegExpPub
 {
 public:
-    RegExpPub();
+    CRegExpPub();
     static QString getRegExpFileNameBefore(QString filename);
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpByFile(QString filename);
     static QStringList getRegExpsByFile(QString filename);
-    static QString procTextByRegExpList(quint32 classtype, QString text);
     static QString getFileNameByClassType(quint32 dwClasstype);
+    static QString procTextByRegExpList(quint32 classtype, QString text);
 
 
 
 
 private:
-    static QString dirbefore;
-    static QString dirafter;
+    static const QString dirbefore;
+    static const QString dirafter;
 };
 
 
 
 
 
-#endif // REGEXPPUB_H
+#endif // CREGEXPPUB_H

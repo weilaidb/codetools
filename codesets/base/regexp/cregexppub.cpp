@@ -1,4 +1,4 @@
-#include "regexppub.h"
+#include "cregexppub.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
 #include "creturnpub.h"
@@ -19,35 +19,37 @@ T_GenCode g_GenCode[] =
     DEF_ITEM_INT_STR(GENERATE_DEFINATION    ),
 };
 
-QString RegExpPub::dirbefore  = ("reg/before/");
-QString RegExpPub::dirafter   = ("reg/after/");
+const QString CRegExpPub::dirbefore  = ("reg/before/");
+const QString CRegExpPub::dirafter   = ("reg/after/");
 
-RegExpPub::RegExpPub()
+CRegExpPub::CRegExpPub()
 {
 
 }
 
-QString RegExpPub::getRegExpFileNameBefore(QString filename)
+QString CRegExpPub::getRegExpFileNameBefore(QString filename)
 {
-    return dirbefore.append(filename);
+    return dirbefore + (filename);
 }
 
-QString RegExpPub::getRegExpFileNameAfter(QString filename)
+QString CRegExpPub::getRegExpFileNameAfter(QString filename)
 {
-    return dirafter.append(filename);
+    return dirafter  +  (filename);
 }
 
-QString RegExpPub::getRegExpByFile(QString filename)
+QString CRegExpPub::getRegExpByFile(QString filename)
 {
+    //创建空文件如果文件不存在
+    CFilePub::createFileNoExist(filename);
     return  CFilePub::readFileAll(filename);
 }
 
-QStringList RegExpPub::getRegExpsByFile(QString filename)
+QStringList CRegExpPub::getRegExpsByFile(QString filename)
 {
     return  CStringPub::stringSplitbyNewLineFilterEmpty(getRegExpByFile(filename));
 }
 
-QString RegExpPub::getFileNameByClassType(quint32 dwClasstype)
+QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
 {
     quint32 dwLp = 0;
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
@@ -60,7 +62,7 @@ QString RegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
-QString RegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
+QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
 {
     QString result("");
     QString filename = getFileNameByClassType(dwClasstype);

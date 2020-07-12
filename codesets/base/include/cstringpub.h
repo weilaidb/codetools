@@ -32,6 +32,7 @@ public:
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
+    static int strSimLen(QString str);
 };
 
 #endif // CSTRINGPUB_H

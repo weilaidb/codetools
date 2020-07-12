@@ -17,7 +17,7 @@
 #include "expresspub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
-#include "regexppub.h"
+#include "cregexppub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -916,6 +916,7 @@ void MainWindow::proc_action_gen_Getter()
     debugApp() << "keyword:" << keyword;
     debugApp() << "linewords:" << linewords;
 
+    setRightTextEdit(CRegExpPub::procTextByRegExpList(EUM_CLASSTYPE::GETTER,linewords));
 
 }
 
