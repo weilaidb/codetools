@@ -79,7 +79,7 @@ QString CRegExpPub::handlerTip(quint32 dwClasstype)
 
 QString CRegExpPub::replaceSignsPub(QString text)
 {
-    return text.replace("\\n", "\n").replace("\\t", "\t").replace("\\", "");
+    return text.replace("\\n", "\n").replace("\\t", "    ").replace("\\", "");
 }
 
 QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match)
