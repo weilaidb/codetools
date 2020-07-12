@@ -25,8 +25,8 @@ public:
 
 
 
-public:
-    static QString beforename;
+private:
+    static QString dirbefore;
     static QString aftername;
 };
 

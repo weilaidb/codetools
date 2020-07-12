@@ -121,6 +121,19 @@ QStringList CStringPub::emptyStringList()
     list.clear();
     return list;
 }
+
+QStringList CStringPub::emptyStringListCount(quint32 dwCount)
+{
+    QStringList list;
+    list.clear();
+    quint32 dwLp = 0;
+    for(dwLp = 0; dwLp < dwCount; dwLp++)
+    {
+        list.append("");
+    }
+    return list;
+}
+
 QString CStringPub::emptyString()
 {
     return QString("");

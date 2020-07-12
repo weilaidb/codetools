@@ -1,9 +1,10 @@
 #include "regexppub.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
+#include "creturnpub.h"
 
-QString RegExpPub::beforename  = (".before.txt");
-QString RegExpPub::aftername   = (".after.txt");
+QString RegExpPub::dirbefore  = ("reg/before/");
+QString RegExpPub::dirafter   = ("reg/after/");
 
 RegExpPub::RegExpPub()
 {
@@ -12,12 +13,12 @@ RegExpPub::RegExpPub()
 
 QString RegExpPub::getRegExpFileNameBefore(QString filename)
 {
-    return filename.append(beforename);
+    return dirbefore.append(filename);
 }
 
 QString RegExpPub::getRegExpFileNameAfter(QString filename)
 {
-    return filename.append(aftername);
+    return dirafter.append(filename);
 }
 
 QString RegExpPub::getRegExpByFile(QString filename)
@@ -33,17 +34,29 @@ QStringList RegExpPub::getRegExpsByFile(QString filename)
 QString RegExpPub::procTextByRegExpList(QString filename, QString text)
 {
     QString result("");
-    QStringList regexps = getRegExpsByFile(filename);
-    if(CExpressPub::isZero(regexps.length()))
+    QStringList regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
+    QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
+    if(CExpressPub::isZero(regexpsbef.length()))
     {
-        return result;
+        return CReturnPub::strError();
+    }
+
+    if(CExpressPub::isZero(regexpsaft.length()))
+    {
+        regexpsaft = CStringPub::emptyStringListCount(regexpsbef.length());
+    }
+
+    if(regexpsbef.length() > regexpsaft.length())
+    {
+        regexpsaft.append(CStringPub::emptyStringListCount(regexpsbef.length() - regexpsaft.length()));
     }
 
     result = text;
-    foreach (QString item, regexps) {
-//        result = result.replace(QRegExp(item),);
+    int dwLp = 0;
+    foreach (QString item, regexpsbef) {
+        result = result.replace(QRegExp(item), regexpsaft.at(dwLp));
+        dwLp++;
     }
-
 
     return result;
 }

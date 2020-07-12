@@ -21,7 +21,10 @@ public:
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
     static QString getOpenFileNamesFilter(QStringList filters, QString sign);
+    //return stringlist, only one item
     static QStringList emptyStringList();
+    //return stringlist, every item is ""
+    static QStringList emptyStringListCount(quint32 dwCount);
     static QString emptyString();
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
