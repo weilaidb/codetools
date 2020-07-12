@@ -280,7 +280,10 @@ QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
     return pEdit->document()->findBlockByLineNumber(getSelectLine(pEdit)).text();
 }
 
-
+QString CUIPub::getTextEdit(QTextEdit *pEdit)
+{
+    return pEdit->toPlainText();
+}
 
 
 

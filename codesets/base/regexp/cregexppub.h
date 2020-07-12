@@ -47,7 +47,9 @@ public:
     static QString replaceSignsPub(QString text);
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
+    static QString handlerRegExp_Getter_Single(QString text,QStringList regbefore, QStringList regafter);
     static QString handlerTip_Getter();
+    static QString handlerTip(quint32 dwClasstype);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();
 

@@ -896,20 +896,30 @@ void MainWindow::proc_action_net_subscribe_trigger()
 
 void MainWindow::proc_action_gen_pub(int type)
 {
-    QString keyword = CUIPub::getSelectTextEdit(ui->textEdit);
+    QString keyword   = CUIPub::getSelectTextEdit(ui->textEdit);
     QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
+    QString lefttext  = CUIPub::getTextEdit(ui->textEdit);
+    QString proctext  = CStringPub::emptyString();
 
     debugApp() << "keyword:" << keyword;
     debugApp() << "linewords:" << linewords;
 
-    if(CExpressPub::isZero(CStringPub::strSimLen(linewords)))
+    if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
-        setLeftTextEdit(CRegExpPub::handlerTip_Getter());
+        setLeftTextEdit(CRegExpPub::handlerTip(type));
         setRightTextEdit(CStringPub::emptyString());
         return;
     }
+    else if(CExpressPub::isFull(CStringPub::strSimLen(keyword)))
+    {
+        proctext = linewords;
+    }
+    else
+    {
+        proctext = lefttext;
+    }
 
-    setRightTextEdit(CRegExpPub::procTextByRegExpList(type,linewords));
+    setRightTextEdit(CRegExpPub::procTextByRegExpList(type,proctext));
 }
 
 void MainWindow::proc_action_gen_Constructor()

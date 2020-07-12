@@ -63,6 +63,20 @@ QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
+QString CRegExpPub::handlerTip(quint32 dwClasstype)
+{
+    quint32 dwLp = 0;
+    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
+    {
+        if(dwClasstype == g_GenCode[dwLp].dwClasstype)
+        {
+            return g_GenCode[dwLp].m_tip();
+        }
+    }
+    return CStringPub::emptyString();
+}
+
+
 QString CRegExpPub::replaceSignsPub(QString text)
 {
     return text.replace("\\n", "\n").replace("\\t", "\t").replace("\\", "");
@@ -118,8 +132,9 @@ QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
     return result;
 }
 
-QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter)
+QString CRegExpPub::handlerRegExp_Getter_Single(QString text, QStringList regbefore, QStringList regafter)
 {
+
     QString result = regafter.at(0);
     debugApp() << "reg before:" << regbefore;
     debugApp() << "reg after :" << regafter;
@@ -149,8 +164,20 @@ QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QSt
     return result;
 }
 
+QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter)
+{
+    QString result = CStringPub::emptyString();
+    QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
+    foreach (QString item, list) {
+        result += handlerRegExp_Getter_Single(item, regbefore, regafter);
+    }
+    return result;
+}
+
 QString CRegExpPub::handlerTip_Getter()
 {
     return ("int abc;");
 }
+
+
 

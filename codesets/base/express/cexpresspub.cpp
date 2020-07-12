@@ -15,6 +15,11 @@ bool CExpressPub::isZero(int length)
     return (0 == length);
 }
 
+bool CExpressPub::isFull(int length)
+{
+    return (0 != length);
+}
+
 
 bool CExpressPub::isFalse(bool bok)
 {

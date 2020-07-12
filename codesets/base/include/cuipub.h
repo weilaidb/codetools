@@ -43,6 +43,7 @@ public:
     static QString getSelectTextEdit(QTextEdit *pEdit);
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);
+    static QString getTextEdit(QTextEdit *pEdit);
 
 public:
     enum{
