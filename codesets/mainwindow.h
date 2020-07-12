@@ -160,7 +160,7 @@ private slots:
 
 
     //generate 添加右键菜单
-    void proc_action_gen_pub();
+    void proc_action_gen_pub(int type);
     void proc_action_gen_Constructor();
     void proc_action_gen_Destructor();
     void proc_action_gen_Getter();

@@ -18,6 +18,7 @@
 #include "cdialogpub.h"
 #include "cnetpub.h"
 #include "cregexppub.h"
+#include "cexpresspub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -845,7 +846,7 @@ void MainWindow::proc_action_net_server_trigger()
 
 void MainWindow::proc_threadmessage_trigger(const QString& info)
 {
-        debugApp() << "recv message:" << info;
+    debugApp() << "recv message:" << info;
 }
 
 void MainWindow::proc_threadprogress_trigger(int progress)
@@ -893,9 +894,22 @@ void MainWindow::proc_action_net_subscribe_trigger()
 
 
 
-void MainWindow::proc_action_gen_pub()
+void MainWindow::proc_action_gen_pub(int type)
 {
+    QString keyword = CUIPub::getSelectTextEdit(ui->textEdit);
+    QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
 
+    debugApp() << "keyword:" << keyword;
+    debugApp() << "linewords:" << linewords;
+
+    if(CExpressPub::isZero(CStringPub::strSimLen(linewords)))
+    {
+        setLeftTextEdit(CRegExpPub::handlerTip_Getter());
+        setRightTextEdit(CStringPub::emptyString());
+        return;
+    }
+
+    setRightTextEdit(CRegExpPub::procTextByRegExpList(type,linewords));
 }
 
 void MainWindow::proc_action_gen_Constructor()
@@ -910,24 +924,17 @@ void MainWindow::proc_action_gen_Destructor()
 
 void MainWindow::proc_action_gen_Getter()
 {
-    QString keyword = CUIPub::getSelectTextEdit(ui->textEdit);
-    QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
-
-    debugApp() << "keyword:" << keyword;
-    debugApp() << "linewords:" << linewords;
-
-    setRightTextEdit(CRegExpPub::procTextByRegExpList(EUM_CLASSTYPE::GETTER,linewords));
-
+    proc_action_gen_pub(EUM_CLASSTYPE::GETTER);
 }
 
 void MainWindow::proc_action_gen_Setter()
 {
-
+    proc_action_gen_pub(EUM_CLASSTYPE::SETTER);
 }
 
 void MainWindow::proc_action_gen_Getter_and_Setter()
 {
-
+    proc_action_gen_pub(EUM_CLASSTYPE::GETTER_AND_SETTER);
 }
 
 void MainWindow::proc_action_gen_Equality_Operators()

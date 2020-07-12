@@ -3,14 +3,18 @@
 
 
 #include <QRegExp>
+#include <QRegularExpression>
 #include "basetypepub.h"
 #include "cfilepub.h"
 
-
+typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
+typedef QString (*handlerTip)();
 
 typedef struct T_GenCode{
     WORD32 dwClasstype;    /* 类型 */
     QString filename ;    /* 文件名称 */
+    handlerRegExp m_hander ;    /* 回调函数 */
+    handlerTip    m_tip ;    /* 帮忙，提示 */
 }T_GenCode, *P_GenCode;
 
 
@@ -40,8 +44,12 @@ public:
     static QStringList getRegExpsByFile(QString filename);
     static QString getFileNameByClassType(quint32 dwClasstype);
     static QString procTextByRegExpList(quint32 classtype, QString text);
-
-
+    static QString replaceSignsPub(QString text);
+    static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
+    static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
+    static QString handlerTip_Getter();
+//    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
+//    static QString handlerTip_Setter();
 
 
 private:

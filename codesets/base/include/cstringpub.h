@@ -29,6 +29,7 @@ public:
     //return stringlist, every item is ""
     static QStringList emptyStringListCount(quint32 dwCount);
     static QString emptyString();
+    static QString listLenthNg();
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();

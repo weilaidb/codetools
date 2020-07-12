@@ -2,7 +2,7 @@
 #define CDEFINEPUB_H
 
 //一个整数和字符串
-#define DEF_ITEM_INT_STR(item) {item, #item }
+#define DEF_ITEM_INT_STR(item, handler,handertip) {item, #item , handler ,handertip}
 
 class CDefinePub
 {

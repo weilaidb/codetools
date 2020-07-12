@@ -3,20 +3,21 @@
 #include "cexpresspub.h"
 #include "creturnpub.h"
 #include "cdefinepub.h"
+#include "debugApp.h"
 
 T_GenCode g_GenCode[] =
 {
-    DEF_ITEM_INT_STR(CONSTRUCTOR            ),
-    DEF_ITEM_INT_STR(DESTRUCTOR             ),
-    DEF_ITEM_INT_STR(GETTER                 ),
-    DEF_ITEM_INT_STR(SETTER                 ),
-    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ),
-    DEF_ITEM_INT_STR(EQUALITY_OPERATOR      ),
-    DEF_ITEM_INT_STR(RELATIONAL_OPERATOR    ),
-    DEF_ITEM_INT_STR(STREAM_OUTPUT_OPERATER ),
-    DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ),
-    DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ),
-    DEF_ITEM_INT_STR(GENERATE_DEFINATION    ),
+    DEF_ITEM_INT_STR(CONSTRUCTOR            ,NULL,NULL),
+    DEF_ITEM_INT_STR(DESTRUCTOR             ,NULL,NULL),
+    DEF_ITEM_INT_STR(GETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
+    DEF_ITEM_INT_STR(SETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
+    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
+    DEF_ITEM_INT_STR(EQUALITY_OPERATOR      ,NULL,NULL),
+    DEF_ITEM_INT_STR(RELATIONAL_OPERATOR    ,NULL,NULL),
+    DEF_ITEM_INT_STR(STREAM_OUTPUT_OPERATER ,NULL,NULL),
+    DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL),
+    DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL),
+    DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL),
 };
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
@@ -62,6 +63,26 @@ QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
+QString CRegExpPub::replaceSignsPub(QString text)
+{
+    return text.replace("\\n", "\n").replace("\\t", "\t").replace("\\", "");
+}
+
+QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match)
+{
+    QString result(text);
+    quint32 dwLp = 0;
+    for(dwLp = dwStartSeq; dwLp < dwCount; dwLp++)
+    {
+        //内容替换
+        result = result.replace(QString("\\%1").arg(dwLp), match.captured(dwLp));
+    }
+
+    result = replaceSignsPub(result);
+    return result;
+}
+
+
 QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
 {
     QString result("");
@@ -84,11 +105,52 @@ QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
     }
 
     result = text;
-    int dwLp = 0;
-    foreach (QString item, regexpsbef) {
-        result = result.replace(QRegExp(item), regexpsaft.at(dwLp));
-        dwLp++;
+
+    quint32 dwLp = 0;
+    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
+    {
+        if(dwClasstype == g_GenCode[dwLp].dwClasstype)
+        {
+            return g_GenCode[dwLp].m_hander(text, regexpsbef, regexpsaft);
+        }
     }
 
     return result;
 }
+
+QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter)
+{
+    QString result = regafter.at(0);
+    debugApp() << "reg before:" << regbefore;
+    debugApp() << "reg after :" << regafter;
+
+    QRegularExpression regularExpression(regbefore.at(0));
+    int index = 0;
+    QRegularExpressionMatch match;
+    do {
+        match = regularExpression.match(text, index);
+        if(match.hasMatch()) {
+            index = match.capturedEnd();
+            qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+        }
+        else
+            break;
+    } while(index < text.length());
+
+    debugApp() << "match.caput1:" << match.capturedTexts();
+
+    if(match.capturedTexts().length() < 4)
+    {
+        return CStringPub::listLenthNg();
+    }
+
+    result = replaceSeqPub(result, 1, match.capturedTexts().length(), match);
+
+    return result;
+}
+
+QString CRegExpPub::handlerTip_Getter()
+{
+    return ("int abc;");
+}
+

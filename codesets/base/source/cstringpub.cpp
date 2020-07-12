@@ -139,6 +139,11 @@ QString CStringPub::emptyString()
     return QString("");
 }
 
+QString CStringPub::listLenthNg()
+{
+    return QString("列表长度不足");
+}
+
 QStringList CStringPub::actionNameList(QAction *action)
 {
     QStringList autolist;
