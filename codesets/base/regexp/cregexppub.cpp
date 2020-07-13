@@ -4,6 +4,7 @@
 #include "creturnpub.h"
 #include "cdefinepub.h"
 #include "debugApp.h"
+#include "signpub.h"
 
 T_GenCode g_GenCode[] =
 {
@@ -170,7 +171,7 @@ QString CRegExpPub::handlerRegExp_Getter_Single(QString text, QStringList regbef
 
     debugApp() << "match.caput1:" << match.capturedTexts();
 
-    if(match.capturedTexts().length() < 4)
+    if(match.capturedTexts().length() < 2)
     {
         return CStringPub::listLenthNg();
     }
@@ -185,7 +186,7 @@ QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QSt
     QString result = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
     foreach (QString item, list) {
-        result += handlerRegExp_Getter_Single(item, regbefore, regafter);
+        result += handlerRegExp_Getter_Single(item, regbefore, regafter) + SIGNENTER;
     }
     return result;
 }
