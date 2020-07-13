@@ -154,33 +154,36 @@ void MainWindow::slot_generate_menu(QPoint pos)
     Q_UNUSED(pos);
     if(pRightMouse)
     {
+        CUIPub::clearMenu(pRightMouse);
         delete pRightMouse;
+        pRightMouse = NULL;
     }
-    debugApp() << "right mouse clicked!!";
-
-    QCursor cur=this->cursor();
-    pRightMouse = new QMenu(this);
-    pRightMouse->addMenu(ui->menuGenerate);
-
     if(pMenuCustom)
     {
         CUIPub::clearMenu(pMenuCustom);
         delete pMenuCustom;
     }
+
+    debugApp() << "right mouse clicked!!";
+
+    pRightMouse = new QMenu(this);
+    pRightMouse->addMenu(ui->menuGenerate);
+
+
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
     {
         pRightMouse->addMenu(pMenuCustom);
     }
-    pRightMouse->exec(cur.pos()); //关联到光标
+    slot_tools_menu(pRightMouse); //工具菜单
+
+    pRightMouse->exec(this->cursor().pos()); //关联到光标
 }
 
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(CFilePub::readFileAll(filename));
-    CPrintPub::printStringListTip(list, "from file");
-    list = CStringPub::stringUniqueSort(list);
-    CPrintPub::printStringListTip(list, "after unique");
+    list = CStringPub::stringUnique(list);
     if(CExpressPub::isZero(list.length()))
     {
         return NULL;
@@ -200,6 +203,24 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
     return pMenu;
 }
 
+
+void MainWindow::slot_tools_menu(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionClearLeft     = new QAction("清空");
+    QAction *pActionPaste         = new QAction("粘贴");
+    QAction *pActionSelectAllCopy = new QAction("全选复制");
+
+//    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
+
+    pMenu->addAction(pActionClearLeft);
+    pMenu->addAction(pActionPaste);
+    pMenu->addAction(pActionSelectAllCopy);
+
+}
 void MainWindow::readSetting()
 {
     readHistorySetting();

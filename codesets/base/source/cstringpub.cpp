@@ -93,7 +93,13 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign,QStr
     return result;
 }
 
-QStringList CStringPub::stringUniqueSort(QStringList &lists)
+QStringList CStringPub::stringUnique(QStringList lists)
+{
+    lists.removeDuplicates();
+    return lists;
+}
+
+QStringList CStringPub::stringUniqueSort(QStringList lists)
 {
     lists.sort();
     lists.removeDuplicates();

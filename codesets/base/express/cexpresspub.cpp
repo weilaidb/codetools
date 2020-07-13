@@ -30,3 +30,9 @@ bool CExpressPub::isTrue(bool bok)
 {
     return (true == bok);
 }
+
+
+bool CExpressPub::isNullPtr(void *Ptr)
+{
+    return (nullptr == Ptr);
+}

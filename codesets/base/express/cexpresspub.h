@@ -14,6 +14,7 @@ public:
     static bool isFull(int length);
     static bool isFalse(bool bok);
     static bool isTrue(bool bok);
+    static bool isNullPtr(void *Ptr);
 };
 
 #endif // CEXPRESSPUB_H

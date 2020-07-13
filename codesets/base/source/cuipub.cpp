@@ -144,12 +144,17 @@ QSettings * CUIPub::writeCurrentSettings(QString &organization,
 
 void CUIPub::clearMenu(QMenu *pMenu)
 {
+    if(nullptr == pMenu)
+    {
+        return;
+    }
     //先删除当前节点
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
         delete action;
     }
     pMenu->clear();
+//    pMenu = nullptr;
 }
 
 void CUIPub::addMenu(QMenu *pMenu, QString item)

@@ -180,6 +180,7 @@ private slots:
 
     void slot_generate_menu(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
+    void slot_tools_menu(QMenu *pMenu);
 
 };
 #endif // MAINWINDOW_H
