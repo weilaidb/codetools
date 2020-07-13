@@ -142,19 +142,34 @@ QSettings * CUIPub::writeCurrentSettings(QString &organization,
     return find_index.value();
 }
 
-void CUIPub::clearMenu(QMenu *pMenu)
+void CUIPub::clearMenu(QMenu **ppMenu)
 {
-    if(nullptr == pMenu)
+    if(nullptr == *ppMenu)
     {
         return;
     }
-    //先删除当前节点
+
+    QMenu *pMenu = *ppMenu;
+    //先删除当前节点,显示与删除有冲突
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
         delete action;
     }
     pMenu->clear();
-//    pMenu = nullptr;
+    delete pMenu;
+    pMenu = nullptr;
+}
+
+QMenu *CUIPub::copyMenu(QMenu *pMenu)
+{
+    QMenu *pNewMenu = new QMenu(pMenu->title());
+    QList<QAction*> listActions = pMenu->actions();
+    foreach (QAction *action, listActions) {
+        QAction *pNewAction = new QAction(action->text());
+        memcpy_s(pNewAction, sizeof(*action), action, sizeof(*action));
+        pNewMenu->addAction(pNewAction);
+    }
+    return pNewMenu;
 }
 
 void CUIPub::addMenu(QMenu *pMenu, QString item)
@@ -288,6 +303,17 @@ QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
 QString CUIPub::getTextEdit(QTextEdit *pEdit)
 {
     return pEdit->toPlainText();
+}
+
+void CUIPub::clearTextEdit(QTextEdit *pEdit)
+{
+    pEdit->clear();
+}
+
+
+void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
+{
+    pEdit->setText(text);
 }
 
 

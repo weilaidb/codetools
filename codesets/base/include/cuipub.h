@@ -23,7 +23,8 @@ public:
     static void procString(QSettings *pSetting, QString name, QString &str, qint8 ucOperType);
     static void procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType);
 
-    static void clearMenu(QMenu *pMenu);
+    static void clearMenu(QMenu **ppMenu);
+    static QMenu *copyMenu(QMenu *pMenu);
     static void addMenu(QMenu *pMenu,QString item);
 
     static int deskWidth();
@@ -44,6 +45,8 @@ public:
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);
     static QString getTextEdit(QTextEdit *pEdit);
+    static void clearTextEdit(QTextEdit *pEdit);
+    static void setTextEdit(QTextEdit *pEdit, QString text);
 
 public:
     enum{

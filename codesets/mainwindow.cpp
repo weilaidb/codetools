@@ -29,6 +29,7 @@
 #include <QProgressBar>
 #include <iostream>
 
+
 extern int AyStyleMain(int argc, char** argv);
 
 
@@ -132,6 +133,7 @@ void MainWindow::initVars()
     m_thread_client = nullptr;
     m_thread_publish = nullptr;
     m_thread_subscribe = nullptr;
+
 }
 
 void MainWindow::initUiOther()
@@ -148,37 +150,28 @@ void MainWindow::initUiOther()
     CFilePub::createFileNoExist(m_FileNameMenu);
 }
 
-
 void MainWindow::slot_generate_menu(QPoint pos)
 {
     Q_UNUSED(pos);
-    if(pRightMouse)
-    {
-        CUIPub::clearMenu(pRightMouse);
-        delete pRightMouse;
-        pRightMouse = NULL;
-    }
-    if(pMenuCustom)
-    {
-        CUIPub::clearMenu(pMenuCustom);
-        delete pMenuCustom;
-    }
-
+    //此处删除会异常，正在显示的内容突然被删除
+    CUIPub::clearMenu(&pMenuCustom);
+    CUIPub::clearMenu(&pRightMouse);
     debugApp() << "right mouse clicked!!";
 
+    QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
-    pRightMouse->addMenu(ui->menuGenerate);
-
+    //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
+    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
     {
         pRightMouse->addMenu(pMenuCustom);
     }
-    slot_tools_menu(pRightMouse); //工具菜单
-
-    pRightMouse->exec(this->cursor().pos()); //关联到光标
+    slot_tools_menu(pRightMouse);
+    pRightMouse->exec(cur.pos()); //关联到光标
 }
+
 
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
@@ -214,7 +207,9 @@ void MainWindow::slot_tools_menu(QMenu *pMenu)
     QAction *pActionPaste         = new QAction("粘贴");
     QAction *pActionSelectAllCopy = new QAction("全选复制");
 
-//    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
+    QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
+    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPaste_trigger()));
+    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopy_trigger()));
 
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionPaste);
@@ -567,7 +562,7 @@ void MainWindow::addMenuRecent(QStringList recent, QMenu *pMenu)
     recent = CStringPub::stringUniqueSortReverse(recent);
 
     //先删除当前节点
-    CUIPub::clearMenu(pMenu);
+    CUIPub::clearMenu(&pMenu);
 
     WORD32 dwLp = 0;
     foreach (QString item, recent) {
@@ -1046,6 +1041,20 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 }
 
 
+void MainWindow::proc_ActionClearLeft_trigger()
+{
+    CUIPub::clearTextEdit(ui->textEdit);
+}
+
+void MainWindow::proc_ActionPaste_trigger()
+{
+    CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
+}
+
+void MainWindow::proc_ActionSelectAllCopy_trigger()
+{
+    CUIPub::setClipBoardText(CUIPub::getTextEdit(ui->textEdit));
+}
 
 
 

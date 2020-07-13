@@ -10,7 +10,6 @@
 #include "filepub.h"
 #include "basetypepub.h"
 
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 namespace Ui { class CDialogAskText; }
@@ -181,6 +180,9 @@ private slots:
     void slot_generate_menu(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
     void slot_tools_menu(QMenu *pMenu);
+    void proc_ActionClearLeft_trigger();
+    void proc_ActionPaste_trigger();
+    void proc_ActionSelectAllCopy_trigger();
 
 };
 #endif // MAINWINDOW_H
