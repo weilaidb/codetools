@@ -19,6 +19,7 @@
 #include "cnetpub.h"
 #include "cregexppub.h"
 #include "cexpresspub.h"
+#include "cprintpub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -164,6 +165,7 @@ void MainWindow::slot_generate_menu(QPoint pos)
     if(pMenuCustom)
     {
         CUIPub::clearMenu(pMenuCustom);
+        delete pMenuCustom;
     }
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
@@ -176,10 +178,14 @@ void MainWindow::slot_generate_menu(QPoint pos)
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(CFilePub::readFileAll(filename));
+    CPrintPub::printStringListTip(list, "from file");
+    list = CStringPub::stringUniqueSort(list);
+    CPrintPub::printStringListTip(list, "after unique");
     if(CExpressPub::isZero(list.length()))
     {
         return NULL;
     }
+
 
     QMenu *pMenu = new QMenu(CStringPub::stringSelfMenu());
     foreach (QString item, list) {
@@ -941,7 +947,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
-        setLeftTextEdit(CRegExpPub::handlerTip(type));
+        setLeftTextEdit(CRegExpPub::handlerTip(configfilename, type));
         setRightTextEdit(CStringPub::emptyString());
         return;
     }

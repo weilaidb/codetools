@@ -19,7 +19,7 @@ T_GenCode g_GenCode[] =
     DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL,NULL),
-    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Common, CRegExpPub::handlerPost_Common),
+    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip, CRegExpPub::handlerPost_Common),
 };
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
@@ -32,13 +32,19 @@ CRegExpPub::CRegExpPub()
 
 QString CRegExpPub::getRegExpFileNameBefore(QString filename)
 {
-    return dirbefore + (filename);
+    return dirbefore + CStringPub::strSim(filename);
 }
 
 QString CRegExpPub::getRegExpFileNameAfter(QString filename)
 {
-    return dirafter  +  (filename);
+    return dirafter  +  CStringPub::strSim(filename);
 }
+
+QString CRegExpPub::getRegExpFileNameTips(QString filename)
+{
+    return dirbefore  +  CStringPub::strSim(filename) + ".tips.txt";
+}
+
 
 QString CRegExpPub::getRegExpByFile(QString filename)
 {
@@ -65,14 +71,19 @@ QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
-QString CRegExpPub::handlerTip(quint32 dwClasstype)
+QString CRegExpPub::handlerTip(QString configfilename, quint32 dwClasstype)
 {
     quint32 dwLp = 0;
+
+    if(CExpressPub::isFull(CStringPub::strSimLen(configfilename)))
+    {
+        return getRegExpByFile(getRegExpFileNameTips(configfilename));
+    }
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
-            return g_GenCode[dwLp].m_tip();
+            return g_GenCode[dwLp].m_tip(configfilename, dwClasstype);
         }
     }
     return CStringPub::emptyString();
@@ -133,6 +144,7 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
 
     QStringList regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
     QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
+    QStringList regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename));
     if(CExpressPub::isZero(regexpsbef.length()))
     {
         return CReturnPub::errorConfigFileNoExist();
@@ -212,15 +224,11 @@ QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QSt
     return result;
 }
 
-QString CRegExpPub::handlerTip_Getter()
+QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstype)
 {
+    Q_UNUSED(configfilename);
+    Q_UNUSED(dwClasstype);
     return ("int abc;");
 }
-
-QString CRegExpPub::handlerTip_Common()
-{
-    return ("please input something");
-}
-
 
 

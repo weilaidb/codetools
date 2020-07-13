@@ -71,7 +71,8 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
         {
             continue;
         }
-        result.append(item);
+        //去除\r 空格等
+        result.append(CStringPub::strSim(item));
     }
 
     return result;
@@ -92,10 +93,10 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign,QStr
     return result;
 }
 
-QStringList CStringPub::stringUniqueSort(QStringList lists)
+QStringList CStringPub::stringUniqueSort(QStringList &lists)
 {
-    lists.removeDuplicates();
     lists.sort();
+    lists.removeDuplicates();
     return lists;
 }
 
@@ -103,8 +104,8 @@ QStringList CStringPub::stringUniqueSortReverse(QStringList lists)
 {
     QStringList reverse;
     reverse.clear();
-    lists.removeDuplicates();
     lists.sort();
+    lists.removeDuplicates();
 
     QVector<QString> list = lists.toVector();
     QVectorIterator<QString> iterator(list);

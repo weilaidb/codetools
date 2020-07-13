@@ -8,7 +8,7 @@
 #include "cfilepub.h"
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
-typedef QString (*handlerTip)();
+typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype);
 typedef QString (*handlerPost)(QString text);
 
 typedef struct T_GenCode{
@@ -43,6 +43,7 @@ public:
     CRegExpPub();
     static QString getRegExpFileNameBefore(QString filename);
     static QString getRegExpFileNameAfter(QString filename);
+    static QString getRegExpFileNameTips(QString filename);
     static QString getRegExpByFile(QString filename);
     static QStringList getRegExpsByFile(QString filename);
     static QString getFileNameByClassType(quint32 dwClasstype);
@@ -51,9 +52,8 @@ public:
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
     static QString handlerRegExp_Getter_Single(QString text,QStringList regbefore, QStringList regafter);
-    static QString handlerTip_Getter();
-    static QString handlerTip_Common();
-    static QString handlerTip(quint32 dwClasstype);
+    static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype);
+    static QString handlerTip(QString configfilename, quint32 dwClasstype);
     static QString handlerPost_Common(QString text);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();

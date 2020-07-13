@@ -1,10 +1,9 @@
 #ifndef CPRINTPUB_H
 #define CPRINTPUB_H
 
-#include <QtDebug>
-#include <QMutex>
-#include <QDateTime>
-#include <QFile>
+#include <QStringList>
+
+
 
 class CPrintPub
 {
@@ -17,8 +16,12 @@ public:
 
     static void printArray(char **argv, int size);
 
+    static void printStringList(QStringList list);
+    static void printStringListTip(QStringList list, QString tip);
 private:
     static QString m_filename;
+
+
 };
 
 #endif // CPRINTPUB_H

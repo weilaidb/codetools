@@ -1,4 +1,8 @@
 #include "cprintpub.h"
+#include "debugApp.h"
+
+
+#include "cprintpub.h"
 #include <sys/fcntl.h>
 #include <QtDebug>
 #include <QMutex>
@@ -17,6 +21,7 @@ CPrintPub::CPrintPub()
 {
 
 }
+
 void CPrintPub::myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     // 加锁
@@ -89,5 +94,24 @@ void CPrintPub::printArray(char **argv, int size)
         }
         cout <<"No:" << i << ", " << argv[i] << endl;
     }
+}
+
+
+
+
+void CPrintPub::printStringList(QStringList list)
+{
+    foreach (QString item, list) {
+        debugApp() << item;
+    }
+}
+
+void CPrintPub::printStringListTip(QStringList list, QString tip)
+{
+    debugApp() << "-----:[" <<tip << "] begin!";
+    foreach (QString item, list) {
+        debugApp() << item;
+    }
+    debugApp() << "-----:[" <<tip << "] end!";
 }
 
