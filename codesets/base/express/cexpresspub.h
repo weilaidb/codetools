@@ -2,8 +2,6 @@
 #define CEXPRESSPUB_H
 
 
-#ifndef EXPRESSPUB_H
-#define EXPRESSPUB_H
 
 #define UNSED(A) (void)A;
 #define STRWORDS(A) #A
@@ -70,10 +68,6 @@ do{  \
         return;\
     }\
 }while(0)
-
-
-
-#endif // EXPRESSPUB_H
 
 
 /**
