@@ -14,7 +14,6 @@
 #include "cuipub.h"
 #include "csqlpub.h"
 #include "cofficepub.h"
-#include "expresspub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
 #include "cregexppub.h"

@@ -97,7 +97,6 @@ HEADERS += \
     mainwindow.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
-    public/include/expresspub.h \
     public/include/filepub.h \
     public/include/looppub.h \
     public/include/signpub.h \
