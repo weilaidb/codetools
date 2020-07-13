@@ -8,12 +8,12 @@ CReturnPub::CReturnPub()
 
 }
 
-QString CReturnPub::strError()
+QString CReturnPub::errorStd()
 {
     return STR_ERROR;
 }
 
-QString CReturnPub::strConfigFileNoExist()
+QString CReturnPub::errorConfigFileNoExist()
 {
     return STR_ERROR_CFGFILE_NOEXIST;
 }

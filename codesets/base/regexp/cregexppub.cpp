@@ -4,22 +4,22 @@
 #include "creturnpub.h"
 #include "cdefinepub.h"
 #include "debugApp.h"
-#include "signpub.h"
+#include "csignpub.h"
 
 T_GenCode g_GenCode[] =
 {
-    DEF_ITEM_INT_STR(CONSTRUCTOR            ,NULL,NULL),
-    DEF_ITEM_INT_STR(DESTRUCTOR             ,NULL,NULL),
-    DEF_ITEM_INT_STR(GETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
-    DEF_ITEM_INT_STR(SETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
-    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter),
-    DEF_ITEM_INT_STR(EQUALITY_OPERATOR      ,NULL,NULL),
-    DEF_ITEM_INT_STR(RELATIONAL_OPERATOR    ,NULL,NULL),
-    DEF_ITEM_INT_STR(STREAM_OUTPUT_OPERATER ,NULL,NULL),
-    DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL),
-    DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL),
-    DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL),
-    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Common),
+    DEF_ITEM_INT_STR(CONSTRUCTOR            ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(DESTRUCTOR             ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(GETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(SETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(EQUALITY_OPERATOR      ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(RELATIONAL_OPERATOR    ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(STREAM_OUTPUT_OPERATER ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL,NULL),
+    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Common, CRegExpPub::handlerPost_Common),
 };
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
@@ -78,6 +78,19 @@ QString CRegExpPub::handlerTip(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
+/**
+ * @brief CRegExpPub::handlerPost_Common
+ * @param text
+ * @return 回调后处理函数
+ */
+QString CRegExpPub::handlerPost_Common(QString text)
+{
+    QString result("");
+    result = text.replace(CStringPub::errorListLenthNg(), CStringPub::emptyString());
+    result = CStringPub::stringList2StringEnter(CStringPub::stringSplitbyNewLineFilterEmpty(text));
+    return result;
+}
+
 
 QString CRegExpPub::replaceSignsPub(QString text)
 {
@@ -122,7 +135,7 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
     QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
     if(CExpressPub::isZero(regexpsbef.length()))
     {
-        return CReturnPub::strConfigFileNoExist();
+        return CReturnPub::errorConfigFileNoExist();
     }
 
     if(CExpressPub::isZero(regexpsaft.length()))
@@ -142,7 +155,15 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
-            return g_GenCode[dwLp].m_hander(text, regexpsbef, regexpsaft);
+            if(g_GenCode[dwLp].m_handler)
+            {
+                result =  g_GenCode[dwLp].m_handler(text, regexpsbef, regexpsaft);
+            }
+
+            if(g_GenCode[dwLp].m_handler_post)
+            {
+                result =  g_GenCode[dwLp].m_handler_post(result);
+            }
         }
     }
 
@@ -173,7 +194,7 @@ QString CRegExpPub::handlerRegExp_Getter_Single(QString text, QStringList regbef
 
     if(match.capturedTexts().length() < 2)
     {
-        return CStringPub::listLenthNg();
+        return CStringPub::errorListLenthNg();
     }
 
     result = replaceSeqPub(result, 1, match.capturedTexts().length(), match);

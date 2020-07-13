@@ -9,12 +9,14 @@
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
 typedef QString (*handlerTip)();
+typedef QString (*handlerPost)(QString text);
 
 typedef struct T_GenCode{
     WORD32 dwClasstype;    /* 类型 */
     QString filename ;    /* 文件名称 */
-    handlerRegExp m_hander ;    /* 回调函数 */
+    handlerRegExp m_handler ;    /* 回调函数 */
     handlerTip    m_tip ;    /* 帮忙，提示 */
+    handlerPost   m_handler_post ;    /* 回调后函数 */
 }T_GenCode, *P_GenCode;
 
 
@@ -52,6 +54,7 @@ public:
     static QString handlerTip_Getter();
     static QString handlerTip_Common();
     static QString handlerTip(quint32 dwClasstype);
+    static QString handlerPost_Common(QString text);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();
 

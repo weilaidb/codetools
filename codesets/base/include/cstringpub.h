@@ -18,6 +18,7 @@ public:
     static QStringList toStringList(const QList<QByteArray> list);
     static QStringList toStringListOnly(QString single);
     static QString stringList2String(const QStringList list, const char *pSign);
+    static QString stringList2StringEnter(const QStringList list);
     //return list by sign
     static QStringList stringSplit(const QString str , const char sign);
     //return list by \n
@@ -33,7 +34,7 @@ public:
     //return stringlist, every item is ""
     static QStringList emptyStringListCount(quint32 dwCount);
     static QString emptyString();
-    static QString listLenthNg();
+    static QString errorListLenthNg();
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();

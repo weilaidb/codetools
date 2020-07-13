@@ -1,7 +1,9 @@
 #ifndef SIGNPUB_H
 #define SIGNPUB_H
 
-#define SIGNENTER         "\n"
+#define SIGNENTER           "\n"
+#define SIGNENTERLR         "\r\n"
+#define SIGN_RE_SPACE         "\\s+"
 #define SIGNSPACE         "  "
 #define SIGNDOUBLEFENHAO  ";;"
 #define SIGNDOUHAO  ","

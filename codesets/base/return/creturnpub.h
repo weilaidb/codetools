@@ -8,8 +8,8 @@ class CReturnPub
 public:
     CReturnPub();
 
-    static QString strError();
-    static QString strConfigFileNoExist();
+    static QString errorStd();
+    static QString errorConfigFileNoExist();
 };
 
 #endif // CRETURNPUB_H

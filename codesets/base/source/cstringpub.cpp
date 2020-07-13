@@ -38,6 +38,18 @@ QString CStringPub::stringList2String(const QStringList list, const char *pSign)
     return result;
 }
 
+QString CStringPub::stringList2StringEnter(const QStringList list)
+{
+    QString result("");
+    foreach (QString item, list) {
+        result += item + SIGNENTER;
+    }
+
+    return result;
+}
+
+
+
 QStringList CStringPub::stringSplit(const QString str , const char sign)
 {
     return  str.split(sign);
@@ -139,9 +151,9 @@ QString CStringPub::emptyString()
     return QString("");
 }
 
-QString CStringPub::listLenthNg()
+QString CStringPub::errorListLenthNg()
 {
-    return QString("列表长度不足");
+    return QString("error:列表长度不足");
 }
 
 QStringList CStringPub::actionNameList(QAction *action)
