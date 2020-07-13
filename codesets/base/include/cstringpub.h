@@ -7,6 +7,10 @@
 //数组大小
 #define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
 
+//定义字符
+#define STRING_SELF_MENU ("自定义")
+
+
 class CStringPub
 {
 public:
@@ -34,6 +38,10 @@ public:
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
     static int strSimLen(QString str);
+
+
+    //字符串
+    static QString stringSelfMenu();
 };
 
 #endif // CSTRINGPUB_H

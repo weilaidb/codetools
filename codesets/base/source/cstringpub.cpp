@@ -180,3 +180,9 @@ int CStringPub::strSimLen(QString str)
 {
     return str.simplified().length();
 }
+
+
+QString CStringPub::stringSelfMenu()
+{
+    return STRING_SELF_MENU;
+}

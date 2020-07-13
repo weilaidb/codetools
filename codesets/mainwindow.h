@@ -91,6 +91,9 @@ private:
 
     /* 右键菜单 */
     QMenu *pRightMouse;
+    //custom menu
+    QMenu *pMenuCustom;
+    QString m_FileNameMenu;
 
 
 private:
@@ -172,9 +175,11 @@ private slots:
     void proc_action_gen_Override_Functions();
     void proc_action_gen_Implement_Functions();
     void proc_action_gen_Generate_Definitions();
+    void proc_action_gen_custom_action(QAction *pAction);
 
 
     void slot_generate_menu(QPoint pos);
+    QMenu *slot_fromfile_menu(QString filename);
 
 };
 #endif // MAINWINDOW_H

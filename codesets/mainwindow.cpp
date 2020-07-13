@@ -140,6 +140,11 @@ void MainWindow::initUiOther()
     //QTextEdit 右键菜单
     ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
     QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu(QPoint)));
+
+    //自定义菜单，从文件读取
+    pMenuCustom = NULL;
+    m_FileNameMenu = "reg/selfmenu.txt";
+    CFilePub::createFileNoExist(m_FileNameMenu);
 }
 
 
@@ -155,8 +160,38 @@ void MainWindow::slot_generate_menu(QPoint pos)
     QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
     pRightMouse->addMenu(ui->menuGenerate);
-    pRightMouse->exec(cur.pos()); //关联到光标
 
+    if(pMenuCustom)
+    {
+        CUIPub::clearMenu(pMenuCustom);
+    }
+    pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
+    if(pMenuCustom)
+    {
+        pRightMouse->addMenu(pMenuCustom);
+    }
+    pRightMouse->exec(cur.pos()); //关联到光标
+}
+
+QMenu *MainWindow::slot_fromfile_menu(QString filename)
+{
+    QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(CFilePub::readFileAll(filename));
+    if(CExpressPub::isZero(list.length()))
+    {
+        return NULL;
+    }
+
+    QMenu *pMenu = new QMenu(CStringPub::stringSelfMenu());
+    foreach (QString item, list) {
+        QAction *pAction = new QAction(item);
+        pMenu->addAction(pAction);
+    }
+    if(pMenu)
+    {
+        QObject::connect(pMenu, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
+    }
+
+    return pMenu;
 }
 
 void MainWindow::readSetting()
@@ -976,6 +1011,13 @@ void MainWindow::proc_action_gen_Generate_Definitions()
 {
 
 }
+
+void MainWindow::proc_action_gen_custom_action(QAction *pAction)
+{
+    debugApp() << "custom action:" << pAction->text();
+}
+
+
 
 
 
