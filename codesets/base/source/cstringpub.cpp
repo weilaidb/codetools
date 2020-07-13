@@ -181,6 +181,10 @@ int CStringPub::strSimLen(QString str)
     return str.simplified().length();
 }
 
+QString CStringPub::strSim(QString str)
+{
+    return str.simplified();
+}
 
 QString CStringPub::stringSelfMenu()
 {

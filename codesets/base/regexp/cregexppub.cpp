@@ -18,6 +18,7 @@ T_GenCode g_GenCode[] =
     DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL),
     DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL),
     DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL),
+    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Common),
 };
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
@@ -96,11 +97,26 @@ QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCo
     return result;
 }
 
-
-QString CRegExpPub::procTextByRegExpList(quint32 dwClasstype, QString text)
+/**
+ * @brief CRegExpPub::procTextByRegExpList
+ * @param classconfig --配置为空时，才使用classType
+ * @param dwClasstype
+ * @param text
+ * @return
+ */
+QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text)
 {
     QString result("");
-    QString filename = getFileNameByClassType(dwClasstype);
+    QString filename  = CStringPub::emptyString();
+    if(CExpressPub::isFull(CStringPub::strSim(classconfig).length()))
+    {
+        filename = CStringPub::strSim(classconfig);
+    }
+    else
+    {
+        filename = getFileNameByClassType(dwClasstype);
+    }
+
     QStringList regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
     QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
     if(CExpressPub::isZero(regexpsbef.length()))
@@ -177,6 +193,11 @@ QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QSt
 QString CRegExpPub::handlerTip_Getter()
 {
     return ("int abc;");
+}
+
+QString CRegExpPub::handlerTip_Common()
+{
+    return ("please input something");
 }
 
 

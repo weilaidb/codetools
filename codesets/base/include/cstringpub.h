@@ -38,6 +38,7 @@ public:
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
     static int strSimLen(QString str);
+    static QString strSim(QString str);
 
 
     //字符串

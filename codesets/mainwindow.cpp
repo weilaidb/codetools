@@ -929,7 +929,7 @@ void MainWindow::proc_action_net_subscribe_trigger()
 
 
 
-void MainWindow::proc_action_gen_pub(int type)
+void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 {
     QString keyword   = CUIPub::getSelectTextEdit(ui->textEdit);
     QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
@@ -954,7 +954,7 @@ void MainWindow::proc_action_gen_pub(int type)
         proctext = lefttext;
     }
 
-    setRightTextEdit(CRegExpPub::procTextByRegExpList(type,proctext));
+    setRightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
 }
 
 void MainWindow::proc_action_gen_Constructor()
@@ -969,17 +969,17 @@ void MainWindow::proc_action_gen_Destructor()
 
 void MainWindow::proc_action_gen_Getter()
 {
-    proc_action_gen_pub(EUM_CLASSTYPE::GETTER);
+    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
 }
 
 void MainWindow::proc_action_gen_Setter()
 {
-    proc_action_gen_pub(EUM_CLASSTYPE::SETTER);
+    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::SETTER);
 }
 
 void MainWindow::proc_action_gen_Getter_and_Setter()
 {
-    proc_action_gen_pub(EUM_CLASSTYPE::GETTER_AND_SETTER);
+    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER_AND_SETTER);
 }
 
 void MainWindow::proc_action_gen_Equality_Operators()
@@ -1015,6 +1015,7 @@ void MainWindow::proc_action_gen_Generate_Definitions()
 void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
+    proc_action_gen_pub(pAction->text(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
 
