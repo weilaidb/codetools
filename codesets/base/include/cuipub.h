@@ -23,7 +23,8 @@ public:
     static void procString(QSettings *pSetting, QString name, QString &str, qint8 ucOperType);
     static void procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType);
 
-    static void clearMenu(QMenu **ppMenu);
+    static void clearMenuAll(QMenu **ppMenu);
+    static void clearMenuItems(QMenu *pMenu);
     static QMenu *copyMenu(QMenu *pMenu);
     static void addMenu(QMenu *pMenu,QString item);
 

@@ -154,8 +154,8 @@ void MainWindow::slot_generate_menu(QPoint pos)
 {
     Q_UNUSED(pos);
     //此处删除会异常，正在显示的内容突然被删除
-    CUIPub::clearMenu(&pMenuCustom);
-    CUIPub::clearMenu(&pRightMouse);
+    CUIPub::clearMenuAll(&pMenuCustom);
+    CUIPub::clearMenuAll(&pRightMouse);
     debugApp() << "right mouse clicked!!";
 
     QCursor cur=this->cursor();
@@ -562,7 +562,7 @@ void MainWindow::addMenuRecent(QStringList recent, QMenu *pMenu)
     recent = CStringPub::stringUniqueSortReverse(recent);
 
     //先删除当前节点
-    CUIPub::clearMenu(&pMenu);
+    CUIPub::clearMenuItems(pMenu);
 
     WORD32 dwLp = 0;
     foreach (QString item, recent) {

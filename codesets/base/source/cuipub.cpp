@@ -1,4 +1,5 @@
 #include "cuipub.h"
+#include "cexpresspub.h"
 
 #include <QDesktopWidget>
 #include <QApplication>
@@ -142,7 +143,7 @@ QSettings * CUIPub::writeCurrentSettings(QString &organization,
     return find_index.value();
 }
 
-void CUIPub::clearMenu(QMenu **ppMenu)
+void CUIPub::clearMenuAll(QMenu **ppMenu)
 {
     if(nullptr == *ppMenu)
     {
@@ -159,6 +160,19 @@ void CUIPub::clearMenu(QMenu **ppMenu)
     delete pMenu;
     pMenu = nullptr;
 }
+void CUIPub::clearMenuItems(QMenu *pMenu)
+{
+    if(nullptr == pMenu)
+    {
+        return;
+    }
+    //先删除当前节点,显示与删除有冲突
+    QList<QAction*> listActions = pMenu->actions();
+    foreach (QAction *action, listActions) {
+        delete action;
+    }
+    pMenu->clear();
+}
 
 QMenu *CUIPub::copyMenu(QMenu *pMenu)
 {
@@ -174,7 +188,15 @@ QMenu *CUIPub::copyMenu(QMenu *pMenu)
 
 void CUIPub::addMenu(QMenu *pMenu, QString item)
 {
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
     QAction *pAction = new QAction(item);
+    if(CExpressPub::isNullPtr(pAction))
+    {
+        return;
+    }
     pMenu->addAction(pAction);
 }
 
