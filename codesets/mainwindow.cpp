@@ -967,6 +967,11 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     {
         setLeftTextEdit(CRegExpPub::handlerTip(configfilename, type));
         setRightTextEdit(CStringPub::emptyString());
+        //如果提示不为空时，则重新调用接口
+        if(CExpressPub::isFull(CUIPub::getTextEditLen(ui->textEdit)))
+        {
+            proc_action_gen_pub(configfilename, type);
+        }
         return;
     }
     else if(CExpressPub::isFull(CStringPub::strSimLen(keyword)))

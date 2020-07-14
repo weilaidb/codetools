@@ -329,6 +329,11 @@ QString CUIPub::getTextEdit(QTextEdit *pEdit)
     return pEdit->toPlainText();
 }
 
+quint32 CUIPub::getTextEditLen(QTextEdit *pEdit)
+{
+    return pEdit->toPlainText().length();
+}
+
 void CUIPub::clearTextEdit(QTextEdit *pEdit)
 {
     pEdit->clear();
