@@ -5,6 +5,7 @@
 #include "cdefinepub.h"
 #include "debugApp.h"
 #include "csignpub.h"
+#include "cprintpub.h"
 
 T_GenCode g_GenCode[] =
 {
@@ -24,6 +25,7 @@ T_GenCode g_GenCode[] =
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
 const QString CRegExpPub::dirafter   = ("reg/after/");
+const QString CRegExpPub::dirtips    = ("reg/tips/");
 
 CRegExpPub::CRegExpPub()
 {
@@ -42,7 +44,7 @@ QString CRegExpPub::getRegExpFileNameAfter(QString filename)
 
 QString CRegExpPub::getRegExpFileNameTips(QString filename)
 {
-    return dirbefore  +  CStringPub::strSim(filename) + ".tips.txt";
+    return dirtips  +  CStringPub::strSim(filename) + ".tip";
 }
 
 
@@ -71,19 +73,24 @@ QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
-QString CRegExpPub::handlerTip(QString configfilename, quint32 dwClasstype)
+QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype)
 {
     quint32 dwLp = 0;
 
-    if(CExpressPub::isFull(CStringPub::strSimLen(configfilename)))
+    if(CExpressPub::isFull(CStringPub::strSimLen(classconfig)))
     {
-        return getRegExpByFile(getRegExpFileNameTips(configfilename));
+        QStringList regexpsbef = CStringPub::emptyStringList();
+        QStringList regexpsaft = CStringPub::emptyStringList();
+        QStringList regexpstip = CStringPub::emptyStringList();
+        checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip);
+
+        return getRegExpByFile(getRegExpFileNameTips(classconfig));
     }
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
-            return g_GenCode[dwLp].m_tip(configfilename, dwClasstype);
+            return g_GenCode[dwLp].m_tip(classconfig, dwClasstype);
         }
     }
     return CStringPub::emptyString();
@@ -98,14 +105,14 @@ QString CRegExpPub::handlerPost_Common(QString text)
 {
     QString result("");
     result = text.replace(CStringPub::errorListLenthNg(), CStringPub::emptyString());
-    result = CStringPub::stringList2StringEnter(CStringPub::stringSplitbyNewLineFilterEmpty(text));
+//    result = CStringPub::stringList2StringEnter(CStringPub::stringSplitbyNewLineFilterEmpty(text));
     return result;
 }
 
 
 QString CRegExpPub::replaceSignsPub(QString text)
 {
-    return text.replace("\\n", "\n").replace("\\t", "    ").replace("\\", "");
+    return text.replace("$NL", "\n").replace("$TB", "    ");
 }
 
 QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match)
@@ -118,7 +125,32 @@ QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCo
         result = result.replace(QString("\\%1").arg(dwLp), match.captured(dwLp));
     }
 
+    CPrintPub::printStringTip(result, "replaceSeqPub before");
     result = replaceSignsPub(result);
+    CPrintPub::printStringTip(result, "replaceSeqPub after");
+    return result;
+}
+
+QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
+                                    , QStringList &regexpsbef
+                                    , QStringList &regexpsaft
+                                    , QStringList &regexpstip
+                                    )
+{
+    QString result("");
+    QString filename  = CStringPub::emptyString();
+    if(CExpressPub::isFull(CStringPub::strSim(classconfig).length()))
+    {
+        filename = CStringPub::strSim(classconfig);
+    }
+    else
+    {
+        filename = getFileNameByClassType(dwClasstype);
+    }
+
+    regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
+    regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
+    regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename));
     return result;
 }
 
@@ -132,19 +164,12 @@ QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCo
 QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text)
 {
     QString result("");
-    QString filename  = CStringPub::emptyString();
-    if(CExpressPub::isFull(CStringPub::strSim(classconfig).length()))
-    {
-        filename = CStringPub::strSim(classconfig);
-    }
-    else
-    {
-        filename = getFileNameByClassType(dwClasstype);
-    }
 
-    QStringList regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
-    QStringList regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
-    QStringList regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename));
+    QStringList regexpsbef = CStringPub::emptyStringList();
+    QStringList regexpsaft = CStringPub::emptyStringList();
+    QStringList regexpstip = CStringPub::emptyStringList();
+    checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip);
+
     if(CExpressPub::isZero(regexpsbef.length()))
     {
         return CReturnPub::errorConfigFileNoExist();

@@ -115,3 +115,12 @@ void CPrintPub::printStringListTip(QStringList list, QString tip)
     debugApp() << "-----:[" <<tip << "] end!";
 }
 
+
+void CPrintPub::printString(QString str)
+{
+    debugApp() << str;
+}
+void CPrintPub::printStringTip(QString str, QString tip)
+{
+    debugApp() << tip << " : " << str;
+}

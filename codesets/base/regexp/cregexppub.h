@@ -48,12 +48,17 @@ public:
     static QStringList getRegExpsByFile(QString filename);
     static QString getFileNameByClassType(quint32 dwClasstype);
     static QString procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text);
+    static QString checkRegExpFile(QString classconfig, quint32 dwClasstype
+                                   , QStringList &regexpsbef
+                                   , QStringList &regexpsaft
+                                   , QStringList &regexpstip
+                                   );
     static QString replaceSignsPub(QString text);
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
     static QString handlerRegExp_Getter_Single(QString text,QStringList regbefore, QStringList regafter);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype);
-    static QString handlerTip(QString configfilename, quint32 dwClasstype);
+    static QString handlerTip(QString classconfig, quint32 dwClasstype);
     static QString handlerPost_Common(QString text);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();
@@ -63,6 +68,7 @@ public:
 private:
     static const QString dirbefore;
     static const QString dirafter;
+    static const QString dirtips;
 };
 
 

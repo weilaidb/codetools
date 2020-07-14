@@ -1,0 +1,1 @@
+\1 \2\3 = \4;$NL#define(fmt,args...) \$NLif(\3)\$NL{\$NL$TB$TBprintf(fmt,##args);\$NL}
