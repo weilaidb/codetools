@@ -183,6 +183,7 @@ private slots:
     void proc_ActionClearLeft_trigger();
     void proc_ActionPaste_trigger();
     void proc_ActionSelectAllCopy_trigger();
+    void proc_ActionOpenConfigDir_trigger();
 
 };
 #endif // MAINWINDOW_H

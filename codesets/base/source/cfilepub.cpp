@@ -306,3 +306,12 @@ QStringList CFilePub::getExistDirAllFiles(QString tips, QString &recent, QString
     return openfiles;
 }
 
+QString CFilePub::getCurrentPath()
+{
+    return QDir::currentPath() + QDir::separator();
+}
+
+QString CFilePub::getSeparator()
+{
+    return QDir::separator();
+}

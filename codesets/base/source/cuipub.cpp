@@ -9,6 +9,8 @@
 #include <QTextLayout>
 #include <QTextBlock>
 #include "debugApp.h"
+#include <windows.h>
+#include "cstringpub.h"
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
 
@@ -339,7 +341,30 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
 }
 
 
+int CUIPub::execCmd(QString path)
+{
+    if(CExpressPub::isZero(CStringPub::strSimLen(path)))
+    {
+        return -1;
+    }
 
+    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+    return 0;
+}
+
+
+int CUIPub::explorerPath(QString path)
+{
+    if(CExpressPub::isZero(CStringPub::strSimLen(path)))
+    {
+        return -1;
+    }
+
+//    QString prefix = "explorer ";
+    QString prefix = "";
+    execCmd(prefix + path);
+    return 0;
+}
 
 
 

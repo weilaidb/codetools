@@ -58,6 +58,7 @@ public:
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();
 
+    static const QString getConfigBefore();
 
 private:
     static const QString dirbefore;

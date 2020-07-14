@@ -49,6 +49,10 @@ public:
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
 
+    //打开路径
+    static int execCmd(QString path);
+    static int explorerPath(QString path);
+
 public:
     enum{
         TYPE_READ = 1,

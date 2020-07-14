@@ -32,6 +32,8 @@ public:
     static QStringList getOpenDiagFilesRecent(QString &openFilePathRecent, QString filter);
     static QString getExistDir(QString tips, QString &recent);
     static QStringList getExistDirAllFiles(QString tips, QString &recent, QStringList &recentlist, QStringList nameFilters);
+    static QString getCurrentPath();
+    static QString getSeparator();
 };
 
 #endif // CFILEPUB_H

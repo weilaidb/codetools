@@ -205,11 +205,14 @@ void MainWindow::slot_tools_menu(QMenu *pMenu)
     QAction *pActionClearLeft     = new QAction("清空");
     QAction *pActionPaste         = new QAction("粘贴");
     QAction *pActionSelectAllCopy = new QAction("全选复制");
+    QAction *pActionOpenConfigDir = new QAction("打开配置文件夹");
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPaste_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopy_trigger()));
+    QObject::connect(pActionOpenConfigDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
 
+    pMenu->addAction(pActionOpenConfigDir);
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
@@ -1053,6 +1056,11 @@ void MainWindow::proc_ActionPaste_trigger()
 void MainWindow::proc_ActionSelectAllCopy_trigger()
 {
     CUIPub::setClipBoardText(CUIPub::getTextEdit(ui->textEdit));
+}
+
+void MainWindow::proc_ActionOpenConfigDir_trigger()
+{
+    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
 
 

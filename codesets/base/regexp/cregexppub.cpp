@@ -232,3 +232,10 @@ QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstyp
 }
 
 
+
+const QString CRegExpPub::getConfigBefore()
+{
+    QString path =  CFilePub::getCurrentPath() + dirbefore;
+    debugApp() << "path:" << path;
+    return path;
+}

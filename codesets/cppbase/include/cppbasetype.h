@@ -3,9 +3,9 @@
 
 
 
-
+#ifndef ARRAYSIZE
 #define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
-
+#endif
 
 typedef char CHAR;
 typedef unsigned char BYTE;

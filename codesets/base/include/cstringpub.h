@@ -5,7 +5,9 @@
 #include <QAction>
 
 //数组大小
+#ifndef ARRAYSIZE
 #define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
+#endif
 
 //定义字符
 #define STRING_SELF_MENU ("自定义")
