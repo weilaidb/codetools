@@ -9,9 +9,6 @@
 #include <QTextEdit>
 #include <QTextBrowser>
 
-//custom menu function pointer
-typedef void (*_handler_slot_menu)(QPoint pos);
-
 class CUIPub
 {
 public:
