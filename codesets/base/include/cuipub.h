@@ -7,6 +7,10 @@
 #include <QMenu>
 #include <QProgressBar>
 #include <QTextEdit>
+#include <QTextBrowser>
+
+//custom menu function pointer
+typedef void (*_handler_slot_menu)(QPoint pos);
 
 class CUIPub
 {
@@ -27,6 +31,7 @@ public:
     static void clearMenuItems(QMenu *pMenu);
     static QMenu *copyMenu(QMenu *pMenu);
     static void addMenu(QMenu *pMenu,QString item);
+    static void setMenuPolicyCustom(QWidget *pWidget);
 
     static int deskWidth();
     static int deskHeigth();
@@ -49,6 +54,9 @@ public:
     static quint32 getTextEditLen(QTextEdit *pEdit);
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
+    static void clearTextBrowser(QTextBrowser *textBrowser);
+    static void setTextBrowser(QTextBrowser *textBrowser, QString text);
+    static QString getTextBrowser(QTextBrowser *textBrowser);
 
     //打开路径
     static int execCmd(QString path);

@@ -8,6 +8,7 @@
 #include <QMimeData>
 #include <QTextLayout>
 #include <QTextBlock>
+#include <QTextBrowser>
 #include "debugApp.h"
 #include <windows.h>
 #include "cstringpub.h"
@@ -345,6 +346,21 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
     pEdit->setText(text);
 }
 
+void CUIPub::clearTextBrowser(QTextBrowser *textBrowser)
+{
+    textBrowser->clear();
+}
+
+void CUIPub::setTextBrowser(QTextBrowser *textBrowser, QString text)
+{
+    textBrowser->setText(text);
+}
+
+QString CUIPub::getTextBrowser(QTextBrowser *textBrowser)
+{
+    return textBrowser->toPlainText();
+}
+
 
 int CUIPub::execCmd(QString path)
 {
@@ -371,7 +387,12 @@ int CUIPub::explorerPath(QString path)
     return 0;
 }
 
+void CUIPub::setMenuPolicyCustom(QWidget *pWidget)
+{
+    pWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+//    QObject::connect(pWidget, SIGNAL(customContextMenuRequested(QPoint)), parent, SLOT(slot_func(QPoint)));
 
+}
 
 
 

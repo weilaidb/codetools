@@ -177,12 +177,17 @@ private slots:
     void proc_action_gen_custom_action(QAction *pAction);
 
 
-    void slot_generate_menu(QPoint pos);
+    void slot_generate_menu_left(QPoint pos);
+    void slot_generate_menu_right(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
-    void slot_tools_menu(QMenu *pMenu);
+    void slot_tools_menu_left(QMenu *pMenu);
+    void slot_tools_menu_right(QMenu *pMenu);
     void proc_ActionClearLeft_trigger();
-    void proc_ActionPaste_trigger();
-    void proc_ActionSelectAllCopy_trigger();
+    void proc_ActionClearRight_trigger();
+    void proc_ActionPasteLeft_trigger();
+    void proc_ActionSelectAllCopyLeft_trigger();
+    void proc_ActionPasteRight_trigger();
+    void proc_ActionSelectAllCopyRight_trigger();
     void proc_ActionOpenConfigDir_trigger();
 
 };

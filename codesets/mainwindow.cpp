@@ -140,8 +140,12 @@ void MainWindow::initUiOther()
     //    this->setWindowIcon();
     pRightMouse = NULL;
     //QTextEdit 右键菜单
-    ui->textEdit->setContextMenuPolicy(Qt::CustomContextMenu);
-    QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu(QPoint)));
+    CUIPub::setMenuPolicyCustom(ui->textEdit);
+    QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_left(QPoint)));
+
+    CUIPub::setMenuPolicyCustom(ui->textBrowser);
+    QObject::connect(ui->textBrowser, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_right(QPoint)));
+
 
     //自定义菜单，从文件读取
     pMenuCustom = NULL;
@@ -149,7 +153,12 @@ void MainWindow::initUiOther()
     CFilePub::createFileNoExist(m_FileNameMenu);
 }
 
-void MainWindow::slot_generate_menu(QPoint pos)
+/**
+ * @brief MainWindow::slot_generate_menu_left
+ * @param pos
+ * 左边显示生成的菜单
+ */
+void MainWindow::slot_generate_menu_left(QPoint pos)
 {
     Q_UNUSED(pos);
     //此处删除会异常，正在显示的内容突然被删除
@@ -167,7 +176,24 @@ void MainWindow::slot_generate_menu(QPoint pos)
     {
         pRightMouse->addMenu(pMenuCustom);
     }
-    slot_tools_menu(pRightMouse);
+    slot_tools_menu_left(pRightMouse);
+    pRightMouse->exec(cur.pos()); //关联到光标
+}
+
+/**
+ * @brief MainWindow::slot_generate_menu_right
+ * @param pos
+ * 右边显示生成的菜单
+ */
+void MainWindow::slot_generate_menu_right(QPoint pos)
+{
+    Q_UNUSED(pos);
+    CUIPub::clearMenuAll(&pRightMouse);
+    debugApp() << "right mouse clicked!!";
+
+    QCursor cur=this->cursor();
+    pRightMouse = new QMenu(this);
+    slot_tools_menu_right(pRightMouse);
     pRightMouse->exec(cur.pos()); //关联到光标
 }
 
@@ -196,7 +222,7 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
 }
 
 
-void MainWindow::slot_tools_menu(QMenu *pMenu)
+void MainWindow::slot_tools_menu_left(QMenu *pMenu)
 {
     if(CExpressPub::isNullPtr(pMenu))
     {
@@ -208,8 +234,8 @@ void MainWindow::slot_tools_menu(QMenu *pMenu)
     QAction *pActionOpenConfigDir = new QAction("打开配置文件夹");
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
-    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPaste_trigger()));
-    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopy_trigger()));
+    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
+    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
     QObject::connect(pActionOpenConfigDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
 
     pMenu->addAction(pActionOpenConfigDir);
@@ -218,6 +244,29 @@ void MainWindow::slot_tools_menu(QMenu *pMenu)
     pMenu->addAction(pActionSelectAllCopy);
 
 }
+
+void MainWindow::slot_tools_menu_right(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionClearRight     = new QAction("清空");
+    QAction *pActionPaste         = new QAction("粘贴");
+    QAction *pActionSelectAllCopy = new QAction("全选复制");
+
+    QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_ActionClearRight_trigger()));
+    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteRight_trigger()));
+    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyRight_trigger()));
+
+    pMenu->addAction(pActionClearRight);
+    pMenu->addAction(pActionPaste);
+    pMenu->addAction(pActionSelectAllCopy);
+
+}
+
+
+
 void MainWindow::readSetting()
 {
     readHistorySetting();
@@ -1053,12 +1102,12 @@ void MainWindow::proc_ActionClearLeft_trigger()
     CUIPub::clearTextEdit(ui->textEdit);
 }
 
-void MainWindow::proc_ActionPaste_trigger()
+void MainWindow::proc_ActionPasteLeft_trigger()
 {
     CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
 }
 
-void MainWindow::proc_ActionSelectAllCopy_trigger()
+void MainWindow::proc_ActionSelectAllCopyLeft_trigger()
 {
     CUIPub::setClipBoardText(CUIPub::getTextEdit(ui->textEdit));
 }
@@ -1068,5 +1117,18 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
     CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
 
+void MainWindow::proc_ActionClearRight_trigger()
+{
+    CUIPub::clearTextBrowser(ui->textBrowser);
+}
 
+void MainWindow::proc_ActionPasteRight_trigger()
+{
+    CUIPub::setTextBrowser(ui->textBrowser, CUIPub::getClipBoardText());
+}
+
+void MainWindow::proc_ActionSelectAllCopyRight_trigger()
+{
+    CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
+}
 
