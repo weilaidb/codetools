@@ -27,6 +27,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/define/ \
     base/sign/ \
     base/print/ \
+    base/tree/ \
     base/net/zeromq/ \
     libs/libzmq-v141-4_3_2 \
     cppbase/string/ \
@@ -64,6 +65,7 @@ SOURCES += \
     base/source/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
+    base/tree/ctreepub.cpp \
     cppbase/string/cstringpubcpp.cpp \
     cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
@@ -89,6 +91,7 @@ HEADERS += \
     base/sign/csignpub.h \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
+    base/tree/ctreepub.h \
     cppbase/include/cppbasetype.h \
     cppbase/include/readmacro.h \
     cppbase/include/testcase.h \

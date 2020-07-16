@@ -1,5 +1,7 @@
 #include "cexpresspub.h"
 
+#include <csignpub.h>
+
 CExpressPub::CExpressPub()
 {
 
@@ -36,3 +38,10 @@ bool CExpressPub::isNullPtr(void *Ptr)
 {
     return (nullptr == Ptr);
 }
+
+bool CExpressPub::isIndexXieLine(QString path)
+{
+    return (-1 != path.lastIndexOf(CSignPub::signLXie()));
+}
+
+

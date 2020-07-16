@@ -12,6 +12,7 @@
 
 #define SIGNENTERS '\n'
 #define SIGNENTERSHUICHE '\r'
+#define SIGLEFTXIELINE '/'
 
 #define FILTERWORD     (";*.doc;*.docx;")
 #define FILTERDOCUMENT (";*.doc;*.docx;*.docm;*.xls;*.xlsx;*.xlsm;*.xlsb,*.ppt;*.pptx;*.pptm;*.txt;*.xml;;*.*")

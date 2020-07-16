@@ -12,6 +12,9 @@ public:
     static QString signEnter();
     static QString signEnterNL();
     static QString signRESpace();
+    static char signLXie();
+
+
 };
 
 #endif // CSIGNPUB_H

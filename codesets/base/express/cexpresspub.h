@@ -1,6 +1,9 @@
 #ifndef CEXPRESSPUB_H
 #define CEXPRESSPUB_H
 
+#include <QString>
+
+
 
 
 #define UNSED(A) (void)A;
@@ -84,6 +87,7 @@ public:
     static bool isFalse(bool bok);
     static bool isTrue(bool bok);
     static bool isNullPtr(void *Ptr);
+    static bool isIndexXieLine(QString path);
 };
 
 #endif // CEXPRESSPUB_H

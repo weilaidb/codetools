@@ -19,6 +19,7 @@
 #include "cregexppub.h"
 #include "cexpresspub.h"
 #include "cprintpub.h"
+#include "ctreepub.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -160,10 +161,32 @@ void MainWindow::initUiOther()
  */
 void MainWindow::slot_generate_menu_left(QPoint pos)
 {
+#if 0
+    Q_UNUSED(pos);
+    pRightMouse = new QMenu(this);
+
+    CTreePub::freeTreeMenu();
+
+    CTreePub::procSubNode("A/B/C/D/E/F");
+    CTreePub::procSubNode("A/B/C/D/E/G");
+    CTreePub::procSubNode("A/B/C/D/E/G/H");
+    CTreePub::showMenuSubNode();
+
+    QCursor cur=this->cursor();
+    QMenu *pTreeMenu = CTreePub::getTreeMenu();
+    if(pTreeMenu)
+    {
+        pRightMouse->addMenu(pTreeMenu);
+    }
+    pRightMouse->exec(cur.pos()); //关联到光标
+    return;
+
+#else
+
     Q_UNUSED(pos);
     //此处删除会异常，正在显示的内容突然被删除
-    CUIPub::clearMenuAll(&pMenuCustom);
     CUIPub::clearMenuAll(&pRightMouse);
+
     debugApp() << "right mouse clicked!!";
 
     QCursor cur=this->cursor();
@@ -174,10 +197,12 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
     {
-        pRightMouse->addMenu(pMenuCustom);
+        pRightMouse->addMenu((pMenuCustom));
     }
     slot_tools_menu_left(pRightMouse);
     pRightMouse->exec(cur.pos()); //关联到光标
+
+#endif
 }
 
 /**
@@ -207,12 +232,12 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
         return NULL;
     }
 
-
-    QMenu *pMenu = new QMenu(CStringPub::stringSelfMenu());
+    QMenu *pMenu = nullptr;
+    CTreePub::freeTreeMenu();
     foreach (QString item, list) {
-        QAction *pAction = new QAction(item);
-        pMenu->addAction(pAction);
+        CTreePub::procSubNode(item);
     }
+    pMenu = CTreePub::getTreeMenu(CStringPub::stringSelfMenu());
     if(pMenu)
     {
         QObject::connect(pMenu, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));

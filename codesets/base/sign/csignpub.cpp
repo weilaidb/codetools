@@ -19,3 +19,8 @@ QString CSignPub::signRESpace()
 {
     return SIGN_RE_SPACE;
 }
+
+char CSignPub::signLXie()
+{
+    return SIGLEFTXIELINE;
+}
