@@ -28,7 +28,6 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QProgressBar>
-#include <iostream>
 
 
 extern int AyStyleMain(int argc, char** argv);
@@ -1113,6 +1112,7 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     {
         proc_action_edit_pub(pAction->data().toString(), EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
         CStringPub::setString(m_EditConfig, pAction->data().toString());
+        showStatusTimer(QString("编译配置文件中:%1").arg(m_EditConfig));
         return;
     }
 
