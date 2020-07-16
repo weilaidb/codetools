@@ -28,6 +28,7 @@ private:
     void showVersion();
     void initDialog();
     void initActionSets();
+    void initCheckBoxSets();
     void initVars();
     void initUiOther();
     void readSetting();
@@ -172,6 +173,7 @@ private slots:
     void proc_action_gen_Implement_Functions();
     void proc_action_gen_Generate_Definitions();
     void proc_action_gen_custom_action(QAction *pAction);
+    void proc_action_EditCfgFile(bool checked);
 
 
     void slot_generate_menu_left(QPoint pos);

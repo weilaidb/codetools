@@ -20,12 +20,37 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="splitter_3">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QTextEdit" name="textEdit"/>
-      <widget class="QTextBrowser" name="textBrowser"/>
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QTextEdit" name="textEdit"/>
+       <widget class="QTextBrowser" name="textBrowser"/>
+      </widget>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QTextEdit" name="textEdit_cfgTips">
+        <property name="placeholderText">
+         <string>配置的提示内容</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_cfgBefore">
+        <property name="placeholderText">
+         <string>正则表达式前</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_cfgAfter">
+        <property name="placeholderText">
+         <string>正则表达式后</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -133,11 +158,18 @@
     <addaction name="action_gen_Implement_Functions"/>
     <addaction name="action_gen_Generate_Definitions"/>
    </widget>
+   <widget class="QMenu" name="menu_8">
+    <property name="title">
+     <string>配置操作</string>
+    </property>
+    <addaction name="action_EditCfgFile"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menuGenerate"/>
+   <addaction name="menu_8"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -280,6 +312,17 @@
   <action name="action_gen_Generate_Definitions">
    <property name="text">
     <string>Generate Definitions...</string>
+   </property>
+  </action>
+  <action name="action_EditCfgFile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>编辑配置文件</string>
    </property>
   </action>
  </widget>

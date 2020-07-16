@@ -20,6 +20,7 @@
 #include "cexpresspub.h"
 #include "cprintpub.h"
 #include "ctreepub.h"
+#include <QCheckBox>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QException>
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     showVersion();
     initActionSets();
+    initCheckBoxSets();
     initVars();
     initUiOther();
 
@@ -67,6 +69,11 @@ void MainWindow::initDialog()
 void MainWindow::showVersion()
 {
     ui->statusbar->showMessage(APP_VERSION);
+}
+
+void MainWindow::initCheckBoxSets()
+{
+
 }
 
 
@@ -107,7 +114,8 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_gen_Implement_Functions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Implement_Functions()));
     QObject::connect(ui->action_gen_Generate_Definitions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Generate_Definitions()));
 
-
+    //edit config
+    QObject::connect(ui->action_EditCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_EditCfgFile(bool)));
 }
 
 
@@ -149,6 +157,9 @@ void MainWindow::initUiOther()
     pMenuCustom = NULL;
     m_FileNameMenu = "reg/selfmenu.txt";
     CFilePub::createFileNoExist(m_FileNameMenu);
+
+    //配置默认关闭
+    emit ui->action_EditCfgFile->triggered(false);
 }
 
 /**
@@ -226,24 +237,26 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     {
         return;
     }
+
     QAction *pActionClearLeft     = new QAction("清空");
     QAction *pActionPaste         = new QAction("粘贴");
     QAction *pActionSelectAllCopy = new QAction("全选复制");
     QAction *pActionOpenCfgDir = new QAction("打开配置文件夹");
-    QAction *pActionEditCfgFile = new QAction("编译配置文件-tip-before-after");
-    pActionEditCfgFile->setChecked(true);
-    QAction *pActionSaveCfgFile = new QAction("保存配置文件-tip-before-after");
+//    QAction *pActionEditCfgFile = new QAction("编译配置文件-tip-before-after");
+//    pActionEditCfgFile->setCheckable(true);
+//    pActionEditCfgFile->setChecked(true);
+//    QAction *pActionSaveCfgFile = new QAction("保存配置文件-tip-before-after");
     QMenu *pMenuConfig = new QMenu("配置");
     pMenuConfig->addAction(pActionOpenCfgDir);
-    pMenuConfig->addAction(pActionEditCfgFile);
-    pMenuConfig->addAction(pActionSaveCfgFile);
+//    pMenuConfig->addAction(pActionEditCfgFile);
+//    pMenuConfig->addAction(pActionSaveCfgFile);
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
-    QObject::connect(pActionEditCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionEditCfgFile_trigger()));
-    QObject::connect(pActionSaveCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionSaveCfgFile_trigger()));
+//    QObject::connect(pActionEditCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionEditCfgFile_trigger()));
+//    QObject::connect(pActionSaveCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionSaveCfgFile_trigger()));
 
     pMenu->addMenu(pMenuConfig);
     pMenu->addAction(pActionClearLeft);
@@ -1083,6 +1096,7 @@ void MainWindow::proc_action_gen_Generate_Definitions()
 
 }
 
+
 void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
@@ -1090,6 +1104,22 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
+void MainWindow::proc_action_EditCfgFile(bool checked)
+{
+    debugApp() << "checked:" << checked;
+    if(CExpressPub::isFalse(checked))
+    {
+        CUIPub::hideTextEdit(ui->textEdit_cfgTips);
+        CUIPub::hideTextEdit(ui->textEdit_cfgBefore);
+        CUIPub::hideTextEdit(ui->textEdit_cfgAfter);
+    }
+    else
+    {
+        CUIPub::showTextEdit(ui->textEdit_cfgTips);
+        CUIPub::showTextEdit(ui->textEdit_cfgBefore);
+        CUIPub::showTextEdit(ui->textEdit_cfgAfter);
+    }
+}
 
 void MainWindow::proc_ActionClearLeft_trigger()
 {

@@ -157,7 +157,11 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
     //先删除当前节点,显示与删除有冲突
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
-        delete action;
+        //不删除数据为非空的节点
+        if(CExpressPub::isZero(action->data().toString()))
+        {
+            delete action;
+        }
     }
     pMenu->clear();
     delete pMenu;
@@ -340,6 +344,16 @@ void CUIPub::clearTextEdit(QTextEdit *pEdit)
     pEdit->clear();
 }
 
+void CUIPub::hideTextEdit(QTextEdit *pEdit)
+{
+    pEdit->hide();
+}
+
+void CUIPub::showTextEdit(QTextEdit *pEdit)
+{
+    pEdit->show();
+}
+
 
 void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
 {
@@ -392,6 +406,16 @@ void CUIPub::setMenuPolicyCustom(QWidget *pWidget)
     pWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 //    QObject::connect(pWidget, SIGNAL(customContextMenuRequested(QPoint)), parent, SLOT(slot_func(QPoint)));
 
+}
+
+
+
+
+QAction *CUIPub::createActionFull(QString name)
+{
+    QAction *pAction = new QAction(name);
+    pAction->setData(name);
+    return pAction;
 }
 
 

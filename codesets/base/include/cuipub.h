@@ -54,10 +54,15 @@ public:
     static void clearTextBrowser(QTextBrowser *textBrowser);
     static void setTextBrowser(QTextBrowser *textBrowser, QString text);
     static QString getTextBrowser(QTextBrowser *textBrowser);
+    static void hideTextEdit(QTextEdit *pEdit);
+    static void showTextEdit(QTextEdit *pEdit);
 
     //打开路径
     static int execCmd(QString path);
     static int explorerPath(QString path);
+
+    //创建Action，并且设置内容不为空
+    static QAction *createActionFull(QString name);
 
 public:
     enum{

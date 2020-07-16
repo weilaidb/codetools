@@ -83,6 +83,7 @@ class CExpressPub
 public:
     CExpressPub();
     static bool isZero(int length);
+    static bool isZero(QString str);
     static bool isFull(int length);
     static bool isFalse(bool bok);
     static bool isTrue(bool bok);
