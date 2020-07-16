@@ -1064,7 +1064,7 @@ void MainWindow::proc_action_gen_Constructor()
 
 void MainWindow::proc_action_gen_Destructor()
 {
-    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
+//    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
 
 }
 
