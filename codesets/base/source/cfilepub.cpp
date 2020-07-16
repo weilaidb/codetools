@@ -311,6 +311,11 @@ QString CFilePub::getCurrentPath()
     return QDir::currentPath() + QDir::separator();
 }
 
+QString CFilePub::getCurrentPath(QString filename)
+{
+    return QDir::currentPath() + QDir::separator() + filename;
+}
+
 QString CFilePub::getSeparator()
 {
     return QDir::separator();

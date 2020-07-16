@@ -418,6 +418,11 @@ QAction *CUIPub::createActionFull(QString name)
     return pAction;
 }
 
+QAction *CUIPub::createAction(QString name)
+{
+    return  new QAction(name);
+}
+
 
 
 bool CUIPub::isCheckedQAction(QAction *pAction)

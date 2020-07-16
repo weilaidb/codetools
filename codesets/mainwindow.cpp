@@ -239,18 +239,22 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
         return;
     }
 
-    QAction *pActionClearLeft     = new QAction("清空");
-    QAction *pActionPaste         = new QAction("粘贴");
-    QAction *pActionSelectAllCopy = new QAction("全选复制");
-    QAction *pActionOpenCfgDir = new QAction("打开配置文件夹");
+
+    QAction *pActionClearLeft     = CUIPub::createAction("清空");
+    QAction *pActionPaste         = CUIPub::createAction("粘贴");
+    QAction *pActionSelectAllCopy = CUIPub::createAction("全选复制");
+    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
+    QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
 
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
+    QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_ActionOpenCfgMenu_trigger()));
 
     pMenu->addAction(pActionOpenCfgDir);
+    pMenu->addAction(pActionOpenCfgMenu);
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
@@ -263,9 +267,9 @@ void MainWindow::slot_tools_menu_right(QMenu *pMenu)
     {
         return;
     }
-    QAction *pActionClearRight     = new QAction("清空");
-    QAction *pActionPaste         = new QAction("粘贴");
-    QAction *pActionSelectAllCopy = new QAction("全选复制");
+    QAction *pActionClearRight     = CUIPub::createAction("清空");
+    QAction *pActionPaste          = CUIPub::createAction("粘贴");
+    QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
 
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_ActionClearRight_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteRight_trigger()));
@@ -1167,6 +1171,12 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
+
+void MainWindow::proc_ActionOpenCfgMenu_trigger()
+{
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
+}
+
 
 void MainWindow::proc_ActionEditCfgFile_trigger()
 {

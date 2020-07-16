@@ -192,6 +192,7 @@ private slots:
     void proc_ActionPasteRight_trigger();
     void proc_ActionSelectAllCopyRight_trigger();
     void proc_ActionOpenConfigDir_trigger();
+    void proc_ActionOpenCfgMenu_trigger();
     void proc_ActionEditCfgFile_trigger();
     void proc_ActionSaveCfgFile_trigger();
 

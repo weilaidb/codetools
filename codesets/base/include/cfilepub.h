@@ -33,6 +33,7 @@ public:
     static QString getExistDir(QString tips, QString &recent);
     static QStringList getExistDirAllFiles(QString tips, QString &recent, QStringList &recentlist, QStringList nameFilters);
     static QString getCurrentPath();
+    static QString getCurrentPath(QString filename);
     static QString getSeparator();
 };
 
