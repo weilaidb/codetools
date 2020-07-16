@@ -165,9 +165,6 @@ private slots:
     void proc_action_gen_pub(QString configfilename, int type);
     void proc_action_gen_Constructor();
     void proc_action_gen_Destructor();
-    void proc_action_gen_Getter();
-    void proc_action_gen_Setter();
-    void proc_action_gen_Getter_and_Setter();
     void proc_action_gen_Equality_Operators();
     void proc_action_gen_Relational_Operators();
     void proc_action_gen_Stream_Output_Operator();

@@ -126,9 +126,6 @@
     </property>
     <addaction name="action_gen_Constructor"/>
     <addaction name="action_gen_Destructor"/>
-    <addaction name="action_gen_Getter"/>
-    <addaction name="action_gen_Setter"/>
-    <addaction name="action_gen_Getter_and_Setter"/>
     <addaction name="action_gen_Equality_Operators"/>
     <addaction name="action_gen_Relational_Operators"/>
     <addaction name="action_gen_Stream_Output_Operator"/>
@@ -253,21 +250,6 @@
   <action name="action_gen_Destructor">
    <property name="text">
     <string>Destructor</string>
-   </property>
-  </action>
-  <action name="action_gen_Getter">
-   <property name="text">
-    <string>Getter</string>
-   </property>
-  </action>
-  <action name="action_gen_Setter">
-   <property name="text">
-    <string>Setter</string>
-   </property>
-  </action>
-  <action name="action_gen_Getter_and_Setter">
-   <property name="text">
-    <string>Getter and Setter</string>
    </property>
   </action>
   <action name="action_gen_Equality_Operators">

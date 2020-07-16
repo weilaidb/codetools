@@ -100,9 +100,6 @@ void MainWindow::initActionSets()
     //generate
     QObject::connect(ui->action_gen_Constructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Constructor()));
     QObject::connect(ui->action_gen_Destructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Destructor()));
-    QObject::connect(ui->action_gen_Getter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Getter()));
-    QObject::connect(ui->action_gen_Setter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Setter()));
-    QObject::connect(ui->action_gen_Getter_and_Setter, SIGNAL(triggered()), this, SLOT(proc_action_gen_Getter_and_Setter()));
     QObject::connect(ui->action_gen_Equality_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Equality_Operators()));
     QObject::connect(ui->action_gen_Relational_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Relational_Operators  ()));
     QObject::connect(ui->action_gen_Stream_Output_Operator  , SIGNAL(triggered()), this, SLOT(proc_action_gen_Stream_Output_Operator()));
@@ -1067,22 +1064,8 @@ void MainWindow::proc_action_gen_Constructor()
 
 void MainWindow::proc_action_gen_Destructor()
 {
-
-}
-
-void MainWindow::proc_action_gen_Getter()
-{
     proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
-}
 
-void MainWindow::proc_action_gen_Setter()
-{
-    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::SETTER);
-}
-
-void MainWindow::proc_action_gen_Getter_and_Setter()
-{
-    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER_AND_SETTER);
 }
 
 void MainWindow::proc_action_gen_Equality_Operators()
