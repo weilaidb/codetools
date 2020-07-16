@@ -8,7 +8,7 @@
 #include "cfilepub.h"
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
-typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype);
+typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
 typedef QString (*handlerPost)(QString text);
 
 typedef struct T_GenCode{
@@ -33,6 +33,7 @@ enum EUM_CLASSTYPE{
     IMPLEMENT_FUNCTIONS,
     GENERATE_DEFINATION,
     COMMON_OPERATIONS, //公共使用
+    EDIT_CFGFILE_OPERATIONS, //编辑配置
 };
 
 
@@ -40,10 +41,20 @@ enum EUM_CLASSTYPE{
 class CRegExpPub
 {
 public:
+    enum EUM_FILETYPE{
+        FILE_TIPS,
+        FILE_BEFORE,
+        FILE_AFTER,
+    };
+
     CRegExpPub();
+    //set
+    static QString setRegExpByFile(QString filename, QString content);
+    //get
     static QString getRegExpFileNameBefore(QString filename);
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpFileNameTips(QString filename);
+    static QString getRegExpFileNamePub(QString filename, int filetype);
     static QString getRegExpByFile(QString filename);
     static QStringList getRegExpsByFile(QString filename);
     static QString getFileNameByClassType(quint32 dwClasstype);
@@ -57,8 +68,9 @@ public:
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
     static QString handlerRegExp_Getter_Single(QString text,QStringList regbefore, QStringList regafter);
-    static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype);
-    static QString handlerTip(QString classconfig, quint32 dwClasstype);
+    static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
+    static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
+    static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);
     static QString handlerPost_Common(QString text);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();

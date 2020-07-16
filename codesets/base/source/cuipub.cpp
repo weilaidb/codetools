@@ -158,7 +158,7 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
         //不删除数据为非空的节点
-        if(CExpressPub::isZero(action->data().toString()))
+        if(CExpressPub::isEmpty(action->data().toString()))
         {
             delete action;
         }
@@ -420,6 +420,10 @@ QAction *CUIPub::createActionFull(QString name)
 
 
 
+bool CUIPub::isCheckedQAction(QAction *pAction)
+{
+    return pAction->isChecked();
+}
 
 
 

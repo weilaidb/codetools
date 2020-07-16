@@ -48,6 +48,26 @@ QString CRegExpPub::getRegExpFileNameTips(QString filename)
 }
 
 
+QString CRegExpPub::getRegExpFileNamePub(QString filename, int filetype)
+{
+    switch (filetype) {
+    case FILE_TIPS:
+        return getRegExpFileNameTips(filename);
+    case FILE_BEFORE:
+        return getRegExpFileNameBefore(filename);
+    case FILE_AFTER:
+        return getRegExpFileNameAfter(filename);
+    default:
+        break;
+    }
+    return CStringPub::emptyString();
+}
+
+QString CRegExpPub::setRegExpByFile(QString filename, QString content)
+{
+    return  CFilePub::writeFileWR(filename, content);
+}
+
 QString CRegExpPub::getRegExpByFile(QString filename)
 {
     //创建空文件如果文件不存在
@@ -73,7 +93,7 @@ QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
     return CStringPub::emptyString();
 }
 
-QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype)
+QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype, int filetype = FILE_TIPS)
 {
     quint32 dwLp = 0;
 
@@ -84,17 +104,39 @@ QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype)
         QStringList regexpstip = CStringPub::emptyStringList();
         checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip);
 
-        return getRegExpByFile(getRegExpFileNameTips(classconfig));
+        return getRegExpByFile(getRegExpFileNamePub(classconfig, filetype));
     }
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
-            return g_GenCode[dwLp].m_tip(classconfig, dwClasstype);
+            return g_GenCode[dwLp].m_tip(classconfig, dwClasstype, filetype);
         }
     }
     return CStringPub::emptyString();
 }
+
+void CRegExpPub::handlerTipSave(QString classconfig, quint32 dwClasstype
+                                , QString content , int filetype = FILE_TIPS)
+{
+//    quint32 dwLp = 0;
+    Q_UNUSED(dwClasstype);
+
+    if(CExpressPub::isFull(CStringPub::strSimLen(classconfig)))
+    {
+        setRegExpByFile(getRegExpFileNamePub(classconfig, filetype), content);
+    }
+////    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
+////    {
+////        if(dwClasstype == g_GenCode[dwLp].dwClasstype)
+////        {
+////            return g_GenCode[dwLp].m_tip(classconfig, dwClasstype, filetype);
+////        }
+////    }
+//    return CStringPub::emptyString();
+}
+
+
 
 /**
  * @brief CRegExpPub::handlerPost_Common
@@ -249,10 +291,11 @@ QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QSt
     return result;
 }
 
-QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstype)
+QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstype,int filetype)
 {
     Q_UNUSED(configfilename);
     Q_UNUSED(dwClasstype);
+    Q_UNUSED(filetype);
     return ("int abc;");
 }
 

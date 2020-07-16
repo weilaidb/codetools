@@ -209,3 +209,25 @@ QString CStringPub::stringSelfMenu()
 {
     return STRING_SELF_MENU;
 }
+
+void CStringPub::clearString(QString &str)
+{
+    str.clear();
+}
+
+void CStringPub::setString(QString &str, QString val)
+{
+    str = val;
+}
+
+QString CStringPub::getString(QString &str)
+{
+    return str;
+}
+
+void CStringPub::clearStringList(QStringList &list)
+{
+    list.clear();
+}
+
+

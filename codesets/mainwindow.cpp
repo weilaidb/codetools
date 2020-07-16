@@ -127,17 +127,18 @@ void MainWindow::initVars()
     logAstyleName = "astyle.log";
     cfgAstyleName = "astyle.conf";
     cfgAstyleNameOrg = cfgAstyleName + ".org";
-    nameFilters.clear();
-    recentfiles_codeformat.clear();
-    recentfiles_document.clear();
+    CStringPub::clearStringList(nameFilters);
+    CStringPub::clearStringList(recentfiles_codeformat);
+    CStringPub::clearStringList(recentfiles_document);
     m_organization = "weilaidb";
     m_application = "codesets";
     m_pSettings = nullptr;
-
     m_thread_server = nullptr;
     m_thread_client = nullptr;
     m_thread_publish = nullptr;
     m_thread_subscribe = nullptr;
+
+    CStringPub::clearString(m_EditConfig);
 
 }
 
@@ -242,23 +243,14 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     QAction *pActionPaste         = new QAction("粘贴");
     QAction *pActionSelectAllCopy = new QAction("全选复制");
     QAction *pActionOpenCfgDir = new QAction("打开配置文件夹");
-//    QAction *pActionEditCfgFile = new QAction("编译配置文件-tip-before-after");
-//    pActionEditCfgFile->setCheckable(true);
-//    pActionEditCfgFile->setChecked(true);
-//    QAction *pActionSaveCfgFile = new QAction("保存配置文件-tip-before-after");
-    QMenu *pMenuConfig = new QMenu("配置");
-    pMenuConfig->addAction(pActionOpenCfgDir);
-//    pMenuConfig->addAction(pActionEditCfgFile);
-//    pMenuConfig->addAction(pActionSaveCfgFile);
+
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
-//    QObject::connect(pActionEditCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionEditCfgFile_trigger()));
-//    QObject::connect(pActionSaveCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionSaveCfgFile_trigger()));
 
-    pMenu->addMenu(pMenuConfig);
+    pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
@@ -1034,7 +1026,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
-        setLeftTextEdit(CRegExpPub::handlerTip(configfilename, type));
+        setLeftTextEdit(CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_TIPS));
         setRightTextEdit(CStringPub::emptyString());
         //如果提示不为空时，则重新调用接口
         if(CExpressPub::isFull(CUIPub::getTextEditLen(ui->textEdit)))
@@ -1055,6 +1047,17 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     setRightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
 }
 
+void MainWindow::proc_action_edit_pub(QString configfilename, int type)
+{
+    QString proctext  = CStringPub::emptyString();
+
+    debugApp() << "configfilename:" << configfilename;
+    debugApp() << "type          :" << type;
+    CUIPub::setTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
+    CUIPub::setTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
+    CUIPub::setTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
+}
+
 void MainWindow::proc_action_gen_Constructor()
 {
 
@@ -1062,7 +1065,7 @@ void MainWindow::proc_action_gen_Constructor()
 
 void MainWindow::proc_action_gen_Destructor()
 {
-//    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
+    //    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
 
 }
 
@@ -1101,6 +1104,14 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
     debugApp() << "custom data  :" << pAction->data();
+    //编辑配置文件模式
+    if(CUIPub::isCheckedQAction(ui->action_EditCfgFile))
+    {
+        proc_action_edit_pub(pAction->data().toString(), EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
+        CStringPub::setString(m_EditConfig, pAction->data().toString());
+        return;
+    }
+
     proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
@@ -1109,12 +1120,28 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
     debugApp() << "checked:" << checked;
     if(CExpressPub::isFalse(checked))
     {
+        if(CExpressPub::isFull(m_EditConfig))
+        {
+            CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgTips)   , CRegExpPub::FILE_TIPS  );
+            CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgBefore) , CRegExpPub::FILE_BEFORE);
+            CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgAfter)  , CRegExpPub::FILE_AFTER );
+            showStatusTimer(QString("保存配置文件成功:%1").arg(m_EditConfig));
+        }
         CUIPub::hideTextEdit(ui->textEdit_cfgTips);
         CUIPub::hideTextEdit(ui->textEdit_cfgBefore);
         CUIPub::hideTextEdit(ui->textEdit_cfgAfter);
     }
     else
     {
+        if(CExpressPub::isFull(m_EditConfig))
+        {
+            showStatusTimer(QString("进入编辑配置文件模式:%1").arg(m_EditConfig));
+        }
+        else
+        {
+            showStatusTimer(QString("进入编辑配置文件模式"));
+        }
+
         CUIPub::showTextEdit(ui->textEdit_cfgTips);
         CUIPub::showTextEdit(ui->textEdit_cfgBefore);
         CUIPub::showTextEdit(ui->textEdit_cfgAfter);

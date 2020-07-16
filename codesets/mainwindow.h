@@ -123,6 +123,9 @@ private:
     CNetThreadPub *m_thread_client;
     CNetThreadPub *m_thread_publish;
     CNetThreadPub *m_thread_subscribe;
+
+    //Edit File
+    QString m_EditConfig;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
@@ -174,6 +177,7 @@ private slots:
     void proc_action_gen_Generate_Definitions();
     void proc_action_gen_custom_action(QAction *pAction);
     void proc_action_EditCfgFile(bool checked);
+    void proc_action_edit_pub(QString configfilename, int type);
 
 
     void slot_generate_menu_left(QPoint pos);

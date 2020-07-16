@@ -63,6 +63,7 @@ public:
 
     //创建Action，并且设置内容不为空
     static QAction *createActionFull(QString name);
+    static bool isCheckedQAction(QAction *pAction);
 
 public:
     enum{

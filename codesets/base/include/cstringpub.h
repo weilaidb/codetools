@@ -43,6 +43,10 @@ public:
     static QStringList wordNameFilter();
     static int strSimLen(QString str);
     static QString strSim(QString str);
+    static void clearString(QString &str);
+    static void setString(QString &str, QString val);
+    static QString getString(QString &str);
+    static void clearStringList(QStringList &list);
 
 
     //字符串

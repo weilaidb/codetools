@@ -17,9 +17,14 @@ bool CExpressPub::isZero(int length)
     return (0 == length);
 }
 
-bool CExpressPub::isZero(QString str)
+bool CExpressPub::isEmpty(QString str)
 {
     return (0 == str.simplified().length());
+}
+
+bool CExpressPub::isFull(QString str)
+{
+    return (0 != str.simplified().length());
 }
 
 bool CExpressPub::isFull(int length)
