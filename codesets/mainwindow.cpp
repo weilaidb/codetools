@@ -158,28 +158,6 @@ void MainWindow::initUiOther()
  */
 void MainWindow::slot_generate_menu_left(QPoint pos)
 {
-#if 0
-    Q_UNUSED(pos);
-    pRightMouse = new QMenu(this);
-
-    CTreePub::freeTreeMenu();
-
-    CTreePub::procSubNode("A/B/C/D/E/F");
-    CTreePub::procSubNode("A/B/C/D/E/G");
-    CTreePub::procSubNode("A/B/C/D/E/G/H");
-    CTreePub::showMenuSubNode();
-
-    QCursor cur=this->cursor();
-    QMenu *pTreeMenu = CTreePub::getTreeMenu();
-    if(pTreeMenu)
-    {
-        pRightMouse->addMenu(pTreeMenu);
-    }
-    pRightMouse->exec(cur.pos()); //关联到光标
-    return;
-
-#else
-
     Q_UNUSED(pos);
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse);
@@ -198,8 +176,6 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
     }
     slot_tools_menu_left(pRightMouse);
     pRightMouse->exec(cur.pos()); //关联到光标
-
-#endif
 }
 
 /**
@@ -253,14 +229,23 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     QAction *pActionClearLeft     = new QAction("清空");
     QAction *pActionPaste         = new QAction("粘贴");
     QAction *pActionSelectAllCopy = new QAction("全选复制");
-    QAction *pActionOpenConfigDir = new QAction("打开配置文件夹");
+    QAction *pActionOpenCfgDir = new QAction("打开配置文件夹");
+    QAction *pActionEditCfgFile = new QAction("编译配置文件-tip-before-after");
+    pActionEditCfgFile->setChecked(true);
+    QAction *pActionSaveCfgFile = new QAction("保存配置文件-tip-before-after");
+    QMenu *pMenuConfig = new QMenu("配置");
+    pMenuConfig->addAction(pActionOpenCfgDir);
+    pMenuConfig->addAction(pActionEditCfgFile);
+    pMenuConfig->addAction(pActionSaveCfgFile);
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
-    QObject::connect(pActionOpenConfigDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
+    QObject::connect(pActionEditCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionEditCfgFile_trigger()));
+    QObject::connect(pActionSaveCfgFile, SIGNAL(triggered()), this, SLOT(proc_ActionSaveCfgFile_trigger()));
 
-    pMenu->addAction(pActionOpenConfigDir);
+    pMenu->addMenu(pMenuConfig);
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
@@ -1125,6 +1110,17 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
+
+void MainWindow::proc_ActionEditCfgFile_trigger()
+{
+    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
+}
+
+void MainWindow::proc_ActionSaveCfgFile_trigger()
+{
+    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
+}
+
 
 void MainWindow::proc_ActionClearRight_trigger()
 {

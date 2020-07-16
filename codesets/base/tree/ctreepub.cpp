@@ -205,3 +205,28 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
         pMenu->addAction(tNode.u.m_pAction);
     }
 }
+
+
+
+#if 0
+//测试
+    Q_UNUSED(pos);
+    pRightMouse = new QMenu(this);
+
+    CTreePub::freeTreeMenu();
+
+    CTreePub::procSubNode("A/B/C/D/E/F");
+    CTreePub::procSubNode("A/B/C/D/E/G");
+    CTreePub::procSubNode("A/B/C/D/E/G/H");
+    CTreePub::showMenuSubNode();
+
+    QCursor cur=this->cursor();
+    QMenu *pTreeMenu = CTreePub::getTreeMenu();
+    if(pTreeMenu)
+    {
+        pRightMouse->addMenu(pTreeMenu);
+    }
+    pRightMouse->exec(cur.pos()); //关联到光标
+    return;
+
+#endif
