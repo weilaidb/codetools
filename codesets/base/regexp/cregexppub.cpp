@@ -65,7 +65,7 @@ QString CRegExpPub::getRegExpFileNamePub(QString filename, int filetype)
 
 QString CRegExpPub::setRegExpByFile(QString filename, QString content)
 {
-    return  CFilePub::writeFileWR(filename, content);
+    return  CFilePub::writeFileWOnly(filename, content);
 }
 
 QString CRegExpPub::getRegExpByFile(QString filename)

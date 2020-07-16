@@ -159,6 +159,20 @@ QString CFilePub::writeFileWR(QString filename, QString msg)
     return msg;
 }
 
+QString CFilePub::writeFileWOnly(QString filename, QString msg)
+{
+    QString result("");
+    QFile file(filename);
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        return result;
+    }
+    result = file.write(msg.toLocal8Bit().data());
+    file.close();
+
+    return msg;
+}
+
 
 QString CFilePub::deleteFile(QString filename)
 {
