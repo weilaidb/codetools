@@ -1118,7 +1118,8 @@ void MainWindow::proc_action_gen_Generate_Definitions()
 void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
-    proc_action_gen_pub(pAction->text(), EUM_CLASSTYPE::COMMON_OPERATIONS);
+    debugApp() << "custom data  :" << pAction->data();
+    proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
 

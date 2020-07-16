@@ -26,7 +26,7 @@ void CTreePub::procSubNode(QString filename)
     initSubNode(tNode);
 
     pos = strKey.lastIndexOf(CSignPub::signLXie());
-    debugApp() << "pos:" << pos <<" , "<< strKey;
+//    debugApp() << "pos:" << pos <<" , "<< strKey;
     m_menuIter = m_menuSubNode.find(strKey);
     if((m_menuSubNode.end() == m_menuIter)
             && setSubNode(tNode, false, strKey))
@@ -38,7 +38,7 @@ void CTreePub::procSubNode(QString filename)
     {
         strKey = strKey.mid(0,pos);
         pos = strKey.lastIndexOf(CSignPub::signLXie());
-        debugApp() << "pos:" << pos <<" , "<< strKey;
+//        debugApp() << "pos:" << pos <<" , "<< strKey;
         m_menuIter = m_menuSubNode.find(strKey);
         if((m_menuSubNode.end() == m_menuSubNode.find(strKey))
                 && setSubNode(tNode, true, strKey))
@@ -119,19 +119,10 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
   *根路径
   */
 //        printSubNode(tNode);
+        //root node
         if(CExpressPub::isZero(tNode.m_parent.length()))
         {
-            if(tNode.m_isMenu)
-            {
-                tNode.u.m_pMenu = new QMenu(tNode.m_name);
-                m_RootMenu->addMenu(tNode.u.m_pMenu);
-            }
-            else
-            {
-                tNode.u.m_pAction = new QAction(tNode.m_name);
-                m_RootMenu->addAction(tNode.u.m_pAction);
-            }
-            debugApp() << "root:" << tNode.m_name;
+            procMenuAction(m_RootMenu,tNode);
             continue;
         }
 
@@ -144,24 +135,17 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
         {
             if(tNode.m_isMenu)
             {
-                QMenu *pMenu = new QMenu(tNode.m_name);
-                tNode.u.m_pMenu = pMenu;
-                m_menuFindIter.value().u.m_pMenu->addMenu(pMenu);
-                debugApp() << "m_isMenu";
+                procMenuAction(m_menuFindIter.value().u.m_pMenu,tNode);
             }
             else
             {
-                QAction *pAction = new QAction(tNode.m_name);
-                tNode.u.m_pAction = pAction;
                 //如果父节点也为根节点，不处理，可提示用户异常
                 if(m_menuFindIter.value().u.m_pMenu && m_menuFindIter.value().m_isMenu)
                 {
-                    m_menuFindIter.value().u.m_pMenu->addAction(pAction);
-                    debugApp() << "m_isAction";
+                    procMenuAction(m_menuFindIter.value().u.m_pMenu,tNode);
                 }
                 else
                 {
-                    debugApp() << "parent is not a menu";
                     ShowTipsInfo(QString("%1 node invalid!!").arg(tNode.m_path));
                 }
             }
@@ -207,4 +191,17 @@ void CTreePub::freeSubNode(T_SubNode &node)
 
 }
 
-
+void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
+{
+    if(tNode.m_isMenu)
+    {
+        tNode.u.m_pMenu = new QMenu(tNode.m_name);
+        pMenu->addMenu(tNode.u.m_pMenu);
+    }
+    else
+    {
+        tNode.u.m_pAction = new QAction(tNode.m_name);
+        tNode.u.m_pAction->setData(tNode.m_path);
+        pMenu->addAction(tNode.u.m_pAction);
+    }
+}

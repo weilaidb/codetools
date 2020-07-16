@@ -36,6 +36,7 @@ public:
     static void showMenuSubNode();
     static QMenu *getTreeMenu(QString rootname);
     static void freeTreeMenu();
+    static void procMenuAction(QMenu *pMenu, T_SubNode &tNode);
 
 private:
     static QMap<QString, T_SubNode> m_menuSubNode;
