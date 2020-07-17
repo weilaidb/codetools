@@ -302,6 +302,7 @@ void MainWindow::pubHistorySetting(int type)
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openDirPathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
+    CUIPub::procAction(m_pSettings, ui->action_SwitchClearLeftText, ui->action_SwitchClearLeftText->text(), ucType);
 }
 
 void MainWindow::readHistorySetting()

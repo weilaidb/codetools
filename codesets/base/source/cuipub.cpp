@@ -95,6 +95,26 @@ void CUIPub::procString(QSettings *pSetting, QString name, QString &str, qint8 u
     }
 }
 
+void CUIPub::procAction(QSettings *pSetting, QAction *pAction, QString name, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pAction->setChecked(pSetting->value(name).toBool());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(name,pAction->isChecked());
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+
+
 void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
 {
     switch (ucOperType) {
