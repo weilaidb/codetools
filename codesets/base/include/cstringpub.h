@@ -10,7 +10,7 @@
 #endif
 
 //定义字符
-#define STRING_SELF_MENU ("自定义")
+#define STRING_SELF_MENU ("Generate")
 
 
 class CStringPub

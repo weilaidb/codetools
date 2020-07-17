@@ -163,6 +163,7 @@
      <string>配置操作</string>
     </property>
     <addaction name="action_EditCfgFile"/>
+    <addaction name="action_SwitchClearLeftText"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -323,6 +324,14 @@
    </property>
    <property name="text">
     <string>编辑配置文件</string>
+   </property>
+  </action>
+  <action name="action_SwitchClearLeftText">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>切换清除左侧内容</string>
    </property>
   </action>
  </widget>

@@ -178,7 +178,7 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
     QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
-    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
+//    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
@@ -1110,16 +1110,25 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
     debugApp() << "custom data  :" << pAction->data();
+
+    if(CUIPub::isCheckedQAction(ui->action_SwitchClearLeftText))
+    {
+        CUIPub::clearTextEdit(ui->textEdit);
+    }
+
+
     //编辑配置文件模式
     if(CUIPub::isCheckedQAction(ui->action_EditCfgFile))
     {
         proc_action_edit_pub(pAction->data().toString(), EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
         CStringPub::setString(m_EditConfig, pAction->data().toString());
         showStatusTimer(QString("编译配置文件中:%1").arg(m_EditConfig));
+        setWindowTitle(QString("编译配置文件中【%1】").arg(m_EditConfig));
         return;
     }
 
     CStringPub::setString(m_EditConfig, pAction->data().toString());
+    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
     proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
