@@ -115,6 +115,10 @@ void MainWindow::initActionSets()
 
     //edit config
     QObject::connect(ui->action_EditCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_EditCfgFile(bool)));
+    QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_textEditChanged()));
+
+    //text edit
+
 }
 
 
@@ -1033,7 +1037,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
-        setLeftTextEdit(CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_TIPS));
+        CUIPub::setTextEditOnEmpty(ui->textEdit, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_TIPS));
         setRightTextEdit(CStringPub::emptyString());
         //如果提示不为空时，则重新调用接口
         if(CExpressPub::isFull(CUIPub::getTextEditLen(ui->textEdit)))
@@ -1106,7 +1110,11 @@ void MainWindow::proc_action_gen_Generate_Definitions()
 
 }
 
-
+/**
+ * @brief MainWindow::proc_action_gen_custom_action
+ * @param pAction
+ * 自定义菜单，右键
+ */
 void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
     debugApp() << "custom action:" << pAction->text();
@@ -1223,3 +1231,17 @@ void MainWindow::proc_ActionClearEmpty_trigger()
     CUIPub::setTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
 }
 
+
+void MainWindow::proc_textEditChanged()
+{
+    //编辑配置文件模式
+    if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
+            || CExpressPub::isEmpty(m_EditConfig))
+    {
+        return;
+    }
+
+    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
+    proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
+
+}

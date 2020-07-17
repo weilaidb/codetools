@@ -380,6 +380,15 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
     pEdit->setText(text);
 }
 
+void CUIPub::setTextEditOnEmpty(QTextEdit *pEdit, QString text)
+{
+    if(CExpressPub::isEmpty(pEdit->toPlainText()))
+    {
+        pEdit->setText(text);
+    }
+}
+
+
 void CUIPub::clearTextBrowser(QTextBrowser *textBrowser)
 {
     textBrowser->clear();
