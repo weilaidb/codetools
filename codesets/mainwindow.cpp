@@ -269,14 +269,17 @@ void MainWindow::slot_tools_menu_right(QMenu *pMenu)
     QAction *pActionClearRight     = CUIPub::createAction("清空");
     QAction *pActionPaste          = CUIPub::createAction("粘贴");
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
+    QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
 
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_ActionClearRight_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteRight_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyRight_trigger()));
+    QObject::connect(pActionClearEmpty, SIGNAL(triggered()), this, SLOT(proc_ActionClearEmpty_trigger()));
 
     pMenu->addAction(pActionClearRight);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
+    pMenu->addAction(pActionClearEmpty);
 
 }
 
@@ -1116,6 +1119,7 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
         return;
     }
 
+    CStringPub::setString(m_EditConfig, pAction->data().toString());
     proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
@@ -1202,5 +1206,10 @@ void MainWindow::proc_ActionPasteRight_trigger()
 void MainWindow::proc_ActionSelectAllCopyRight_trigger()
 {
     CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
+}
+
+void MainWindow::proc_ActionClearEmpty_trigger()
+{
+    CUIPub::setTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
 }
 

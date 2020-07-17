@@ -109,7 +109,7 @@ QString CFilePub::readFileAll(QString filename)
         return result;
     }
     file.open(QIODevice::ReadOnly);
-    result = file.readAll();
+    result = QString::fromLocal8Bit(file.readAll());
     file.close();
 
     return result;

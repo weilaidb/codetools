@@ -231,3 +231,21 @@ void CStringPub::clearStringList(QStringList &list)
 }
 
 
+QString CStringPub::stringFilterEmpty(const QString str)
+{
+    QString result;
+    const char sign = '\n';
+    QStringList strlist = str.split(sign);
+    foreach (QString item, strlist) {
+        if(item.simplified().isEmpty())
+        {
+            continue;
+        }
+        //去除\r 空格等
+        result.append(CStringPub::strSim(item));
+    }
+
+    return result;
+}
+
+

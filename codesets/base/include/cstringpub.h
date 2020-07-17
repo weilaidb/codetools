@@ -47,6 +47,7 @@ public:
     static void setString(QString &str, QString val);
     static QString getString(QString &str);
     static void clearStringList(QStringList &list);
+    static QString stringFilterEmpty(const QString str);
 
 
     //字符串
