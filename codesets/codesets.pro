@@ -1,6 +1,6 @@
 QT       += core gui
 QT       += sql
-QT       += axcontainer
+#QT       += axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,7 +18,6 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/include/ \
     base/msgtips/ \
     base/mysql/ \
-    base/office/ \
     base/dialog/ \
     base/thread/ \
     base/regexp/ \
@@ -29,13 +28,11 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/print/ \
     base/tree/ \
     base/map/ \
-    base/net/zeromq/ \
-    libs/libzmq-v141-4_3_2 \
     cppbase/string/ \
     cppbase/include/ \
 
 #$$PWD指当前路径， -l指定的文件去掉 .lib 以及 lib替换为l
-LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
+#LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
 
 
 # You can also make your code fail to compile if it uses deprecated APIs.
@@ -57,7 +54,6 @@ SOURCES += \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
-    base/office/cofficepub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
     base/return/creturnpub.cpp \
@@ -87,7 +83,6 @@ HEADERS += \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
-    base/office/cofficepub.h \
     base/print/cprintpub.h \
     base/regexp/cregexppub.h \
     base/return/creturnpub.h \

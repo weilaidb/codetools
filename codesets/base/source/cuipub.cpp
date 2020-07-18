@@ -10,7 +10,6 @@
 #include <QTextBlock>
 #include <QTextBrowser>
 #include "debugApp.h"
-#include <windows.h>
 #include "cstringpub.h"
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
@@ -207,7 +206,7 @@ QMenu *CUIPub::copyMenu(QMenu *pMenu)
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
         QAction *pNewAction = new QAction(action->text());
-        memcpy_s(pNewAction, sizeof(*action), action, sizeof(*action));
+        memcpy((void*)pNewAction, (void*)action, sizeof(*action));
         pNewMenu->addAction(pNewAction);
     }
     return pNewMenu;
@@ -412,7 +411,7 @@ int CUIPub::execCmd(QString path)
         return -1;
     }
 
-    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+//    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
     return 0;
 }
 

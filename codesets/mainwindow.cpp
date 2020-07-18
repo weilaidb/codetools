@@ -13,7 +13,6 @@
 #include "looppub.h"
 #include "cuipub.h"
 #include "csqlpub.h"
-#include "cofficepub.h"
 #include "cdialogpub.h"
 #include "cnetpub.h"
 #include "cregexppub.h"
@@ -756,68 +755,68 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
 {
-    QString filename;
-    int ret =0;
-    switch (ucActionType) {
-    case ACTIONTYPE_OPEN:
-    {
-        filename = list.at(0);
+//    QString filename;
+//    int ret =0;
+//    switch (ucActionType) {
+//    case ACTIONTYPE_OPEN:
+//    {
+//        filename = list.at(0);
 
-        ret = CFilePub::isFile(filename);
-        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_DIR_NO_SUPPORT);
+//        ret = CFilePub::isFile(filename);
+//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_DIR_NO_SUPPORT);
 
-        ret = CFilePub::fileExist(filename);
-        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+//        ret = CFilePub::fileExist(filename);
+//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
 
-        COfficePub *pObjOffice = new COfficePub();
-        setRightTextEdit(pObjOffice->readWord(filename));
-        showStatus("打开文档成功!" + filename);
-    }
-        break;
-    case ACTIONTYPE_SEARCH:
-    {
-        filename = list.at(0);
+//        COfficePub *pObjOffice = new COfficePub();
+//        setRightTextEdit(pObjOffice->readWord(filename));
+//        showStatus("打开文档成功!" + filename);
+//    }
+//        break;
+//    case ACTIONTYPE_SEARCH:
+//    {
+//        filename = list.at(0);
 
-        ret = CFilePub::fileExist(filename);
-        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+//        ret = CFilePub::fileExist(filename);
+//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
 
-        COfficePub *pObjOffice = new COfficePub(findtext);
-        setRightTextEdit(pObjOffice->readWordFindText(filename));
-        setLeftTextEdit(findtext);
-        showStatus("查找文档结束!" + filename);
-    }
-        break;
-    case ACTIONTYPE_SEARCH_ALLFILES:
-    {
-        QProgressBar *pProgressBar = new QProgressBar(this);
-        QString result("");
-        COfficePub *pObjOffice = new COfficePub(findtext);
-        int cur = 0;
-        QString singres("");
-        foreach (QString item, list) {
-            qApp->processEvents();
-            singres = pObjOffice->readWordFindText(item);
-            if(singres.trimmed().isEmpty())
-            {
-                continue;
-            }
-            debugApp() << "[OpenFile]" + item ;
-            result+="[OpenFile]" + item + SIGNENTER;
-            result+=singres + SIGNENTER;
-            cur++;
-            CUIPub::progressBar(pProgressBar,cur, list.size());
-        }
-        delete  pProgressBar;
-        setRightTextEdit(result);
-        setLeftTextEdit(findtext);
-        showStatus("查找文档结束!" + list.at(0));
-    }
-        break;
-    default:
-        break;
-    }
-    updateRecent(recentfiles_document,  ui->menu_document_search_recent);
-    updateRecent(recentfiles_document,  ui->menu_document_open_recent);
+//        COfficePub *pObjOffice = new COfficePub(findtext);
+//        setRightTextEdit(pObjOffice->readWordFindText(filename));
+//        setLeftTextEdit(findtext);
+//        showStatus("查找文档结束!" + filename);
+//    }
+//        break;
+//    case ACTIONTYPE_SEARCH_ALLFILES:
+//    {
+//        QProgressBar *pProgressBar = new QProgressBar(this);
+//        QString result("");
+//        COfficePub *pObjOffice = new COfficePub(findtext);
+//        int cur = 0;
+//        QString singres("");
+//        foreach (QString item, list) {
+//            qApp->processEvents();
+//            singres = pObjOffice->readWordFindText(item);
+//            if(singres.trimmed().isEmpty())
+//            {
+//                continue;
+//            }
+//            debugApp() << "[OpenFile]" + item ;
+//            result+="[OpenFile]" + item + SIGNENTER;
+//            result+=singres + SIGNENTER;
+//            cur++;
+//            CUIPub::progressBar(pProgressBar,cur, list.size());
+//        }
+//        delete  pProgressBar;
+//        setRightTextEdit(result);
+//        setLeftTextEdit(findtext);
+//        showStatus("查找文档结束!" + list.at(0));
+//    }
+//        break;
+//    default:
+//        break;
+//    }
+//    updateRecent(recentfiles_document,  ui->menu_document_search_recent);
+//    updateRecent(recentfiles_document,  ui->menu_document_open_recent);
 }
 
 /**
