@@ -6,21 +6,24 @@
 #include "debugApp.h"
 #include "csignpub.h"
 #include "cprintpub.h"
+#include "cmappub.h"
+
+#include <cmappub.h>
 
 T_GenCode g_GenCode[] =
 {
     DEF_ITEM_INT_STR(CONSTRUCTOR            ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(DESTRUCTOR             ,NULL,NULL,NULL),
-    DEF_ITEM_INT_STR(GETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
-    DEF_ITEM_INT_STR(SETTER                 ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
-    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(GETTER                 ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(SETTER                 ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip_Getter ,NULL),
+    DEF_ITEM_INT_STR(GETTER_AND_SETTER      ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip_Getter ,NULL),
     DEF_ITEM_INT_STR(EQUALITY_OPERATOR      ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(RELATIONAL_OPERATOR    ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(STREAM_OUTPUT_OPERATER ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(OVEERRIDE_FUNCTIONS    ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(IMPLEMENT_FUNCTIONS    ,NULL,NULL,NULL),
     DEF_ITEM_INT_STR(GENERATE_DEFINATION    ,NULL,NULL,NULL),
-    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Getter, CRegExpPub::handlerTip, CRegExpPub::handlerPost_Common),
+    DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip, CRegExpPub::handlerPost_Pub),
 };
 
 const QString CRegExpPub::dirbefore  = ("reg/before/");
@@ -102,7 +105,8 @@ QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype, int fil
         QStringList regexpsbef = CStringPub::emptyStringList();
         QStringList regexpsaft = CStringPub::emptyStringList();
         QStringList regexpstip = CStringPub::emptyStringList();
-        checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip);
+        QString regexpsmode    = CStringPub::emptyString();
+        checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip, regexpsmode);
 
         return getRegExpByFile(getRegExpFileNamePub(classconfig, filetype));
     }
@@ -119,31 +123,22 @@ QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype, int fil
 void CRegExpPub::handlerTipSave(QString classconfig, quint32 dwClasstype
                                 , QString content , int filetype = FILE_TIPS)
 {
-//    quint32 dwLp = 0;
     Q_UNUSED(dwClasstype);
 
     if(CExpressPub::isFull(CStringPub::strSimLen(classconfig)))
     {
         setRegExpByFile(getRegExpFileNamePub(classconfig, filetype), content);
     }
-////    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
-////    {
-////        if(dwClasstype == g_GenCode[dwLp].dwClasstype)
-////        {
-////            return g_GenCode[dwLp].m_tip(classconfig, dwClasstype, filetype);
-////        }
-////    }
-//    return CStringPub::emptyString();
 }
 
 
 
 /**
- * @brief CRegExpPub::handlerPost_Common
+ * @brief CRegExpPub::handlerPost_Pub
  * @param text
  * @return 回调后处理函数
  */
-QString CRegExpPub::handlerPost_Common(QString text)
+QString CRegExpPub::handlerPost_Pub(QString text)
 {
     QString result("");
     result = text.replace(CStringPub::errorListLenthNg(), CStringPub::emptyString());
@@ -177,6 +172,7 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
                                     , QStringList &regexpsbef
                                     , QStringList &regexpsaft
                                     , QStringList &regexpstip
+                                    , QString &regexpmode
                                     )
 {
     QString result("");
@@ -193,6 +189,11 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
     regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
     regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
     regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename));
+    QMap<QString, QString> *pMap = CMapPub::getMapFileMode();
+    if(pMap->end() != pMap->find(classconfig))
+    {
+        regexpmode = CMapPub::getMapFileMode()->find(classconfig).value();
+    }
     return result;
 }
 
@@ -210,7 +211,8 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
     QStringList regexpsbef = CStringPub::emptyStringList();
     QStringList regexpsaft = CStringPub::emptyStringList();
     QStringList regexpstip = CStringPub::emptyStringList();
-    checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip);
+    QString regexpsmode    = CStringPub::emptyString();
+    checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip,regexpsmode);
 
     if(CExpressPub::isZero(regexpsbef.length()))
     {
@@ -227,16 +229,15 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
         regexpsaft.append(CStringPub::emptyStringListCount(regexpsbef.length() - regexpsaft.length()));
     }
 
-    result = text;
-
     quint32 dwLp = 0;
+    result = text;
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
             if(g_GenCode[dwLp].m_handler)
             {
-                result =  g_GenCode[dwLp].m_handler(text, regexpsbef, regexpsaft);
+                result =  g_GenCode[dwLp].m_handler(text, regexpsbef, regexpsaft, regexpsmode);
             }
 
             if(g_GenCode[dwLp].m_handler_post)
@@ -249,9 +250,10 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
     return result;
 }
 
-QString CRegExpPub::handlerRegExp_Getter_Single(QString text, QStringList regbefore, QStringList regafter)
+QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode)
 {
 
+    Q_UNUSED(mode);
     QString result = regafter.at(0);
     debugApp() << "reg before:" << regbefore;
     debugApp() << "reg after :" << regafter;
@@ -281,13 +283,28 @@ QString CRegExpPub::handlerRegExp_Getter_Single(QString text, QStringList regbef
     return result;
 }
 
-QString CRegExpPub::handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter)
+QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
 {
     QString result = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
-    foreach (QString item, list) {
-        result += handlerRegExp_Getter_Single(item, regbefore, regafter) + SIGNENTER;
+
+    if(CExpressPub::isEmpty(mode))
+    {
+        foreach (QString item, list) {
+            result += handlerRegExp_Pub_Single(item, regbefore, regafter, mode) + SIGNENTER;
+        }
     }
+    else if(mode == STR_MODE_SINGLELINE_EXECMULTI)
+    {
+        foreach (QString item, list) {
+            foreach (QString reg, regbefore) {
+
+            }
+            result += handlerRegExp_Pub_Single(item, regbefore, regafter, mode) + SIGNENTER;
+        }
+    }
+
+
     return result;
 }
 

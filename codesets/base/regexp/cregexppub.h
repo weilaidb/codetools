@@ -12,7 +12,7 @@
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 
-typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
+typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
 typedef QString (*handlerPost)(QString text);
 
@@ -75,15 +75,15 @@ public:
                                    , QStringList &regexpsbef
                                    , QStringList &regexpsaft
                                    , QStringList &regexpstip
-                                   );
+                                   , QString &regexpmode);
     static QString replaceSignsPub(QString text);
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
-    static QString handlerRegExp_Getter(QString text,QStringList regbefore, QStringList regafter);
-    static QString handlerRegExp_Getter_Single(QString text,QStringList regbefore, QStringList regafter);
+    static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
+    static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);
-    static QString handlerPost_Common(QString text);
+    static QString handlerPost_Pub(QString text);
 //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
 //    static QString handlerTip_Setter();
 
