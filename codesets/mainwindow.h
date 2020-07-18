@@ -167,18 +167,10 @@ private slots:
 
     //generate 添加右键菜单
     void proc_action_gen_pub(QString configfilename, int type);
-    void proc_action_gen_Constructor();
-    void proc_action_gen_Destructor();
-    void proc_action_gen_Equality_Operators();
-    void proc_action_gen_Relational_Operators();
-    void proc_action_gen_Stream_Output_Operator();
-    void proc_action_gen_Override_Functions();
-    void proc_action_gen_Implement_Functions();
-    void proc_action_gen_Generate_Definitions();
     void proc_action_gen_custom_action(QAction *pAction);
     void proc_action_EditCfgFile(bool checked);
     void proc_action_edit_pub(QString configfilename, int type);
-    void proc_textEditChanged();
+    void proc_action_TryAgain();
 
 
     void slot_generate_menu_left(QPoint pos);

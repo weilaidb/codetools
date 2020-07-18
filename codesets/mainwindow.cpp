@@ -103,19 +103,9 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_net_publish, SIGNAL(triggered()), this, SLOT(proc_action_net_publish_trigger()));
     QObject::connect(ui->action_net_subscribe, SIGNAL(triggered()), this, SLOT(proc_action_net_subscribe_trigger()));
 
-    //generate
-    QObject::connect(ui->action_gen_Constructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Constructor()));
-    QObject::connect(ui->action_gen_Destructor, SIGNAL(triggered()), this, SLOT(proc_action_gen_Destructor()));
-    QObject::connect(ui->action_gen_Equality_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Equality_Operators()));
-    QObject::connect(ui->action_gen_Relational_Operators, SIGNAL(triggered()), this, SLOT(proc_action_gen_Relational_Operators  ()));
-    QObject::connect(ui->action_gen_Stream_Output_Operator  , SIGNAL(triggered()), this, SLOT(proc_action_gen_Stream_Output_Operator()));
-    QObject::connect(ui->action_gen_Override_Functions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Override_Functions()));
-    QObject::connect(ui->action_gen_Implement_Functions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Implement_Functions()));
-    QObject::connect(ui->action_gen_Generate_Definitions, SIGNAL(triggered()), this, SLOT(proc_action_gen_Generate_Definitions()));
-
     //edit config
     QObject::connect(ui->action_EditCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_EditCfgFile(bool)));
-    QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_textEditChanged()));
+    QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_action_TryAgain()));
 
     //text edit
 
@@ -1069,46 +1059,7 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
     CUIPub::setTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
 }
 
-void MainWindow::proc_action_gen_Constructor()
-{
-
-}
-
-void MainWindow::proc_action_gen_Destructor()
-{
-    //    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
-
-}
-
-void MainWindow::proc_action_gen_Equality_Operators()
-{
-
-}
-
-void MainWindow::proc_action_gen_Relational_Operators()
-{
-
-}
-
-void MainWindow::proc_action_gen_Stream_Output_Operator()
-{
-
-}
-
-void MainWindow::proc_action_gen_Override_Functions()
-{
-
-}
-
-void MainWindow::proc_action_gen_Implement_Functions()
-{
-
-}
-
-void MainWindow::proc_action_gen_Generate_Definitions()
-{
-
-}
+//    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
 
 /**
  * @brief MainWindow::proc_action_gen_custom_action
@@ -1232,7 +1183,7 @@ void MainWindow::proc_ActionClearEmpty_trigger()
 }
 
 
-void MainWindow::proc_textEditChanged()
+void MainWindow::proc_action_TryAgain()
 {
     //编辑配置文件模式
     if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
