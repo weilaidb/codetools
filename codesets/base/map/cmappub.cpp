@@ -1,20 +1,20 @@
 #include "cmappub.h"
 #include "debugApp.h"
 
-QMap<QString, QStringList> CMapPub::m_tMapFileMode;
+QMap<QString, QString> CMapPub::m_tMapFileMode;
 CMapPub::CMapPub()
 {
 
 }
 
-void CMapPub::insertMapFileMode(QString str, QStringList list)
+void CMapPub::insertMapFileMode(QString str, QString val)
 {
-    getMapFileModeInstance()->insert(str,list);
+    getMapFileModeInstance()->insert(str,val);
     debugApp() << "getMapFileModeInstance()->size():" << getMapFileModeInstance()->size();
 
 }
 
-QMap<QString, QStringList> *CMapPub::getMapFileMode()
+QMap<QString, QString> *CMapPub::getMapFileMode()
 {
     return getMapFileModeInstance();
 }

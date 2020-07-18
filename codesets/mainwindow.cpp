@@ -183,7 +183,7 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
     QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
-//    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
+    //    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
     pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
@@ -222,13 +222,14 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
     }
 
     //Mode Data
-    CMapPub::insertMapFileMode(STR_MODE_SINGLELINE_EXECMULTI, modelist_singl_execmulti);
+    foreach (QString item, modelist_singl_execmulti) {
+        CMapPub::insertMapFileMode(item, STR_MODE_SINGLELINE_EXECMULTI);
+    }
 
     QMenu *pMenu = nullptr;
     CTreePub::freeTreeMenu();
-    QMap<QString, QStringList> *pModeMap = CMapPub::getMapFileMode();
     foreach (QString item, list) {
-        CTreePub::procSubNode(item, *pModeMap);
+        CTreePub::procSubNode(item);
     }
     pMenu = CTreePub::getTreeMenu(CStringPub::stringSelfMenu());
     if(pMenu)
@@ -1074,7 +1075,15 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
     CUIPub::setTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
 }
 
-//    proc_action_gen_pub(CStringPub::emptyString(), EUM_CLASSTYPE::GETTER);
+void MainWindow::proc_action_editinginfo(QString configfilename, int type)
+{
+    Q_UNUSED(type);
+    proc_action_edit_pub(configfilename, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
+    CStringPub::setString(m_EditConfig, configfilename);
+    showStatusTimer(QString("编译配置文件中【%1】").arg(m_EditConfig));
+    setWindowTitle (QString("编译配置文件中【%1】").arg(m_EditConfig));
+}
+
 
 /**
  * @brief MainWindow::proc_action_gen_custom_action
@@ -1089,9 +1098,15 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     QString totalstr = pAction->data().toString();
     QStringList actlist = CStringPub::stringSplit(totalstr, CSignPub::signFenHaoC());
     QString cfgFirst = CStringPub::emptyString();
+    QString cfgMode = CStringPub::emptyString();
     if(CExpressPub::isFull(actlist.count()))
     {
         cfgFirst = actlist.at(0);
+    }
+
+    if(actlist.count() > 1)
+    {
+        cfgMode  = actlist.at(1);
     }
 
     if(CUIPub::isCheckedQAction(ui->action_SwitchClearLeftText))
@@ -1099,25 +1114,20 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
         CUIPub::clearTextEdit(ui->textEdit);
     }
 
-
     //编辑配置文件模式
     if(CUIPub::isCheckedQAction(ui->action_EditCfgFile))
     {
-        proc_action_edit_pub(cfgFirst, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
-        CStringPub::setString(m_EditConfig, cfgFirst);
-        showStatusTimer(QString("编译配置文件中:%1").arg(m_EditConfig));
-        setWindowTitle(QString("编译配置文件中【%1】").arg(m_EditConfig));
+        proc_action_editinginfo(cfgFirst,0);
         return;
     }
 
     CStringPub::setString(m_EditConfig, cfgFirst);
-    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
+    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)
 {
-    debugApp() << "checked:" << checked;
     if(CExpressPub::isFalse(checked))
     {
         if(CExpressPub::isFull(m_EditConfig))
@@ -1135,7 +1145,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
     {
         if(CExpressPub::isFull(m_EditConfig))
         {
-            showStatusTimer(QString("进入编辑配置文件模式:%1").arg(m_EditConfig));
+            proc_action_editinginfo(m_EditConfig, 0);
         }
         else
         {

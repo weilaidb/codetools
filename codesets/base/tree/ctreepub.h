@@ -29,7 +29,7 @@ class CTreePub
 {
 public:
     CTreePub();
-    static void procSubNode(QString filename, QMap<QString, QStringList> tModeMap);
+    static void procSubNode(QString filename);
     static void initSubNode(T_SubNode &node);
     static void printSubNode(T_SubNode &node);
     static bool setSubNode(T_SubNode &node, bool isMenu, QString path);

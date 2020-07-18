@@ -272,6 +272,9 @@
    <property name="text">
     <string>编辑配置文件</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_SwitchClearLeftText">
    <property name="checkable">

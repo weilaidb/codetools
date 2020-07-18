@@ -3,7 +3,7 @@
 
 #include <QMap>
 #include <QString>
-#include <QStringList>
+#include <QString>
 
 
 
@@ -11,13 +11,13 @@ class CMapPub
 {
 public:
     CMapPub();
-    static void insertMapFileMode(QString str, QStringList list);
-    static QMap<QString, QStringList> *getMapFileMode();
+    static void insertMapFileMode(QString str, QString val);
+    static QMap<QString, QString> *getMapFileMode();
 
 
 private:
-    static QMap<QString, QStringList> m_tMapFileMode;
-    static QMap<QString, QStringList> *getMapFileModeInstance()
+    static QMap<QString, QString> m_tMapFileMode;
+    static QMap<QString, QString> *getMapFileModeInstance()
     {
         return &m_tMapFileMode;
     }

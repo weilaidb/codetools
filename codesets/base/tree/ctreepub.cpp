@@ -20,25 +20,23 @@ CTreePub::CTreePub()
 
 
 
-void CTreePub::procSubNode(QString filename, QMap<QString, QStringList> tModeMap)
+void CTreePub::procSubNode(QString filename)
 {
     int pos = 0;
     T_SubNode tNode;
     initSubNode(tNode);
     QString strKey = filename;
 
-    QMap<QString, QStringList>::iterator mapiter;
-    mapiter = tModeMap.find(STR_MODE_SINGLELINE_EXECMULTI);
-    if(mapiter != tModeMap.end())
+    QMap<QString, QString>::iterator mapiter;
+    QMap<QString, QString> *pModeMap = CMapPub::getMapFileMode();
+    mapiter = pModeMap->find(filename);
+    if(mapiter != pModeMap->end())
     {
-        if(CStringPub::atStringList(strKey, mapiter.value()))
+        if(mapiter.value() == STR_MODE_SINGLELINE_EXECMULTI)
         {
             tNode.m_mode = CRegExpPub::MODE_SINGLELINE_EXECMULTI;
         }
     }
-
-
-
 
     pos = strKey.lastIndexOf(CSignPub::signLXie());
 //    debugApp() << "pos:" << pos <<" , "<< strKey;
