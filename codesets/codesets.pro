@@ -28,6 +28,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/print/ \
     base/tree/ \
     base/map/ \
+    base/net/zeromq \
     cppbase/string/ \
     cppbase/include/ \
 
