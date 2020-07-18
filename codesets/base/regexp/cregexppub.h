@@ -7,8 +7,8 @@
 #include "basetypepub.h"
 #include "cfilepub.h"
 
-#define STR_MODE_NONE           ("MODE_NONE")
-#define STR_MODE_ONE2MUL        ("MODE_ONE2MUL")
+#define STR_MODE_NONE                        ("MODE_NONE")
+#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 
@@ -54,7 +54,7 @@ public:
 
     enum EUM_MODE{
         MODE_NONE,
-        MODE_ONE2MUL,
+        MODE_SINGLELINE_EXECMULTI,
         MODE_MUL2ONE,
     };
 

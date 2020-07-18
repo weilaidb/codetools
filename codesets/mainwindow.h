@@ -94,7 +94,14 @@ private:
     //custom menu
     QMenu *pMenuCustom;
     QString m_FileNameMenu;
-    QString m_FileModeOne2Mul;
+    /**
+      ** 模式：
+      ** 单行 多处理
+      ** 单行 单处理
+      ** 多行 单处理
+      ** 多行 多处理
+      **/
+    QString m_FileMode_SingleL_ExecMulti;
 
 
 private:

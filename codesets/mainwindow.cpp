@@ -20,6 +20,7 @@
 #include "cexpresspub.h"
 #include "cprintpub.h"
 #include "ctreepub.h"
+#include "cmappub.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QDesktopServices>
@@ -152,9 +153,15 @@ void MainWindow::initUiOther()
     pMenuCustom = NULL;
     m_FileNameMenu = "reg/selfmenu.txt";
     CFilePub::createFileNoExist(m_FileNameMenu);
-    //模型，一对多
-    m_FileModeOne2Mul = "reg/selfmode_one2multi.txt";
-    CFilePub::createFileNoExist(m_FileModeOne2Mul);
+    /**
+      ** 模式：
+      ** 单行 多处理
+      ** 单行 单处理
+      ** 多行 单处理
+      ** 多行 多处理
+      **/
+    m_FileMode_SingleL_ExecMulti = "reg/selfmode_singleline_execmulti.txt";
+    CFilePub::createFileNoExist(m_FileMode_SingleL_ExecMulti);
 
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
@@ -208,16 +215,20 @@ void MainWindow::slot_generate_menu_right(QPoint pos)
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
-    QStringList modeone2multlist = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileModeOne2Mul));
+    QStringList modelist_singl_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_SingleL_ExecMulti));
     if(CExpressPub::isZero(list.length()))
     {
         return NULL;
     }
 
+    //Mode Data
+    CMapPub::insertMapFileMode(STR_MODE_SINGLELINE_EXECMULTI, modelist_singl_execmulti);
+
     QMenu *pMenu = nullptr;
     CTreePub::freeTreeMenu();
+    QMap<QString, QStringList> *pModeMap = CMapPub::getMapFileMode();
     foreach (QString item, list) {
-        CTreePub::procSubNode(item, modeone2multlist);
+        CTreePub::procSubNode(item, *pModeMap);
     }
     pMenu = CTreePub::getTreeMenu(CStringPub::stringSelfMenu());
     if(pMenu)
@@ -1160,7 +1171,7 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
 void MainWindow::proc_ActionOpenCfgMenu_trigger()
 {
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileModeOne2Mul));
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
 }
 
 

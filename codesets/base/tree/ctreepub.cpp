@@ -5,6 +5,7 @@
 #include "cstringpub.h"
 #include "cmsgtips.h"
 #include "cregexppub.h"
+#include "cmappub.h"
 #include<stdio.h>
 
 QMap<QString, T_SubNode> CTreePub::m_menuSubNode;
@@ -19,16 +20,25 @@ CTreePub::CTreePub()
 
 
 
-void CTreePub::procSubNode(QString filename, QStringList modelist)
+void CTreePub::procSubNode(QString filename, QMap<QString, QStringList> tModeMap)
 {
     int pos = 0;
-    QString strKey = filename;
     T_SubNode tNode;
     initSubNode(tNode);
-    if(CStringPub::atStringList(filename, modelist))
+    QString strKey = filename;
+
+    QMap<QString, QStringList>::iterator mapiter;
+    mapiter = tModeMap.find(STR_MODE_SINGLELINE_EXECMULTI);
+    if(mapiter != tModeMap.end())
     {
-        tNode.m_mode = CRegExpPub::MODE_ONE2MUL;
+        if(CStringPub::atStringList(strKey, mapiter.value()))
+        {
+            tNode.m_mode = CRegExpPub::MODE_SINGLELINE_EXECMULTI;
+        }
     }
+
+
+
 
     pos = strKey.lastIndexOf(CSignPub::signLXie());
 //    debugApp() << "pos:" << pos <<" , "<< strKey;
@@ -207,9 +217,9 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
     else
     {
         tNode.u.m_pAction = new QAction(tNode.m_name);
-        if(tNode.m_mode == CRegExpPub::MODE_ONE2MUL)
+        if(tNode.m_mode == CRegExpPub::MODE_SINGLELINE_EXECMULTI)
         {
-            mode = CSignPub::signFenHao() + STR_MODE_ONE2MUL;
+            mode = CSignPub::signFenHao() + STR_MODE_SINGLELINE_EXECMULTI;
         }
         tNode.u.m_pAction->setData(tNode.m_path + mode);
         pMenu->addAction(tNode.u.m_pAction);
