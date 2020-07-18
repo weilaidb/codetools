@@ -78,6 +78,24 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
     return result;
 }
 
+QStringList CStringPub::stringSplitbyNewLineFilterEmptyUnique(const QString str)
+{
+    QStringList result;
+    const char sign = '\n';
+    QStringList strlist = str.split(sign);
+    foreach (QString item, strlist) {
+        if(item.simplified().isEmpty())
+        {
+            continue;
+        }
+        //去除\r 空格等
+        result.append(CStringPub::strSim(item));
+    }
+
+    result = CStringPub::stringUnique(result);
+    return result;
+}
+
 
 QString CStringPub::stringSplitFindText(const QString str , const char sign,QString signadd, QString findtext)
 {
@@ -245,6 +263,31 @@ QString CStringPub::stringFilterEmpty(const QString str)
     }
 
     return result;
+}
+
+
+bool CStringPub::atStringList(QString str, QStringList list)
+{
+    foreach (QString item, list) {
+        if(CStringPub::strSim(item) == CStringPub::strSim(str))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool CStringPub::inStringList(QString str, QStringList list, Qt::CaseSensitivity cs)
+{
+    foreach (QString item, list) {
+        if(item.contains(str, cs))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 

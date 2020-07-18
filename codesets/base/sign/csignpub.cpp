@@ -24,3 +24,14 @@ char CSignPub::signLXie()
 {
     return SIGLEFTXIELINE;
 }
+
+QString CSignPub::signFenHao()
+{
+    return SIGNFENHAO;
+}
+
+char CSignPub::signFenHaoC()
+{
+    return SIGNFENHAOC;
+}
+

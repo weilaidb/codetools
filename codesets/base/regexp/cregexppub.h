@@ -7,6 +7,11 @@
 #include "basetypepub.h"
 #include "cfilepub.h"
 
+#define STR_MODE_NONE           ("MODE_NONE")
+#define STR_MODE_ONE2MUL        ("MODE_ONE2MUL")
+#define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
+
+
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
 typedef QString (*handlerPost)(QString text);
@@ -46,6 +51,13 @@ public:
         FILE_BEFORE,
         FILE_AFTER,
     };
+
+    enum EUM_MODE{
+        MODE_NONE,
+        MODE_ONE2MUL,
+        MODE_MUL2ONE,
+    };
+
 
     CRegExpPub();
     //set

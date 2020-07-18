@@ -1,6 +1,7 @@
 #include "cexpresspub.h"
 
 #include <csignpub.h>
+#include <cstringpub.h>
 
 CExpressPub::CExpressPub()
 {
@@ -54,4 +55,13 @@ bool CExpressPub::isIndexXieLine(QString path)
     return (-1 != path.lastIndexOf(CSignPub::signLXie()));
 }
 
+bool CExpressPub::isSame(QString str, QString other)
+{
+    return (CStringPub::strSim(str) == CStringPub::strSim(other));
+}
+
+bool CExpressPub::isIn(QString str, QString other)
+{
+    return (str.contains(other));
+}
 

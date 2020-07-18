@@ -94,6 +94,7 @@ private:
     //custom menu
     QMenu *pMenuCustom;
     QString m_FileNameMenu;
+    QString m_FileModeOne2Mul;
 
 
 private:

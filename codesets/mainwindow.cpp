@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QProgressBar>
+#include <csignpub.h>
 
 
 extern int AyStyleMain(int argc, char** argv);
@@ -151,6 +152,9 @@ void MainWindow::initUiOther()
     pMenuCustom = NULL;
     m_FileNameMenu = "reg/selfmenu.txt";
     CFilePub::createFileNoExist(m_FileNameMenu);
+    //模型，一对多
+    m_FileModeOne2Mul = "reg/selfmode_one2multi.txt";
+    CFilePub::createFileNoExist(m_FileModeOne2Mul);
 
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
@@ -203,8 +207,8 @@ void MainWindow::slot_generate_menu_right(QPoint pos)
 
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
-    QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(CFilePub::readFileAll(filename));
-    list = CStringPub::stringUnique(list);
+    QStringList list = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
+    QStringList modeone2multlist = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileModeOne2Mul));
     if(CExpressPub::isZero(list.length()))
     {
         return NULL;
@@ -213,7 +217,7 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
     QMenu *pMenu = nullptr;
     CTreePub::freeTreeMenu();
     foreach (QString item, list) {
-        CTreePub::procSubNode(item);
+        CTreePub::procSubNode(item, modeone2multlist);
     }
     pMenu = CTreePub::getTreeMenu(CStringPub::stringSelfMenu());
     if(pMenu)
@@ -1071,6 +1075,14 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     debugApp() << "custom action:" << pAction->text();
     debugApp() << "custom data  :" << pAction->data();
 
+    QString totalstr = pAction->data().toString();
+    QStringList actlist = CStringPub::stringSplit(totalstr, CSignPub::signFenHaoC());
+    QString cfgFirst = CStringPub::emptyString();
+    if(CExpressPub::isFull(actlist.count()))
+    {
+        cfgFirst = actlist.at(0);
+    }
+
     if(CUIPub::isCheckedQAction(ui->action_SwitchClearLeftText))
     {
         CUIPub::clearTextEdit(ui->textEdit);
@@ -1080,16 +1092,16 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     //编辑配置文件模式
     if(CUIPub::isCheckedQAction(ui->action_EditCfgFile))
     {
-        proc_action_edit_pub(pAction->data().toString(), EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
-        CStringPub::setString(m_EditConfig, pAction->data().toString());
+        proc_action_edit_pub(cfgFirst, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
+        CStringPub::setString(m_EditConfig, cfgFirst);
         showStatusTimer(QString("编译配置文件中:%1").arg(m_EditConfig));
         setWindowTitle(QString("编译配置文件中【%1】").arg(m_EditConfig));
         return;
     }
 
-    CStringPub::setString(m_EditConfig, pAction->data().toString());
+    CStringPub::setString(m_EditConfig, cfgFirst);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
-    proc_action_gen_pub(pAction->data().toString(), EUM_CLASSTYPE::COMMON_OPERATIONS);
+    proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)
@@ -1148,6 +1160,7 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
 void MainWindow::proc_ActionOpenCfgMenu_trigger()
 {
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileModeOne2Mul));
 }
 
 

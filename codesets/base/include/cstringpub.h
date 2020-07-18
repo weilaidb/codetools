@@ -27,6 +27,7 @@ public:
     static QStringList stringSplitbyNewLine(const QString str);
     //return list by \n, filter a line with nothing
     static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
+    static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);
@@ -52,6 +53,8 @@ public:
 
     //字符串
     static QString stringSelfMenu();
+    static bool atStringList(QString str, QStringList list);
+    static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
 };
 
 #endif // CSTRINGPUB_H

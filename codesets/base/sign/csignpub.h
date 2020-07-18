@@ -13,6 +13,8 @@ public:
     static QString signEnterNL();
     static QString signRESpace();
     static char signLXie();
+    static QString signFenHao();
+    static char signFenHaoC();
 
 
 };

@@ -8,6 +8,7 @@
 #define SIGNDOUBLEFENHAO  ";;"
 #define SIGNDOUHAO  ","
 #define SIGNFENHAO  ";"
+#define SIGNFENHAOC  ';'
 
 
 #define SIGNENTERS '\n'

@@ -15,6 +15,7 @@ typedef struct T_SubNode{
     QString m_name; //节点名称
     QString m_parent; //父节点名称
     QString m_path; //节点路径
+    quint8  m_mode;//操作模式
     union{
         QMenu *m_pMenu;
         QAction *m_pAction;
@@ -28,7 +29,7 @@ class CTreePub
 {
 public:
     CTreePub();
-    static void procSubNode(QString filename);
+    static void procSubNode(QString filename, QStringList modelist);
     static void initSubNode(T_SubNode &node);
     static void printSubNode(T_SubNode &node);
     static bool setSubNode(T_SubNode &node, bool isMenu, QString path);
