@@ -8,7 +8,7 @@
 #include "cfilepub.h"
 
 #define STR_MODE_NONE                        ("MODE_NONE")
-#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")
+#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 
@@ -80,6 +80,7 @@ public:
     static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
+    static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);

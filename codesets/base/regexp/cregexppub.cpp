@@ -283,9 +283,43 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QStringList regbefore
     return result;
 }
 
+QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode)
+{
+
+    Q_UNUSED(mode);
+    QString result = regafter;
+    debugApp() << "reg before:" << regbefore;
+    debugApp() << "reg after :" << regafter;
+
+    QRegularExpression regularExpression(regbefore);
+    int index = 0;
+    QRegularExpressionMatch match;
+    do {
+        match = regularExpression.match(text, index);
+        if(match.hasMatch()) {
+            index = match.capturedEnd();
+            qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+        }
+        else
+            break;
+    } while(index < text.length());
+
+    debugApp() << "match.caput1:" << match.capturedTexts();
+
+    if(match.capturedTexts().length() < 2)
+    {
+        return CStringPub::errorListLenthNg();
+    }
+
+    result = replaceSeqPub(result, 1, match.capturedTexts().length(), match);
+
+    return result;
+}
+
 QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
 {
     QString result = CStringPub::emptyString();
+    QString strtmp = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
 
     if(CExpressPub::isEmpty(mode))
@@ -297,10 +331,13 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     else if(mode == STR_MODE_SINGLELINE_EXECMULTI)
     {
         foreach (QString item, list) {
+            quint32 dwLp = 0;
+            strtmp = item;
             foreach (QString reg, regbefore) {
-
+                strtmp = handlerRegExp_Pub_Single(strtmp, reg, regafter.at(dwLp), mode);
+                dwLp++;
             }
-            result += handlerRegExp_Pub_Single(item, regbefore, regafter, mode) + SIGNENTER;
+            result += strtmp + SIGNENTER;
         }
     }
 
@@ -315,8 +352,6 @@ QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstyp
     Q_UNUSED(filetype);
     return ("int abc;");
 }
-
-
 
 const QString CRegExpPub::getConfigBefore()
 {
