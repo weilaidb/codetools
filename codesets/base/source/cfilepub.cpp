@@ -123,7 +123,7 @@ QString CFilePub::writeFileOnlly(QString filename, QString msg)
     {
         return result;
     }
-    result = file.write(msg.toLocal8Bit().data());
+    result = file.write(static_cast<const char *>(msg.toLocal8Bit().data()));
     file.close();
 
     return msg;
