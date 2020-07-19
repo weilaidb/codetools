@@ -38,6 +38,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/tree/ \
     base/map/ \
     base/codec/ \
+    base/log/ \
     base/net/zeromq/ \
     cppbase/string/ \
     cppbase/include/ \
@@ -78,6 +79,7 @@ SOURCES += \
     base/define/cdefinepub.cpp \
     base/dialog/cdialogpub.cpp \
     base/express/cexpresspub.cpp \
+    base/log/clogpub.cpp \
     base/map/cmappub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
@@ -108,6 +110,7 @@ HEADERS += \
     base/include/cfilepub.h \
     base/include/cstringpub.h \
     base/include/cuipub.h \
+    base/log/clogpub.h \
     base/map/cmappub.h \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \

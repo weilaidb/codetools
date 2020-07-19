@@ -12,9 +12,13 @@
 #include <QDesktopServices>
 #include "debugApp.h"
 #ifdef WIN32
+#include <clogpub.h>
 #include <windows.h>
 #endif
 #include "cstringpub.h"
+#include "ctextcodecpub.h"
+
+#define MAX_LENGTH (20480)
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
 
@@ -283,15 +287,15 @@ void CUIPub::paste()
     const QMimeData *mimeData = clipboard->mimeData();
 
     if (mimeData->hasImage()) {
-//        setPixmap(qvariant_cast<QPixmap>(mimeData->imageData()));
+        //        setPixmap(qvariant_cast<QPixmap>(mimeData->imageData()));
     } else if (mimeData->hasHtml()) {
-//        setText(mimeData->html());
-//        setTextFormat(Qt::RichText);
+        //        setText(mimeData->html());
+        //        setTextFormat(Qt::RichText);
     } else if (mimeData->hasText()) {
-//        setText(mimeData->text());
-//        setTextFormat(Qt::PlainText);
+        //        setText(mimeData->text());
+        //        setTextFormat(Qt::PlainText);
     } else {
-//        setText(tr("Cannot display data"));
+        //        setText(tr("Cannot display data"));
     }
 }
 
@@ -299,26 +303,26 @@ void CUIPub::paste()
 
 void CUIPub::startProgress()
 {
-//    QProcess::start()
-//    特点：非阻塞、一体式
+    //    QProcess::start()
+    //    特点：非阻塞、一体式
 
-//    void QProcess::start(const QString & program, const QStringList & arguments, OpenMode mode = ReadWrite)
+    //    void QProcess::start(const QString & program, const QStringList & arguments, OpenMode mode = ReadWrite)
 
-//    使用这样的启动方式之启动外部程序启动后，它会随着主程序的退出而退出。
+    //    使用这样的启动方式之启动外部程序启动后，它会随着主程序的退出而退出。
 
-//    QProcess::startDetached()
-//    特点：分离式
+    //    QProcess::startDetached()
+    //    特点：分离式
 
-//    void QProcess::startDetached(const QString & program, const QStringList & arguments, const QString & workingDirectory = QString(), qint64 * pid = 0)
+    //    void QProcess::startDetached(const QString & program, const QStringList & arguments, const QString & workingDirectory = QString(), qint64 * pid = 0)
 
-//    外部程序启动后，当主程序退出时并不退出，而是继续运行。
+    //    外部程序启动后，当主程序退出时并不退出，而是继续运行。
 
-//    QProcess::execute()
-//    特点：阻塞
+    //    QProcess::execute()
+    //    特点：阻塞
 
-//    获取返回值
-//    int QProcess::execute()
-//    int QProcess::exitCode()
+    //    获取返回值
+    //    int QProcess::execute()
+    //    int QProcess::exitCode()
 
 
 
@@ -342,13 +346,13 @@ int CUIPub::getSelectLine(QTextEdit *pTextEdit)
     //当前光标在本BLOCK内的相对位置
     int nCurpos = tc.position() - tc.block().position();
     int nTextline = pLayout->lineForTextPosition(nCurpos).lineNumber() + tc.block().firstLineNumber();
-//    qDebug()<<nTextline<<endl;           //可以看到行号随着光标的改变而改变
+    //    qDebug()<<nTextline<<endl;           //可以看到行号随着光标的改变而改变
     return nTextline;
 }
 
 QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
 {
-//    debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
+    //    debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
     return pEdit->document()->findBlockByLineNumber(getSelectLine(pEdit)).text();
 }
 
@@ -414,9 +418,15 @@ int CUIPub::execCmd(QString path)
     {
         return -1;
     }
+    CLogPub::msgDefault(path);
 
 #ifdef WIN32
-    ShellExecuteA(NULL, "open", path.toUtf8().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+    LPCSTR filepath2 = NULL;
+    char* puacPathBuf = new char[MAX_LENGTH];
+    memset(puacPathBuf, 0, MAX_LENGTH);
+    filepath2 = CTextCodecPub::convertQString2buf(path, puacPathBuf);
+    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+    delete [] puacPathBuf;
 #else
     bool ok = QDesktopServices::openUrl(QUrl(path));
     Q_UNUSED(ok)
@@ -432,8 +442,9 @@ int CUIPub::explorerPath(QString path)
         return -1;
     }
 
-//    QString prefix = "explorer ";
+    //    QString prefix = "explorer ";
     QString prefix = "";
+    CLogPub::logDefault(path);
     execCmd(prefix + path);
     return 0;
 }
@@ -441,12 +452,9 @@ int CUIPub::explorerPath(QString path)
 void CUIPub::setMenuPolicyCustom(QWidget *pWidget)
 {
     pWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-//    QObject::connect(pWidget, SIGNAL(customContextMenuRequested(QPoint)), parent, SLOT(slot_func(QPoint)));
+    //    QObject::connect(pWidget, SIGNAL(customContextMenuRequested(QPoint)), parent, SLOT(slot_func(QPoint)));
 
 }
-
-
-
 
 QAction *CUIPub::createActionFull(QString name)
 {
@@ -466,19 +474,3 @@ bool CUIPub::isCheckedQAction(QAction *pAction)
 {
     return pAction->isChecked();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
