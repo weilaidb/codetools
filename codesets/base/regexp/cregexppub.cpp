@@ -152,14 +152,14 @@ QString CRegExpPub::replaceSignsPub(QString text)
     return text.replace("$NL", "\n").replace("$TB", "    ");
 }
 
-QString CRegExpPub::replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match)
+QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegularExpressionMatch match)
 {
     QString result(text);
-    quint32 dwLp = 0;
-    for(dwLp = dwStartSeq; dwLp < dwCount; dwLp++)
+    int iLp = 0;
+    for(iLp = iStartSeq; iLp < iCount; iLp++)
     {
         //内容替换
-        result = result.replace(QString("\\%1").arg(dwLp), match.captured(dwLp));
+        result = result.replace(QString("\\%1").arg(iLp), match.captured(iLp));
     }
 
     CPrintPub::printStringTip(result, "replaceSeqPub before");
