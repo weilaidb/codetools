@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    CTextCodecPub::setTextCodecGB18030();
+    CTextCodecPub::setTextCodecUtf8();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
