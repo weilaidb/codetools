@@ -9,6 +9,7 @@
 
 #define STR_MODE_NONE                        ("MODE_NONE")
 #define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
+#define STR_MODE_ALALLINE_EXECMULTI          ("MODE_ALALLINE_EXECMULTI")    //左侧所有行内容，进行多次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 
@@ -55,6 +56,7 @@ public:
     enum EUM_MODE{
         MODE_NONE,
         MODE_SINGLELINE_EXECMULTI,
+        MODE_ALLLINE_EXECMULTI,
         MODE_MUL2ONE,
     };
 

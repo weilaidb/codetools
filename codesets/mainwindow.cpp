@@ -165,6 +165,9 @@ void MainWindow::initUiOther()
     m_FileMode_SingleL_ExecMulti = "reg/selfmode_singleline_execmulti.txt";
     CFilePub::createFileNoExist(m_FileMode_SingleL_ExecMulti);
 
+    m_FileMode_AllL_ExecMulti = "reg/selfmode_allline_execmulti.txt";
+    CFilePub::createFileNoExist(m_FileMode_AllL_ExecMulti);
+
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
 }
@@ -218,6 +221,8 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
     QStringList modelist_singl_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_SingleL_ExecMulti));
+    QStringList modelist_alll_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_AllL_ExecMulti));
+
     if(CExpressPub::isZero(list.length()))
     {
         return nullptr;
@@ -386,7 +391,6 @@ void MainWindow::proc_action_about_trigger()
                + CSignPub::signEnter()
                + CStringPub::getDateTime());
 }
-
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)
 {
@@ -1192,6 +1196,7 @@ void MainWindow::proc_ActionOpenCfgMenu_trigger()
 {
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
 }
 
 

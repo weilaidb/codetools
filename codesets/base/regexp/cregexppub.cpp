@@ -142,7 +142,7 @@ QString CRegExpPub::handlerPost_Pub(QString text)
 {
     QString result("");
     result = text.replace(CStringPub::errorListLenthNg(), CStringPub::emptyString());
-//    result = CStringPub::stringList2StringEnter(CStringPub::stringSplitbyNewLineFilterEmpty(text));
+    //    result = CStringPub::stringList2StringEnter(CStringPub::stringSplitbyNewLineFilterEmpty(text));
     return result;
 }
 
@@ -275,7 +275,12 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QStringList regbefore
 
     if(match.capturedTexts().length() < 2)
     {
-        return CStringPub::errorListLenthNg();
+        //        return CStringPub::errorListLenthNg();
+        return result;
+    }
+    else
+    {
+
     }
 
     result = replaceSeqPub(result, 1, match.capturedTexts().length(), match);
@@ -324,8 +329,10 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
 
     if(CExpressPub::isEmpty(mode))
     {
+        quint32 dwLp = 0;
         foreach (QString item, list) {
-            result += handlerRegExp_Pub_Single(item, regbefore, regafter, mode) + SIGNENTER;
+            result += handlerRegExp_Pub_Single(item, regbefore.at(dwLp), regafter.at(dwLp), mode) + SIGNENTER;
+            dwLp++;
         }
     }
     else if(mode == STR_MODE_SINGLELINE_EXECMULTI)
@@ -339,6 +346,16 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
             }
             result += strtmp + SIGNENTER;
         }
+    }
+    else if(mode == STR_MODE_ALALLINE_EXECMULTI)
+    {
+        quint32 dwLp = 0;
+        strtmp = text;
+        foreach (QString reg, regbefore) {
+            strtmp = handlerRegExp_Pub_Single(strtmp, reg, regafter.at(dwLp), mode);
+            dwLp++;
+        }
+        result += strtmp + SIGNENTER;
     }
 
 

@@ -102,6 +102,7 @@ private:
       ** 多行 多处理
       **/
     QString m_FileMode_SingleL_ExecMulti;
+    QString m_FileMode_AllL_ExecMulti;
 
 
 private:
