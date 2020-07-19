@@ -49,7 +49,7 @@ public:
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);
     static QString getTextEdit(QTextEdit *pEdit);
-    static quint32 getTextEditLen(QTextEdit *pEdit);
+    static int getTextEditLen(QTextEdit *pEdit);
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
     static void setTextEditOnEmpty(QTextEdit *pEdit, QString text);

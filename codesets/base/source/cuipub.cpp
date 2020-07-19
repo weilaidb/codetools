@@ -354,7 +354,7 @@ QString CUIPub::getTextEdit(QTextEdit *pEdit)
     return pEdit->toPlainText();
 }
 
-quint32 CUIPub::getTextEditLen(QTextEdit *pEdit)
+int CUIPub::getTextEditLen(QTextEdit *pEdit)
 {
     return pEdit->toPlainText().length();
 }

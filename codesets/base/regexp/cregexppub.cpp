@@ -231,7 +231,7 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
 
     quint32 dwLp = 0;
     result = text;
-    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
+    for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);++dwLp)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
