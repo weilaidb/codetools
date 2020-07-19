@@ -139,7 +139,7 @@ void MainWindow::initVars()
 void MainWindow::initUiOther()
 {
     //    this->setWindowIcon();
-    pRightMouse = NULL;
+    pRightMouse = nullptr;
     //QTextEdit 右键菜单
     CUIPub::setMenuPolicyCustom(ui->textEdit);
     QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_left(QPoint)));
@@ -149,7 +149,7 @@ void MainWindow::initUiOther()
 
 
     //自定义菜单，从文件读取
-    pMenuCustom = NULL;
+    pMenuCustom = nullptr;
     m_FileNameMenu = "reg/selfmenu.txt";
     CFilePub::createFileNoExist(m_FileNameMenu);
     /**
@@ -173,7 +173,7 @@ void MainWindow::initUiOther()
  */
 void MainWindow::slot_generate_menu_left(QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse);
 
@@ -200,7 +200,7 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
  */
 void MainWindow::slot_generate_menu_right(QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     CUIPub::clearMenuAll(&pRightMouse);
     debugApp() << "right mouse clicked!!";
 
@@ -217,7 +217,7 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
     QStringList modelist_singl_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_SingleL_ExecMulti));
     if(CExpressPub::isZero(list.length()))
     {
-        return NULL;
+        return nullptr;
     }
 
     //Mode Data
@@ -508,7 +508,7 @@ void MainWindow::procAstyleInstance(QStringList filelist)
     if(filelist.size() > ASTYLE_PROC_FILES_MAX)
     {
         showStatus("文件数量较多，建议不处理");
-        int result = QMessageBox::warning(NULL, "warning", QString("文件数量较多 %1，是否继续处理?").arg(filelist.size()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        int result = QMessageBox::warning(nullptr, "warning", QString("文件数量较多 %1，是否继续处理?").arg(filelist.size()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         switch (result)
         {
         case QMessageBox::Yes:
@@ -755,68 +755,75 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
 {
-//    QString filename;
-//    int ret =0;
-//    switch (ucActionType) {
-//    case ACTIONTYPE_OPEN:
-//    {
-//        filename = list.at(0);
+    Q_UNUSED(ucActionType)
+    Q_UNUSED(list)
+    Q_UNUSED(findtext)
+#ifdef WIN_32
+    QString filename;
+    int ret =0;
+    switch (ucActionType) {
+    case ACTIONTYPE_OPEN:
+    {
+        filename = list.at(0);
 
-//        ret = CFilePub::isFile(filename);
-//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_DIR_NO_SUPPORT);
+        ret = CFilePub::isFile(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_DIR_NO_SUPPORT);
 
-//        ret = CFilePub::fileExist(filename);
-//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+        ret = CFilePub::fileExist(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
 
-//        COfficePub *pObjOffice = new COfficePub();
-//        setRightTextEdit(pObjOffice->readWord(filename));
-//        showStatus("打开文档成功!" + filename);
-//    }
-//        break;
-//    case ACTIONTYPE_SEARCH:
-//    {
-//        filename = list.at(0);
+        COfficePub *pObjOffice = new COfficePub();
+        setRightTextEdit(pObjOffice->readWord(filename));
+        showStatus("打开文档成功!" + filename);
+    }
+        break;
+    case ACTIONTYPE_SEARCH:
+    {
+        filename = list.at(0);
 
-//        ret = CFilePub::fileExist(filename);
-//        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
+        ret = CFilePub::fileExist(filename);
+        CHECKFALSE_TIPS_RETURN(ret, showStatus, STRING_TIPS_FILE_NO_EXIST);
 
-//        COfficePub *pObjOffice = new COfficePub(findtext);
-//        setRightTextEdit(pObjOffice->readWordFindText(filename));
-//        setLeftTextEdit(findtext);
-//        showStatus("查找文档结束!" + filename);
-//    }
-//        break;
-//    case ACTIONTYPE_SEARCH_ALLFILES:
-//    {
-//        QProgressBar *pProgressBar = new QProgressBar(this);
-//        QString result("");
-//        COfficePub *pObjOffice = new COfficePub(findtext);
-//        int cur = 0;
-//        QString singres("");
-//        foreach (QString item, list) {
-//            qApp->processEvents();
-//            singres = pObjOffice->readWordFindText(item);
-//            if(singres.trimmed().isEmpty())
-//            {
-//                continue;
-//            }
-//            debugApp() << "[OpenFile]" + item ;
-//            result+="[OpenFile]" + item + SIGNENTER;
-//            result+=singres + SIGNENTER;
-//            cur++;
-//            CUIPub::progressBar(pProgressBar,cur, list.size());
-//        }
-//        delete  pProgressBar;
-//        setRightTextEdit(result);
-//        setLeftTextEdit(findtext);
-//        showStatus("查找文档结束!" + list.at(0));
-//    }
-//        break;
-//    default:
-//        break;
-//    }
-//    updateRecent(recentfiles_document,  ui->menu_document_search_recent);
-//    updateRecent(recentfiles_document,  ui->menu_document_open_recent);
+        COfficePub *pObjOffice = new COfficePub(findtext);
+        setRightTextEdit(pObjOffice->readWordFindText(filename));
+        setLeftTextEdit(findtext);
+        showStatus("查找文档结束!" + filename);
+    }
+        break;
+    case ACTIONTYPE_SEARCH_ALLFILES:
+    {
+        QProgressBar *pProgressBar = new QProgressBar(this);
+        QString result("");
+        COfficePub *pObjOffice = new COfficePub(findtext);
+        int cur = 0;
+        QString singres("");
+        foreach (QString item, list) {
+            qApp->processEvents();
+            singres = pObjOffice->readWordFindText(item);
+            if(singres.trimmed().isEmpty())
+            {
+                continue;
+            }
+            debugApp() << "[OpenFile]" + item ;
+            result+="[OpenFile]" + item + SIGNENTER;
+            result+=singres + SIGNENTER;
+            cur++;
+            CUIPub::progressBar(pProgressBar,cur, list.size());
+        }
+        delete  pProgressBar;
+        setRightTextEdit(result);
+        setLeftTextEdit(findtext);
+        showStatus("查找文档结束!" + list.at(0));
+    }
+        break;
+    default:
+        break;
+    }
+    updateRecent(recentfiles_document,  ui->menu_document_search_recent);
+    updateRecent(recentfiles_document,  ui->menu_document_open_recent);
+#else
+
+#endif
 }
 
 /**
@@ -976,7 +983,7 @@ void MainWindow::proc_action_net_server_trigger()
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
 #else
-    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1);
+    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
 #endif
 }
 
@@ -1076,7 +1083,7 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
 
 void MainWindow::proc_action_editinginfo(QString configfilename, int type)
 {
-    Q_UNUSED(type);
+    Q_UNUSED(type)
     proc_action_edit_pub(configfilename, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
     CStringPub::setString(m_EditConfig, configfilename);
     showStatusTimer(QString("编译配置文件中【%1】").arg(m_EditConfig));

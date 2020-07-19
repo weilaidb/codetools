@@ -347,9 +347,9 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
 
 QString CRegExpPub::handlerTip_Getter(QString configfilename, quint32 dwClasstype,int filetype)
 {
-    Q_UNUSED(configfilename);
-    Q_UNUSED(dwClasstype);
-    Q_UNUSED(filetype);
+    Q_UNUSED(configfilename)
+    Q_UNUSED(dwClasstype)
+    Q_UNUSED(filetype)
     return ("int abc;");
 }
 

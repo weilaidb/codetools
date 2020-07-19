@@ -9,6 +9,7 @@
 #include <QTextLayout>
 #include <QTextBlock>
 #include <QTextBrowser>
+#include <QDesktopServices>
 #include "debugApp.h"
 #include "cstringpub.h"
 
@@ -411,7 +412,12 @@ int CUIPub::execCmd(QString path)
         return -1;
     }
 
-//    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+#ifdef WIN_32
+    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+#else
+    bool ok = QDesktopServices::openUrl(QUrl(path));
+    Q_UNUSED(ok)
+#endif
     return 0;
 }
 
