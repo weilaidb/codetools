@@ -71,8 +71,7 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
         {
             continue;
         }
-        //去除\r 空格等
-        result.append(CStringPub::strSim(item));
+        result.append(item);
     }
 
     return result;
