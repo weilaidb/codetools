@@ -11,6 +11,9 @@
 #include <QTextBrowser>
 #include <QDesktopServices>
 #include "debugApp.h"
+#ifdef WIN32
+#include <windows.h>
+#endif
 #include "cstringpub.h"
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
@@ -412,7 +415,7 @@ int CUIPub::execCmd(QString path)
         return -1;
     }
 
-#ifdef WIN_32
+#ifdef WIN32
     ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
 #else
     bool ok = QDesktopServices::openUrl(QUrl(path));

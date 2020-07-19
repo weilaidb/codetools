@@ -1,6 +1,16 @@
 QT       += core gui
 QT       += sql
-#QT       += axcontainer
+
+win32 {
+#顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
+QT       += axcontainer
+}
+
+unix {
+
+#原理和win32一样
+
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,7 +22,6 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-#添加外部的引用头文件和库文件
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
     base/include/ \
@@ -28,12 +37,28 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/print/ \
     base/tree/ \
     base/map/ \
-    base/net/zeromq \
+    base/net/zeromq/ \
     cppbase/string/ \
     cppbase/include/ \
 
+win32 {
+#顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
+#添加外部的引用头文件和库文件
+INCLUDEPATH += \
+    base/office/ \
+    libs/libzmq-v141-4_3_2 \
+
+
 #$$PWD指当前路径， -l指定的文件去掉 .lib 以及 lib替换为l
-#LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
+LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
+
+
+}
+
+unix {
+#原理和win32一样
+
+}
 
 
 # You can also make your code fail to compile if it uses deprecated APIs.
@@ -103,6 +128,24 @@ HEADERS += \
     public/include/looppub.h \
     public/include/signpub.h \
     version.h
+
+win32 {
+#顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
+SOURCES += \
+    base/office/cofficepub.cpp \
+
+HEADERS += \
+    base/office/cofficepub.h \
+
+}
+
+unix {
+
+#原理和win32一样
+
+}
+
+
 
 FORMS += \
     cdialogasktext.ui \

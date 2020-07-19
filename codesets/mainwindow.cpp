@@ -13,6 +13,9 @@
 #include "looppub.h"
 #include "cuipub.h"
 #include "csqlpub.h"
+#ifdef WIN32
+#include "cofficepub.h"
+#endif
 #include "cdialogpub.h"
 #include "cnetpub.h"
 #include "cregexppub.h"
@@ -754,10 +757,8 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
 {
-    Q_UNUSED(ucActionType)
-    Q_UNUSED(list)
-    Q_UNUSED(findtext)
-#ifdef WIN_32
+
+#ifdef WIN32
     QString filename;
     int ret =0;
     switch (ucActionType) {
@@ -821,7 +822,9 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
     updateRecent(recentfiles_document,  ui->menu_document_search_recent);
     updateRecent(recentfiles_document,  ui->menu_document_open_recent);
 #else
-
+    Q_UNUSED(ucActionType)
+    Q_UNUSED(list)
+    Q_UNUSED(findtext)
 #endif
 }
 
