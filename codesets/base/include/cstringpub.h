@@ -36,7 +36,7 @@ public:
     //return stringlist, only one item
     static QStringList emptyStringList();
     //return stringlist, every item is ""
-    static QStringList emptyStringListCount(quint32 dwCount);
+    static QStringList emptyStringListCount(int count);
     static QString emptyString();
     static QString errorListLenthNg();
     static QStringList actionNameList(QAction *action);

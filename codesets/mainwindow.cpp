@@ -13,7 +13,9 @@
 #include "looppub.h"
 #include "cuipub.h"
 #include "csqlpub.h"
+#ifdef WIN32
 #include "cofficepub.h"
+#endif
 #include "cdialogpub.h"
 #include "cnetpub.h"
 #include "cregexppub.h"
@@ -140,7 +142,7 @@ void MainWindow::initVars()
 void MainWindow::initUiOther()
 {
     //    this->setWindowIcon();
-    pRightMouse = NULL;
+    pRightMouse = nullptr;
     //QTextEdit 右键菜单
     CUIPub::setMenuPolicyCustom(ui->textEdit);
     QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_left(QPoint)));
@@ -150,7 +152,7 @@ void MainWindow::initUiOther()
 
 
     //自定义菜单，从文件读取
-    pMenuCustom = NULL;
+    pMenuCustom = nullptr;
     m_FileNameMenu = "reg/selfmenu.txt";
     CFilePub::createFileNoExist(m_FileNameMenu);
     /**
@@ -174,7 +176,7 @@ void MainWindow::initUiOther()
  */
 void MainWindow::slot_generate_menu_left(QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse);
 
@@ -201,7 +203,7 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
  */
 void MainWindow::slot_generate_menu_right(QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     CUIPub::clearMenuAll(&pRightMouse);
     debugApp() << "right mouse clicked!!";
 
@@ -218,7 +220,7 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
     QStringList modelist_singl_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_SingleL_ExecMulti));
     if(CExpressPub::isZero(list.length()))
     {
-        return NULL;
+        return nullptr;
     }
 
     //Mode Data
@@ -254,7 +256,6 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     QAction *pActionSelectAllCopy = CUIPub::createAction("全选复制");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
-
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
@@ -509,7 +510,7 @@ void MainWindow::procAstyleInstance(QStringList filelist)
     if(filelist.size() > ASTYLE_PROC_FILES_MAX)
     {
         showStatus("文件数量较多，建议不处理");
-        int result = QMessageBox::warning(NULL, "warning", QString("文件数量较多 %1，是否继续处理?").arg(filelist.size()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        int result = QMessageBox::warning(nullptr, "warning", QString("文件数量较多 %1，是否继续处理?").arg(filelist.size()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         switch (result)
         {
         case QMessageBox::Yes:
@@ -756,6 +757,8 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
 {
+
+#ifdef WIN32
     QString filename;
     int ret =0;
     switch (ucActionType) {
@@ -818,6 +821,11 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
     }
     updateRecent(recentfiles_document,  ui->menu_document_search_recent);
     updateRecent(recentfiles_document,  ui->menu_document_open_recent);
+#else
+    Q_UNUSED(ucActionType)
+    Q_UNUSED(list)
+    Q_UNUSED(findtext)
+#endif
 }
 
 /**
@@ -977,7 +985,7 @@ void MainWindow::proc_action_net_server_trigger()
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
 #else
-    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1);
+    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
 #endif
 }
 
@@ -1077,7 +1085,7 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
 
 void MainWindow::proc_action_editinginfo(QString configfilename, int type)
 {
-    Q_UNUSED(type);
+    Q_UNUSED(type)
     proc_action_edit_pub(configfilename, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
     CStringPub::setString(m_EditConfig, configfilename);
     showStatusTimer(QString("编译配置文件中【%1】").arg(m_EditConfig));

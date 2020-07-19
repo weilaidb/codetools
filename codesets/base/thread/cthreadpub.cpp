@@ -21,26 +21,26 @@ CThreadPub::~CThreadPub()
 void CThreadPub::setSomething()
 {
     msleep(500);
-    QString str = QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((int)QThread::currentThreadId());
+    QString str = QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((unsigned long long)QThread::currentThreadId());
     emit message(str);
 }
 
 void CThreadPub::getSomething()
 {
     msleep(500);
-    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((int)QThread::currentThreadId()));
+    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((unsigned long long)QThread::currentThreadId()));
 }
 
 void CThreadPub::setRunCount(int count)
 {
     m_runCount = count;
-    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((int)QThread::currentThreadId()));
+    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((unsigned long long)QThread::currentThreadId()));
 }
 
 void CThreadPub::run()
 {
     int count = 0;
-    QString str = QString("%1->%2,thread id:%3").arg(__FILE__).arg(__FUNCTION__).arg((int)QThread::currentThreadId());
+    QString str = QString("%1->%2,thread id:%3").arg(__FILE__).arg(__FUNCTION__).arg((unsigned long long)QThread::currentThreadId());
     emit message(str);
     while(1)
     {
@@ -65,6 +65,6 @@ void CThreadPub::run()
 void CThreadPub::doSomething()
 {
     msleep(500);
-    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((int)QThread::currentThreadId()));
+    emit message(QString("%1->%2,thread id:%3").arg(__FUNCTION__).arg(__FILE__).arg((unsigned long long)QThread::currentThreadId()));
 }
 

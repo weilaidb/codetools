@@ -2,7 +2,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
+#ifdef WIN32
 #include <zmq.h>
+#endif
 #include "cnetpub.h"
 #include <iostream>
 #include <string>
@@ -30,6 +32,7 @@ int CNetPub::sendMsg()
 int CNetPub::startServer(const char *uri)
 {
     printf ("startServer\n");
+#ifdef WIN32
     //  Socket to talk to clients
     void *context = zmq_ctx_new ();
     void *responder = zmq_socket (context, ZMQ_REP);
@@ -43,13 +46,14 @@ int CNetPub::startServer(const char *uri)
         sleep (1);          //  Do some 'work'
         zmq_send (responder, "World", 5, 0);
     }
+#endif
     return 0;
 }
 
 int CNetPub::startClient(const char *uri)
 {
     printf ("Connecting to hello world server...\n");
-
+#ifdef WIN32
     /*创建一个新的上下文*/
     void *context = zmq_ctx_new ();
     void *requester = zmq_socket (context, ZMQ_REQ);
@@ -67,6 +71,7 @@ int CNetPub::startClient(const char *uri)
 
     zmq_close (requester);
     zmq_ctx_destroy (context);
+#endif
     return 0;
 }
 
@@ -84,6 +89,7 @@ int CNetPub::startClient()
 
 int CNetPub::startPublish()
 {
+#ifdef WIN32
     void *context = zmq_ctx_new ();
     void *publisher = zmq_socket (context, ZMQ_PUB);
     int rc = zmq_bind (publisher, "tcp://*:5556");
@@ -105,6 +111,7 @@ int CNetPub::startPublish()
     }
     zmq_close (publisher);
     zmq_ctx_destroy (context);
+#endif
 
     return 0;
 }
@@ -113,6 +120,7 @@ int CNetPub::startSubscribe()
 {
     //  Socket to talk to server
     printf ("Collecting updates from weather server...\n");
+#ifdef WIN32
     void *context = zmq_ctx_new ();
     void *subscriber = zmq_socket (context, ZMQ_SUB);
     int rc = zmq_connect (subscriber, "tcp://localhost:5556");
@@ -142,6 +150,7 @@ int CNetPub::startSubscribe()
 
     zmq_close (subscriber);
     zmq_ctx_destroy (context);
+#endif
 
     return 0;
 }

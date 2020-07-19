@@ -159,12 +159,12 @@ QStringList CStringPub::emptyStringList()
     return list;
 }
 
-QStringList CStringPub::emptyStringListCount(quint32 dwCount)
+QStringList CStringPub::emptyStringListCount(int count)
 {
     QStringList list;
     list.clear();
-    quint32 dwLp = 0;
-    for(dwLp = 0; dwLp < dwCount; dwLp++)
+    int lp = 0;
+    for(lp = 0; lp < count; lp++)
     {
         list.append("");
     }

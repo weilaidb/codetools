@@ -9,8 +9,11 @@
 #include <QTextLayout>
 #include <QTextBlock>
 #include <QTextBrowser>
+#include <QDesktopServices>
 #include "debugApp.h"
+#ifdef WIN32
 #include <windows.h>
+#endif
 #include "cstringpub.h"
 
 QMap<QString,QSettings *> CUIPub::m_settingMap;
@@ -207,7 +210,7 @@ QMenu *CUIPub::copyMenu(QMenu *pMenu)
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
         QAction *pNewAction = new QAction(action->text());
-        memcpy_s(pNewAction, sizeof(*action), action, sizeof(*action));
+        memcpy((void*)pNewAction, (void*)action, sizeof(*action));
         pNewMenu->addAction(pNewAction);
     }
     return pNewMenu;
@@ -354,7 +357,7 @@ QString CUIPub::getTextEdit(QTextEdit *pEdit)
     return pEdit->toPlainText();
 }
 
-quint32 CUIPub::getTextEditLen(QTextEdit *pEdit)
+int CUIPub::getTextEditLen(QTextEdit *pEdit)
 {
     return pEdit->toPlainText().length();
 }
@@ -412,7 +415,12 @@ int CUIPub::execCmd(QString path)
         return -1;
     }
 
+#ifdef WIN32
     ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+#else
+    bool ok = QDesktopServices::openUrl(QUrl(path));
+    Q_UNUSED(ok)
+#endif
     return 0;
 }
 

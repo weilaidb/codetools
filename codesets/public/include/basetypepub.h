@@ -1,8 +1,9 @@
 #ifndef BASETYPEPUB_H
 #define BASETYPEPUB_H
 
-#define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
-
+#ifndef ARRAYSIZE
+#define ARRAYSIZE(A) static_cast<unsigned int>(sizeof(A)/sizeof(A[0]))
+#endif
 
 typedef unsigned char UINT8;
 typedef unsigned short UINT16;
