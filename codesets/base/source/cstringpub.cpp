@@ -23,7 +23,7 @@ QStringList CStringPub::toStringList(const QList<QByteArray> list)
         {
             continue;
         }
-        strings.append(QString::fromLocal8Bit(item)); // Assuming local 8-bit.
+        strings.append(QString::fromUtf8(item)); // Assuming local 8-bit.
     }
     return strings;
 }

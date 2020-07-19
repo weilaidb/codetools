@@ -416,7 +416,7 @@ int CUIPub::execCmd(QString path)
     }
 
 #ifdef WIN32
-    ShellExecuteA(NULL, "open", path.toLocal8Bit().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+    ShellExecuteA(NULL, "open", path.toUtf8().data(), NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
 #else
     bool ok = QDesktopServices::openUrl(QUrl(path));
     Q_UNUSED(ok)

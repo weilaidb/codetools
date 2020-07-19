@@ -482,10 +482,10 @@ WORD32 MainWindow::getAstyleFmt(QStringList filelist)
     m_argvp = new char*[listAstyleArgv.size()];
     int i = 0;
     foreach (QString item, listAstyleArgv) {
-        WORD32 dwLen = strlen(item.toLocal8Bit().data());
+        WORD32 dwLen = strlen(item.toUtf8().data());
         char *p = new char[dwLen + 1];
         memset(p,0,dwLen + 1);
-        strcpy(p, item.toLocal8Bit().data());
+        strcpy(p, item.toUtf8().data());
         m_argvp[i++] = p;
     }
 
@@ -591,7 +591,7 @@ void MainWindow::getAstyleConfig()
   **/
         if(0 == listAstyleArgv.size())
         {
-            listAstyleArgv = CStringPub::toStringList(CFilePub::readFileAll(cfgAstyleNameOrg).toLocal8Bit().split(SIGNENTERS));
+            listAstyleArgv = CStringPub::toStringList(CFilePub::readFileAll(cfgAstyleNameOrg).toUtf8().split(SIGNENTERS));
         }
     }
     else
@@ -629,7 +629,7 @@ void MainWindow::getAstyleOrgConfig()
     listAstyleArgv << ("--keep-one-line-statements");
     listAstyleArgv << ("--indent-preproc-block");
     //        listAstyleArgv << ("-xW ");
-    //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toLocal8Bit().data()};
+    //char *argv[] = {" --style=allman  --style=ansi  --style=bsd  --style=break  -A1  --indent-switches  -S  --pad-return-type  -xq  --keep-one-line-statements  -o  --add-braces  -j  --max-continuation-indent=#  /  -M#  --indent-continuation=#  /  -xt#  --indent-preproc-block  -xW ", item.toUtf8().data()};
 
 }
 

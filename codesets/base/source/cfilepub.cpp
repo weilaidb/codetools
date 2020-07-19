@@ -109,7 +109,7 @@ QString CFilePub::readFileAll(QString filename)
         return result;
     }
     file.open(QIODevice::ReadOnly);
-    result = QString::fromLocal8Bit(file.readAll());
+    result = QString::fromUtf8(file.readAll());
     file.close();
 
     return result;
@@ -123,7 +123,7 @@ QString CFilePub::writeFileOnlly(QString filename, QString msg)
     {
         return result;
     }
-    result = file.write(static_cast<const char *>(msg.toLocal8Bit().data()));
+    result = file.write(static_cast<const char *>(msg.toUtf8().data()));
     file.close();
 
     return msg;
@@ -138,7 +138,7 @@ QString CFilePub::writeFileAppend(QString filename, QString msg)
     {
         return result;
     }
-    result = file.write(msg.toLocal8Bit().data());
+    result = file.write(msg.toUtf8().data());
     file.close();
 
     return msg;
@@ -153,7 +153,7 @@ QString CFilePub::writeFileWR(QString filename, QString msg)
     {
         return result;
     }
-    result = file.write(msg.toLocal8Bit().data());
+    result = file.write(msg.toUtf8().data());
     file.close();
 
     return msg;
@@ -167,7 +167,7 @@ QString CFilePub::writeFileWOnly(QString filename, QString msg)
     {
         return result;
     }
-    result = file.write(msg.toLocal8Bit().data());
+    result = file.write(msg.toUtf8().data());
     file.close();
 
     return msg;
