@@ -327,12 +327,11 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     QString strtmp = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
 
+    //默认为一对一
     if(CExpressPub::isEmpty(mode))
     {
-        quint32 dwLp = 0;
         foreach (QString item, list) {
-            result += handlerRegExp_Pub_Single(item, regbefore.at(dwLp), regafter.at(dwLp), mode) + SIGNENTER;
-            dwLp++;
+            result += handlerRegExp_Pub_Single(item, regbefore.at(0), regafter.at(0), mode) + SIGNENTER;
         }
     }
     else if(mode == STR_MODE_SINGLELINE_EXECMULTI)
