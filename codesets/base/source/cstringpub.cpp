@@ -290,4 +290,18 @@ bool CStringPub::inStringList(QString str, QStringList list, Qt::CaseSensitivity
     return false;
 }
 
+void CStringPub::printDateTime()
+{
+    printf("Date : %s\n", __DATE__);
+    printf("Time : %s\n", __TIME__);
+    printf("File : %s\n", __FILE__);
+    printf("Line : %d\n", __LINE__);
+}
+
+
+QString CStringPub::getDateTime()
+{
+    return QString("%1-%2").arg(__DATE__).arg(__TIME__);
+}
+
 

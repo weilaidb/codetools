@@ -55,6 +55,10 @@ public:
     static QString stringSelfMenu();
     static bool atStringList(QString str, QStringList list);
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
+
+    //version
+    static void printDateTime();
+    static QString getDateTime();
 };
 
 #endif // CSTRINGPUB_H

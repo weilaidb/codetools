@@ -382,7 +382,9 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
 
 void MainWindow::proc_action_about_trigger()
 {
-    showStatus(QString("当前版本是:") + APP_VERSION);
+    showStatus(QString("当前版本是:") + APP_VERSION
+               + CSignPub::signEnter()
+               + CStringPub::getDateTime());
 }
 
 
