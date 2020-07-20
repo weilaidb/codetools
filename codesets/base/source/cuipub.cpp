@@ -17,6 +17,7 @@
 #endif
 #include "cstringpub.h"
 #include "ctextcodecpub.h"
+#include "clogpub.h"
 
 #define MAX_LENGTH (20480)
 
