@@ -66,7 +66,7 @@ QString CFilePub::dirName(QString filename)
 }
 
 
-bool CFilePub::createFileNoExist(QString filename)
+bool CFilePub::createFileEmptyNoExist(QString filename)
 {
     if(fileExist(filename))
     {
@@ -83,6 +83,25 @@ bool CFilePub::createFileNoExist(QString filename)
     writeFileOnlly(filename, CStringPub::emptyString());
     return ok;
 }
+
+bool CFilePub::createFileContentNoExist(QString filename, QString content)
+{
+    if(fileExist(filename))
+    {
+        return true;
+    }
+    bool ok =  createDirNoExist(dirName(filename));
+    if(CExpressPub::isFalse(ok))
+    {
+        return false;
+    }
+//    debugApp() << "create dirName          :" << dirName(filename);
+//    debugApp() << "writeFileOnlly filename :" << filename;
+
+    writeFileOnlly(filename, content);
+    return ok;
+}
+
 
 bool CFilePub::createDirExt(QString dirname)
 {

@@ -39,6 +39,8 @@ public:
     static QStringList emptyStringListCount(int count);
     static QString emptyString();
     static QString errorListLenthNg();
+    static QString stringRegExpBefore();
+    static QString stringRegExpAfter();
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();

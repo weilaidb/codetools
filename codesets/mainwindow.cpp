@@ -154,7 +154,7 @@ void MainWindow::initUiOther()
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
     m_FileNameMenu = "reg/selfmenu.txt";
-    CFilePub::createFileNoExist(m_FileNameMenu);
+    CFilePub::createFileEmptyNoExist(m_FileNameMenu);
     /**
       ** 模式：
       ** 单行 多处理
@@ -163,10 +163,10 @@ void MainWindow::initUiOther()
       ** 多行 多处理
       **/
     m_FileMode_SingleL_ExecMulti = "reg/selfmode_singleline_execmulti.txt";
-    CFilePub::createFileNoExist(m_FileMode_SingleL_ExecMulti);
+    CFilePub::createFileEmptyNoExist(m_FileMode_SingleL_ExecMulti);
 
     m_FileMode_AllL_ExecMulti = "reg/selfmode_allline_execmulti.txt";
-    CFilePub::createFileNoExist(m_FileMode_AllL_ExecMulti);
+    CFilePub::createFileEmptyNoExist(m_FileMode_AllL_ExecMulti);
 
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);

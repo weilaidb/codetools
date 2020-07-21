@@ -69,8 +69,8 @@ public:
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpFileNameTips(QString filename);
     static QString getRegExpFileNamePub(QString filename, int filetype);
-    static QString getRegExpByFile(QString filename);
-    static QStringList getRegExpsByFile(QString filename);
+    static QString getRegExpByFile(QString filename, QString content);
+    static QStringList getRegExpsByFile(QString filename,QString content);
     static QString getFileNameByClassType(quint32 dwClasstype);
     static QString procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text);
     static QString checkRegExpFile(QString classconfig, quint32 dwClasstype

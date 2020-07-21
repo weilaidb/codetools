@@ -175,6 +175,17 @@ QString CStringPub::emptyString()
     return QString("");
 }
 
+QString CStringPub::stringRegExpBefore()
+{
+    return QString("(.*)");
+}
+
+QString CStringPub::stringRegExpAfter()
+{
+    return QString("\\1");
+}
+
+
 QString CStringPub::errorListLenthNg()
 {
     return QString("error:列表长度不足");

@@ -71,16 +71,16 @@ QString CRegExpPub::setRegExpByFile(QString filename, QString content)
     return  CFilePub::writeFileWOnly(filename, content);
 }
 
-QString CRegExpPub::getRegExpByFile(QString filename)
+QString CRegExpPub::getRegExpByFile(QString filename,QString content)
 {
     //创建空文件如果文件不存在
-    CFilePub::createFileNoExist(filename);
+    CFilePub::createFileContentNoExist(filename, content);
     return  CFilePub::readFileAll(filename);
 }
 
-QStringList CRegExpPub::getRegExpsByFile(QString filename)
+QStringList CRegExpPub::getRegExpsByFile(QString filename,QString content)
 {
-    return  CStringPub::stringSplitbyNewLineFilterEmpty(getRegExpByFile(filename));
+    return  CStringPub::stringSplitbyNewLineFilterEmpty(getRegExpByFile(filename, content));
 }
 
 QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
@@ -108,7 +108,7 @@ QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype, int fil
         QString regexpsmode    = CStringPub::emptyString();
         checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip, regexpsmode);
 
-        return getRegExpByFile(getRegExpFileNamePub(classconfig, filetype));
+        return getRegExpByFile(getRegExpFileNamePub(classconfig, filetype), CStringPub::emptyString());
     }
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);dwLp++)
     {
@@ -186,9 +186,9 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
         filename = getFileNameByClassType(dwClasstype);
     }
 
-    regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename));
-    regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename));
-    regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename));
+    regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename), CStringPub::stringRegExpBefore());
+    regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename), CStringPub::stringRegExpAfter());
+    regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename), CStringPub::emptyString());
     QMap<QString, QString> *pMap = CMapPub::getMapFileMode();
     if(pMap->end() != pMap->find(classconfig))
     {
