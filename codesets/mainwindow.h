@@ -191,6 +191,7 @@ private slots:
     void proc_ActionClearLeft_trigger();
     void proc_ActionClearRight_trigger();
     void proc_ActionPasteLeft_trigger();
+    void proc_ActionSelectCopy_trigger();
     void proc_ActionSelectAllCopyLeft_trigger();
     void proc_ActionPasteRight_trigger();
     void proc_ActionSelectAllCopyRight_trigger();

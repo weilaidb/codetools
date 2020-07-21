@@ -258,12 +258,14 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
 
     QAction *pActionClearLeft     = CUIPub::createAction("清空");
     QAction *pActionPaste         = CUIPub::createAction("粘贴");
+    QAction *pActionSelectCopy = CUIPub::createAction("复制");
     QAction *pActionSelectAllCopy = CUIPub::createAction("全选复制");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
+    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectCopy_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_ActionOpenCfgMenu_trigger()));
@@ -271,6 +273,7 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
     pMenu->addAction(pActionClearLeft);
+    pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
 
@@ -284,15 +287,18 @@ void MainWindow::slot_tools_menu_right(QMenu *pMenu)
     }
     QAction *pActionClearRight     = CUIPub::createAction("清空");
     QAction *pActionPaste          = CUIPub::createAction("粘贴");
+    QAction *pActionSelectCopy = CUIPub::createAction("复制");
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
     QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
 
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_ActionClearRight_trigger()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteRight_trigger()));
+    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectCopy_trigger()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyRight_trigger()));
     QObject::connect(pActionClearEmpty, SIGNAL(triggered()), this, SLOT(proc_ActionClearEmpty_trigger()));
 
     pMenu->addAction(pActionClearRight);
+    pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
     pMenu->addAction(pActionClearEmpty);
@@ -1182,10 +1188,16 @@ void MainWindow::proc_ActionPasteLeft_trigger()
     CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
 }
 
+void MainWindow::proc_ActionSelectCopy_trigger()
+{
+    CUIPub::setClipBoardText(CUIPub::getSelectTextEdit(ui->textEdit));
+}
+
 void MainWindow::proc_ActionSelectAllCopyLeft_trigger()
 {
     CUIPub::setClipBoardText(CUIPub::getTextEdit(ui->textEdit));
 }
+
 
 void MainWindow::proc_ActionOpenConfigDir_trigger()
 {
