@@ -24,9 +24,9 @@ void CLogPub::msgDefault(QString info)
     info.append(CSignPub::signEnter());
     QByteArray ba = info.toLatin1();
     char *mm = ba.data();
-    debugApp()<< mm <<endl;  //调试时，在console中输出
+//    debugApp()<< mm <<endl;  //调试时，在console中输出
     string cppstr = CStringPubCpp::getDataOfStr((BYTE *)mm, strlen(mm));
-    cout << cppstr << endl;  //调试时，在console中输出
+//    cout << cppstr << endl;  //调试时，在console中输出
     CFilePub::writeFileAppend(m_logDefaultFileName, info);
     CFilePub::writeFileAppend(m_logDefaultFileName, cppstr.c_str());
 }
