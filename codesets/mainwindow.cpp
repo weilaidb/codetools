@@ -110,6 +110,7 @@ void MainWindow::initActionSets()
     //edit config
     QObject::connect(ui->action_EditCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_EditCfgFile(bool)));
     QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_action_TryAgain()));
+    QObject::connect(ui->action_DeleteCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_DeleteCfgFile(bool)));
 
     //text edit
 
@@ -1104,6 +1105,22 @@ void MainWindow::proc_action_editinginfo(QString configfilename, int type)
     setWindowTitle (QString("编译配置文件中【%1】").arg(m_EditConfig));
 }
 
+void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
+{
+    Q_UNUSED(type)
+
+    if(CUIPub::showBoxInfoIsNo(QString("确认删除配置文件%1").arg(configfilename)))
+    {
+        return;
+    }
+    showStatusTimer(QString("删除配置文件【%1】").arg(configfilename));
+    setWindowTitle (QString("删除配置文件【%1】").arg(configfilename));
+
+    CFilePub::deleteFile(CRegExpPub::getRegExpFileNameBefore(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
+    CFilePub::deleteFile(CRegExpPub::getRegExpFileNameAfter(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
+    CFilePub::deleteFile(CRegExpPub::getRegExpFileNameTips(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
+}
+
 
 /**
  * @brief MainWindow::proc_action_gen_custom_action
@@ -1141,6 +1158,14 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
         return;
     }
 
+    //删除配置文件模式
+    if(CUIPub::isCheckedQAction(ui->action_DeleteCfgFile))
+    {
+        proc_action_deleteinfo(cfgFirst,0);
+        return;
+    }
+
+
     CStringPub::setString(m_EditConfig, cfgFirst);
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
@@ -1175,8 +1200,33 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
         CUIPub::showTextEdit(ui->textEdit_cfgTips);
         CUIPub::showTextEdit(ui->textEdit_cfgBefore);
         CUIPub::showTextEdit(ui->textEdit_cfgAfter);
+
+        CUIPub::setCheckedQAction(ui->action_DeleteCfgFile, false);
     }
 }
+
+
+void MainWindow::proc_action_DeleteCfgFile(bool checked)
+{
+    if(CExpressPub::isFalse(checked))
+    {
+        showStatusTimer(QString("退出删除配置文件模式"));
+        return;
+    }
+    showStatusTimer(QString("进入删除配置文件模式"));
+    proc_action_EditCfgFileMutex();
+}
+
+void MainWindow::proc_action_EditCfgFileMutex()
+{
+    if(CExpressPub::isFalse(CUIPub::getCheckedQAction(ui->action_EditCfgFile)))
+    {
+        return;
+    }
+    emit ui->action_EditCfgFile->triggered(false);
+    CUIPub::setCheckedQAction(ui->action_EditCfgFile, false);
+}
+
 
 void MainWindow::proc_ActionClearLeft_trigger()
 {

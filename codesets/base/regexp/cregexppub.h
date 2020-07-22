@@ -78,6 +78,7 @@ public:
                                    , QStringList &regexpsaft
                                    , QStringList &regexpstip
                                    , QString &regexpmode);
+    static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);

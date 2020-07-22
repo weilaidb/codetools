@@ -152,6 +152,7 @@
     <addaction name="action_EditCfgFile"/>
     <addaction name="action_SwitchClearLeftText"/>
     <addaction name="action_TryAgain"/>
+    <addaction name="action_DeleteCfgFile"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -290,6 +291,20 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="action_DeleteCfgFile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>删除配置文件</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

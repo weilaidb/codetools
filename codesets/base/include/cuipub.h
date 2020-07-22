@@ -67,6 +67,15 @@ public:
     static QAction *createActionFull(QString name);
     static QAction *createAction(QString name);
     static bool isCheckedQAction(QAction *pAction);
+    static void setCheckedQAction(QAction *pAction, bool bflag);
+    static bool getCheckedQAction(QAction *pAction);
+
+    //messgebox
+    static int showBoxWarning(QString tips);
+    static int showBoxInfo(QString tips);
+    static bool showBoxInfoIsYes(QString tips);
+    static bool showBoxInfoIsNo(QString tips);
+    static int showBoxCritical(QString tips);
 
 public:
     enum{

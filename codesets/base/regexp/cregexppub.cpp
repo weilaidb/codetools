@@ -168,14 +168,8 @@ QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegu
     return result;
 }
 
-QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
-                                    , QStringList &regexpsbef
-                                    , QStringList &regexpsaft
-                                    , QStringList &regexpstip
-                                    , QString &regexpmode
-                                    )
+QString CRegExpPub::getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype)
 {
-    QString result("");
     QString filename  = CStringPub::emptyString();
     if(CExpressPub::isFull(CStringPub::strSim(classconfig).length()))
     {
@@ -185,7 +179,19 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
     {
         filename = getFileNameByClassType(dwClasstype);
     }
+    return filename;
+}
 
+
+QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
+                                    , QStringList &regexpsbef
+                                    , QStringList &regexpsaft
+                                    , QStringList &regexpstip
+                                    , QString &regexpmode
+                                    )
+{
+    QString result("");
+    QString filename  = getFileNameByClassCfgType(classconfig, dwClasstype);
     regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename), CStringPub::stringRegExpBefore());
     regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename), CStringPub::stringRegExpAfter());
     regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename), CStringPub::emptyString());

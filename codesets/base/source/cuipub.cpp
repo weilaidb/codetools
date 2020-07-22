@@ -10,6 +10,7 @@
 #include <QTextBlock>
 #include <QTextBrowser>
 #include <QDesktopServices>
+#include <QMessageBox>
 #include "debugApp.h"
 #ifdef WIN32
 #include <clogpub.h>
@@ -475,3 +476,45 @@ bool CUIPub::isCheckedQAction(QAction *pAction)
 {
     return pAction->isChecked();
 }
+
+void CUIPub::setCheckedQAction(QAction *pAction, bool bflag)
+{
+
+    pAction->setChecked(bflag);
+}
+
+bool CUIPub::getCheckedQAction(QAction *pAction)
+{
+    return pAction->isChecked();
+}
+
+int CUIPub::showBoxWarning(QString tips)
+{
+    return QMessageBox::warning(NULL, "Title", tips,
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+
+int CUIPub::showBoxInfo(QString tips)
+{
+    return QMessageBox::information(NULL, "Title", tips,
+                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+
+int CUIPub::showBoxCritical(QString tips)
+{
+    return QMessageBox::critical(NULL, "Title", tips,
+                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+
+bool CUIPub::showBoxInfoIsYes(QString tips)
+{
+    return QMessageBox::Yes == QMessageBox::information(NULL, "Title", tips,
+                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+
+bool CUIPub::showBoxInfoIsNo(QString tips)
+{
+    return QMessageBox::No == QMessageBox::information(NULL, "Title", tips,
+                                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+

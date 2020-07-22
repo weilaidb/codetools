@@ -178,8 +178,11 @@ private slots:
     void proc_action_gen_pub(QString configfilename, int type);
     void proc_action_gen_custom_action(QAction *pAction);
     void proc_action_EditCfgFile(bool checked);
+    void proc_action_DeleteCfgFile(bool checked);
+    void proc_action_EditCfgFileMutex();
     void proc_action_edit_pub(QString configfilename, int type);
     void proc_action_editinginfo(QString configfilename, int type);
+    void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
 
 
