@@ -112,8 +112,6 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_action_TryAgain()));
     QObject::connect(ui->action_DeleteCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_DeleteCfgFile(bool)));
 
-    //text edit
-
 }
 
 
@@ -569,6 +567,12 @@ void MainWindow::showStatusTimer(QString msg)
 #else
     ShowTipsInfoWithShowTime(msg, 2000);
 #endif
+}
+
+void MainWindow::showStatusTimerWindowTitle(QString msg)
+{
+    showStatusTimer(msg);
+    setWindowTitle(msg);
 }
 
 void MainWindow::showTextBrower(QString msg)
@@ -1101,8 +1105,7 @@ void MainWindow::proc_action_editinginfo(QString configfilename, int type)
     Q_UNUSED(type)
     proc_action_edit_pub(configfilename, EUM_CLASSTYPE::EDIT_CFGFILE_OPERATIONS);
     CStringPub::setString(m_EditConfig, configfilename);
-    showStatusTimer(QString("编译配置文件中【%1】").arg(m_EditConfig));
-    setWindowTitle (QString("编译配置文件中【%1】").arg(m_EditConfig));
+    showStatusTimerWindowTitle(QString("编译配置文件中【%1】").arg(m_EditConfig));
 }
 
 void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
@@ -1113,12 +1116,13 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
     {
         return;
     }
-    showStatusTimer(QString("删除配置文件【%1】").arg(configfilename));
-    setWindowTitle (QString("删除配置文件【%1】").arg(configfilename));
+    showStatusTimerWindowTitle(QString("删除配置文件【%1】").arg(configfilename));
 
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameBefore(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameAfter(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameTips(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
+
+    CFilePub::deleteFileSameLine(m_FileNameMenu, configfilename);
 }
 
 
@@ -1180,7 +1184,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgTips)   , CRegExpPub::FILE_TIPS  );
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgBefore) , CRegExpPub::FILE_BEFORE);
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgAfter)  , CRegExpPub::FILE_AFTER );
-            showStatusTimer(QString("保存配置文件成功:%1").arg(m_EditConfig));
+            showStatusTimerWindowTitle(QString("保存配置文件成功:%1").arg(m_EditConfig));
         }
         CUIPub::hideTextEdit(ui->textEdit_cfgTips);
         CUIPub::hideTextEdit(ui->textEdit_cfgBefore);
@@ -1194,7 +1198,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
         }
         else
         {
-            showStatusTimer(QString("进入编辑配置文件模式"));
+            showStatusTimerWindowTitle(QString("进入编辑配置文件模式"));
         }
 
         CUIPub::showTextEdit(ui->textEdit_cfgTips);
@@ -1210,10 +1214,10 @@ void MainWindow::proc_action_DeleteCfgFile(bool checked)
 {
     if(CExpressPub::isFalse(checked))
     {
-        showStatusTimer(QString("退出删除配置文件模式"));
+        showStatusTimerWindowTitle(QString("退出删除配置文件模式"));
         return;
     }
-    showStatusTimer(QString("进入删除配置文件模式"));
+    showStatusTimerWindowTitle(QString("进入删除配置文件模式"));
     proc_action_EditCfgFileMutex();
 }
 

@@ -25,6 +25,7 @@ public:
     static QString writeFileWR(QString filename, QString msg);
     static QString writeFileWOnly(QString filename, QString msg);
     static QString deleteFile(QString filename);
+    static QString deleteFileSameLine(QString filename,QString same);
     static QStringList getFileNames(QStringList nameFilters, const QString path);
     static QStringList getFileAbsoluteNames(QStringList nameFilters, const QString path);
     static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);

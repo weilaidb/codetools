@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <qapplication.h>
+#include <csignpub.h>
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
@@ -203,6 +204,30 @@ QString CFilePub::deleteFile(QString filename)
     }
     file.remove();
     file.close();
+
+    return result;
+}
+
+QString CFilePub::deleteFileSameLine(QString filename,QString same)
+{
+    QString result("");
+    QFile file(filename);
+    if(!file.exists())
+    {
+        return result;
+    }
+
+    QString filecontent = readFileAll(filename);
+    QStringList list = CStringPub::stringSplitbyNewLine(filecontent);
+    foreach (QString item, list) {
+        if(same == item)
+        {
+            continue;
+        }
+        result += item + CSignPub::signEnter();
+    }
+
+    writeFileOnlly(filename, result);
 
     return result;
 }

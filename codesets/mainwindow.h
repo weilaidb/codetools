@@ -42,6 +42,7 @@ private:
     void procAstyleInstance(QStringList filelist);
     void showStatus(QString msg);
     void showStatusTimer(QString msg);
+    void showStatusTimerWindowTitle(QString msg);
     void showTextBrower(QString msg);
     void showTextBrowerAppend(QString msg);
     void getNameFilter();
