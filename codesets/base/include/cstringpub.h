@@ -32,6 +32,8 @@ public:
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);
     static void addStringUnique(QStringList &lists, QString str);
+    static void addStringUniqueMax(QStringList &lists, QString str, int max);
+    static void addStringUniqueSortMax(QStringList &lists, QString str, int max);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
     static QString getOpenFileNamesFilter(QStringList filters, QString sign);
     //return stringlist, only one item

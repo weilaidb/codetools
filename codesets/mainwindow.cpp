@@ -145,6 +145,7 @@ void MainWindow::initVars()
 
     CStringPub::clearString(m_EditConfig);
     CStringPub::clearStringList(listfrequse);
+    m_iListFreqUseCnt = 10;
 
 }
 
@@ -1215,7 +1216,7 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     CStringPub::setString(m_EditConfig, cfgFirst);
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
-    CStringPub::addStringUnique(listfrequse, cfgFirst);
+    CStringPub::addStringUniqueSortMax(listfrequse, cfgFirst, m_iListFreqUseCnt);
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)

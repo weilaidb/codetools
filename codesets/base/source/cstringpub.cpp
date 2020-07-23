@@ -128,6 +128,27 @@ void CStringPub::addStringUnique(QStringList &lists,QString str)
     lists.removeDuplicates();
 }
 
+void CStringPub::addStringUniqueMax(QStringList &lists, QString str, int max)
+{
+    lists.append(str);
+    lists.removeDuplicates();
+    if(lists.count() > max)
+    {
+        lists.removeFirst();
+    }
+}
+
+void CStringPub::addStringUniqueSortMax(QStringList &lists, QString str, int max)
+{
+    lists.append(str);
+    lists.removeDuplicates();
+    if(lists.count() > max)
+    {
+        lists.removeFirst();
+    }
+    lists.sort();
+}
+
 
 QStringList CStringPub::stringUniqueSort(QStringList lists)
 {

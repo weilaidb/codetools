@@ -183,6 +183,10 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
     }
 
     QMenu *pMenu = *ppMenu;
+    if(nullptr == pMenu)
+    {
+        return;
+    }
     //先删除当前节点,显示与删除有冲突
     QList<QAction*> listActions = pMenu->actions();
     foreach (QAction *action, listActions) {
@@ -192,9 +196,26 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
             delete action;
         }
     }
-    /*QList<QAction*> listActions = pMenu.me*/;
-//    pMenu->children();
 
+//    QObjectList q = pMenu->children();
+//    pMenu->addMenu()
+//    for(int i=0;i<q.length();i++)
+//    {
+//        if(!q.at(i)->children().empty())
+//        {
+//            QMenu* pInMenu = qobject_cast<QMenu*>(q.at(i));
+//            clearMenuAll(&pInMenu);
+//        }
+//        else
+//        {
+//            QObject* qObject = q.at(i);
+//            if(qObject->inherits("QAction"))
+//            {
+//                QAction* b = qobject_cast<QAction*>(qObject);
+//                delete b;
+//            }
+//        }
+//    }
 
     pMenu->clear();
     delete pMenu;
@@ -235,7 +256,7 @@ QAction *CUIPub::copyActionOfMenu(QMenu *pMenu,QString findstr)
         if(findstr == action->data().toString())
         {
             QAction *pNewAction = new QAction(action->text());
-//            pNewAction->setData(action->data());
+            //            pNewAction->setData(action->data());
             memcpy((void*)pNewAction, (void*)action, sizeof(*action));
             return pNewAction;
         }
@@ -522,7 +543,7 @@ bool CUIPub::getCheckedQAction(QAction *pAction)
 int CUIPub::showBoxWarning(QString tips)
 {
     return QMessageBox::warning(NULL, "Title", tips,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 int CUIPub::showBoxInfo(QString tips)
@@ -534,18 +555,18 @@ int CUIPub::showBoxInfo(QString tips)
 int CUIPub::showBoxCritical(QString tips)
 {
     return QMessageBox::critical(NULL, "Title", tips,
-                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 bool CUIPub::showBoxInfoIsYes(QString tips)
 {
     return QMessageBox::Yes == QMessageBox::information(NULL, "Title", tips,
-                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 bool CUIPub::showBoxInfoIsNo(QString tips)
 {
     return QMessageBox::No == QMessageBox::information(NULL, "Title", tips,
-                                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
