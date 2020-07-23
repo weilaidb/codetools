@@ -1322,6 +1322,13 @@ void MainWindow::proc_action_TryAgain()
 
 void MainWindow::proc_textEdit_textChanged()
 {
+    if(CUIPub::getCheckedQAction(ui->action_EditCfgFile)
+            ||CUIPub::getCheckedQAction(ui->action_DeleteCfgFile))
+    {
+        return;
+    }
+
+
     static QString oldText = CStringPub::emptyString();
     static QString curText = CStringPub::emptyString();
 
