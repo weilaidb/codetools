@@ -5,6 +5,8 @@
 #define ARRAYSIZE(A) static_cast<unsigned int>(sizeof(A)/sizeof(A[0]))
 #endif
 
+typedef unsigned char BYTE;
+
 typedef unsigned char UINT8;
 typedef unsigned short UINT16;
 typedef unsigned int UINT32;

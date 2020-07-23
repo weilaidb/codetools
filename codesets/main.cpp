@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QDebug>
 #include "ctextcodecpub.h"
 
 int main(int argc, char *argv[])
 {
     CTextCodecPub::setTextCodecUtf8();
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow w(argv[0]);
     w.show();
     return a.exec();
 }

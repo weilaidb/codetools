@@ -2,6 +2,7 @@
 #include "signpub.h"
 #include "debugApp.h"
 #include <QStringList>
+#include <QCoreApplication>
 
 CStringPub::CStringPub()
 {
@@ -314,4 +315,41 @@ QString CStringPub::getDateTime()
     return QString("%1-%2").arg(__DATE__).arg(__TIME__);
 }
 
+QString CStringPub::hexToString(unsigned char *in, int len)
+{
+    int i;
+    unsigned char inChar,hi,lo;
+    QString s;
 
+    for (i=0; i<len; i++)
+    {
+        inChar = in[i];
+
+        hi = (inChar & 0xF0) >> 4;
+        if (hi > 9)
+            hi = 'A' + (hi - 0x0A);
+        else
+            hi += 0x30;
+        s.append(hi);
+
+        lo = inChar & 0x0F;
+        if (lo > 9)
+            lo = 'A' + (lo - 0x0A);
+        else
+            lo += 0x30;
+        s.append(lo);
+
+        //        s.append(0x20);
+    }
+
+    return s;
+}
+
+
+QString CStringPub::getCurrentExePath()
+{
+    //Qt 获取当前程序运行路径
+    //获取程序当前运行目录
+    QString fileName = QCoreApplication::applicationDirPath();
+    return fileName;
+}

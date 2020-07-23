@@ -23,6 +23,7 @@
 #include "cprintpub.h"
 #include "ctreepub.h"
 #include "cmappub.h"
+#include "calgorithmpub.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QDesktopServices>
@@ -37,9 +38,10 @@
 extern int AyStyleMain(int argc, char** argv);
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QString appexe, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_apppath(appexe)
 {
     ui->setupUi(this);
     showVersion();
@@ -400,9 +402,14 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
 
 void MainWindow::proc_action_about_trigger()
 {
+    debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
+    debugApp() << CStringPub::getCurrentExePath();
     showStatus(QString("当前版本是:") + APP_VERSION
                + CSignPub::signEnter()
-               + CStringPub::getDateTime());
+               + CStringPub::getDateTime()
+               + CSignPub::signEnter()
+               + CAlgorithmPub::getMd5SumOfFile(m_apppath)
+               );
 }
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)

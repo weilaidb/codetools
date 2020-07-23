@@ -61,6 +61,9 @@ public:
     //version
     static void printDateTime();
     static QString getDateTime();
+
+    static QString hexToString(unsigned char *in, int len);
+    static QString getCurrentExePath();
 };
 
 #endif // CSTRINGPUB_H

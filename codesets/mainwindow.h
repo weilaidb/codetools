@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QString appexe, QWidget *parent = nullptr);
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
 
@@ -141,6 +141,9 @@ private:
     //text edit
     QTimer *pCheckLeftTimer;
     int iTimeout;
+
+    //程序名
+    QString m_apppath;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();

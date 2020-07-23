@@ -39,6 +39,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/map/ \
     base/codec/ \
     base/log/ \
+    base/algorithm/ \
     base/net/zeromq/ \
     cppbase/string/ \
     cppbase/include/ \
@@ -75,6 +76,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    base/algorithm/calgorithmpub.cpp \
     base/codec/ctextcodecpub.cpp \
     base/define/cdefinepub.cpp \
     base/dialog/cdialogpub.cpp \
@@ -103,6 +105,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
+    base/algorithm/calgorithmpub.h \
     base/codec/ctextcodecpub.h \
     base/define/cdefinepub.h \
     base/dialog/cdialogpub.h \
