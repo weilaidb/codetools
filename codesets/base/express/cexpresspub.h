@@ -89,6 +89,7 @@ public:
     static bool isFalse(bool bok);
     static bool isTrue(bool bok);
     static bool isNullPtr(void *Ptr);
+    static bool isOkPtr(void *Ptr);
     static bool isIndexXieLine(QString path);
     static bool isSame(QString str, QString other);
     static bool isIn(QString str, QString other);

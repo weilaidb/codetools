@@ -50,6 +50,11 @@ bool CExpressPub::isNullPtr(void *Ptr)
     return (nullptr == Ptr);
 }
 
+bool CExpressPub::isOkPtr(void *Ptr)
+{
+    return (nullptr != Ptr);
+}
+
 bool CExpressPub::isIndexXieLine(QString path)
 {
     return (-1 != path.lastIndexOf(CSignPub::signLXie()));

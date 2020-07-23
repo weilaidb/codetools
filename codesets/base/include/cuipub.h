@@ -28,6 +28,7 @@ public:
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);
     static QMenu *copyMenu(QMenu *pMenu);
+    static QAction *copyActionOfMenu(QMenu *pMenu,QString findstr);
     static void addMenu(QMenu *pMenu,QString item);
     static void setMenuPolicyCustom(QWidget *pWidget);
 
@@ -65,6 +66,7 @@ public:
 
     //创建Action，并且设置内容不为空
     static QAction *createActionFull(QString name);
+    static QAction *createActionData(QString name,QString data);
     static QAction *createAction(QString name);
     static bool isCheckedQAction(QAction *pAction);
     static void setCheckedQAction(QAction *pAction, bool bflag);

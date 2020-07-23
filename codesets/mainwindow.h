@@ -105,7 +105,8 @@ private:
       **/
     QString m_FileMode_SingleL_ExecMulti;
     QString m_FileMode_AllL_ExecMulti;
-
+    //常用列表 configfile
+    QStringList listfrequse;
 
 private:
     QString openFilePathRecent;
@@ -201,6 +202,7 @@ private slots:
     void slot_generate_menu_left(QPoint pos);
     void slot_generate_menu_right(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
+    QMenu *slot_frequse_menu();
     void slot_tools_menu_left(QMenu *pMenu);
     void slot_tools_menu_right(QMenu *pMenu);
     void proc_ActionClearLeft_trigger();

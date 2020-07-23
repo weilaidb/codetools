@@ -122,6 +122,13 @@ QStringList CStringPub::stringUnique(QStringList lists)
     return lists;
 }
 
+void CStringPub::addStringUnique(QStringList &lists,QString str)
+{
+    lists.append(str);
+    lists.removeDuplicates();
+}
+
+
 QStringList CStringPub::stringUniqueSort(QStringList lists)
 {
     lists.sort();

@@ -192,10 +192,15 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
             delete action;
         }
     }
+    /*QList<QAction*> listActions = pMenu.me*/;
+//    pMenu->children();
+
+
     pMenu->clear();
     delete pMenu;
     pMenu = nullptr;
 }
+
 void CUIPub::clearMenuItems(QMenu *pMenu)
 {
     if(nullptr == pMenu)
@@ -221,6 +226,24 @@ QMenu *CUIPub::copyMenu(QMenu *pMenu)
     }
     return pNewMenu;
 }
+
+QAction *CUIPub::copyActionOfMenu(QMenu *pMenu,QString findstr)
+{
+
+    QList<QAction*> listActions = pMenu->actions();
+    foreach (QAction *action, listActions) {
+        if(findstr == action->data().toString())
+        {
+            QAction *pNewAction = new QAction(action->text());
+//            pNewAction->setData(action->data());
+            memcpy((void*)pNewAction, (void*)action, sizeof(*action));
+            return pNewAction;
+        }
+    }
+
+    return nullptr;
+}
+
 
 void CUIPub::addMenu(QMenu *pMenu, QString item)
 {
@@ -464,6 +487,14 @@ QAction *CUIPub::createActionFull(QString name)
     pAction->setData(name);
     return pAction;
 }
+
+QAction *CUIPub::createActionData(QString name,QString data)
+{
+    QAction *pAction = new QAction(name);
+    pAction->setData(data);
+    return pAction;
+}
+
 
 QAction *CUIPub::createAction(QString name)
 {

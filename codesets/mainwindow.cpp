@@ -144,6 +144,7 @@ void MainWindow::initVars()
     m_thread_subscribe = nullptr;
 
     CStringPub::clearString(m_EditConfig);
+    CStringPub::clearStringList(listfrequse);
 
 }
 
@@ -284,6 +285,7 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_ActionOpenCfgMenu_trigger()));
 
+    pMenu->addMenu(slot_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
     pMenu->addAction(pActionClearLeft);
@@ -292,6 +294,24 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionSelectAllCopy);
 
 }
+
+QMenu *MainWindow::slot_frequse_menu()
+{
+    QMenu *pFreqUse = new QMenu("常用列表");
+    debugApp() << listfrequse.count();
+    foreach (QString item, listfrequse) {
+        QAction *pTmpAction = CUIPub::createActionFull(item);
+        pFreqUse->addAction(pTmpAction);
+    }
+
+    if(pFreqUse)
+    {
+        QObject::connect(pFreqUse, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
+    }
+
+    return pFreqUse;
+}
+
 
 void MainWindow::slot_tools_menu_right(QMenu *pMenu)
 {
@@ -335,6 +355,7 @@ void MainWindow::pubHistorySetting(int type)
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
+    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(listfrequse), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openDirPathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
@@ -1194,6 +1215,7 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     CStringPub::setString(m_EditConfig, cfgFirst);
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
+    CStringPub::addStringUnique(listfrequse, cfgFirst);
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)
