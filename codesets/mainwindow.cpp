@@ -112,6 +112,8 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_TryAgain, SIGNAL(triggered()), this, SLOT(proc_action_TryAgain()));
     QObject::connect(ui->action_DeleteCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_DeleteCfgFile(bool)));
 
+    //text edit
+    QObject::connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(proc_textEdit_textChanged()));
 }
 
 
@@ -169,6 +171,12 @@ void MainWindow::initUiOther()
 
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
+
+    iTimeout = 2000;
+    pCheckLeftTimer = new QTimer(this);
+    pCheckLeftTimer->start(iTimeout);
+    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
+
 }
 
 /**
@@ -1260,9 +1268,9 @@ void MainWindow::proc_ActionOpenConfigDir_trigger()
 
 void MainWindow::proc_ActionOpenCfgMenu_trigger()
 {
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
+    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
 }
 
 
@@ -1311,3 +1319,23 @@ void MainWindow::proc_action_TryAgain()
     proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
 
 }
+
+void MainWindow::proc_textEdit_textChanged()
+{
+    static QString oldText = CStringPub::emptyString();
+    static QString curText = CStringPub::emptyString();
+
+    curText = CUIPub::getTextEdit(ui->textEdit);
+    if(curText != oldText)
+    {
+        pCheckLeftTimer->start(iTimeout);
+        oldText = curText;
+        return;
+    }
+
+    oldText = curText;
+    proc_action_TryAgain();
+    pCheckLeftTimer->stop();
+
+}
+

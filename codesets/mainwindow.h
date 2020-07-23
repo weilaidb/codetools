@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QCloseEvent>
 #include <QTextEdit>
+#include <QTimer>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "filepub.h"
@@ -136,6 +137,10 @@ private:
 
     //Edit File
     QString m_EditConfig;
+
+    //text edit
+    QTimer *pCheckLeftTimer;
+    int iTimeout;
 private slots:
     void proc_action_codeFormat_File_trigger();
     void proc_action_codeFormat_Directory_trigger();
@@ -173,6 +178,9 @@ private slots:
     void proc_threadmessage_trigger(const QString &info);
     void proc_threadprogress_trigger(int progress);
     void proc_threadfinished_trigger();
+
+    //text edit
+    void proc_textEdit_textChanged();
 
 
     //generate 添加右键菜单
