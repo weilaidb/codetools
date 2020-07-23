@@ -172,7 +172,7 @@ void MainWindow::initUiOther()
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
 
-    iTimeout = 2000;
+    iTimeout = 600;
     pCheckLeftTimer = new QTimer(this);
     pCheckLeftTimer->start(iTimeout);
     connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
