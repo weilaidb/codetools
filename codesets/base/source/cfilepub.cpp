@@ -5,9 +5,12 @@
 #include <QFileDialog>
 #include <qapplication.h>
 #include <csignpub.h>
+#include <csignpub.h>
+#include <cstringpub.h>
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
+#include "signpub.h"
 
 CFilePub::CFilePub()
 {
@@ -182,6 +185,21 @@ QString CFilePub::writeFileWR(QString filename, QString msg)
 QString CFilePub::writeFileWOnly(QString filename, QString msg)
 {
     QString result("");
+    QFile file(filename);
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        return result;
+    }
+    result = file.write(msg.toUtf8().data());
+    file.close();
+
+    return msg;
+}
+
+QString CFilePub::writeFileWOnly(QString filename, QStringList list)
+{
+    QString result("");
+    QString msg = CStringPub::stringList2String(list, CSignPub::signEnterExt());
     QFile file(filename);
     if(!file.open(QIODevice::WriteOnly))
     {

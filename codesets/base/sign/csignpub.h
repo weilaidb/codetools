@@ -10,6 +10,8 @@ public:
     CSignPub();
 
     static QString signEnter();
+    static const char *signEnterExt();
+    static char signEnterS();
     static QString signEnterNL();
     static QString signRESpace();
     static char signLXie();

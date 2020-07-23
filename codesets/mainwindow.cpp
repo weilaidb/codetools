@@ -144,9 +144,6 @@ void MainWindow::initVars()
     m_thread_subscribe = nullptr;
 
     CStringPub::clearString(m_EditConfig);
-    CStringPub::clearStringList(listfrequse);
-    m_iListFreqUseCnt = 10;
-
 }
 
 void MainWindow::initUiOther()
@@ -186,6 +183,10 @@ void MainWindow::initUiOther()
     pCheckLeftTimer->start(iTimeout);
     connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
 
+    m_iListFreqUseCnt = 10;
+    m_ListFreqUseFile = "reg/frequse.txt";
+    CFilePub::createFileEmptyNoExist(m_ListFreqUseFile);
+    m_listfrequse = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_ListFreqUseFile));;
 }
 
 /**
@@ -299,8 +300,8 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
 QMenu *MainWindow::slot_frequse_menu()
 {
     QMenu *pFreqUse = new QMenu("常用列表");
-    debugApp() << listfrequse.count();
-    foreach (QString item, listfrequse) {
+    debugApp() << m_listfrequse.count();
+    foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
     }
@@ -356,7 +357,6 @@ void MainWindow::pubHistorySetting(int type)
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_codeformat), ucType);
     CUIPub::procStringList(m_pSettings, BINDSTRWORDS(recentfiles_document), ucType);
-    CUIPub::procStringList(m_pSettings, BINDSTRWORDS(listfrequse), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openDirPathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
@@ -1216,7 +1216,8 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     CStringPub::setString(m_EditConfig, cfgFirst);
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
-    CStringPub::addStringUniqueSortMax(listfrequse, cfgFirst, m_iListFreqUseCnt);
+    proc_frequse(cfgFirst);
+
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)
@@ -1382,3 +1383,8 @@ void MainWindow::proc_textEdit_textChanged()
 
 }
 
+void MainWindow::proc_frequse(QString configfilename)
+{
+    CStringPub::addStringUniqueSortMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
+    CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
+}

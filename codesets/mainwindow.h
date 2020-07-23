@@ -106,8 +106,9 @@ private:
     QString m_FileMode_SingleL_ExecMulti;
     QString m_FileMode_AllL_ExecMulti;
     //常用列表 configfile, 显示的最大数量
-    QStringList listfrequse;
+    QStringList m_listfrequse;
     int m_iListFreqUseCnt;
+    QString m_ListFreqUseFile;
 
 private:
     QString openFilePathRecent;
@@ -198,6 +199,7 @@ private slots:
     void proc_action_editinginfo(QString configfilename, int type);
     void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
+    void proc_frequse(QString configfilename);
 
 
     void slot_generate_menu_left(QPoint pos);
