@@ -144,6 +144,9 @@ private:
     //text edit
     QTimer *pCheckLeftTimer;
     int iTimeout;
+    //text edit
+    QTimer *pClipBoardTimer;
+    int iClipBoardTimeout;
 
     //程序名
     QString m_apppath;
@@ -187,6 +190,7 @@ private slots:
 
     //text edit
     void proc_textEdit_textChanged();
+    void proc_clipBoard_textChanged();
 
 
     //generate 添加右键菜单

@@ -24,6 +24,7 @@ public:
     static void procString(QSettings *pSetting, QString name, QString &str, qint8 ucOperType);
     static void procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, QString name, qint8 ucOperType);
+    static void procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType);
 
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);

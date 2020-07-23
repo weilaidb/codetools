@@ -121,6 +121,8 @@ void MainWindow::initActionSets()
 
     //text edit
     QObject::connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(proc_textEdit_textChanged()));
+
+    //clipboard change
 }
 
 
@@ -182,6 +184,11 @@ void MainWindow::initUiOther()
     pCheckLeftTimer = new QTimer(this);
     pCheckLeftTimer->start(iTimeout);
     connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
+
+    iClipBoardTimeout = 600;
+    pClipBoardTimer = new QTimer(this);
+    pClipBoardTimer->start(iClipBoardTimeout);
+    connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
     m_iListFreqUseCnt = 10;
     m_ListFreqUseFile = "reg/frequse.txt";
@@ -360,7 +367,8 @@ void MainWindow::pubHistorySetting(int type)
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openDirPathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
-    CUIPub::procAction(m_pSettings, ui->action_SwitchClearLeftText, ui->action_SwitchClearLeftText->text(), ucType);
+    CUIPub::procAction(m_pSettings, ui->action_SwitchClearLeftText, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_ClipBoarChange, ucType);
 }
 
 void MainWindow::readHistorySetting()
@@ -1381,6 +1389,28 @@ void MainWindow::proc_textEdit_textChanged()
     proc_action_TryAgain();
     pCheckLeftTimer->stop();
 
+}
+
+void MainWindow::proc_clipBoard_textChanged()
+{
+    if(CExpressPub::isFalse(CUIPub::getCheckedQAction(ui->action_ClipBoarChange)))
+    {
+        return;
+    }
+
+    static QString oldText = CUIPub::getClipBoardText();
+    static QString curText = CUIPub::getClipBoardText();
+
+    curText = CUIPub::getClipBoardText();
+    if(curText != oldText)
+    {
+        CUIPub::setTextEdit(ui->textEdit, curText);
+        proc_action_TryAgain();
+        oldText = curText;
+        return;
+    }
+
+    oldText = curText;
 }
 
 void MainWindow::proc_frequse(QString configfilename)

@@ -153,6 +153,7 @@
     <addaction name="action_SwitchClearLeftText"/>
     <addaction name="action_TryAgain"/>
     <addaction name="action_DeleteCfgFile"/>
+    <addaction name="action_ClipBoarChange"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -308,6 +309,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_ClipBoarChange">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>自动检测剪切板</string>
    </property>
   </action>
  </widget>
