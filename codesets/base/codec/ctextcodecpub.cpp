@@ -56,11 +56,11 @@ void CTextCodecPub::setQTextCodecUTF8()
 
 char*  CTextCodecPub::convertQString2buf(QString single, char *szLogin)
 {
-//    QTextCodec *textc_gbk = QTextCodec::codecForName("gb18030");
+    //    QTextCodec *textc_gbk = QTextCodec::codecForName("gb18030");
     QTextCodec *textc_utf8 = QTextCodec::codecForName("UTF-8");
 
 #ifdef WIN32
-    LPCSTR filepath2 = NULL;
+//    LPCSTR filepath2 = NULL;
     /**
       ** 统一使用默认使用的字符编码为utf-8
       ** 发送的数据也是utf-8
@@ -80,18 +80,37 @@ char*  CTextCodecPub::convertQString2buf(QString single, char *szLogin)
     QByteArray ba222 = utf8data.toLocal8Bit();
     setQTextCodecUTF8();
     char* temp111 = ba222.data();
-    //    PrintStrData("temp111", (BYTE *)temp111, strlen(temp111));
+//    PrintStrData("temp111", (BYTE *)temp111, strlen(temp111));
 
     strcpy(szLogin, temp111);
-    //    然后强行转换char*到LPCWSTR：
-    filepath2 = (LPCSTR)szLogin;
-//    fprintf(stdout, "temp111  :%s\n", temp111);
-//    fprintf(stdout, "szLogin  :%s\n", szLogin);
-//    fprintf(stdout, "filepath2:%s\n", filepath2);
-//    fflush(stdout);
+//    //    然后强行转换char*到LPCWSTR：
+//    filepath2 = (LPCSTR)szLogin;
 #endif
 
 
     return szLogin;
+}
+//GBK转Unicode编码
+QString CTextCodecPub::getGBKToUnicode(char *text)
+{
+    return getGBKTextCodec()->toUnicode(text);
+}
+
+
+//GBK转Unicode编码
+QString CTextCodecPub::getUtf8ToUnicode(char *text)
+{
+    return getUtf8TextCodec()->toUnicode(text);
+}
+
+
+QTextCodec *CTextCodecPub::getUtf8TextCodec()
+{
+    return QTextCodec::codecForName("UTF-8");
+}
+
+QTextCodec *CTextCodecPub::getGBKTextCodec()
+{
+    return QTextCodec::codecForName("gb18030");
 }
 

@@ -92,8 +92,10 @@ public:
 //    static QString handlerTip_Setter();
 
     static const QString getConfigBefore();
+    static const QString getConfigBase();
 
 private:
+    static const QString dirbase;
     static const QString dirbefore;
     static const QString dirafter;
     static const QString dirtips;

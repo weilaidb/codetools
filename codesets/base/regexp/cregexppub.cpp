@@ -26,6 +26,7 @@ T_GenCode g_GenCode[] =
     DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip, CRegExpPub::handlerPost_Pub),
 };
 
+const QString CRegExpPub::dirbase    = ("reg/");
 const QString CRegExpPub::dirbefore  = ("reg/before/");
 const QString CRegExpPub::dirafter   = ("reg/after/");
 const QString CRegExpPub::dirtips    = ("reg/tips/");
@@ -363,7 +364,6 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         result += strtmp + SIGNENTER;
     }
 
-
     return result;
 }
 
@@ -381,3 +381,11 @@ const QString CRegExpPub::getConfigBefore()
     debugApp() << "path:" << path;
     return path;
 }
+
+const QString CRegExpPub::getConfigBase()
+{
+    QString path =  CFilePub::getCurrentPath() + dirbase;
+    debugApp() << "path:" << path;
+    return path;
+}
+

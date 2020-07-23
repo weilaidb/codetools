@@ -2,6 +2,7 @@
 #include "csignpub.h"
 #include "debugApp.h"
 #include "cstringpubcpp.h"
+#include "cstringpub.h"
 
 #include <cfilepub.h>
 #include <cprintpub.h>
@@ -29,4 +30,12 @@ void CLogPub::msgDefault(QString info)
 //    cout << cppstr << endl;  //调试时，在console中输出
     CFilePub::writeFileAppend(m_logDefaultFileName, info);
     CFilePub::writeFileAppend(m_logDefaultFileName, cppstr.c_str());
+}
+
+void CLogPub::msgDefault(char *pMsg)
+{
+    QString result =CStringPub::emptyString();
+    result.append(CSignPub::signEnter());
+    result.append(CStringPub::hexToString((BYTE *)pMsg));
+    CFilePub::writeFileAppend(m_logDefaultFileName, result);
 }

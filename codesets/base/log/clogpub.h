@@ -14,6 +14,7 @@ public:
 
     static void logDefault(QString info);
     static void msgDefault(QString info);
+    static void msgDefault(char *pMsg);
 
 
 private:

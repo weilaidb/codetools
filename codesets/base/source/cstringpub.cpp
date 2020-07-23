@@ -3,6 +3,11 @@
 #include "debugApp.h"
 #include <QStringList>
 #include <QCoreApplication>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
 
 CStringPub::CStringPub()
 {
@@ -317,7 +322,7 @@ QString CStringPub::getDateTime()
 
 QString CStringPub::hexToString(unsigned char *in, int len)
 {
-    int i;
+    int i = 0;
     unsigned char inChar,hi,lo;
     QString s;
 
@@ -345,6 +350,10 @@ QString CStringPub::hexToString(unsigned char *in, int len)
     return s;
 }
 
+QString CStringPub::hexToString(unsigned char *in)
+{
+    return hexToString(in,strlen((char *)in));
+}
 
 QString CStringPub::getCurrentExePath()
 {

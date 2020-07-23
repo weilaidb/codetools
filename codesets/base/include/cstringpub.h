@@ -63,6 +63,7 @@ public:
     static QString getDateTime();
 
     static QString hexToString(unsigned char *in, int len);
+    static QString hexToString(unsigned char *in);
     static QString getCurrentExePath();
 };
 

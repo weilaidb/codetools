@@ -17,6 +17,10 @@ public:
     static char*  convertQString2buf(QString single, char *szLogin);
     static void setQTextCodecGBK();
     static void setQTextCodecUTF8();
+    static QString getGBKToUnicode(char *text);
+    static QString getUtf8ToUnicode(char *text);
+    static QTextCodec *getUtf8TextCodec();
+    static QTextCodec *getGBKTextCodec();
 
 };
 

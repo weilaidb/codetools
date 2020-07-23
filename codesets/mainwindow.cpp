@@ -24,6 +24,8 @@
 #include "ctreepub.h"
 #include "cmappub.h"
 #include "calgorithmpub.h"
+#include "clogpub.h"
+#include "ctextcodecpub.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QDesktopServices>
@@ -38,11 +40,14 @@
 extern int AyStyleMain(int argc, char** argv);
 
 
-MainWindow::MainWindow(QString appexe, QWidget *parent)
+MainWindow::MainWindow(char *appexe, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , m_apppath(appexe)
 {
+    m_apppath = CTextCodecPub::getGBKToUnicode(appexe);
+//    CLogPub::logDefault(m_apppath);
+    CLogPub::msgDefault(appexe); //发现“副本”这两个字的编码是B8B1 B1BE，为GB2312编码，appexe传递的数据为直接为中文编码
+
     ui->setupUi(this);
     showVersion();
     initActionSets();
@@ -403,7 +408,8 @@ void MainWindow::proc_action_codeFormat_Del_Config_trigger()
 void MainWindow::proc_action_about_trigger()
 {
     debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
-    debugApp() << CStringPub::getCurrentExePath();
+//    debugApp() << CStringPub::getCurrentExePath();
+    CLogPub::logDefault(m_apppath);
     showStatus(QString("当前版本是:") + APP_VERSION
                + CSignPub::signEnter()
                + CStringPub::getDateTime()
@@ -1270,7 +1276,7 @@ void MainWindow::proc_ActionSelectAllCopyLeft_trigger()
 
 void MainWindow::proc_ActionOpenConfigDir_trigger()
 {
-    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
+    CUIPub::explorerPath(CRegExpPub::getConfigBase());
 }
 
 void MainWindow::proc_ActionOpenCfgMenu_trigger()
