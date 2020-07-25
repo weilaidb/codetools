@@ -11,6 +11,7 @@
 #include <QTextBrowser>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <cfilepub.h>
 #include "debugApp.h"
 #ifdef WIN32
 #include <clogpub.h>
@@ -496,7 +497,12 @@ int CUIPub::execCmd(QString path)
     delete [] puacPathBuf;
 #else
     //QUrl支持中文打开
-    bool ok = QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    if(CFilePub::isFile(path) || CFilePub::isDir(path))
+    {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        return 0;
+    }
+    bool ok = QDesktopServices::openUrl(QUrl(path));
     Q_UNUSED(ok)
 #endif
     return 0;
