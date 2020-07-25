@@ -42,6 +42,7 @@ public:
     static QString getCurrentPath();
     static QString getCurrentPath(QString filename);
     static QString getSeparator();
+    static void openSystemPathOrUrl(QString filenameOrUrl);
 };
 
 #endif // CFILEPUB_H

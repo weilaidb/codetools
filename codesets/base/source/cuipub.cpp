@@ -497,13 +497,7 @@ int CUIPub::execCmd(QString path)
     delete [] puacPathBuf;
 #else
     //QUrl支持中文打开
-    if(CFilePub::isFile(path) || CFilePub::isDir(path))
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
-        return 0;
-    }
-    bool ok = QDesktopServices::openUrl(QUrl(path));
-    Q_UNUSED(ok)
+    CFilePub::openSystemPathOrUrl(path);
 #endif
     return 0;
 }

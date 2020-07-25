@@ -8,6 +8,7 @@
 #include <csignpub.h>
 #include <cstringpub.h>
 #include <cstringpub.h>
+#include <QDesktopServices>
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
@@ -38,6 +39,17 @@ int CFilePub::isDir(QString filename)
     return false;
 }
 
+void CFilePub::openSystemPathOrUrl(QString filenameOrUrl)
+{
+    //QUrl支持中文打开
+    if(CFilePub::isFile(filenameOrUrl) || CFilePub::isDir(filenameOrUrl))
+    {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(filenameOrUrl));
+        return;
+    }
+    bool ok = QDesktopServices::openUrl(QUrl(filenameOrUrl));
+    Q_UNUSED(ok)
+}
 
 
 int CFilePub::fileExist(QString filename)
