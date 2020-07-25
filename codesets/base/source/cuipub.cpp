@@ -452,6 +452,10 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
 
 void CUIPub::setTextEditOnEmpty(QTextEdit *pEdit, QString text)
 {
+    if(CExpressPub::isNullPtr(pEdit))
+    {
+        return;
+    }
     if(CExpressPub::isEmpty(pEdit->toPlainText()))
     {
         pEdit->setText(text);

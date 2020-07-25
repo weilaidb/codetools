@@ -109,6 +109,8 @@ private:
     QStringList m_listfrequse;
     int m_iListFreqUseCnt;
     QString m_ListFreqUseFile;
+    //注意事项
+    QString m_AttentionFile;
 
 private:
     QString openFilePathRecent;
@@ -159,6 +161,7 @@ private slots:
     void proc_action_codeFormat_Save_Config_trigger();
     void proc_action_codeFormat_Del_Config_trigger();
     void proc_action_about_trigger();
+    void proc_action_attention_trigger();
 
     //mysql
     void proc_action_mysql_testdatabase_trigger();

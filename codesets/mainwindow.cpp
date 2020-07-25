@@ -94,9 +94,10 @@ void MainWindow::initActionSets()
     QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
     QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
-    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
     QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_codeFormat_Recent_trigger(QAction *)));
-
+    //about
+    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
+    QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attention_trigger()));
     //mysql
     QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
 
@@ -194,6 +195,9 @@ void MainWindow::initUiOther()
     m_ListFreqUseFile = "reg/frequse.txt";
     CFilePub::createFileEmptyNoExist(m_ListFreqUseFile);
     m_listfrequse = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_ListFreqUseFile));;
+
+    m_AttentionFile = "reg/attention.txt";
+    CFilePub::createFileEmptyNoExist(m_AttentionFile);
 }
 
 /**
@@ -447,6 +451,12 @@ void MainWindow::proc_action_about_trigger()
                + CAlgorithmPub::getMd5SumOfFile(m_apppath)
                );
 }
+
+void MainWindow::proc_action_attention_trigger()
+{
+    CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
+}
+
 
 void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)
 {
