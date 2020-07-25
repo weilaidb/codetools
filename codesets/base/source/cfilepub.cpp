@@ -70,6 +70,11 @@ QString CFilePub::dirName(QString filename)
 }
 
 
+bool CFilePub::createFileEmptyNoExistAndVar(QString &m_Var,QString filename)
+{
+    m_Var = filename;
+    return createFileEmptyNoExist(filename);
+}
 bool CFilePub::createFileEmptyNoExist(QString filename)
 {
     if(fileExist(filename))

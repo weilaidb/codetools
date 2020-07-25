@@ -16,6 +16,7 @@ public:
     static QString dirName(QString filename);
     static QString baseName(QString filename);
     static bool createFileEmptyNoExist(QString filename);
+    static bool createFileEmptyNoExistAndVar(QString &m_Var,QString filename);
     static bool createFileContentNoExist(QString filename, QString content);
     static bool createDirNoExist(QString dirname);
     static bool createDirExt(QString dirname);

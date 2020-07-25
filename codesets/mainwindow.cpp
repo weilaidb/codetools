@@ -163,8 +163,7 @@ void MainWindow::initUiOther()
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
-    m_FileNameMenu = "reg/selfmenu.txt";
-    CFilePub::createFileEmptyNoExist(m_FileNameMenu);
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameMenu, "reg/selfmenu.txt");
     /**
       ** 模式：
       ** 单行 多处理
@@ -172,11 +171,8 @@ void MainWindow::initUiOther()
       ** 多行 单处理
       ** 多行 多处理
       **/
-    m_FileMode_SingleL_ExecMulti = "reg/selfmode_singleline_execmulti.txt";
-    CFilePub::createFileEmptyNoExist(m_FileMode_SingleL_ExecMulti);
-
-    m_FileMode_AllL_ExecMulti = "reg/selfmode_allline_execmulti.txt";
-    CFilePub::createFileEmptyNoExist(m_FileMode_AllL_ExecMulti);
+    CFilePub::createFileEmptyNoExistAndVar(m_FileMode_SingleL_ExecMulti, "reg/selfmode_singleline_execmulti.txt");
+    CFilePub::createFileEmptyNoExistAndVar(m_FileMode_AllL_ExecMulti, "reg/selfmode_allline_execmulti.txt");
 
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
@@ -192,12 +188,10 @@ void MainWindow::initUiOther()
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
     m_iListFreqUseCnt = 10;
-    m_ListFreqUseFile = "reg/frequse.txt";
-    CFilePub::createFileEmptyNoExist(m_ListFreqUseFile);
+    CFilePub::createFileEmptyNoExistAndVar(m_ListFreqUseFile, "reg/frequse.txt");
     m_listfrequse = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_ListFreqUseFile));;
 
-    m_AttentionFile = "reg/attention.txt";
-    CFilePub::createFileEmptyNoExist(m_AttentionFile);
+    CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 }
 
 /**
