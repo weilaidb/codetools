@@ -8,6 +8,7 @@
 #include <QProgressBar>
 #include <QTextEdit>
 #include <QTextBrowser>
+#include <QTimer>
 
 class CUIPub
 {
@@ -80,6 +81,9 @@ public:
     static bool showBoxInfoIsNo(QString tips);
     static int showBoxCritical(QString tips);
 
+
+    //time
+    static QTimer *createTimer(int &iTimeout, int value);
 public:
     enum{
         TYPE_READ = 1,

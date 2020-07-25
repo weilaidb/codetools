@@ -591,3 +591,11 @@ bool CUIPub::showBoxInfoIsNo(QString tips)
                                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
+QTimer *CUIPub::createTimer(int &iTimeout, int value)
+{
+    iTimeout = value;
+    QTimer *pTimer = new QTimer();
+    pTimer->start(iTimeout);
+    return pTimer;
+}
+

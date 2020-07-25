@@ -7,6 +7,7 @@
 #include <csignpub.h>
 #include <csignpub.h>
 #include <cstringpub.h>
+#include <cstringpub.h>
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
@@ -126,6 +127,11 @@ bool CFilePub::createDirNoExist(QString dirname)
         return false;
     }
     return createDirExt(dirname);
+}
+
+QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
+{
+    return CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
 }
 
 QString CFilePub::readFileAll(QString filename)

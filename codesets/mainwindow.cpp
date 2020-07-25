@@ -177,19 +177,15 @@ void MainWindow::initUiOther()
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
 
-    iTimeout = 600;
-    pCheckLeftTimer = new QTimer(this);
-    pCheckLeftTimer->start(iTimeout);
-    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
+    pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
+    connect(pCheckLeftTimer, SIGNAL(timeout()), pCheckLeftTimer, SLOT(proc_textEdit_textChanged()));
 
-    iClipBoardTimeout = 600;
-    pClipBoardTimer = new QTimer(this);
-    pClipBoardTimer->start(iClipBoardTimeout);
+    pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
     m_iListFreqUseCnt = 10;
     CFilePub::createFileEmptyNoExistAndVar(m_ListFreqUseFile, "reg/frequse.txt");
-    m_listfrequse = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_ListFreqUseFile));;
+    m_listfrequse = CFilePub::readFileAllFilterEmptyUnique(m_ListFreqUseFile);
 
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 }
@@ -241,9 +237,9 @@ void MainWindow::slot_generate_menu_right(QPoint pos)
 
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
-    QStringList list = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
-    QStringList modelist_singl_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_SingleL_ExecMulti));
-    QStringList modelist_alll_execmulti = CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(m_FileMode_AllL_ExecMulti));
+    QStringList list = CFilePub::readFileAllFilterEmptyUnique(filename);
+    QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUnique(m_FileMode_SingleL_ExecMulti);
+    QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUnique(m_FileMode_AllL_ExecMulti);
 
     if(CExpressPub::isZero(list.length()))
     {
@@ -1382,6 +1378,13 @@ void MainWindow::proc_textEdit_textChanged()
     static QString curText = CStringPub::emptyString();
 
     curText = CUIPub::getTextEdit(ui->textEdit);
+    if(CExpressPub::isEmpty(curText))
+    {
+        pCheckLeftTimer->stop();
+        oldText = curText;
+        return;
+    }
+
     if(curText != oldText)
     {
         pCheckLeftTimer->start(iTimeout);
@@ -1390,7 +1393,7 @@ void MainWindow::proc_textEdit_textChanged()
     }
 
     oldText = curText;
-    proc_action_TryAgain();
+//    proc_action_TryAgain();
     pCheckLeftTimer->stop();
 
 }
