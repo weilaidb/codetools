@@ -22,6 +22,7 @@ public:
     static bool createDirExt(QString dirname);
     static QString readFileAll(QString filename);
     static QStringList readFileAllFilterEmptyUnique(QString filename);
+    static QStringList readFileAllFilterEmptyUniqueNoExistAndVar(QString &m_Var,QString filename);
     static QString writeFileOnlly(QString filename, QString msg);
     static QString writeFileAppend(QString filename, QString msg);
     static QString writeFileWR(QString filename, QString msg);

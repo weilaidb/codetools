@@ -111,6 +111,10 @@ private:
     QString m_ListFreqUseFile;
     //注意事项
     QString m_AttentionFile;
+    //常用文件打开列表
+    QStringList m_listNormalUse;
+    int m_iListNormalUseCnt;
+    QString m_ListNormalUseFile;
 
 private:
     QString openFilePathRecent;
@@ -199,6 +203,7 @@ private slots:
     //generate 添加右键菜单
     void proc_action_gen_pub(QString configfilename, int type);
     void proc_action_gen_custom_action(QAction *pAction);
+    void proc_action_openpath_action(QAction *pAction);
     void proc_action_EditCfgFile(bool checked);
     void proc_action_DeleteCfgFile(bool checked);
     void proc_action_EditCfgFileMutex();
@@ -213,6 +218,7 @@ private slots:
     void slot_generate_menu_right(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
     QMenu *slot_frequse_menu();
+    QMenu *slot_openfilelist_menu();
     void slot_tools_menu_left(QMenu *pMenu);
     void slot_tools_menu_right(QMenu *pMenu);
     void proc_ActionClearLeft_trigger();

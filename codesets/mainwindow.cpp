@@ -184,10 +184,13 @@ void MainWindow::initUiOther()
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
     m_iListFreqUseCnt = 10;
-    CFilePub::createFileEmptyNoExistAndVar(m_ListFreqUseFile, "reg/frequse.txt");
-    m_listfrequse = CFilePub::readFileAllFilterEmptyUnique(m_ListFreqUseFile);
+    m_listfrequse = CFilePub::readFileAllFilterEmptyUniqueNoExistAndVar(m_ListFreqUseFile, "reg/frequse.txt");
 
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
+
+    //打开常用文件列表
+    m_iListNormalUseCnt = 30;
+    CFilePub::createFileEmptyNoExistAndVar(m_ListNormalUseFile, "reg/normalfiles.txt");
 }
 
 /**
@@ -291,6 +294,7 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     pMenu->addMenu(slot_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
+    pMenu->addMenu(slot_openfilelist_menu());
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
@@ -300,7 +304,7 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
 
 QMenu *MainWindow::slot_frequse_menu()
 {
-    QMenu *pFreqUse = new QMenu("常用列表");
+    QMenu *pFreqUse = new QMenu("常用配置列表");
     debugApp() << m_listfrequse.count();
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
@@ -313,6 +317,23 @@ QMenu *MainWindow::slot_frequse_menu()
     }
 
     return pFreqUse;
+}
+
+QMenu *MainWindow::slot_openfilelist_menu()
+{
+    QMenu *pOpenFile = new QMenu("文件列表");
+    m_listNormalUse = CFilePub::readFileAllFilterEmptyUnique(m_ListNormalUseFile);
+    foreach (QString item, m_listNormalUse) {
+        QAction *pTmpAction = CUIPub::createActionFull(item);
+        pOpenFile->addAction(pTmpAction);
+    }
+
+    if(pOpenFile)
+    {
+        QObject::connect(pOpenFile, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_openpath_action(QAction *)));
+    }
+
+    return pOpenFile;
 }
 
 
@@ -1424,4 +1445,11 @@ void MainWindow::proc_frequse(QString configfilename)
 {
     CStringPub::addStringUniqueSortMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
+}
+
+void MainWindow::proc_action_openpath_action(QAction *pAction)
+{
+//    debugApp() << "custom action:" << pAction->text();
+//    debugApp() << "custom data  :" << pAction->data();
+    CUIPub::explorerPath(pAction->text());
 }

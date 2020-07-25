@@ -134,6 +134,13 @@ QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
     return CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
 }
 
+QStringList CFilePub::readFileAllFilterEmptyUniqueNoExistAndVar(QString &m_Var,QString filename)
+{
+    m_Var = filename;
+    return CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
+}
+
+
 QString CFilePub::readFileAll(QString filename)
 {
     QString result("");
