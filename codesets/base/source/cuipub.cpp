@@ -488,17 +488,17 @@ int CUIPub::execCmd(QString path)
     }
     CLogPub::msgDefault(path);
 
-#ifdef WIN32
-    LPCSTR filepath2 = NULL;
-    char* puacPathBuf = new char[MAX_LENGTH];
-    memset(puacPathBuf, 0, MAX_LENGTH);
-    filepath2 = CTextCodecPub::convertQString2buf(path, puacPathBuf);
-    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
-    delete [] puacPathBuf;
-#else
+//#ifndef WIN32
+//    LPCSTR filepath2 = NULL;
+//    char* puacPathBuf = new char[MAX_LENGTH];
+//    memset(puacPathBuf, 0, MAX_LENGTH);
+//    filepath2 = CTextCodecPub::convertQString2buf(path, puacPathBuf);
+//    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+//    delete [] puacPathBuf;
+//#else
     //QUrl支持中文打开
     CFilePub::openSystemPathOrUrl(path);
-#endif
+//#endif
     return 0;
 }
 
