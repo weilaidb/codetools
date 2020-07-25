@@ -495,7 +495,8 @@ int CUIPub::execCmd(QString path)
     ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
     delete [] puacPathBuf;
 #else
-    bool ok = QDesktopServices::openUrl(QUrl(path));
+    //QUrl支持中文打开
+    bool ok = QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     Q_UNUSED(ok)
 #endif
     return 0;
