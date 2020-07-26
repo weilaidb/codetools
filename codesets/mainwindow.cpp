@@ -149,17 +149,17 @@ void MainWindow::initVars()
     CStringPub::clearString(m_EditConfig);
 }
 
+
+
+
 void MainWindow::initUiSets()
 {
     //    this->setWindowIcon();
     pRightMouse = nullptr;
     //QTextEdit 右键菜单
-    CUIPub::setMenuPolicyCustom(ui->textEdit);
-    QObject::connect(ui->textEdit, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_left(QPoint)));
-
-    CUIPub::setMenuPolicyCustom(ui->textBrowser);
-    QObject::connect(ui->textBrowser, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slot_generate_menu_right(QPoint)));
-
+    GEN_MENU_PUB(ui->textEdit, slot_generate_menu_left);
+    GEN_MENU_PUB(ui->textBrowser, slot_generate_menu_right);
+    GEN_MENU_PUB(ui->textEdit_cfgTips, slot_generate_menu_leftbottom);
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
@@ -216,7 +216,7 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
     {
         pRightMouse->addMenu((pMenuCustom));
     }
-    slot_tools_menu_left(pRightMouse);
+    nodes_menu_left(pRightMouse);
     pRightMouse->exec(cur.pos()); //关联到光标
 }
 
@@ -229,11 +229,21 @@ void MainWindow::slot_generate_menu_right(QPoint pos)
 {
     Q_UNUSED(pos)
     CUIPub::clearMenuAll(&pRightMouse);
-    debugApp() << "right mouse clicked!!";
 
     QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
-    slot_tools_menu_right(pRightMouse);
+    nodes_menu_right(pRightMouse);
+    pRightMouse->exec(cur.pos()); //关联到光标
+}
+
+void MainWindow::slot_generate_menu_leftbottom(QPoint pos)
+{
+    Q_UNUSED(pos)
+    CUIPub::clearMenuAll(&pRightMouse);
+
+    QCursor cur=this->cursor();
+    pRightMouse = new QMenu(this);
+    nodes_menu_leftbottom(pRightMouse);
     pRightMouse->exec(cur.pos()); //关联到光标
 }
 
@@ -269,7 +279,7 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
 }
 
 
-void MainWindow::slot_tools_menu_left(QMenu *pMenu)
+void MainWindow::nodes_menu_left(QMenu *pMenu)
 {
     if(CExpressPub::isNullPtr(pMenu))
     {
@@ -337,7 +347,7 @@ QMenu *MainWindow::slot_openfilelist_menu()
 }
 
 
-void MainWindow::slot_tools_menu_right(QMenu *pMenu)
+void MainWindow::nodes_menu_right(QMenu *pMenu)
 {
     if(CExpressPub::isNullPtr(pMenu))
     {
@@ -363,6 +373,19 @@ void MainWindow::slot_tools_menu_right(QMenu *pMenu)
 
 }
 
+
+void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionOpenCfgFile    = CUIPub::createAction("打开配置文件");
+
+    QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
+
+    pMenu->addAction(pActionOpenCfgFile);
+}
 
 
 void MainWindow::readSetting()
@@ -1331,6 +1354,12 @@ void MainWindow::proc_actionOpenConfigDir()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBase());
 }
+
+void MainWindow::proc_actionOpenConfigFile()
+{
+    CUIPub::explorerPath(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+}
+
 
 void MainWindow::proc_actionOpenCfgMenu()
 {

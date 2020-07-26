@@ -16,6 +16,7 @@ namespace Ui { class MainWindow; }
 namespace Ui { class CDialogAskText; }
 QT_END_NAMESPACE
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -216,11 +217,13 @@ private slots:
 
     void slot_generate_menu_left(QPoint pos);
     void slot_generate_menu_right(QPoint pos);
+    void slot_generate_menu_leftbottom(QPoint pos);
     QMenu *slot_fromfile_menu(QString filename);
     QMenu *slot_frequse_menu();
     QMenu *slot_openfilelist_menu();
-    void slot_tools_menu_left(QMenu *pMenu);
-    void slot_tools_menu_right(QMenu *pMenu);
+    void nodes_menu_left(QMenu *pMenu);
+    void nodes_menu_right(QMenu *pMenu);
+    void nodes_menu_leftbottom(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();
@@ -230,6 +233,7 @@ private slots:
     void proc_actionSelectAllCopyRight();
     void proc_actionClearEmpty();
     void proc_actionOpenConfigDir();
+    void proc_actionOpenConfigFile();
     void proc_actionOpenCfgMenu();
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();

@@ -10,6 +10,16 @@
 #include <QTextBrowser>
 #include <QTimer>
 
+/**
+  ** 自定义右键菜单
+  **/
+
+#define GEN_MENU_PUB(pWidget, procFun)\
+    CUIPub::setMenuPolicyCustom(pWidget);\
+    QObject::connect(pWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(procFun(QPoint)));\
+
+
+
 class CUIPub
 {
 public:
