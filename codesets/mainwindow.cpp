@@ -53,7 +53,7 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     initActionSets();
     initCheckBoxSets();
     initVars();
-    initUiOther();
+    initUiSets();
 
     readSetting();
 
@@ -89,31 +89,31 @@ void MainWindow::initCheckBoxSets()
 
 void MainWindow::initActionSets()
 {
-    QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File_trigger()));
-    QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory_trigger()));
-    QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config_trigger()));
-    QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config_trigger()));
-    QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config_trigger()));
-    QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_codeFormat_Recent_trigger(QAction *)));
+    QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File()));
+    QObject::connect(ui->action_codeFormat_Directory, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Directory()));
+    QObject::connect(ui->action_codeFormat_Edit_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Edit_Config()));
+    QObject::connect(ui->action_codeFormat_Save_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Save_Config()));
+    QObject::connect(ui->action_codeFormat_Del_Config, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_Del_Config()));
+    QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_codeFormat_Recent(QAction *)));
     //about
-    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about_trigger()));
-    QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attention_trigger()));
+    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about()));
+    QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attention()));
     //mysql
-    QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase_trigger()));
+    QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase()));
 
 
     //office
-    QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open_trigger()));
-    QObject::connect(ui->action_office_search_file, SIGNAL(triggered()), this, SLOT(proc_action_office_search_file_trigger()));
-    QObject::connect(ui->action_office_search_dir, SIGNAL(triggered()), this, SLOT(proc_action_office_search_dir_trigger()));
-    QObject::connect(ui->menu_document_open_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_open_recent_trigger(QAction *)));
-    QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent_trigger(QAction *)));
+    QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open()));
+    QObject::connect(ui->action_office_search_file, SIGNAL(triggered()), this, SLOT(proc_action_office_search_file()));
+    QObject::connect(ui->action_office_search_dir, SIGNAL(triggered()), this, SLOT(proc_action_office_search_dir()));
+    QObject::connect(ui->menu_document_open_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_open_recent(QAction *)));
+    QObject::connect(ui->menu_document_search_recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_document_search_recent(QAction *)));
 
     //net
-    QObject::connect(ui->action_net_server, SIGNAL(triggered()), this, SLOT(proc_action_net_server_trigger()));
-    QObject::connect(ui->action_net_client, SIGNAL(triggered()), this, SLOT(proc_action_net_client_trigger()));
-    QObject::connect(ui->action_net_publish, SIGNAL(triggered()), this, SLOT(proc_action_net_publish_trigger()));
-    QObject::connect(ui->action_net_subscribe, SIGNAL(triggered()), this, SLOT(proc_action_net_subscribe_trigger()));
+    QObject::connect(ui->action_net_server, SIGNAL(triggered()), this, SLOT(proc_action_net_server()));
+    QObject::connect(ui->action_net_client, SIGNAL(triggered()), this, SLOT(proc_action_net_client()));
+    QObject::connect(ui->action_net_publish, SIGNAL(triggered()), this, SLOT(proc_action_net_publish()));
+    QObject::connect(ui->action_net_subscribe, SIGNAL(triggered()), this, SLOT(proc_action_net_subscribe()));
 
     //edit config
     QObject::connect(ui->action_EditCfgFile, SIGNAL(triggered(bool)), this, SLOT(proc_action_EditCfgFile(bool)));
@@ -149,7 +149,7 @@ void MainWindow::initVars()
     CStringPub::clearString(m_EditConfig);
 }
 
-void MainWindow::initUiOther()
+void MainWindow::initUiSets()
 {
     //    this->setWindowIcon();
     pRightMouse = nullptr;
@@ -284,12 +284,12 @@ void MainWindow::slot_tools_menu_left(QMenu *pMenu)
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
 
-    QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_ActionClearLeft_trigger()));
-    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteLeft_trigger()));
-    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectCopy_trigger()));
-    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyLeft_trigger()));
-    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_ActionOpenConfigDir_trigger()));
-    QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_ActionOpenCfgMenu_trigger()));
+    QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_actionClearLeft()));
+    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
+    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
+    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectAllCopyLeft()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+    QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
 
     pMenu->addMenu(slot_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
@@ -330,7 +330,7 @@ QMenu *MainWindow::slot_openfilelist_menu()
 
     if(pOpenFile)
     {
-        QObject::connect(pOpenFile, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_openpath_action(QAction *)));
+        QObject::connect(pOpenFile, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_openfilelist(QAction *)));
     }
 
     return pOpenFile;
@@ -349,11 +349,11 @@ void MainWindow::slot_tools_menu_right(QMenu *pMenu)
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
     QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
 
-    QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_ActionClearRight_trigger()));
-    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_ActionPasteRight_trigger()));
-    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectCopy_trigger()));
-    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_ActionSelectAllCopyRight_trigger()));
-    QObject::connect(pActionClearEmpty, SIGNAL(triggered()), this, SLOT(proc_ActionClearEmpty_trigger()));
+    QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_actionClearRight()));
+    QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteRight()));
+    QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
+    QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectAllCopyRight()));
+    QObject::connect(pActionClearEmpty, SIGNAL(triggered()), this, SLOT(proc_actionClearEmpty()));
 
     pMenu->addAction(pActionClearRight);
     pMenu->addAction(pActionSelectCopy);
@@ -373,7 +373,7 @@ void MainWindow::readSetting()
     addMenuDocumentSearchRecent();
 }
 
-void MainWindow::pubHistorySetting(int type)
+void MainWindow::procHistorySetting(int type)
 {
     quint8 ucType = type;
     m_pSettings = CUIPub::readHistorySettings(m_organization,m_application);
@@ -388,52 +388,52 @@ void MainWindow::pubHistorySetting(int type)
 
 void MainWindow::readHistorySetting()
 {
-    pubHistorySetting(CUIPub::TYPE_READ);
+    procHistorySetting(CUIPub::TYPE_READ);
 }
 
 
 void MainWindow::writeHistorySetting()
 {
-    pubHistorySetting(CUIPub::TYPE_WRITE);
+    procHistorySetting(CUIPub::TYPE_WRITE);
 }
 
 
-void MainWindow::proc_menu_codeFormat_Recent_trigger(QAction *action)
+void MainWindow::proc_menu_codeFormat_Recent(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_codeFormat_Pub_trigger(TYPE_AUTO,autolist);
+    proc_action_codeFormat_Pub(TYPE_AUTO,autolist);
 }
 /**
- * @brief MainWindow::proc_action_codeFormat_Directory_trigger
+ * @brief MainWindow::proc_action_codeFormat_Directory
  * 代码格式化，如何处理呢
  * 指定一个文件夹或文件来格式化吗
  */
-void MainWindow::proc_action_codeFormat_Directory_trigger()
+void MainWindow::proc_action_codeFormat_Directory()
 {
     QStringList autolist;
-    //    debugApp() << "proc_action_codeFormat_Directory_trigger";
-    proc_action_codeFormat_Pub_trigger(TYPE_DIR,autolist);
+    //    debugApp() << "proc_action_codeFormat_Directory";
+    proc_action_codeFormat_Pub(TYPE_DIR,autolist);
 }
 
 /**
- * @brief MainWindow::proc_action_codeFormat_File_trigger
+ * @brief MainWindow::proc_action_codeFormat_File
  * 指定一个文件
  */
-void MainWindow::proc_action_codeFormat_File_trigger()
+void MainWindow::proc_action_codeFormat_File()
 {
     QStringList autolist;
-    //    debugApp() << "proc_action_codeFormat_File_trigger";
-    proc_action_codeFormat_Pub_trigger(TYPE_FILES,autolist);
+    //    debugApp() << "proc_action_codeFormat_File";
+    proc_action_codeFormat_Pub(TYPE_FILES,autolist);
 }
 
-void MainWindow::proc_action_codeFormat_Edit_Config_trigger()
+void MainWindow::proc_action_codeFormat_Edit_Config()
 {
     ui->textEdit->setText(CFilePub::readFileAll(cfgAstyleName));
     showStatus("编译Asytle配置....");
 }
 
-void MainWindow::proc_action_codeFormat_Save_Config_trigger()
+void MainWindow::proc_action_codeFormat_Save_Config()
 {
     QString result = ui->textEdit->toPlainText();
     if(result.trimmed().isEmpty())
@@ -444,13 +444,13 @@ void MainWindow::proc_action_codeFormat_Save_Config_trigger()
     CFilePub::writeFileOnlly(cfgAstyleName, result);
     showStatus("保存Asytle配置成功");
 }
-void MainWindow::proc_action_codeFormat_Del_Config_trigger()
+void MainWindow::proc_action_codeFormat_Del_Config()
 {
     CFilePub::deleteFile(cfgAstyleName);
     showStatus("删除Asytle配置成功");
 }
 
-void MainWindow::proc_action_about_trigger()
+void MainWindow::proc_action_about()
 {
     debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
 //    debugApp() << CStringPub::getCurrentExePath();
@@ -463,15 +463,15 @@ void MainWindow::proc_action_about_trigger()
                );
 }
 
-void MainWindow::proc_action_attention_trigger()
+void MainWindow::proc_action_attention()
 {
     CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
 }
 
 
-void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList autolist)
+void MainWindow::proc_action_codeFormat_Pub(int openType,QStringList autolist)
 {
-    debugApp() << "proc_action_codeFormat_Pub_trigger";
+    debugApp() << "proc_action_codeFormat_Pub";
     getNameFilter();
 
     switch (openType) {
@@ -536,11 +536,11 @@ void MainWindow::proc_action_codeFormat_Pub_trigger(int openType,QStringList aut
         foreach (QString item, autolist) {
             if(true == CFilePub::isFile(item))
             {
-                proc_action_codeFormat_Pub_trigger(TYPE_FILES_NOUI, autolist);
+                proc_action_codeFormat_Pub(TYPE_FILES_NOUI, autolist);
             }
             else if(true == CFilePub::isDir(item))
             {
-                proc_action_codeFormat_Pub_trigger(TYPE_DIR_NOUI, autolist);
+                proc_action_codeFormat_Pub(TYPE_DIR_NOUI, autolist);
             }
         }
     }
@@ -770,7 +770,7 @@ void MainWindow::setLeftTextEdit(QString str)
     ui->textEdit->setText(str);
 }
 
-void MainWindow::clearLeftTextEdit()
+void MainWindow::clrLeftTextEdit()
 {
     ui->textEdit->setText("");
 }
@@ -780,12 +780,12 @@ void MainWindow::setRightTextEdit(QString str)
     ui->textBrowser->setText(str);
 }
 
-void MainWindow::clearRightTextEdit()
+void MainWindow::clrRightTextEdit()
 {
     ui->textBrowser->setText("");
 }
 
-void MainWindow::proc_action_mysql_testdatabase_trigger()
+void MainWindow::proc_action_mysql_testdatabase()
 {
     QString hostName;
     QString dbName;
@@ -802,7 +802,7 @@ void MainWindow::proc_action_mysql_testdatabase_trigger()
 
 }
 
-QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist)
+QStringList MainWindow::proc_action_office_auto_pub(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist)
 {
     QStringList list;
     switch (openDiagFlag) {
@@ -844,7 +844,7 @@ QStringList MainWindow::proc_action_office_auto_pub_trigger(QString filter, QStr
 
 
 
-void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStringList list,QString findtext)
+void MainWindow::proc_action_office_action_pub(quint8 ucActionType, QStringList list,QString findtext)
 {
 
 #ifdef WIN32
@@ -918,48 +918,48 @@ void MainWindow::proc_action_office_action_pub_trigger(quint8 ucActionType, QStr
 }
 
 /**
- * @brief MainWindow::proc_action_office_open_pub_trigger
+ * @brief MainWindow::proc_action_office_open_pub
  * @param filter
  * @param openRecent
  * @param openDiagFlag 是否打开对话框
  * @param openfilelist
  */
-void MainWindow::proc_action_office_open_pub_trigger(QString filter,QStringList filterlist,  QString &openRecent,quint8 openDiagFlag, QStringList openfilelist)
+void MainWindow::proc_action_office_open_pub(QString filter,QStringList filterlist,  QString &openRecent,quint8 openDiagFlag, QStringList openfilelist)
 {
-    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
+    QStringList list = proc_action_office_auto_pub(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
     CHECKSIZEZERORETURN(list);
-    proc_action_office_action_pub_trigger(ACTIONTYPE_OPEN, list, CStringPub::emptyString());
+    proc_action_office_action_pub(ACTIONTYPE_OPEN, list, CStringPub::emptyString());
 }
 
 
-void MainWindow::proc_action_office_search_file_pub_trigger(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
+void MainWindow::proc_action_office_search_file_pub(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
 {
     QString findtext;
     CHECKFALSERETURN(getDialogFindText(findtext));
-    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
+    QStringList list = proc_action_office_auto_pub(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
     CHECKSIZEZERORETURN(list);
-    proc_action_office_action_pub_trigger(ACTIONTYPE_SEARCH, list, findtext);
+    proc_action_office_action_pub(ACTIONTYPE_SEARCH, list, findtext);
 }
 
-void MainWindow::proc_action_office_search_dir_pub_trigger(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
+void MainWindow::proc_action_office_search_dir_pub(QString filter,QStringList filterlist, QString openRecent, quint8 openDiagFlag, QStringList openfilelist)
 {
     QString findtext;
     CHECKFALSERETURN(getDialogFindText(findtext));
     CHECKEMPTY_TIPS_RETURN(findtext,showStatus, STRING_INPUT_FIND_KEY_EMPTY);
-    QStringList list = proc_action_office_auto_pub_trigger(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
+    QStringList list = proc_action_office_auto_pub(filter, filterlist, openRecent, recentfiles_document, openDiagFlag, openfilelist);
     CHECKSIZEZERO_TIPS_RETURN(list,showStatus, STRING_RES_FIND_FILES_EMPTY);
-    proc_action_office_action_pub_trigger(ACTIONTYPE_SEARCH_ALLFILES, list, findtext);
+    proc_action_office_action_pub(ACTIONTYPE_SEARCH_ALLFILES, list, findtext);
 }
 
 
-void MainWindow::proc_action_office_search_file_trigger()
+void MainWindow::proc_action_office_search_file()
 {
-    proc_action_office_search_file_pub_trigger(FILTERWORD, CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
+    proc_action_office_search_file_pub(FILTERWORD, CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
 }
 
-void MainWindow::proc_action_office_search_dir_trigger()
+void MainWindow::proc_action_office_search_dir()
 {
-    proc_action_office_search_dir_pub_trigger(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_YES_DIR, CStringPub::emptyStringList());
+    proc_action_office_search_dir_pub(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_YES_DIR, CStringPub::emptyStringList());
 }
 
 
@@ -1000,30 +1000,30 @@ void MainWindow::updateRecentAppend(QStringList &list, QString name, QMenu *pMen
 }
 
 
-void MainWindow::proc_action_office_open_trigger()
+void MainWindow::proc_action_office_open()
 {
-    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
+    proc_action_office_open_pub(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_YES_FILE, CStringPub::emptyStringList());
 }
 
-void MainWindow::proc_menu_document_open_recent_trigger(QAction *action)
+void MainWindow::proc_menu_document_open_recent(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
-    proc_action_office_open_pub_trigger(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
+    proc_action_office_open_pub(FILTERWORD, CStringPub::emptyStringList(), openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
 }
 
-void MainWindow::proc_menu_document_search_recent_trigger(QAction *action)
+void MainWindow::proc_menu_document_search_recent(QAction *action)
 {
     QStringList autolist = CStringPub::actionNameList(action);
     CHECKSIZEZERORETURN(autolist);
 
     if(CFilePub::isDir(action->iconText()))
     {
-        proc_action_office_search_dir_pub_trigger(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_NO_DIR, autolist);
+        proc_action_office_search_dir_pub(FILTERWORD, CStringPub::wordNameFilter(), openWordFilePathRecent, OPENTYPE_NO_DIR, autolist);
     }
     else
     {
-        proc_action_office_search_file_pub_trigger(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
+        proc_action_office_search_file_pub(FILTERWORD,CStringPub::emptyStringList(),  openWordFilePathRecent, OPENTYPE_NO_FILE, autolist);
     }
 }
 
@@ -1060,16 +1060,16 @@ void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_
     pTthread->start();
 
     connect(pTthread,&CNetThreadPub::message
-            ,this,&MainWindow::proc_threadmessage_trigger);
+            ,this,&MainWindow::proc_threadmessage);
     connect(pTthread,&CNetThreadPub::progress
-            ,this,&MainWindow::proc_threadprogress_trigger);
+            ,this,&MainWindow::proc_threadprogress);
     connect(pTthread,&CNetThreadPub::finished
-            ,this,&MainWindow::proc_threadfinished_trigger);
+            ,this,&MainWindow::proc_threadfinished);
     connect(pTthread, SIGNAL(finished()), pTthread, SLOT(deleteLater())); //线程释放自己
 }
 
 
-void MainWindow::proc_action_net_server_trigger()
+void MainWindow::proc_action_net_server()
 {
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
@@ -1078,17 +1078,17 @@ void MainWindow::proc_action_net_server_trigger()
 #endif
 }
 
-void MainWindow::proc_threadmessage_trigger(const QString& info)
+void MainWindow::proc_threadmessage(const QString& info)
 {
     debugApp() << "recv message:" << info;
 }
 
-void MainWindow::proc_threadprogress_trigger(int progress)
+void MainWindow::proc_threadprogress(int progress)
 {
     debugApp() << "progress:" << progress;
 }
 
-void MainWindow::proc_threadfinished_trigger()
+void MainWindow::proc_threadfinished()
 {
     debugApp() << "threadfinished:" ;
 }
@@ -1096,7 +1096,7 @@ void MainWindow::proc_threadfinished_trigger()
 
 
 
-void MainWindow::proc_action_net_client_trigger()
+void MainWindow::proc_action_net_client()
 {
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
@@ -1105,7 +1105,7 @@ void MainWindow::proc_action_net_client_trigger()
 #endif
 }
 
-void MainWindow::proc_action_net_publish_trigger()
+void MainWindow::proc_action_net_publish()
 {
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
@@ -1115,7 +1115,7 @@ void MainWindow::proc_action_net_publish_trigger()
 }
 
 
-void MainWindow::proc_action_net_subscribe_trigger()
+void MainWindow::proc_action_net_subscribe()
 {
 #if UT_TESTCASE
     EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
@@ -1245,7 +1245,7 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     CStringPub::setString(m_EditConfig, cfgFirst);
     proc_action_gen_pub(cfgFirst, EUM_CLASSTYPE::COMMON_OPERATIONS);
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
-    proc_frequse(cfgFirst);
+    proc_frequse_config(cfgFirst);
 
 }
 
@@ -1306,33 +1306,33 @@ void MainWindow::proc_action_EditCfgFileMutex()
 }
 
 
-void MainWindow::proc_ActionClearLeft_trigger()
+void MainWindow::proc_actionClearLeft()
 {
     CUIPub::clearTextEdit(ui->textEdit);
 }
 
-void MainWindow::proc_ActionPasteLeft_trigger()
+void MainWindow::proc_actionPasteLeft()
 {
     CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
 }
 
-void MainWindow::proc_ActionSelectCopy_trigger()
+void MainWindow::proc_actionSelectCopy()
 {
     CUIPub::setClipBoardText(CUIPub::getSelectTextEdit(ui->textEdit));
 }
 
-void MainWindow::proc_ActionSelectAllCopyLeft_trigger()
+void MainWindow::proc_actionSelectAllCopyLeft()
 {
     CUIPub::setClipBoardText(CUIPub::getTextEdit(ui->textEdit));
 }
 
 
-void MainWindow::proc_ActionOpenConfigDir_trigger()
+void MainWindow::proc_actionOpenConfigDir()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBase());
 }
 
-void MainWindow::proc_ActionOpenCfgMenu_trigger()
+void MainWindow::proc_actionOpenCfgMenu()
 {
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
     CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
@@ -1340,33 +1340,33 @@ void MainWindow::proc_ActionOpenCfgMenu_trigger()
 }
 
 
-void MainWindow::proc_ActionEditCfgFile_trigger()
+void MainWindow::proc_actionEditCfgFile()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
 
-void MainWindow::proc_ActionSaveCfgFile_trigger()
+void MainWindow::proc_actionSaveCfgFile()
 {
     CUIPub::explorerPath(CRegExpPub::getConfigBefore());
 }
 
 
-void MainWindow::proc_ActionClearRight_trigger()
+void MainWindow::proc_actionClearRight()
 {
     CUIPub::clearTextBrowser(ui->textBrowser);
 }
 
-void MainWindow::proc_ActionPasteRight_trigger()
+void MainWindow::proc_actionPasteRight()
 {
     CUIPub::setTextBrowser(ui->textBrowser, CUIPub::getClipBoardText());
 }
 
-void MainWindow::proc_ActionSelectAllCopyRight_trigger()
+void MainWindow::proc_actionSelectAllCopyRight()
 {
     CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
 }
 
-void MainWindow::proc_ActionClearEmpty_trigger()
+void MainWindow::proc_actionClearEmpty()
 {
     CUIPub::setTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
 }
@@ -1441,13 +1441,13 @@ void MainWindow::proc_clipBoard_textChanged()
     oldText = curText;
 }
 
-void MainWindow::proc_frequse(QString configfilename)
+void MainWindow::proc_frequse_config(QString configfilename)
 {
     CStringPub::addStringUniqueSortMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
 }
 
-void MainWindow::proc_action_openpath_action(QAction *pAction)
+void MainWindow::proc_action_openfilelist(QAction *pAction)
 {
     if(CExpressPub::isTrue(CUIPub::getCheckedQAction(ui->action_EditCfgFile)))
     {
