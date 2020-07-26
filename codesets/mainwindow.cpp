@@ -1449,7 +1449,12 @@ void MainWindow::proc_frequse(QString configfilename)
 
 void MainWindow::proc_action_openpath_action(QAction *pAction)
 {
-//    debugApp() << "custom action:" << pAction->text();
-//    debugApp() << "custom data  :" << pAction->data();
+    if(CExpressPub::isTrue(CUIPub::getCheckedQAction(ui->action_EditCfgFile)))
+    {
+        showStatusTimerWindowTitle("编译常用列表模式");
+        CUIPub::explorerPath(m_ListNormalUseFile);
+        return;
+    }
+    showStatusTimerWindowTitle("打开配置文件" + pAction->text());
     CUIPub::explorerPath(pAction->text());
 }
