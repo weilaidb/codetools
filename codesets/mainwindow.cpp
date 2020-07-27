@@ -259,10 +259,14 @@ QMenu *MainWindow::slot_fromfile_menu(QString filename)
         return nullptr;
     }
 
-    //Mode Data
+    //-------Mode Data begin --------
     foreach (QString item, modelist_singl_execmulti) {
         CMapPub::insertMapFileMode(item, STR_MODE_SINGLELINE_EXECMULTI);
     }
+    foreach (QString item, modelist_alll_execmulti) {
+        CMapPub::insertMapFileMode(item, STR_MODE_ALALLINE_EXECMULTI);
+    }
+    //-------Mode Data end  --------
 
     QMenu *pMenu = nullptr;
     CTreePub::freeTreeMenu();

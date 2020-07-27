@@ -81,9 +81,11 @@ public:
     static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
+    static QString replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
+    static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);

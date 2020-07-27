@@ -225,6 +225,12 @@ QString CStringPub::errorListLenthNg()
     return QString("error:列表长度不足");
 }
 
+QString CStringPub::errorRegExpInvalid()
+{
+    return QString("error:正则表达式异常，请认真检测");
+}
+
+
 QStringList CStringPub::actionNameList(QAction *action)
 {
     QStringList autolist;
