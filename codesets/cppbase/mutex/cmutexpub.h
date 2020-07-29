@@ -16,6 +16,9 @@ public:
     static void *print_msg6(void *arg);
 private:
     static pthread_mutex_t m_mutex;
+    static unsigned int global_count;
+    static pthread_cond_t m_cond;  //条件变量
+
 };
 
 #endif // CMUTEXPUB_H
