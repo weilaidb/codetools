@@ -98,6 +98,7 @@ SOURCES += \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
     cppbase/mutex/cmutexpub.cpp \
+    cppbase/mutex/csempub.cpp \
     cppbase/string/cstringpubcpp.cpp \
     cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     cppbase/include/readmacro.h \
     cppbase/include/testcase.h \
     cppbase/mutex/cmutexpub.h \
+    cppbase/mutex/csempub.h \
     cppbase/string/cstringpubcpp.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
