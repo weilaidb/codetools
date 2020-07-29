@@ -42,6 +42,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/algorithm/ \
     base/net/zeromq/ \
     cppbase/string/ \
+    cppbase/mutex/ \
     cppbase/include/ \
 
 win32 {
@@ -96,6 +97,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    cppbase/mutex/cmutexpub.cpp \
     cppbase/string/cstringpubcpp.cpp \
     cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
@@ -128,6 +130,7 @@ HEADERS += \
     cppbase/include/cppbasetype.h \
     cppbase/include/readmacro.h \
     cppbase/include/testcase.h \
+    cppbase/mutex/cmutexpub.h \
     cppbase/string/cstringpubcpp.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
