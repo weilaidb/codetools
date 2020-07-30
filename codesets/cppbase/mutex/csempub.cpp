@@ -27,7 +27,7 @@ csempub::csempub()
 #include <semaphore.h>
 #include "basetypepub.h"
 
-#define MAXSIZE 1000000
+#define MAXSIZE 10
 
 WORD64 stack[MAXSIZE];
 
@@ -37,33 +37,39 @@ sem_t sem;
 void *privide_data(void *arg)
 {
     WORD64 i;
+    sem_wait(&sem);
     for(i =0;i<MAXSIZE;++i)
     {
         stack[i] = i;
-        sem_post(&sem);
     }
+    sem_post(&sem);
 }
 
 void *handle_data(void *arg)
 {
     WORD64 i;
+//    sleep(1);
+    sem_wait(&sem);
     while((i = size ++) <MAXSIZE)
     {
-        sem_wait(&sem);
         printf("cross : %llu X %llu = %llu \n",stack[i],stack[i],stack[i] * stack[i]);
-        //    sleep(1);
+//        sleep(1);
+        usleep(10);
     }
+    sem_post(&sem);
 }
 
+#if 1
 int main()
 {
     pthread_t privider,handler;
-    sem_init(&sem,0,0);
-    pthread_create(&privider,NULL,privide_data,NULL);
+    sem_init(&sem,0,1);
     pthread_create(&handler,NULL,handle_data,NULL);
+    pthread_create(&privider,NULL,privide_data,NULL);
     pthread_join(privider,NULL);
     pthread_join(handler,NULL);
     sem_destroy(&sem);
 
     return 0;
 }
+#endif
