@@ -4,7 +4,7 @@
 #include <QDebug>
 #include "ctextcodecpub.h"
 
-#if 0
+#if 1
 int main(int argc, char *argv[])
 {
     CTextCodecPub::setTextCodecUtf8();

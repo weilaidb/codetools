@@ -178,7 +178,7 @@ void MainWindow::initUiSets()
     emit ui->action_EditCfgFile->triggered(false);
 
     pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
-    connect(pCheckLeftTimer, SIGNAL(timeout()), pCheckLeftTimer, SLOT(proc_textEdit_textChanged()));
+    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
 
     pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));

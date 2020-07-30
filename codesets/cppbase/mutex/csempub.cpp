@@ -59,7 +59,7 @@ void *handle_data(void *arg)
     sem_post(&sem);
 }
 
-#if 1
+#if 0
 int main()
 {
     pthread_t privider,handler;
