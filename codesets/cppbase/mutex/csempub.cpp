@@ -4,62 +4,61 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/types.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include <sys/fcntl.h>
 #include <sys/types.h>
-#include <sys/syscall.h> /* must include this file */
+#include <sys/types.h>
+#include <sys/syscall.h>
+
+#include "basetypepub.h"
+
+#define NULL nullptr
 
 csempub::csempub()
 {
 
 }
 
-#include<stdio.h>
-#include<stdlib.h>
-
-#include<sys/ipc.h>
-#include<sys/sem.h>
-#include<sys/types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include "basetypepub.h"
 
 #define MAXSIZE 10
 
-WORD64 stack[MAXSIZE];
-
-WORD64 size =0;
+volatile unsigned int global_count = 0;
 sem_t sem;
+
+static pid_t gettid(void)
+{
+    return syscall(SYS_gettid);
+}
+
 
 void *privide_data(void *arg)
 {
-    WORD64 i;
-    sem_wait(&sem);
-    for(i =0;i<MAXSIZE;++i)
-    {
-        stack[i] = i;
+    WORD64 i = 0;
+    while (1) {
+        sem_wait(&sem);
+        global_count++;
+        printf("output : %-4llu, cnt:%-5u :%#x\n",i++, global_count, gettid());
+        sem_post(&sem);
     }
-    sem_post(&sem);
 }
 
 void *handle_data(void *arg)
 {
-    WORD64 i;
-//    sleep(1);
-    sem_wait(&sem);
-    while((i = size ++) <MAXSIZE)
-    {
-        printf("cross : %llu X %llu = %llu \n",stack[i],stack[i],stack[i] * stack[i]);
-//        sleep(1);
-        usleep(10);
+    WORD64 i = 0;
+    while (1) {
+        sem_wait(&sem);
+        global_count++;
+        printf("output : %-4llu, cnt:%-5u :%#x\n",i++, global_count, gettid());
+        sem_post(&sem);
     }
-    sem_post(&sem);
 }
 
-#if 0
+#if 1
 int main()
 {
     pthread_t privider,handler;

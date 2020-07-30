@@ -10,13 +10,9 @@ public:
     static int createtask();
     static void *print_msg1(void *arg);
     static void *print_msg2(void *arg);
-    static void *print_msg3(void *arg);
-    static void *print_msg4(void *arg);
-    static void *print_msg5(void *arg);
-    static void *print_msg6(void *arg);
 private:
     static pthread_mutex_t m_mutex;
-    static unsigned int global_count;
+    static volatile unsigned int global_count;
     static pthread_cond_t m_cond;  //条件变量
 
 };

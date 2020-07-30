@@ -1,2 +1,5 @@
 D:
 D:\E\QtExamplenew\codetools
+/home/duo
+/home/duo/下载
+http://tool.chinaz.com/tools/urlencode.aspx
