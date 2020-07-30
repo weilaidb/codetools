@@ -27,8 +27,8 @@ csempub::csempub()
 
 #define MAXSIZE 10
 
-volatile unsigned int global_count = 0;
-sem_t sem;
+static volatile unsigned int global_count = 0;
+static sem_t sem;
 
 static pid_t gettid(void)
 {
@@ -38,6 +38,7 @@ static pid_t gettid(void)
 
 void *privide_data(void *arg)
 {
+    UNUSED(arg);
     WORD64 i = 0;
     while (1) {
         sem_wait(&sem);
@@ -49,6 +50,7 @@ void *privide_data(void *arg)
 
 void *handle_data(void *arg)
 {
+    UNUSED(arg);
     WORD64 i = 0;
     while (1) {
         sem_wait(&sem);
@@ -58,7 +60,7 @@ void *handle_data(void *arg)
     }
 }
 
-#if 1
+#if 0
 int main()
 {
     pthread_t privider,handler;
