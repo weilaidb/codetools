@@ -28,6 +28,7 @@ public:
     //return list by \n, filter a line with nothing
     static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);
+    static QStringList stringSplitbyNewLineFilterEmptyUniqueSort(const QString str);
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);

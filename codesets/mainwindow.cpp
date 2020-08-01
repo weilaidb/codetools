@@ -195,7 +195,7 @@ void MainWindow::initUiSets()
 
     //打开常用文件列表
     m_iListNormalUseCnt = 30;
-    CFilePub::createFileEmptyNoExistAndVar(m_ListNormalUseFile, "reg/normalfiles.txt");
+    CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
 }
 
 /**
@@ -341,7 +341,7 @@ QMenu *MainWindow::slot_frequse_menu()
 QMenu *MainWindow::slot_openfilelist_menu()
 {
     QMenu *pOpenFile = new QMenu("文件列表");
-    m_listNormalUse = CFilePub::readFileAllFilterEmptyUnique(m_ListNormalUseFile);
+    m_listNormalUse = CFilePub::readFileAllFilterEmptyUniqueSort(m_ListOpenFile);
     foreach (QString item, m_listNormalUse) {
         if(CUIPub::getCheckedQAction(ui->action_checknoexistpath)
                 &&CStringPub::contain(item, "\\w+:"))
@@ -1499,7 +1499,7 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
     if(CExpressPub::isTrue(CUIPub::getCheckedQAction(ui->action_EditCfgFile)))
     {
         showStatusTimerWindowTitle("编译常用列表模式");
-        CUIPub::explorerPath(m_ListNormalUseFile);
+        CUIPub::explorerPath(m_ListOpenFile);
         return;
     }
     showStatusTimerWindowTitle("打开配置文件" + pAction->text());

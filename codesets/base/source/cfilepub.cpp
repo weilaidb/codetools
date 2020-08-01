@@ -179,6 +179,11 @@ QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
     return CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));
 }
 
+QStringList CFilePub::readFileAllFilterEmptyUniqueSort(QString filename)
+{
+    return CStringPub::stringSplitbyNewLineFilterEmptyUniqueSort(CFilePub::readFileAll(filename));
+}
+
 QStringList CFilePub::readFileAllFilterEmptyUniqueNoExistAndVar(QString &m_Var,QString filename)
 {
     m_Var = filename;

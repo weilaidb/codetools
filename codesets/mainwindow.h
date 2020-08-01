@@ -115,7 +115,7 @@ private:
     //常用文件打开列表
     QStringList m_listNormalUse;
     int m_iListNormalUseCnt;
-    QString m_ListNormalUseFile;
+    QString m_ListOpenFile;
 
 private:
     QString openFilePathRecent;
