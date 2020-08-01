@@ -1,3 +1,4 @@
+#ifndef WIN32
 #include "csempub.h"
 #include <iostream>
 #include <stdio.h>
@@ -73,4 +74,6 @@ int main()
 
     return 0;
 }
+#endif
+
 #endif

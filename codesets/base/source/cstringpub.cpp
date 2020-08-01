@@ -396,3 +396,9 @@ QString CStringPub::getCurrentExePath()
     QString fileName = QCoreApplication::applicationDirPath();
     return fileName;
 }
+
+bool CStringPub::contain(QString str, QString reg)
+{
+    return str.contains(QRegExp(reg));
+}
+

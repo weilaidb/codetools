@@ -1,6 +1,7 @@
 #ifndef CMUTEXPUB_H
 #define CMUTEXPUB_H
 
+#ifndef WIN32
 #include <pthread.h>
 
 class cmutexpub
@@ -16,5 +17,7 @@ private:
     static pthread_cond_t m_cond;  //条件变量
 
 };
+
+#endif
 
 #endif // CMUTEXPUB_H

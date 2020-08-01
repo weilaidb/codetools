@@ -13,6 +13,8 @@ public:
     static int isFile(QString filename);
     static int isDir(QString filename);
     static int fileExist(QString filename);
+    static bool pathExist(QString filename);
+    static bool pathNoExist(QString filename);
     static QString dirName(QString filename);
     static QString baseName(QString filename);
     static bool createFileEmptyNoExist(QString filename);

@@ -124,6 +124,11 @@ void MainWindow::initActionSets()
     QObject::connect(ui->textEdit, SIGNAL(textChanged()), this, SLOT(proc_textEdit_textChanged()));
 
     //clipboard change
+
+
+    //check no exist path
+//    QObject::connect(ui->action_checknoexistpath, SIGNAL(triggered(bool)), this, SLOT(proc_action_checknoexistpath(bool)));
+
 }
 
 
@@ -338,6 +343,14 @@ QMenu *MainWindow::slot_openfilelist_menu()
     QMenu *pOpenFile = new QMenu("文件列表");
     m_listNormalUse = CFilePub::readFileAllFilterEmptyUnique(m_ListNormalUseFile);
     foreach (QString item, m_listNormalUse) {
+        if(CUIPub::getCheckedQAction(ui->action_checknoexistpath)
+                &&CStringPub::contain(item, "\\w+:"))
+        {
+            if(CFilePub::pathNoExist(item))
+            {
+                continue;
+            }
+        }
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pOpenFile->addAction(pTmpAction);
     }
@@ -411,6 +424,7 @@ void MainWindow::procHistorySetting(int type)
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openWordFilePathRecent), ucType);
     CUIPub::procAction(m_pSettings, ui->action_SwitchClearLeftText, ucType);
     CUIPub::procAction(m_pSettings, ui->action_ClipBoarChange, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_checknoexistpath, ucType);
 }
 
 void MainWindow::readHistorySetting()

@@ -62,6 +62,39 @@ int CFilePub::fileExist(QString filename)
     return false;
 }
 
+bool CFilePub::pathExist(QString filename)
+{
+    QFile file(filename);
+    if(file.exists())
+    {
+        return true;
+    }
+
+    QDir dir(filename);
+    if(dir.exists())
+    {
+        return true;
+    }
+    return false;
+}
+
+bool CFilePub::pathNoExist(QString filename)
+{
+    QFile file(filename);
+    if(file.exists())
+    {
+        return false;
+    }
+
+    QDir dir(filename);
+    if(dir.exists())
+    {
+        return false;
+    }
+    return true;
+}
+
+
 QString CFilePub::baseName(QString filename)
 {
     QStringList list = filename.split(QRegExp(".*/"));
