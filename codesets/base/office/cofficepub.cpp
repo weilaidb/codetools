@@ -2,7 +2,7 @@
 #include "cuipub.h"
 #include "debugApp.h"
 #include "cstringpub.h"
-#include "signpub.h"
+#include "csignpub.h"
 
 COfficePub::COfficePub()
 {
@@ -86,7 +86,7 @@ void COfficePub::openFile(QString filePath)
 
 void COfficePub::closeFile(bool isSave /*=false*/)
 {
-    isSave = isSave;
+    UNUSED(isSave);
     if (officeContent)
     {
         if (currentFilePath.endsWith(".ppt") || currentFilePath.endsWith(".pptx") ||currentFilePath.endsWith(".pptm"))
@@ -111,7 +111,7 @@ void COfficePub::Save()
 
 void COfficePub::SaveAs( QString newFilePath )
 {
-    newFilePath = newFilePath;
+    UNUSED(newFilePath);
 }
 
 

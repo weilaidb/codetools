@@ -140,7 +140,6 @@ HEADERS += \
     public/include/debugApp.h \
     public/include/filepub.h \
     public/include/looppub.h \
-    public/include/signpub.h \
     version.h
 
 win32 {

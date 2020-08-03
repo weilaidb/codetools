@@ -1,5 +1,5 @@
 #include "cstringpub.h"
-#include "signpub.h"
+#include "csignpub.h"
 #include "debugApp.h"
 #include <QStringList>
 #include <QCoreApplication>
