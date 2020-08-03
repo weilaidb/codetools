@@ -1,0 +1,30 @@
+测试
+测试主要用于条件判断。[ condition-to-test-for ] ，如[ -e /etc/passwd ]，注意的是[]前后必须有空格，如[-e /etc/passwd]是错误的写法
+文件测试操作
+-d FILE_NAM  # True if FILE_NAM is a directory
+-e FILE_NAM  # True if FILE_NAM exists
+-f FILE_NAM  # True if FILE_NAM exists and is a regular file
+-r FILE_NAM  # True if FILE_NAM is readable
+-s FILE_NAM  # True if FILE_NAM exists and is not empty
+-w FILE_NAM  # True if FILE_NAM has write permission
+-x FILE_NAM  # True if FILE_NAM is executable
+
+字符串测试操作
+-z STRING  # True if STRING is empty
+-n STRING  # True if STRING is not empty
+STRING1 = STRIN2 # True if strings are equal
+STRING1 != STRIN2 # True if strings are not equal
+
+算术测试操作
+var1 -eq var2  # True if var1 is equal to var2
+var1 -ne var2  # True if var1 not equal to var2
+var1 -lt var2  # True if var1 is less than var2
+var1 -le var2  # True if var1 is less than or equal to var2
+var1 -gt var2  # True if var1 is greater than var2
+var1 -ge var2  # True if var1 is greater than or equal to var2
+
+
+作者：shellhub
+链接：https://www.jianshu.com/p/5568d311fb5a
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
