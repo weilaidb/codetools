@@ -1,14 +1,23 @@
 #ifndef BASETYPEPUB_H
 #define BASETYPEPUB_H
 
+
+
 #ifndef ARRAYSIZE
-#define ARRAYSIZE(A) static_cast<unsigned int>(sizeof(A)/sizeof(A[0]))
+#define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
+#endif
+
+
+
+
+#ifndef ARRAYSIZEX
+#define ARRAYSIZEX(A) static_cast<unsigned int>(sizeof(A)/sizeof(A[0]))
 #endif
 
 #define UNUSED(A) (void)A
 
 
-
+typedef char CHAR;
 typedef unsigned char BYTE;
 
 typedef unsigned char UINT8;
@@ -23,8 +32,6 @@ typedef unsigned long long WORD64;
 
 //函数指针
 typedef int (*handler_retint_nopara)(void);
-
-
 
 
 

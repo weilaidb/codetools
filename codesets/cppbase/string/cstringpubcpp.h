@@ -2,7 +2,7 @@
 #define CSTRINGPUBCPP_H
 
 #include <iostream>
-#include "cppbasetype.h"
+#include "basetypepub.h"
 
 using namespace std;
 //普通，指定指针和长度

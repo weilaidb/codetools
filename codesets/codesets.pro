@@ -131,7 +131,6 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
-    cppbase/include/cppbasetype.h \
     cppbase/include/readmacro.h \
     cppbase/include/testcase.h \
     cppbase/mutex/cmutexpub.h \
