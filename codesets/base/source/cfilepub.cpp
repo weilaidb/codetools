@@ -12,7 +12,7 @@
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
-#include "signpub.h"
+#include "csignpub.h"
 
 CFilePub::CFilePub()
 {

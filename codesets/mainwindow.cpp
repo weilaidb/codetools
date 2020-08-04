@@ -5,7 +5,7 @@
 #include "debugApp.h"
 #include "basetypepub.h"
 #include "filepub.h"
-#include "signpub.h"
+#include "csignpub.h"
 #include "cprintpub.h"
 #include "cstringpub.h"
 #include "cfilepub.h"
