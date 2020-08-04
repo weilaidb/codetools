@@ -1,7 +1,6 @@
 #include "clogpub.h"
 #include "csignpub.h"
 #include "debugApp.h"
-#include "cstringpubcpp.h"
 #include "cstringpub.h"
 
 #include <cfilepub.h>
@@ -26,7 +25,7 @@ void CLogPub::msgDefault(QString info)
     QByteArray ba = info.toLatin1();
     char *mm = ba.data();
 //    debugApp()<< mm <<endl;  //调试时，在console中输出
-    string cppstr = CStringPubCpp::getDataOfStr((BYTE *)mm, strlen(mm));
+    string cppstr = CStringPub::getDataOfStr((BYTE *)mm, strlen(mm));
 //    cout << cppstr << endl;  //调试时，在console中输出
     CFilePub::writeFileAppend(m_logDefaultFileName, info);
     CFilePub::writeFileAppend(m_logDefaultFileName, cppstr.c_str());

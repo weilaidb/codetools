@@ -3,14 +3,19 @@
 
 #include <QStringList>
 #include <QAction>
-
-//数组大小
-#ifndef ARRAYSIZE
-#define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
-#endif
+#include <iostream>
+#include "basetypepub.h"
 
 //定义字符
 #define STRING_SELF_MENU ("Generate")
+
+using namespace std;
+//普通，指定指针和长度
+#define GETSTROFDATA(P,L) CStringPubCpp::getDataOfStr((BYTE *)P,L).c_str()
+//结构体指针
+#define GETSTROFDATAPTR(P) CStringPubCpp::getDataOfStr((BYTE *)P,sizeof(*P)).c_str()
+//非指针变量
+#define GETSTROFDATABUF(M) CStringPubCpp::getDataOfStr((BYTE *)&M,sizeof(M)).c_str()
 
 
 class CStringPub
@@ -71,6 +76,9 @@ public:
     static QString hexToString(unsigned char *in);
     static QString getCurrentExePath();
     static bool contain(QString str, QString reg);
+
+    //cpp string
+    static string getDataOfStr(BYTE *pMsg, WORD32 dwLen);
 };
 
 #endif // CSTRINGPUB_H
