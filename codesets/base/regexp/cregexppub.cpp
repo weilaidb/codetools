@@ -1,7 +1,6 @@
 #include "cregexppub.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
-#include "creturnpub.h"
 #include "cdefinepub.h"
 #include "debugApp.h"
 #include "csignpub.h"
@@ -247,7 +246,7 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
 
     if(CExpressPub::isZero(regexpsbef.length()))
     {
-        return CReturnPub::errorConfigFileNoExist();
+        return CExpressPub::errorConfigFileNoExist();
     }
 
     if(CExpressPub::isZero(regexpsaft.length()))

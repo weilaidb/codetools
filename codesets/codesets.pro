@@ -93,7 +93,6 @@ SOURCES += \
     base/net/zeromq/cnetpub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
-    base/return/creturnpub.cpp \
     base/sign/csignpub.cpp \
     base/file/cfilepub.cpp \
     base/string/cstringpub.cpp \
@@ -126,7 +125,6 @@ HEADERS += \
     base/net/zeromq/cnetpub.h \
     base/print/cprintpub.h \
     base/regexp/cregexppub.h \
-    base/return/creturnpub.h \
     base/sign/csignpub.h \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \

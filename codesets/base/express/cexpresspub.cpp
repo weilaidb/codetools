@@ -70,3 +70,13 @@ bool CExpressPub::isIn(QString str, QString other)
     return (str.contains(other));
 }
 
+QString CExpressPub::errorStd()
+{
+    return STR_ERROR;
+}
+
+QString CExpressPub::errorConfigFileNoExist()
+{
+    return STR_ERROR_CFGFILE_NOEXIST;
+}
+
