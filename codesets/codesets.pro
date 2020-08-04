@@ -88,6 +88,8 @@ SOURCES += \
     base/log/clogpub.cpp \
     base/map/cmappub.cpp \
     base/msgtips/cmsgtips.cpp \
+    base/mutex/cmutexpub.cpp \
+    base/mutex/csempub.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/print/cprintpub.cpp \
@@ -100,8 +102,6 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
-    cppbase/mutex/cmutexpub.cpp \
-    cppbase/mutex/csempub.cpp \
     cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
     mainwindow.cpp
@@ -116,6 +116,8 @@ HEADERS += \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \
     base/file/cfilepub.h \
+    base/mutex/cmutexpub.h \
+    base/mutex/csempub.h \
     base/string/cstringpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
@@ -131,8 +133,6 @@ HEADERS += \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
     cppbase/include/testcase.h \
-    cppbase/mutex/cmutexpub.h \
-    cppbase/mutex/csempub.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basetypepub.h \
