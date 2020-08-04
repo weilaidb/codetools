@@ -179,6 +179,7 @@ RC_FILE = \
 
 DISTFILES += \
     doc/代码替换说明.txt \
+    images/fohand.ico \
     images/myapp.rc \
     libs/libzmq-v141-4_3_2/libsodium.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
