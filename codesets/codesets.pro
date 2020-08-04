@@ -130,7 +130,6 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
-    cppbase/include/readmacro.h \
     cppbase/include/testcase.h \
     cppbase/mutex/cmutexpub.h \
     cppbase/mutex/csempub.h \
@@ -140,6 +139,7 @@ HEADERS += \
     public/include/debugApp.h \
     public/include/filepub.h \
     public/include/looppub.h \
+    public/include/readmacro.h \
     version.h
 
 win32 {
