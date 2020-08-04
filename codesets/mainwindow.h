@@ -8,7 +8,7 @@
 #include <QTimer>
 #include "cnetthreadpub.h"
 #include "version.h"
-#include "filepub.h"
+#include "basedefinepub.h"
 #include "basetypepub.h"
 
 QT_BEGIN_NAMESPACE

@@ -2,21 +2,6 @@
 #define BASETYPEPUB_H
 
 
-
-#ifndef ARRAYSIZE
-#define ARRAYSIZE(A) (unsigned int)(sizeof(A)/sizeof(A[0]))
-#endif
-
-
-
-
-#ifndef ARRAYSIZEX
-#define ARRAYSIZEX(A) static_cast<unsigned int>(sizeof(A)/sizeof(A[0]))
-#endif
-
-#define UNUSED(A) (void)A
-
-
 typedef char CHAR;
 typedef unsigned char BYTE;
 

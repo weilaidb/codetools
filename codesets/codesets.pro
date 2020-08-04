@@ -133,9 +133,10 @@ HEADERS += \
     base/tree/ctreepub.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
+    public/include/basedefinepub.h \
+    public/include/basepub.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
-    public/include/filepub.h \
     public/include/looppub.h \
     public/include/readmacro.h \
     testcase/stringtest/testcase.h \

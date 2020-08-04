@@ -2,6 +2,7 @@
 #include "cuipub.h"
 #include "debugApp.h"
 #include "cstringpub.h"
+#include "basepub.h"
 #include "csignpub.h"
 
 COfficePub::COfficePub()

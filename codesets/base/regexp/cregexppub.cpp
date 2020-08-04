@@ -7,6 +7,7 @@
 #include "csignpub.h"
 #include "cprintpub.h"
 #include "cmappub.h"
+#include "basepub.h"
 
 #include <cmappub.h>
 
