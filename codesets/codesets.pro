@@ -24,7 +24,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
-    base/include/ \
     base/msgtips/ \
     base/mysql/ \
     base/dialog/ \
@@ -46,7 +45,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/net/zeromq/ \
     cppbase/string/ \
     cppbase/mutex/ \
-    cppbase/include/ \
+    testcase/stringtest/ \
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
@@ -102,9 +101,9 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
-    cppbase/string/testcase/cstringpubcpp_main.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    testcase/stringtest/cstringpubcpp_main.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
@@ -132,7 +131,6 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
-    cppbase/include/testcase.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basetypepub.h \
@@ -140,6 +138,7 @@ HEADERS += \
     public/include/filepub.h \
     public/include/looppub.h \
     public/include/readmacro.h \
+    testcase/stringtest/testcase.h \
     version.h
 
 win32 {
