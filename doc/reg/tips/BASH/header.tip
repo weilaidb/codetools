@@ -1,6 +1,0 @@
-#!/bin/bash
-
-bash: #!/bin/bash
-zsh: #!/bin/zsh
-ksh: #!/bin/ksh
-csh: #!/bin/csh
