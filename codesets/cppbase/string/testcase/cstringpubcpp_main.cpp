@@ -1,4 +1,4 @@
-#include "cstringpubcpp.h"
+#include "cstringpub.h"
 #include "testcase.h"
 #include "readmacro.h"
 #include <stdio.h>
