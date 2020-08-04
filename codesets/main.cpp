@@ -13,4 +13,13 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
+
+#else
+int main(int argc, char **argv)
+{
+    qDebug() << "hello";
+    return 0;
+}
+
+
 #endif
