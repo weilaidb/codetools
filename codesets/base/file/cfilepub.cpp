@@ -9,6 +9,7 @@
 #include <cstringpub.h>
 #include <cstringpub.h>
 #include <QDesktopServices>
+#include <clogpub.h>
 #include "debugApp.h"
 #include "cstringpub.h"
 #include "cexpresspub.h"
@@ -300,19 +301,22 @@ QString CFilePub::deleteFileSameLine(QString filename,QString same)
     QFile file(filename);
     if(!file.exists())
     {
+        CLogPub::logDefault("[deleteFileSameLine] no exist:" + filename);
         return result;
     }
 
     QString filecontent = readFileAll(filename);
     QStringList list = CStringPub::stringSplitbyNewLine(filecontent);
     foreach (QString item, list) {
-        if(same == item)
+        if(CStringPub::strSim(same) == CStringPub::strSim(item))
         {
+            CLogPub::logDefault("[deleteFileSameLine] ignore item:" + same);
             continue;
         }
         result += item + CSignPub::signEnter();
     }
 
+    CLogPub::logDefault("[deleteFileSameLine]" + filename);
     writeFileOnlly(filename, result);
 
     return result;
