@@ -238,5 +238,8 @@ private slots:
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();
 
+    //read file
+    void read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename);
+    void read_FreqUseFile();
 };
 #endif // MAINWINDOW_H

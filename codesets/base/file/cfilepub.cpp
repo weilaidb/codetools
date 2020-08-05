@@ -305,18 +305,19 @@ QString CFilePub::deleteFileSameLine(QString filename,QString same)
         return result;
     }
 
+    CLogPub::logDefault("[deleteFileSameLine] prepare ignore save:" + same);
     QString filecontent = readFileAll(filename);
     QStringList list = CStringPub::stringSplitbyNewLine(filecontent);
     foreach (QString item, list) {
         if(CStringPub::strSim(same) == CStringPub::strSim(item))
         {
-            CLogPub::logDefault("[deleteFileSameLine] ignore item:" + same);
+            CLogPub::logDefault("[deleteFileSameLine] ignore save:" + same);
             continue;
         }
         result += item + CSignPub::signEnter();
     }
 
-    CLogPub::logDefault("[deleteFileSameLine]" + filename);
+    CLogPub::logDefault("[deleteFileSameLine] filename:" + filename);
     writeFileOnlly(filename, result);
 
     return result;

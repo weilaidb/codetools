@@ -189,14 +189,24 @@ void MainWindow::initUiSets()
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
     m_iListFreqUseCnt = 10;
-    m_listfrequse = CFilePub::readFileAllFilterEmptyUniqueNoExistAndVar(m_ListFreqUseFile, "reg/frequse.txt");
-
+    read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 
     //打开常用文件列表
     m_iListNormalUseCnt = 30;
     CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
 }
+
+void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename)
+{
+    list = CFilePub::readFileAllFilterEmptyUniqueNoExistAndVar(filenamevar, filename);
+}
+
+void MainWindow::read_FreqUseFile()
+{
+    read_CfgFile2List(m_listfrequse, m_ListFreqUseFile, "reg/frequse.txt");
+}
+
 
 /**
  * @brief MainWindow::slot_generate_menu_left
@@ -324,6 +334,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
 QMenu *MainWindow::slot_frequse_menu()
 {
     QMenu *pFreqUse = new QMenu("常用配置列表");
+    read_FreqUseFile();
     debugApp() << m_listfrequse.count();
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
@@ -1236,6 +1247,7 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameTips(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
 
     CFilePub::deleteFileSameLine(m_FileNameMenu, configfilename);
+    CFilePub::deleteFileSameLine(m_ListFreqUseFile, configfilename);
 }
 
 
@@ -1490,7 +1502,10 @@ void MainWindow::proc_clipBoard_textChanged()
 
 void MainWindow::proc_frequse_config(QString configfilename)
 {
+    CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
     CStringPub::addStringUniqueSortMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
+//    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
+//    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
 }
 
