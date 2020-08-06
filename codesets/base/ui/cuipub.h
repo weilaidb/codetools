@@ -65,9 +65,12 @@ public:
     static int getTextEditLen(QTextEdit *pEdit);
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
+    static void setPlainTextEdit(QTextEdit *pEdit, QString text);
     static void setTextEditOnEmpty(QTextEdit *pEdit, QString text);
+    static void setPlainTextEditOnEmpty(QTextEdit *pEdit, QString text);
     static void clearTextBrowser(QTextBrowser *textBrowser);
     static void setTextBrowser(QTextBrowser *textBrowser, QString text);
+    static void setPlainTextBrowser(QTextBrowser *textBrowser, QString text);
     static QString getTextBrowser(QTextBrowser *textBrowser);
     static void hideTextEdit(QTextEdit *pEdit);
     static void showTextEdit(QTextEdit *pEdit);

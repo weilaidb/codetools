@@ -451,6 +451,12 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
     pEdit->setText(text);
 }
 
+void CUIPub::setPlainTextEdit(QTextEdit *pEdit, QString text)
+{
+    pEdit->setPlainText(text);
+}
+
+
 void CUIPub::setTextEditOnEmpty(QTextEdit *pEdit, QString text)
 {
     if(CExpressPub::isNullPtr(pEdit))
@@ -463,6 +469,18 @@ void CUIPub::setTextEditOnEmpty(QTextEdit *pEdit, QString text)
     }
 }
 
+void CUIPub::setPlainTextEditOnEmpty(QTextEdit *pEdit, QString text)
+{
+    if(CExpressPub::isNullPtr(pEdit))
+    {
+        return;
+    }
+    if(CExpressPub::isEmpty(pEdit->toPlainText()))
+    {
+        pEdit->setPlainText(text);
+    }
+}
+
 
 void CUIPub::clearTextBrowser(QTextBrowser *textBrowser)
 {
@@ -472,6 +490,11 @@ void CUIPub::clearTextBrowser(QTextBrowser *textBrowser)
 void CUIPub::setTextBrowser(QTextBrowser *textBrowser, QString text)
 {
     textBrowser->setText(text);
+}
+
+void CUIPub::setPlainTextBrowser(QTextBrowser *textBrowser, QString text)
+{
+    textBrowser->setPlainText(text);
 }
 
 QString CUIPub::getTextBrowser(QTextBrowser *textBrowser)

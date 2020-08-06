@@ -819,7 +819,8 @@ void MainWindow::addMenuDocumentSearchRecent()
 
 void MainWindow::setLeftTextEdit(QString str)
 {
-    ui->textEdit->setText(str);
+//    ui->textEdit->setText(str);
+    ui->textEdit->setPlainText(str);
 }
 
 void MainWindow::clrLeftTextEdit()
@@ -829,7 +830,8 @@ void MainWindow::clrLeftTextEdit()
 
 void MainWindow::setRightTextEdit(QString str)
 {
-    ui->textBrowser->setText(str);
+//    ui->textBrowser->setText(str);
+    ui->textBrowser->setPlainText(str);
 }
 
 void MainWindow::clrRightTextEdit()
@@ -1192,7 +1194,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
-        CUIPub::setTextEditOnEmpty(ui->textEdit, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_TIPS));
+        CUIPub::setPlainTextEditOnEmpty(ui->textEdit, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_TIPS));
         setRightTextEdit(CStringPub::emptyString());
         //如果提示不为空时，则重新调用接口
         if(CExpressPub::isFull(CUIPub::getTextEditLen(ui->textEdit)))
@@ -1219,9 +1221,9 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
 
     debugApp() << "configfilename:" << configfilename;
     debugApp() << "type          :" << type;
-    CUIPub::setTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
-    CUIPub::setTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
-    CUIPub::setTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
 }
 
 void MainWindow::proc_action_editinginfo(QString configfilename, int type)
@@ -1366,7 +1368,7 @@ void MainWindow::proc_actionClearLeft()
 
 void MainWindow::proc_actionPasteLeft()
 {
-    CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
+    CUIPub::setPlainTextEdit(ui->textEdit, CUIPub::getClipBoardText());
 }
 
 void MainWindow::proc_actionSelectCopy()
@@ -1417,7 +1419,7 @@ void MainWindow::proc_actionClearRight()
 
 void MainWindow::proc_actionPasteRight()
 {
-    CUIPub::setTextBrowser(ui->textBrowser, CUIPub::getClipBoardText());
+    CUIPub::setPlainTextBrowser(ui->textBrowser, CUIPub::getClipBoardText());
 }
 
 void MainWindow::proc_actionSelectAllCopyRight()
@@ -1427,7 +1429,7 @@ void MainWindow::proc_actionSelectAllCopyRight()
 
 void MainWindow::proc_actionClearEmpty()
 {
-    CUIPub::setTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
+    CUIPub::setPlainTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
 }
 
 
@@ -1491,7 +1493,7 @@ void MainWindow::proc_clipBoard_textChanged()
     curText = CUIPub::getClipBoardText();
     if(curText != oldText)
     {
-        CUIPub::setTextEdit(ui->textEdit, curText);
+        CUIPub::setPlainTextEdit(ui->textEdit, curText);
         proc_action_TryAgain();
         oldText = curText;
         return;
