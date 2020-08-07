@@ -60,6 +60,10 @@ private:
     void clrLeftTextEdit();
     void setRightTextEdit(QString str);
     void clrRightTextEdit();
+
+    // right mouse list to free
+    void appendRightMouseList(void *ptr);
+    void freeRightMouseList();
 public:
     enum{
         TYPE_FILE,
@@ -94,6 +98,7 @@ private:
 
     /* 右键菜单 */
     QMenu *pRightMouse;
+    QList<void *> m_lstRightMouse;
     //custom menu
     QMenu *pMenuCustom;
     QString m_FileNameMenu;
