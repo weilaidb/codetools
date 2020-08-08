@@ -30,7 +30,7 @@ void *cmutexpub::print_msg1(void *arg)
     int i=0;
     while(1){
         while(EOWNERDEAD==pthread_mutex_lock(&m_mutex)) {
-            pthread_mutex_consistent(&m_mutex);
+//            pthread_mutex_consistent(&m_mutex);
             pthread_mutex_unlock(&m_mutex);
         }
         global_count++;
@@ -48,7 +48,7 @@ void *cmutexpub::print_msg2(void *arg)
     int i=0;
     while(1){
         while(EOWNERDEAD==pthread_mutex_lock(&m_mutex)) {
-            pthread_mutex_consistent(&m_mutex);
+//            pthread_mutex_consistent(&m_mutex);
             pthread_mutex_unlock(&m_mutex);
         }
         global_count++;
@@ -65,7 +65,7 @@ int cmutexpub::createtask()
     pthread_t id2;
     pthread_mutexattr_t mutexattr;
     pthread_mutexattr_init(&mutexattr);
-    pthread_mutexattr_setrobust(&mutexattr, PTHREAD_MUTEX_ROBUST);
+//    pthread_mutexattr_setrobust(&mutexattr, PTHREAD_MUTEX_ROBUST);
     pthread_mutex_init(&m_mutex,&mutexattr);
     pthread_create(&id1,nullptr,print_msg1,nullptr);
     pthread_create(&id2,nullptr,print_msg2,nullptr);
