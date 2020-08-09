@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7479d6ae-83c0-464c-aab8-379a74fc1c65" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +30,37 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/__init__.py" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python">
+      <module name="codetools_py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Software\Python36-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -58,11 +84,40 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1597014717873</updated>
-      <workItem from="1597014720083" duration="247000" />
+      <workItem from="1597014720083" duration="354000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="620" y="161" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597015073737">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state x="620" y="161" key="#com.intellij.execution.impl.EditConfigurationsDialog/75.0.1845.1080@75.0.1845.1080" timestamp="1597015073737" />
+    <state x="508" y="320" key="FileChooserDialogImpl" timestamp="1597015072469">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state x="508" y="320" key="FileChooserDialogImpl/75.0.1845.1080@75.0.1845.1080" timestamp="1597015072469" />
+    <state width="1573" height="241" key="GridCell.Tab.0.bottom" timestamp="1597015094741">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1573" height="241" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597015094741" />
+    <state width="1573" height="241" key="GridCell.Tab.0.center" timestamp="1597015094741">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1573" height="241" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597015094741" />
+    <state width="1573" height="241" key="GridCell.Tab.0.left" timestamp="1597015094741">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1573" height="241" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597015094741" />
+    <state width="1573" height="241" key="GridCell.Tab.0.right" timestamp="1597015094741">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1573" height="241" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597015094741" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597015094734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
