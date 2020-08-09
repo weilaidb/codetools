@@ -15,9 +15,18 @@ from Ui_mainwindow import *
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+    """
+    Class documentation goes here.
+    """
+    def __init__(self, parent=None):
+        """
+        Constructor
+
+        @param parent reference to the parent widget
+        @type QWidget
+        """
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+
+
+    
