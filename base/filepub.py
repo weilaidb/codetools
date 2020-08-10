@@ -10,12 +10,12 @@ def readFileUtf8(filename):
     print ("filename:%s" % filename)
     try:
         f = open(filename, 'r',encoding='UTF-8')
-        print((f.readlines()))
-        return f.readlines()
+        result =  f.readlines()
+        print(result)
+        return result
     except Exception as e:
         print("exception:%s" %e)
     finally:
         if f:
             f.close()
-def test():
-    print("test")
+

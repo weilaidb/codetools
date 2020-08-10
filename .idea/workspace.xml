@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7479d6ae-83c0-464c-aab8-379a74fc1c65" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/base/textcodecpub.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/stringpub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/filepub.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/filepub.py" afterDir="false" />
@@ -92,7 +92,7 @@
       <updated>1597014717873</updated>
       <workItem from="1597014720083" duration="4190000" />
       <workItem from="1597031722654" duration="457000" />
-      <workItem from="1597032297707" duration="365000" />
+      <workItem from="1597032297707" duration="2336000" />
     </task>
     <servers />
   </component>
@@ -112,32 +112,32 @@
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="508" y="320" key="FileChooserDialogImpl/75.0.1845.1080@75.0.1845.1080" timestamp="1597032185256" />
-    <state width="1804" height="241" key="GridCell.Tab.0.bottom" timestamp="1597032666515">
+    <state width="1804" height="241" key="GridCell.Tab.0.bottom" timestamp="1597035135825">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597032666515" />
-    <state width="1804" height="241" key="GridCell.Tab.0.center" timestamp="1597032666515">
+    <state width="1804" height="241" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
+    <state width="1804" height="241" key="GridCell.Tab.0.center" timestamp="1597035135825">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597032666515" />
-    <state width="1804" height="241" key="GridCell.Tab.0.left" timestamp="1597032666515">
+    <state width="1804" height="241" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
+    <state width="1804" height="241" key="GridCell.Tab.0.left" timestamp="1597035135825">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597032666515" />
-    <state width="1804" height="241" key="GridCell.Tab.0.right" timestamp="1597032666515">
+    <state width="1804" height="241" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
+    <state width="1804" height="241" key="GridCell.Tab.0.right" timestamp="1597035135825">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597032666515" />
-    <state x="665" y="286" width="664" height="508" key="find.popup" timestamp="1597031788681">
+    <state width="1804" height="241" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
+    <state x="665" y="286" width="664" height="508" key="find.popup" timestamp="1597034872308">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state x="665" y="286" width="664" height="508" key="find.popup/75.0.1845.1080@75.0.1845.1080" timestamp="1597031788681" />
+    <state x="665" y="286" width="664" height="508" key="find.popup/75.0.1845.1080@75.0.1845.1080" timestamp="1597034872308" />
     <state x="161" y="140" key="new project wizard" timestamp="1597032158557">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="161" y="140" key="new project wizard/75.0.1845.1080@75.0.1845.1080" timestamp="1597032158557" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597032666500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597035135820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

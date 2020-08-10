@@ -37,7 +37,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ##右键菜单
         self.textEdit.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
         self.textEdit.customContextMenuRequested.connect(self.generateMenu_left)  ####右键菜单
+        self.rightPopMenu = QtWidgets.QMenu(self.menuAyStle)
+        self.rightPopMenu.setObjectName("rightPopMenu")
+        # self.menu = QtWidgets.QMenu(self.menuAyStle)
 
     def generateMenu_left(self, pos):
         print("left menu")
-        readFileUtf8(self.fileCumstomMenu)
+        menulist = (readFileUtf8(self.fileCumstomMenu))
+        # showlist(menulist)
+
+        try:
+            self.rightPopMenu.clear()
+            self.rightPopMenu.addAction('item1')
+            # self.rightPopMenu.setShortcut(Qt.CTRL | Qt.Key_Q)
+            self.rightPopMenu.addAction('item2')
+            self.rightPopMenu.addSeparator()
+            self.rightPopMenu.addAction('item3')
+            self.rightPopMenu.triggered.connect(self._triggered)
+            self.rightPopMenu.exec(self.cursor().pos())
+        except Exception as e:
+            print("exception:%s" %e)
+            return e
+
+
+    def _triggered(self, action): #出发点击，快捷键等信号
+            print(action.text())
+    def keyPressEvent(self, e): #按键事件
+        if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
+            print('触发组合键')
