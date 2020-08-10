@@ -40,5 +40,4 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def generateMenu_left(self, pos):
         print("left menu")
-        test()
-        readFile(self.fileCumstomMenu)
+        readFileUtf8(self.fileCumstomMenu)
