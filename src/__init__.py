@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from PyQt5 import QtCore
-
 from codetools import *
 
 if __name__ == '__main__':
