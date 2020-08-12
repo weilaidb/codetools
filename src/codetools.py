@@ -82,18 +82,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             curpos = 0
             changed = 0
             num = 0
-            numaction = 0
             self.keylist = []
             self.vallist = []
-            # self.tempmenu = [QtWidgets.QMenu("test")]
-            # self.tempAction = [QtWidgets.QAction("test")]
-            # self.generateMenu.addMenu(self.tempmenu)
-
-            # show_max = 1000
-            # for i in range(show_max):
-            #     self.tempmenu.append(QtWidgets.QMenu("test"))
-            #     self.tempAction.append(QtWidgets.QAction("test"))
-
             for i in range(len(menulist)):
                 item = menulist[i]
                 pos = item.find(keych)
@@ -119,35 +109,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     print("changed!")
                     self.keylist.append(menutext)
                     self.vallist.append("")
-                    # self.tempmenu[num] = QtWidgets.QMenu(menutext)
-                    # self.tempmenu[num].setData(menutext)
+                    self.vallist[num] += item + ";"
                     changed = 0
-                    # self.generateMenu.addMenu(self.tempmenu[num])
-                    # self.tempAction[numaction] = QtWidgets.QAction(item)
-                    # self.tempmenu[num].addAction(self.tempAction[numaction])
                     num+=1
-                    # numaction = 0
                 else:
                     print("no changed! item:%s" % item)
-                    # numaction+=1
-                    # self.tempAction[numaction] = QtWidgets.QAction(item)
-                    # self.tempAction[numaction].setData(item)
-                    # self.tempmenu[num].addAction(self.tempAction[numaction])
                     if(num > 0):
                         self.vallist[num - 1] += item + ";"
-
-                # self.generateMenu.addAction(menulist[i])
-            # self.rightPopMenu.addAction('item1')
-            # self.rightPopMenu.addAction('item2')
-            # self.rightPopMenu.addSeparator()
-            # self.rightPopMenu.addAction('item3')
 
             for i in range(num):
                 print(self.keylist)
                 print(self.vallist)
 
             self.testMenu =  [QtWidgets.QMenu("")]
-            showMenuMax = 100
+            showMenuMax = 1000
             for i in range(showMenuMax):
                 self.testMenu.append(QtWidgets.QMenu(""))
             #
@@ -163,7 +138,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 key = self.keylist[i]
                 vallist = self.vallist[i].split(";")
 
-                # self.testMenu.append(QtWidgets.QMenu(key))
                 self.testMenu[i] = QtWidgets.QMenu(key)
                 print("create menu key:%s" % key)
                 for j in range(len(vallist)):
