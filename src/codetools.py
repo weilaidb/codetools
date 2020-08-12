@@ -37,9 +37,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ##右键菜单
         self.textEdit.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
         self.textEdit.customContextMenuRequested.connect(self.generateMenu_left)  ####右键菜单
-        self.rightPopMenu = QtWidgets.QMenu(self.menuAyStle)
+        self.rightPopMenu = QtWidgets.QMenu()
         self.rightPopMenu.setObjectName("rightPopMenu")
-        # self.menu = QtWidgets.QMenu(self.menuAyStle)
 
     def generateMenu_left(self, pos):
         print("left menu")
@@ -48,11 +47,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         try:
             self.rightPopMenu.clear()
-            self.rightPopMenu.addAction('item1')
-            # self.rightPopMenu.setShortcut(Qt.CTRL | Qt.Key_Q)
-            self.rightPopMenu.addAction('item2')
-            self.rightPopMenu.addSeparator()
-            self.rightPopMenu.addAction('item3')
+            self.generateMenu = QtWidgets.QMenu("Generate")
+            self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
+            self.OpenCfgDirAction = QtWidgets.QAction("打开配置文件夹")
+            self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
+            self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
+            # self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
+            self.FileListsMenu = QtWidgets.QMenu("文件列表")
+
+            self.clearAction = QtWidgets.QAction("清空")
+            self.copyAction  = QtWidgets.QAction("复制")
+            self.pasteAction = QtWidgets.QAction("粘贴")
+            self.selectallcopyAction = QtWidgets.QAction("全选复制")
+
+            self.rightPopMenu.addMenu(self.generateMenu)
+            self.rightPopMenu.addMenu(self.FreqUseCfgListMenu)
+            self.rightPopMenu.addAction(self.OpenCfgDirAction)
+            self.rightPopMenu.addAction(self.OpenCfgFileAction)
+            self.rightPopMenu.addMenu(self.FileListsMenu)
+
+            self.rightPopMenu.addAction(self.clearAction)
+            self.rightPopMenu.addAction(self.copyAction)
+            self.rightPopMenu.addAction(self.pasteAction)
+            self.rightPopMenu.addAction(self.selectallcopyAction)
+
+
+            for i in range(len(menulist)):
+                print(menulist[i])
+                self.generateMenu.addAction(menulist[i])
+            # self.rightPopMenu.addAction('item1')
+            # self.rightPopMenu.addAction('item2')
+            # self.rightPopMenu.addSeparator()
+            # self.rightPopMenu.addAction('item3')
             self.rightPopMenu.triggered.connect(self._triggered)
             self.rightPopMenu.exec(self.cursor().pos())
         except Exception as e:
