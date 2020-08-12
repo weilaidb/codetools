@@ -44,6 +44,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("left menu")
         menulist = (readFileUtf8(self.fileCumstomMenu))
         # showlist(menulist)
+        menulist = list(set(menulist))
+        menulist.sort()
 
         try:
             self.rightPopMenu.clear()
@@ -71,14 +73,111 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.rightPopMenu.addAction(self.pasteAction)
             self.rightPopMenu.addAction(self.selectallcopyAction)
 
+            # #并不会添加5个
+            # for i in range(5):
+            #     self.rightPopMenu.addAction(self.copyAction)
+
+            keych = "/"
+            menutext = ""
+            curpos = 0
+            changed = 0
+            num = 0
+            numaction = 0
+            self.keylist = []
+            self.vallist = []
+            # self.tempmenu = [QtWidgets.QMenu("test")]
+            # self.tempAction = [QtWidgets.QAction("test")]
+            # self.generateMenu.addMenu(self.tempmenu)
+
+            # show_max = 1000
+            # for i in range(show_max):
+            #     self.tempmenu.append(QtWidgets.QMenu("test"))
+            #     self.tempAction.append(QtWidgets.QAction("test"))
 
             for i in range(len(menulist)):
-                print(menulist[i])
-                self.generateMenu.addAction(menulist[i])
+                item = menulist[i]
+                pos = item.find(keych)
+
+                print("---->>pos:%d %s" % (pos, item))
+                # print(menulist[i])
+
+                if(0 == len(item.strip())):
+                    continue
+
+                if(-1 == pos):
+                    print("not found:%d" % pos)
+                else:
+                    print("found:%d" % pos)
+
+                if(curpos != pos):
+                    changed = 1
+                    menutext = item[0:pos]
+                    print("menutext:%s" % menutext)
+                    curpos = pos
+
+                if(changed):
+                    print("changed!")
+                    self.keylist.append(menutext)
+                    self.vallist.append("")
+                    # self.tempmenu[num] = QtWidgets.QMenu(menutext)
+                    # self.tempmenu[num].setData(menutext)
+                    changed = 0
+                    # self.generateMenu.addMenu(self.tempmenu[num])
+                    # self.tempAction[numaction] = QtWidgets.QAction(item)
+                    # self.tempmenu[num].addAction(self.tempAction[numaction])
+                    num+=1
+                    # numaction = 0
+                else:
+                    print("no changed! item:%s" % item)
+                    # numaction+=1
+                    # self.tempAction[numaction] = QtWidgets.QAction(item)
+                    # self.tempAction[numaction].setData(item)
+                    # self.tempmenu[num].addAction(self.tempAction[numaction])
+                    if(num > 0):
+                        self.vallist[num - 1] += item + ";"
+
+                # self.generateMenu.addAction(menulist[i])
             # self.rightPopMenu.addAction('item1')
             # self.rightPopMenu.addAction('item2')
             # self.rightPopMenu.addSeparator()
             # self.rightPopMenu.addAction('item3')
+
+            for i in range(num):
+                print(self.keylist)
+                print(self.vallist)
+
+            self.testMenu =  [QtWidgets.QMenu("")]
+            showMenuMax = 100
+            for i in range(showMenuMax):
+                self.testMenu.append(QtWidgets.QMenu(""))
+            #
+
+            self.testAction =  [QtWidgets.QAction("")]
+            showActionMax = 10000
+            for i in range(showActionMax):
+                self.testAction.append(QtWidgets.QAction(""))
+            #
+
+            actioncount = 0
+            for i in range(num):
+                key = self.keylist[i]
+                vallist = self.vallist[i].split(";")
+
+                # self.testMenu.append(QtWidgets.QMenu(key))
+                self.testMenu[i] = QtWidgets.QMenu(key)
+                print("create menu key:%s" % key)
+                for j in range(len(vallist)):
+                    showval = vallist[j].strip()
+                    if(0 == len(showval)):
+                        continue
+                    print("create action:%s" % showval)
+
+                    self.testAction[actioncount] = QtWidgets.QAction(showval)
+                    self.testMenu[i].addAction(self.testAction[actioncount])
+                    actioncount+=1
+
+                self.generateMenu.addMenu(self.testMenu[i])
+
             self.rightPopMenu.triggered.connect(self._triggered)
             self.rightPopMenu.exec(self.cursor().pos())
         except Exception as e:
