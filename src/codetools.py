@@ -160,7 +160,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def _triggered(self, action): #出发点击，快捷键等信号
-            print(action.text())
+            print("triggered:%s" % action.text())
     def keyPressEvent(self, e): #按键事件
         if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
             print('触发组合键')
