@@ -40,6 +40,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.filename_normalfiles = self.topdir + "normalfiles.txt"
         self.filename_totalmenu = self.topdir + "selfmenu.txt"
 
+        self.hideUiSets()
+
+
+    def initUiSets(self):
+        pass
+
+    def hideUiSets(self):
+        self.textEdit_cfgTips.hide()
+        self.textEdit_cfgBefore.hide()
+        self.textEdit_cfgAfter.hide()
+        pass
+
+    def showUiSets(self):
+        self.textEdit_cfgTips.show()
+        self.textEdit_cfgBefore.show()
+        self.textEdit_cfgAfter.show()
+        pass
+
+
     def appendActionFileList(self, par_filemenu):
         filelist = listuniquesort((readFileUtf8(self.filename_normalfiles)))
         filelistpos = 0
@@ -57,7 +76,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.appendActionFileList(self.FileListsMenu)
 
         self.clearAction = QtWidgets.QAction("清空")
-        self.copyAction  = QtWidgets.QAction("复制")
+        # self.copyAction  = QtWidgets.QAction("复制")
         self.pasteAction = QtWidgets.QAction("粘贴")
         self.selectallcopyAction = QtWidgets.QAction("全选复制")
 
@@ -66,7 +85,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.OpenCfgFileAction.triggered.connect(self._triggered_OpenCfgFileAction )
         self.FileListsMenu.triggered.connect(self._triggered_FileListsMenu )
         self.clearAction.triggered.connect(self._triggered_clearAction )
-        self.copyAction.triggered.connect(self._triggered_copyAction )
+        # self.copyAction.triggered.connect(self._triggered_copyAction )
         self.pasteAction.triggered.connect(self._triggered_pasteAction )
         self.selectallcopyAction.triggered.connect(self._triggered_selectallcopyAction )
 
@@ -77,7 +96,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         par_rightPopMenu.addMenu(self.FileListsMenu)
 
         par_rightPopMenu.addAction(self.clearAction)
-        par_rightPopMenu.addAction(self.copyAction)
+        # par_rightPopMenu.addAction(self.copyAction)
         par_rightPopMenu.addAction(self.pasteAction)
         par_rightPopMenu.addAction(self.selectallcopyAction)
 
@@ -108,9 +127,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
 
     def _triggered_pasteAction(self):
+        self.textEdit.setText(getclipboardtext())
         pass
 
     def _triggered_selectallcopyAction(self):
+        setclipboardtext(self.textEdit.toPlainText())
         pass
 
     def initVar(self):
@@ -165,17 +186,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             for i in range(len(menulist)):
                 item = menulist[i]
                 pos = item.find(self.keych)
-                print("---->>pos:%d %s" % (pos, item))
+                # print("---->>pos:%d %s" % (pos, item))
 
                 if(stringlenzero(item)):
                     continue
-                self.printfound(pos)
+                # self.printfound(pos)
 
                 if(self.curpos != pos):
                     self.changed = 1
                     self.menutext = item[0:pos]
                     self.curpos = pos
-                    print("menutext:%s" % self.menutext)
+                    # print("menutext:%s" % self.menutext)
 
                 if(self.changed):
                     self.keylist.append(self.menutext)
@@ -183,23 +204,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.vallist[self.num] += item + ";"
                     self.changed = 0
                     self.num+=1
-                    print("changed!")
+                    # print("changed!")
                 else:
-                    print("no changed! item:%s" % item)
+                    # print("no changed! item:%s" % item)
                     if(self.num > 0):
                         self.vallist[self.num - 1] += item + ";"
 
-            self.printkeyvallist()
+            # self.printkeyvallist()
             for i in range(self.num):
                 key = self.keylist[i]
                 vallist = self.vallist[i].split(";")
                 self.testMenu[i] = QtWidgets.QMenu(key)
-                print("create menu key:%s" % key)
+                # print("create menu key:%s" % key)
                 for j in range(len(vallist)):
                     showval = vallist[j].strip()
                     if(stringlenzero(showval)):
                         continue
-                    print("create action:%s" % showval)
+                    # print("create action:%s" % showval)
 
                     self.testAction[self.actioncount] = QtWidgets.QAction(showval)
                     self.testMenu[i].addAction(self.testAction[self.actioncount])
