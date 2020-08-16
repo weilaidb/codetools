@@ -40,11 +40,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rightPopMenu = QtWidgets.QMenu()
         self.rightPopMenu.setObjectName("rightPopMenu")
 
-        self.topdir = "reg/"
-        self.filelist = self.topdir + "normalfiles.txt"
+        self.topdir = "reg" + os.sep
+        self.filename_normalfiles = self.topdir + "normalfiles.txt"
+        self.filename_totalmenu = self.topdir + "selfmenu.txt"
 
     def appendActionFileList(self, par_filemenu):
-        filelist = listuniquesort((readFileUtf8(self.filelist)))
+        filelist = listuniquesort((readFileUtf8(self.filename_normalfiles)))
         filelistpos = 0
         for i in range(len(filelist)):
             self.filelistAction[filelistpos] = QtWidgets.QAction(filelist[i])
@@ -92,6 +93,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
 
     def _triggered_OpenCfgFileAction(self):
+        openfilelist = [self.filename_normalfiles , self.filename_totalmenu]
+        for i in range(len(openfilelist)):
+            print("filename_:%s" % getcwdwithpath(openfilelist[i]))
+            openfileordirpath(getcwdwithpath(openfilelist[i]))
         pass
 
     def _triggered_FileListsMenu(self, action):
@@ -100,6 +105,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
 
     def _triggered_clearAction(self):
+        self.textEdit.clear()
         pass
 
     def _triggered_copyAction(self):

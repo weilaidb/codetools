@@ -41,5 +41,8 @@ def openfileordirpath(path):
 def getcwd():
     return os.getcwd()
 
+def getcwdwithpath(str):
+    return getcwd() + os.sep + str;
+
 def opencurrentcwd():
     openfileordirpath(getcwd())
