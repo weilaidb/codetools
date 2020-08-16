@@ -44,6 +44,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.filename_normalfiles = self.topdir + "normalfiles.txt"
         self.filename_totalmenu = self.topdir + "selfmenu.txt"
 
+        self.currentcfgitem = ""
         self.hideUiSets()
         self.initUiSets()
 
@@ -67,18 +68,48 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textEdit_cfgAfter.show()
         pass
 
+    def getTipFileName(self, selectitem):
+        return self.topdir + self.tipsdir + selectitem + self.tipssuffix
+
+    def getBeforeFileName(self, selectitem):
+        return self.topdir + self.beforedir + selectitem
+
+    def getAfterFileName(self, selectitem):
+        return self.topdir + self.afterdir + selectitem
+
     def showBottomFileInfo(self, selectitem):
         try:
+            self.currentcfgitem = selectitem
             self.showUiSets()
-            tipinfo = readFileUtf8(self.topdir + self.tipsdir + selectitem + self.tipssuffix)
-            beforeinfo = readFileUtf8(self.topdir + self.beforedir + selectitem)
-            afterinfo = readFileUtf8(self.topdir + self.afterdir + selectitem)
+            tipinfo = readFileUtf8(self.getTipFileName(selectitem))
+            beforeinfo = readFileUtf8(self.getTipFileName(selectitem))
+            afterinfo = readFileUtf8(self.getAfterFileName( selectitem))
             self.textEdit_cfgTips.setText(list2str(tipinfo))
             self.textEdit_cfgBefore.setText(list2str(beforeinfo))
             self.textEdit_cfgAfter.setText(list2str(afterinfo))
-            
         except Exception as e:
             print("exception:%s" %e)
+            self.textEdit.setText(e)
+
+    def hideBottomFileInfo(self, selectitem):
+        try:
+            self.currentcfgitem = selectitem
+            self.hideUiSets()
+            tipinfo = readFileUtf8(self.getTipFileName(selectitem))
+            beforeinfo = readFileUtf8(self.getTipFileName(selectitem))
+            afterinfo = readFileUtf8(self.getAfterFileName( selectitem))
+            if(self.action_SwitchClearLeftText.isChecked()):
+                self.textEdit.setText(list2str(tipinfo))
+
+
+        except Exception as e:
+            print("exception:%s" %e)
+            self.textEdit.setText(e)
+
+
+
+
+
 
     def _triggered_EditCfgFile(self):
         pass
@@ -93,6 +124,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def _triggered_TryAgain(self):
         pass
         print ("_triggered_TryAgain checked:%d" % self.action_TryAgain.isChecked())
+        if(stringlenzero(self.currentcfgitem)):
+            return
+
+        todealtext = self.textEdit.toPlainText()
+
 
 
     def _triggered_DeleteCfgFile(self):
@@ -280,7 +316,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _triggered(self, action): #出发点击，快捷键等信号
         print("triggered:%s" % action.text())
-        self.showBottomFileInfo(action.text())
+        self.hideBottomFileInfo(action.text())
     def keyPressEvent(self, e): #按键事件
         if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
             print('触发组合键')
