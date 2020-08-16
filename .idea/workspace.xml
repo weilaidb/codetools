@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7479d6ae-83c0-464c-aab8-379a74fc1c65" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/base/stringpub.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/expresspub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/filepub.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/filepub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/stringpub.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/stringpub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codetools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/codetools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,52 +92,115 @@
       <updated>1597014717873</updated>
       <workItem from="1597014720083" duration="4190000" />
       <workItem from="1597031722654" duration="457000" />
-      <workItem from="1597032297707" duration="2336000" />
+      <workItem from="1597032297707" duration="2737000" />
+      <workItem from="1597065631842" duration="563000" />
+      <workItem from="1597230960964" duration="9706000" />
+      <workItem from="1597537801781" duration="1783000" />
     </task>
+    <task id="LOCAL-00001" summary="添加右键菜单">
+      <created>1597241584037</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597241584037</updated>
+    </task>
+    <task id="LOCAL-00002" summary="添加右键菜单,基本正常，有些不显示">
+      <created>1597248357175</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1597248357175</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加右键菜单,基本正常，找到丢失处">
+      <created>1597248601653</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1597248601653</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加右键菜单,正常，print action text">
+      <created>1597248688953</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1597248688953</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加右键菜单" />
+    <MESSAGE value="添加右键菜单,基本正常，有些不显示" />
+    <MESSAGE value="添加右键菜单,基本正常，找到丢失处" />
+    <MESSAGE value="添加右键菜单,正常，print action text" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加右键菜单,正常，print action text" />
   </component>
   <component name="WindowStateProjectService">
     <state x="620" y="161" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597015073737">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="620" y="161" key="#com.intellij.execution.impl.EditConfigurationsDialog/75.0.1845.1080@75.0.1845.1080" timestamp="1597015073737" />
-    <state x="740" y="233" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1597017367644">
+    <state x="740" y="233" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1597248577876">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state x="740" y="233" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/75.0.1845.1080@75.0.1845.1080" timestamp="1597017367644" />
+    <state x="740" y="233" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/75.0.1845.1080@75.0.1845.1080" timestamp="1597248577876" />
+    <state x="541" y="235" key="CommitChangelistDialog2" timestamp="1597248688308">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state x="541" y="235" key="CommitChangelistDialog2/75.0.1845.1080@75.0.1845.1080" timestamp="1597248688308" />
     <state x="508" y="320" key="FileChooserDialogImpl" timestamp="1597032185256">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="508" y="320" key="FileChooserDialogImpl/75.0.1845.1080@75.0.1845.1080" timestamp="1597032185256" />
-    <state width="1804" height="241" key="GridCell.Tab.0.bottom" timestamp="1597035135825">
+    <state width="1804" height="162" key="GridCell.Tab.0.bottom" timestamp="1597539617194">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
-    <state width="1804" height="241" key="GridCell.Tab.0.center" timestamp="1597035135825">
+    <state width="1804" height="162" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597539617194" />
+    <state width="1804" height="162" key="GridCell.Tab.0.center" timestamp="1597539617194">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
-    <state width="1804" height="241" key="GridCell.Tab.0.left" timestamp="1597035135825">
+    <state width="1804" height="162" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597539617194" />
+    <state width="1804" height="162" key="GridCell.Tab.0.left" timestamp="1597539617194">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
-    <state width="1804" height="241" key="GridCell.Tab.0.right" timestamp="1597035135825">
+    <state width="1804" height="162" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597539617194" />
+    <state width="1804" height="162" key="GridCell.Tab.0.right" timestamp="1597539617194">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="241" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597035135825" />
-    <state x="665" y="286" width="664" height="508" key="find.popup" timestamp="1597034872308">
+    <state width="1804" height="162" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597539617194" />
+    <state width="1804" height="312" key="GridCell.Tab.1.bottom" timestamp="1597248732449">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state x="665" y="286" width="664" height="508" key="find.popup/75.0.1845.1080@75.0.1845.1080" timestamp="1597034872308" />
+    <state width="1804" height="312" key="GridCell.Tab.1.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597248732449" />
+    <state width="1804" height="312" key="GridCell.Tab.1.center" timestamp="1597248732449">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1804" height="312" key="GridCell.Tab.1.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597248732449" />
+    <state width="1804" height="312" key="GridCell.Tab.1.left" timestamp="1597248732449">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1804" height="312" key="GridCell.Tab.1.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597248732449" />
+    <state width="1804" height="312" key="GridCell.Tab.1.right" timestamp="1597248732449">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state width="1804" height="312" key="GridCell.Tab.1.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597248732449" />
+    <state x="615" y="467" key="Vcs.Push.Dialog.v2" timestamp="1597248603384">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state x="615" y="467" key="Vcs.Push.Dialog.v2/75.0.1845.1080@75.0.1845.1080" timestamp="1597248603384" />
+    <state x="665" y="286" width="664" height="508" key="find.popup" timestamp="1597539609761">
+      <screen x="75" y="0" width="1845" height="1080" />
+    </state>
+    <state x="665" y="286" width="664" height="508" key="find.popup/75.0.1845.1080@75.0.1845.1080" timestamp="1597539609761" />
     <state x="161" y="140" key="new project wizard" timestamp="1597032158557">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="161" y="140" key="new project wizard/75.0.1845.1080@75.0.1845.1080" timestamp="1597032158557" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597035135820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597539617179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

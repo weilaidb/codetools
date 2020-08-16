@@ -40,115 +40,115 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rightPopMenu = QtWidgets.QMenu()
         self.rightPopMenu.setObjectName("rightPopMenu")
 
+    def addMenuOrActionMayPub(self, par_rightPopMenu):
+        self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
+        self.OpenCfgDirAction = QtWidgets.QAction("打开配置文件夹")
+        self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
+        self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
+        # self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
+        self.FileListsMenu = QtWidgets.QMenu("文件列表")
+
+        self.clearAction = QtWidgets.QAction("清空")
+        self.copyAction  = QtWidgets.QAction("复制")
+        self.pasteAction = QtWidgets.QAction("粘贴")
+        self.selectallcopyAction = QtWidgets.QAction("全选复制")
+
+        par_rightPopMenu.addMenu(self.generateMenu)
+        par_rightPopMenu.addMenu(self.FreqUseCfgListMenu)
+        par_rightPopMenu.addAction(self.OpenCfgDirAction)
+        par_rightPopMenu.addAction(self.OpenCfgFileAction)
+        par_rightPopMenu.addMenu(self.FileListsMenu)
+
+        par_rightPopMenu.addAction(self.clearAction)
+        par_rightPopMenu.addAction(self.copyAction)
+        par_rightPopMenu.addAction(self.pasteAction)
+        par_rightPopMenu.addAction(self.selectallcopyAction)
+
+    def initVar(self):
+        self.keych = "/"
+        self.menutext = ""
+        self.curpos = 0
+        self.changed = 0
+        self.num = 0
+        self.keylist = []
+        self.vallist = []
+        self.rightPopMenu.clear()
+
+        self.actioncount = 0
+        #the reserved qmenu max for use
+        self.showMenuMax = 1000
+        self.testMenu =  [QtWidgets.QMenu("")]
+        for i in range(self.showMenuMax):
+            self.testMenu.append(QtWidgets.QMenu(""))
+
+        #the reserved qaction max for use
+        self.showActionMax = 10000
+        self.testAction =  [QtWidgets.QAction("")]
+        for i in range(self.showActionMax):
+            self.testAction.append(QtWidgets.QAction(""))
+
+
+    def printkeyvallist(self):
+        for i in range(self.num):
+            print(self.keylist)
+            print(self.vallist)
+
+    def printfound(self, pos):
+        if(-1 == pos):
+            print("not found:%d" % pos)
+        else:
+            print("found:%d" % pos)
     def generateMenu_left(self, pos):
         print("left menu")
-        menulist = (readFileUtf8(self.fileCumstomMenu))
-        # showlist(menulist)
-        menulist = list(set(menulist))
-        menulist.sort()
-
         try:
-            self.rightPopMenu.clear()
+            menulist = listuniquesort((readFileUtf8(self.fileCumstomMenu)))
+            # showlist(menulist)
+            self.initVar()
             self.generateMenu = QtWidgets.QMenu("Generate")
-            self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
-            self.OpenCfgDirAction = QtWidgets.QAction("打开配置文件夹")
-            self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
-            self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
-            # self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
-            self.FileListsMenu = QtWidgets.QMenu("文件列表")
-
-            self.clearAction = QtWidgets.QAction("清空")
-            self.copyAction  = QtWidgets.QAction("复制")
-            self.pasteAction = QtWidgets.QAction("粘贴")
-            self.selectallcopyAction = QtWidgets.QAction("全选复制")
-
-            self.rightPopMenu.addMenu(self.generateMenu)
-            self.rightPopMenu.addMenu(self.FreqUseCfgListMenu)
-            self.rightPopMenu.addAction(self.OpenCfgDirAction)
-            self.rightPopMenu.addAction(self.OpenCfgFileAction)
-            self.rightPopMenu.addMenu(self.FileListsMenu)
-
-            self.rightPopMenu.addAction(self.clearAction)
-            self.rightPopMenu.addAction(self.copyAction)
-            self.rightPopMenu.addAction(self.pasteAction)
-            self.rightPopMenu.addAction(self.selectallcopyAction)
-
-            # #并不会添加5个
-            # for i in range(5):
-            #     self.rightPopMenu.addAction(self.copyAction)
-
-            keych = "/"
-            menutext = ""
-            curpos = 0
-            changed = 0
-            num = 0
-            self.keylist = []
-            self.vallist = []
+            self.addMenuOrActionMayPub(self.rightPopMenu)
             for i in range(len(menulist)):
                 item = menulist[i]
-                pos = item.find(keych)
-
+                pos = item.find(self.keych)
                 print("---->>pos:%d %s" % (pos, item))
-                # print(menulist[i])
 
-                if(0 == len(item.strip())):
+                if(stringlenzero(item)):
                     continue
+                self.printfound(pos)
 
-                if(-1 == pos):
-                    print("not found:%d" % pos)
-                else:
-                    print("found:%d" % pos)
+                if(self.curpos != pos):
+                    self.changed = 1
+                    self.menutext = item[0:pos]
+                    self.curpos = pos
+                    print("menutext:%s" % self.menutext)
 
-                if(curpos != pos):
-                    changed = 1
-                    menutext = item[0:pos]
-                    print("menutext:%s" % menutext)
-                    curpos = pos
-
-                if(changed):
-                    print("changed!")
-                    self.keylist.append(menutext)
+                if(self.changed):
+                    self.keylist.append(self.menutext)
                     self.vallist.append("")
-                    self.vallist[num] += item + ";"
-                    changed = 0
-                    num+=1
+                    self.vallist[self.num] += item + ";"
+                    self.changed = 0
+                    self.num+=1
+                    print("changed!")
                 else:
                     print("no changed! item:%s" % item)
-                    if(num > 0):
-                        self.vallist[num - 1] += item + ";"
+                    if(self.num > 0):
+                        self.vallist[self.num - 1] += item + ";"
 
-            for i in range(num):
-                print(self.keylist)
-                print(self.vallist)
 
-            self.testMenu =  [QtWidgets.QMenu("")]
-            showMenuMax = 1000
-            for i in range(showMenuMax):
-                self.testMenu.append(QtWidgets.QMenu(""))
-            #
-
-            self.testAction =  [QtWidgets.QAction("")]
-            showActionMax = 10000
-            for i in range(showActionMax):
-                self.testAction.append(QtWidgets.QAction(""))
-            #
-
-            actioncount = 0
-            for i in range(num):
+            self.printkeyvallist()
+            for i in range(self.num):
                 key = self.keylist[i]
                 vallist = self.vallist[i].split(";")
-
                 self.testMenu[i] = QtWidgets.QMenu(key)
                 print("create menu key:%s" % key)
                 for j in range(len(vallist)):
                     showval = vallist[j].strip()
-                    if(0 == len(showval)):
+                    if(stringlenzero(showval)):
                         continue
                     print("create action:%s" % showval)
 
-                    self.testAction[actioncount] = QtWidgets.QAction(showval)
-                    self.testMenu[i].addAction(self.testAction[actioncount])
-                    actioncount+=1
+                    self.testAction[self.actioncount] = QtWidgets.QAction(showval)
+                    self.testMenu[i].addAction(self.testAction[self.actioncount])
+                    self.actioncount+=1
 
                 self.generateMenu.addMenu(self.testMenu[i])
 
