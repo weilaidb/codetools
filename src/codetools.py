@@ -40,11 +40,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rightPopMenu = QtWidgets.QMenu()
         self.rightPopMenu.setObjectName("rightPopMenu")
 
+        self.topdir = "reg/"
+        self.filelist = self.topdir + "normalfiles.txt"
+
+    def appendActionFileList(self, par_filemenu):
+        filelist = listuniquesort((readFileUtf8(self.filelist)))
+        filelistpos = 0
+        for i in range(len(filelist)):
+            self.filelistAction[filelistpos] = QtWidgets.QAction(filelist[i])
+            par_filemenu.addAction(self.filelistAction[filelistpos])
+            filelistpos+=1
+        pass
+
     def addMenuOrActionMayPub(self, par_rightPopMenu):
         self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
         self.OpenCfgDirAction = QtWidgets.QAction("打开配置文件夹")
         self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
         self.FileListsMenu = QtWidgets.QMenu("文件列表")
+        self.appendActionFileList(self.FileListsMenu)
 
         self.clearAction = QtWidgets.QAction("清空")
         self.copyAction  = QtWidgets.QAction("复制")
@@ -81,7 +94,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def _triggered_OpenCfgFileAction(self):
         pass
 
-    def _triggered_FileListsMenu(self):
+    def _triggered_FileListsMenu(self, action):
+        print("file list triggered:%s" % action.text())
+        openfileordirpath(action.text())
         pass
 
     def _triggered_clearAction(self):
@@ -118,6 +133,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.testAction =  [QtWidgets.QAction("")]
         for i in range(self.showActionMax):
             self.testAction.append(QtWidgets.QAction(""))
+
+        #file list action
+        self.filelistActionMax = 10000
+        self.filelistAction =  [QtWidgets.QAction("")]
+        for i in range(self.filelistActionMax):
+            self.filelistAction.append(QtWidgets.QAction(""))
+
 
     def printkeyvallist(self):
         for i in range(self.num):
@@ -191,7 +213,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def _triggered(self, action): #出发点击，快捷键等信号
-            print("triggered:%s" % action.text())
+        print("triggered:%s" % action.text())
     def keyPressEvent(self, e): #按键事件
         if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
             print('触发组合键')
