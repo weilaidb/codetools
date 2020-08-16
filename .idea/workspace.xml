@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7479d6ae-83c0-464c-aab8-379a74fc1c65" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/base/clipboardpub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/filepub.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/filepub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/stringpub.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/stringpub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codetools.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/codetools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -96,7 +96,7 @@
       <workItem from="1597230960964" duration="9706000" />
       <workItem from="1597537801781" duration="4401000" />
       <workItem from="1597551687187" duration="1807000" />
-      <workItem from="1597569081722" duration="1060000" />
+      <workItem from="1597569081722" duration="4115000" />
     </task>
     <task id="LOCAL-00001" summary="添加右键菜单">
       <created>1597241584037</created>
@@ -156,22 +156,22 @@
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
     <state x="508" y="320" key="FileChooserDialogImpl/75.0.1845.1080@75.0.1845.1080" timestamp="1597032185256" />
-    <state width="1804" height="340" key="GridCell.Tab.0.bottom" timestamp="1597570365437">
+    <state width="1804" height="330" key="GridCell.Tab.0.bottom" timestamp="1597573375487">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="340" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597570365437" />
-    <state width="1804" height="340" key="GridCell.Tab.0.center" timestamp="1597570365437">
+    <state width="1804" height="330" key="GridCell.Tab.0.bottom/75.0.1845.1080@75.0.1845.1080" timestamp="1597573375487" />
+    <state width="1804" height="330" key="GridCell.Tab.0.center" timestamp="1597573375487">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="340" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597570365437" />
-    <state width="1804" height="340" key="GridCell.Tab.0.left" timestamp="1597570365437">
+    <state width="1804" height="330" key="GridCell.Tab.0.center/75.0.1845.1080@75.0.1845.1080" timestamp="1597573375487" />
+    <state width="1804" height="330" key="GridCell.Tab.0.left" timestamp="1597573375487">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="340" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597570365437" />
-    <state width="1804" height="340" key="GridCell.Tab.0.right" timestamp="1597570365437">
+    <state width="1804" height="330" key="GridCell.Tab.0.left/75.0.1845.1080@75.0.1845.1080" timestamp="1597573375487" />
+    <state width="1804" height="330" key="GridCell.Tab.0.right" timestamp="1597573375487">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
-    <state width="1804" height="340" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597570365437" />
+    <state width="1804" height="330" key="GridCell.Tab.0.right/75.0.1845.1080@75.0.1845.1080" timestamp="1597573375487" />
     <state width="1804" height="312" key="GridCell.Tab.1.bottom" timestamp="1597248732449">
       <screen x="75" y="0" width="1845" height="1080" />
     </state>
@@ -202,6 +202,6 @@
     <state x="161" y="140" key="new project wizard/75.0.1845.1080@75.0.1845.1080" timestamp="1597032158557" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597570365427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/codetools_py$run.coverage" NAME="run Coverage Results" MODIFIED="1597573375480" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

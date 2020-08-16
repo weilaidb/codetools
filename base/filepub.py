@@ -7,6 +7,7 @@ import time
 from textcodecpub import *
 
 def readFileUtf8(filename):
+    filename = filename.replace("/", os.sep)
     print ("filename:%s" % filename)
     try:
         f = open(filename, 'r',encoding='UTF-8')
@@ -15,11 +16,13 @@ def readFileUtf8(filename):
         return result
     except Exception as e:
         print("exception:%s" %e)
+        return e
     finally:
         if f:
             f.close()
 
 def readFileGBK(filename):
+    filename = filename.replace("/", os.sep)
     print ("filename:%s" % filename)
     try:
         f = open(filename, 'r',encoding='GBK')
@@ -28,6 +31,7 @@ def readFileGBK(filename):
         return result
     except Exception as e:
         print("exception:%s" %e)
+        return e
     finally:
         if f:
             f.close()

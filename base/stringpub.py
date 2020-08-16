@@ -37,3 +37,7 @@ def stringstriplen(str):
     return len(str.strip())
 
 
+def list2str(list):
+    return "\n".join(list)
+
+

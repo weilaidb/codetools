@@ -37,13 +37,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rightPopMenu.setObjectName("rightPopMenu")
 
         self.topdir = "reg" + os.sep
+        self.tipsdir = "tips" + os.sep
+        self.tipssuffix = ".tip"
+        self.beforedir = "before" + os.sep
+        self.afterdir = "after" + os.sep
         self.filename_normalfiles = self.topdir + "normalfiles.txt"
         self.filename_totalmenu = self.topdir + "selfmenu.txt"
 
         self.hideUiSets()
+        self.initUiSets()
 
 
     def initUiSets(self):
+        self.action_EditCfgFile.triggered.connect(self._triggered_EditCfgFile )
+        self.action_SwitchClearLeftText.triggered.connect(self._triggered_SwitchClearLeftText )
+        self.action_TryAgain.triggered.connect(self._triggered_TryAgain )
+        self.action_DeleteCfgFile.triggered.connect(self._triggered_DeleteCfgFile )
         pass
 
     def hideUiSets(self):
@@ -57,6 +66,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textEdit_cfgBefore.show()
         self.textEdit_cfgAfter.show()
         pass
+
+    def showBottomFileInfo(self, selectitem):
+        try:
+            self.showUiSets()
+            tipinfo = readFileUtf8(self.topdir + self.tipsdir + selectitem + self.tipssuffix)
+            beforeinfo = readFileUtf8(self.topdir + self.beforedir + selectitem)
+            afterinfo = readFileUtf8(self.topdir + self.afterdir + selectitem)
+            self.textEdit_cfgTips.setText(list2str(tipinfo))
+            self.textEdit_cfgBefore.setText(list2str(beforeinfo))
+            self.textEdit_cfgAfter.setText(list2str(afterinfo))
+            
+        except Exception as e:
+            print("exception:%s" %e)
+
+    def _triggered_EditCfgFile(self):
+        pass
+        print ("_triggered_EditCfgFile checked:%d" % self.action_EditCfgFile.isChecked())
+
+
+    def _triggered_SwitchClearLeftText(self):
+        pass
+        print ("_triggered_SwitchClearLeftText checked:%d" % self.action_SwitchClearLeftText.isChecked())
+
+
+    def _triggered_TryAgain(self):
+        pass
+        print ("_triggered_TryAgain checked:%d" % self.action_TryAgain.isChecked())
+
+
+    def _triggered_DeleteCfgFile(self):
+        pass
+        print ("_triggered_DeleteCfgFile checked:%d" % self.action_DeleteCfgFile.isChecked())
+
+
 
 
     def appendActionFileList(self, par_filemenu):
@@ -237,6 +280,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _triggered(self, action): #出发点击，快捷键等信号
         print("triggered:%s" % action.text())
+        self.showBottomFileInfo(action.text())
     def keyPressEvent(self, e): #按键事件
         if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
             print('触发组合键')
