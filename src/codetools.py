@@ -30,10 +30,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
-        #文件名称定义
-        self.fileCumstomMenu = "reg\selfmenu.txt"
-
-
         ##右键菜单
         self.textEdit.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
         self.textEdit.customContextMenuRequested.connect(self.generateMenu_left)  ####右键菜单
@@ -161,7 +157,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def generateMenu_left(self, pos):
         print("left menu")
         try:
-            menulist = listuniquesort((readFileUtf8(self.fileCumstomMenu)))
+            menulist = listuniquesort((readFileUtf8(self.filename_totalmenu)))
             # showlist(menulist)
             self.initVar()
             self.generateMenu = QtWidgets.QMenu("Generate")
