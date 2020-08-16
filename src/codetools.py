@@ -44,14 +44,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
         self.OpenCfgDirAction = QtWidgets.QAction("打开配置文件夹")
         self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
-        self.OpenCfgFileAction = QtWidgets.QAction("打开配置总表")
-        # self.FreqUseCfgListMenu = QtWidgets.QMenu("常用配置列表")
         self.FileListsMenu = QtWidgets.QMenu("文件列表")
 
         self.clearAction = QtWidgets.QAction("清空")
         self.copyAction  = QtWidgets.QAction("复制")
         self.pasteAction = QtWidgets.QAction("粘贴")
         self.selectallcopyAction = QtWidgets.QAction("全选复制")
+
+        self.FreqUseCfgListMenu.triggered.connect(self._triggered_FreqUseCfgListMenu )
+        self.OpenCfgDirAction.triggered.connect(self._triggered_OpenCfgDirAction )
+        self.OpenCfgFileAction.triggered.connect(self._triggered_OpenCfgFileAction )
+        self.FileListsMenu.triggered.connect(self._triggered_FileListsMenu )
+        self.clearAction.triggered.connect(self._triggered_clearAction )
+        self.copyAction.triggered.connect(self._triggered_copyAction )
+        self.pasteAction.triggered.connect(self._triggered_pasteAction )
+        self.selectallcopyAction.triggered.connect(self._triggered_selectallcopyAction )
 
         par_rightPopMenu.addMenu(self.generateMenu)
         par_rightPopMenu.addMenu(self.FreqUseCfgListMenu)
@@ -64,6 +71,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         par_rightPopMenu.addAction(self.pasteAction)
         par_rightPopMenu.addAction(self.selectallcopyAction)
 
+    def _triggered_FreqUseCfgListMenu(self):
+        pass
+
+    def _triggered_OpenCfgDirAction(self):
+        opencurrentcwd()
+        pass
+
+    def _triggered_OpenCfgFileAction(self):
+        pass
+
+    def _triggered_FileListsMenu(self):
+        pass
+
+    def _triggered_clearAction(self):
+        pass
+
+    def _triggered_copyAction(self):
+        pass
+
+    def _triggered_pasteAction(self):
+        pass
+
+    def _triggered_selectallcopyAction(self):
+        pass
+
     def initVar(self):
         self.keych = "/"
         self.menutext = ""
@@ -73,8 +105,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.keylist = []
         self.vallist = []
         self.rightPopMenu.clear()
-
         self.actioncount = 0
+
         #the reserved qmenu max for use
         self.showMenuMax = 1000
         self.testMenu =  [QtWidgets.QMenu("")]
@@ -87,7 +119,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for i in range(self.showActionMax):
             self.testAction.append(QtWidgets.QAction(""))
 
-
     def printkeyvallist(self):
         for i in range(self.num):
             print(self.keylist)
@@ -98,6 +129,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("not found:%d" % pos)
         else:
             print("found:%d" % pos)
+
     def generateMenu_left(self, pos):
         print("left menu")
         try:
@@ -132,7 +164,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     print("no changed! item:%s" % item)
                     if(self.num > 0):
                         self.vallist[self.num - 1] += item + ";"
-
 
             self.printkeyvallist()
             for i in range(self.num):
