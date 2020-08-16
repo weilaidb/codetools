@@ -9,5 +9,25 @@ b）一种为替换的内容有值
 3.文件夹存储到
 
 
+21:17:14: Starting D:\E\QtExamplenew\codetools\build-codesets-Desktop_Qt_5_14_2_MinGW_32_bit-Release\release\codesets.exe ...
+qt.qpa.plugin: Could not find the Qt platform plugin "windows" in ""
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+21:17:23: 程序异常结束。
+21:17:23: The process was ended forcefully.
+21:17:24: D:\E\QtExamplenew\codetools\build-codesets-Desktop_Qt_5_14_2_MinGW_32_bit-Release\release\codesets.exe crashed.
+
+【解决办法】
+1.D:\E\QtExamplenew\codetools\build-codesets-Desktop_Qt_5_14_2_MinGW_32_bit-Release\
+下执行
+
+D:\E\QtExamplenew\codetools\build-codesets-Desktop_Qt_5_14_2_MinGW_32_bit-Release>D:\Qt\Qt5.14.2\5.14.2\mingw73_32\bin\windeployqt.exe  release\codesets.exe
+
+2.拷贝运行库到
+D:\E\QtExamplenew\codetools\build-codesets-Desktop_Qt_5_14_2_MinGW_32_bit-Release\
+
+https://blog.csdn.net/Zhenggenno_1/article/details/80459066
+
+
 
 
