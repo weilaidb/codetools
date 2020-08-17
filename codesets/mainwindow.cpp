@@ -364,7 +364,7 @@ QMenu *MainWindow::slot_openfilelist_menu()
     m_listNormalUse = CFilePub::readFileAllFilterEmptyUniqueSort(m_ListOpenFile);
     foreach (QString item, m_listNormalUse) {
         if(CUIPub::getCheckedQAction(ui->action_checknoexistpath)
-                &&CStringPub::contain(item, "\\w+:"))
+                &&CStringPub::contain(item, "^\\w:"))
         {
             if(CFilePub::pathNoExist(item))
             {
