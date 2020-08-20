@@ -26,6 +26,7 @@ public:
     static QStringList readFileAllFilterEmptyUnique(QString filename);
     static QStringList readFileAllFilterEmptyUniqueNoExistAndVar(QString &m_Var,QString filename);
     static QStringList readFileAllFilterEmptyUniqueSort(QString filename);
+    static QStringList readFileAllFilterEmptyUniqueMulti(QString filename);
     static QString writeFileOnlly(QString filename, QString msg);
     static QString writeFileAppend(QString filename, QString msg);
     static QString writeFileWR(QString filename, QString msg);
@@ -33,6 +34,7 @@ public:
     static QString writeFileWOnly(QString filename, QStringList list);
     static QString deleteFile(QString filename);
     static QString deleteFileSameLine(QString filename,QString same);
+    static QString deleteFileSameLineExt(QString filename,QString same);
     static QStringList getFileNames(QStringList nameFilters, const QString path);
     static QStringList getFileAbsoluteNames(QStringList nameFilters, const QString path);
     static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);

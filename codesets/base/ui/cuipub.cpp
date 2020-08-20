@@ -15,6 +15,7 @@
 #include "debugApp.h"
 #ifdef WIN32
 #include <clogpub.h>
+#include <csignpub.h>
 #include <windows.h>
 #endif
 #include "cstringpub.h"
@@ -525,6 +526,28 @@ int CUIPub::execCmd(QString path)
     return 0;
 }
 
+/**
+ * @brief CUIPub::explorerPathExt
+ * @param path
+ * @return
+ * @desp 支持多文件处理，指文件中带;号
+ */
+int CUIPub::explorerPathExt(QString path)
+{
+    int result = -1;
+    if(path.contains(CSignPub::signFenHao()))
+    {
+        QStringList list = path.split(CSignPub::signFenHao());
+        foreach (QString item, list) {
+            result |= explorerPath(item);
+        }
+    }
+    else
+    {
+        result = explorerPath(path);
+    }
+    return result;
+}
 
 int CUIPub::explorerPath(QString path)
 {

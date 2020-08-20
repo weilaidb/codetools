@@ -78,6 +78,7 @@ public:
     //打开路径
     static int execCmd(QString path);
     static int explorerPath(QString path);
+    static int explorerPathExt(QString path);
 
     //创建Action，并且设置内容不为空
     static QAction *createActionFull(QString name);

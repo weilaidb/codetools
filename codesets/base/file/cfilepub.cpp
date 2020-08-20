@@ -116,11 +116,31 @@ QString CFilePub::dirName(QString filename)
     return CStringPub::emptyString();
 }
 
-
+/**
+ * @brief CFilePub::createFileEmptyNoExistAndVar
+ * @param m_Var
+ * @param filename
+ * @return
+ * @desp 文件不存在则创建，并且置变量m_Var
+ * @desp 支持多个文件处理，指filename包含;号
+ */
 bool CFilePub::createFileEmptyNoExistAndVar(QString &m_Var,QString filename)
 {
     m_Var = filename;
-    return createFileEmptyNoExist(filename);
+    bool result = false;
+    if(filename.contains(CSignPub::signFenHao()))
+    {
+        QStringList list = filename.split(CSignPub::signFenHao());
+        foreach (QString item, list) {
+            result |= createFileEmptyNoExist(item);
+        }
+    }
+    else
+    {
+        return createFileEmptyNoExist(filename);
+    }
+
+    return result;
 }
 bool CFilePub::createFileEmptyNoExist(QString filename)
 {
@@ -173,6 +193,29 @@ bool CFilePub::createDirNoExist(QString dirname)
         return false;
     }
     return createDirExt(dirname);
+}
+/**
+ * @brief CFilePub::readFileAllFilterEmptyUniqueMulti
+ * @param filename
+ * @return
+ * @desp 支持多文件读取，指filename中包含;号
+ */
+QStringList CFilePub::readFileAllFilterEmptyUniqueMulti(QString filename)
+{
+    QStringList result = CStringPub::emptyStringList();
+    if(filename.contains(CSignPub::signFenHao()))
+    {
+        QStringList list = filename.split(CSignPub::signFenHao());
+        foreach (QString item, list) {
+            result.append(readFileAllFilterEmptyUnique(item));
+        }
+    }
+    else
+    {
+        result.append(readFileAllFilterEmptyUnique(filename));
+    }
+
+    return result;
 }
 
 QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
@@ -293,6 +336,30 @@ QString CFilePub::deleteFile(QString filename)
     file.close();
 
     return result;
+}
+
+/**
+ * @brief CFilePub::deleteFileSameLineExt
+ * @param filename
+ * @param same
+ * @return
+ * @desp 支持多文件处理，指文件名中含有;号
+ */
+QString CFilePub::deleteFileSameLineExt(QString filename,QString same)
+{
+    if(filename.contains(CSignPub::signFenHao()))
+    {
+        QStringList list = filename.split(CSignPub::signFenHao());
+        foreach (QString item, list) {
+            deleteFileSameLine(item, same);
+        }
+    }
+    else
+    {
+        deleteFileSameLine(filename, same);
+    }
+
+    return CStringPub::emptyString();
 }
 
 QString CFilePub::deleteFileSameLine(QString filename,QString same)
@@ -462,6 +529,17 @@ QString CFilePub::getCurrentPath()
 
 QString CFilePub::getCurrentPath(QString filename)
 {
+    QString result = CStringPub::emptyString();
+
+    if(filename.contains(CSignPub::signFenHao()))
+    {
+        QStringList list = filename.split(CSignPub::signFenHao());
+        foreach (QString item, list) {
+            result += QDir::currentPath() + QDir::separator() + item + CSignPub::signFenHao();
+        }
+        return result;
+    }
+
     return QDir::currentPath() + QDir::separator() + filename;
 }
 

@@ -169,7 +169,7 @@ void MainWindow::initUiSets()
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
-    CFilePub::createFileEmptyNoExistAndVar(m_FileNameMenu, "reg/selfmenu.txt");
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameMenu, "reg/selfmenu.txt;reg/selfmenu_user.txt");
     /**
       ** 模式：
       ** 单行 多处理
@@ -267,9 +267,9 @@ void MainWindow::slot_generate_menu_leftbottom(QPoint pos)
 
 QMenu *MainWindow::slot_fromfile_menu(QString filename)
 {
-    QStringList list = CFilePub::readFileAllFilterEmptyUnique(filename);
-    QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUnique(m_FileMode_SingleL_ExecMulti);
-    QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUnique(m_FileMode_AllL_ExecMulti);
+    QStringList list = CFilePub::readFileAllFilterEmptyUniqueMulti(filename);
+    QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_SingleL_ExecMulti);
+    QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_AllL_ExecMulti);
 
     if(CExpressPub::isZero(list.length()))
     {
@@ -1263,8 +1263,8 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameAfter(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameTips(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
 
-    CFilePub::deleteFileSameLine(m_FileNameMenu, configfilename);
-    CFilePub::deleteFileSameLine(m_ListFreqUseFile, configfilename);
+    CFilePub::deleteFileSameLineExt(m_FileNameMenu, configfilename);
+    CFilePub::deleteFileSameLineExt(m_ListFreqUseFile, configfilename);
 }
 
 
@@ -1399,31 +1399,31 @@ void MainWindow::proc_actionSelectAllCopyLeft()
 
 void MainWindow::proc_actionOpenConfigDir()
 {
-    CUIPub::explorerPath(CRegExpPub::getConfigBase());
+    CUIPub::explorerPathExt(CRegExpPub::getConfigBase());
 }
 
 void MainWindow::proc_actionOpenConfigFile()
 {
-    CUIPub::explorerPath(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+    CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
 }
 
 
 void MainWindow::proc_actionOpenCfgMenu()
 {
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
-    CUIPub::explorerPath(CFilePub::getCurrentPath(m_FileNameMenu));
+    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
+    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
+    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileNameMenu));
 }
 
 
 void MainWindow::proc_actionEditCfgFile()
 {
-    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
+    CUIPub::explorerPathExt(CRegExpPub::getConfigBefore());
 }
 
 void MainWindow::proc_actionSaveCfgFile()
 {
-    CUIPub::explorerPath(CRegExpPub::getConfigBefore());
+    CUIPub::explorerPathExt(CRegExpPub::getConfigBefore());
 }
 
 
@@ -1531,11 +1531,11 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
     if(CExpressPub::isTrue(CUIPub::getCheckedQAction(ui->action_EditCfgFile)))
     {
         showStatusTimerWindowTitle("编译常用列表模式");
-        CUIPub::explorerPath(m_ListOpenFile);
+        CUIPub::explorerPathExt(m_ListOpenFile);
         return;
     }
     showStatusTimerWindowTitle("打开配置文件" + pAction->text());
-    CUIPub::explorerPath(pAction->text());
+    CUIPub::explorerPathExt(pAction->text());
 }
 
 void MainWindow::appendRightMouseList(void *ptr)
