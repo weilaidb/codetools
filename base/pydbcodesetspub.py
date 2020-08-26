@@ -38,17 +38,25 @@ def selectDataBase(connect, databasename):
 #connect: 连接信息
 #tablename: 表名
 #midexpress: 中间表达式
-def createTable(cursor, connect, tablename, midexpress):
+def createTablePub(cursor, connect, tablename, midexpress):
+    print("------------------------")
+    print ("tablename:%s" % tablename)
+
+    sql = '''
+        CREATE TABLE `%s` (
+        `id` int(200) unsigned NOT NULL AUTO_INCREMENT,
+        `name` varchar(200) NOT NULL COMMENT 'keyword',
+        `content` varchar(10000) NOT NULL COMMENT 'content for show',
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `name_UNIQUE` (`name`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=1051 DEFAULT CHARSET=utf8mb4;
+      ''' % (tablename)
+
+
+
+    print ("sql:%s" % sql)
     try:
         # 执行 SQL 语句
-        sql = '''
-      CREATE TABLE `%s` ( ''' \
-        +  midexpress , \
-      ''' PRIMARY KEY (`id`),
-      UNIQUE KEY `name_UNIQUE` (`name`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8mb4;
-      ''' % tablename
-
         # cursor.execute("drop table if exists trade")
         cursor.execute(sql)
         # 提交修改
@@ -60,30 +68,19 @@ def createTable(cursor, connect, tablename, midexpress):
         print("create table failed, reason:", e)
 
 
-def createTableEg(cursor, connect, tablename):
+def createTable(cursor, connect, tablename):
     try:
-        # 执行 SQL 语句
-        sql = '''
-      CREATE TABLE `%s` (
-      `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
-      `name` varchar(1000) NOT NULL COMMENT 'keyword',
-      `content` varchar(10000) NOT NULL COMMENT 'content for show',
-      PRIMARY KEY (`id`),
-      UNIQUE KEY `name_UNIQUE` (`name`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-      ''' % tablename
+        sql = '''`name` varchar(1000) NOT NULL COMMENT 'keyword',
+      `content` varchar(10000) NOT NULL COMMENT 'content for show' ,
+      '''
+        print ("sql:%s" % sql)
+        print ("tablename:%s" % tablename)
 
-        # cursor.execute("drop table if exists trade")
-        cursor.execute(sql)
-        # 提交修改
-        connect.commit()
-        # print("creat table ok")
+        createTablePub(cursor, connect, tablename, sql)
     except Exception as e:
         # 发生错误时回滚
         connect.rollback()
         print("create table failed, reason:", e)
-
-
 
 
 def insertTable(cursor,connect, tablename):

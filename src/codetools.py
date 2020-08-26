@@ -48,6 +48,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.hideUiSets()
         self.initUiSets()
 
+        #database
+        self.initDbCodeSets()
+
 
     def initUiSets(self):
         self.action_EditCfgFile.triggered.connect(self._triggered_EditCfgFile )
@@ -320,3 +323,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def keyPressEvent(self, e): #按键事件
         if (e.modifiers() == Qt.ControlModifier) and e.key() == Qt.Key_Q: #设置组合键事件
             print('触发组合键')
+
+
+
+    def initDbCodeSets(self):
+        self.host = "localhost"
+        self.user = "root"
+        self.password = "Zzerp123"
+        self.charset = "UTF-8"
+        self.databasename='codesets'
+        # self.port =
+        # self.connect  = initDatabase()
+        default_insert_contetNameWithTime(self.databasename)
