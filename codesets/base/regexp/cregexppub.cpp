@@ -339,6 +339,14 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         if(match.hasMatch()) {
             index = match.capturedEnd();
             qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            debugApp() << "match.capturedLength:" << match.capturedLength();
+            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+            debugApp() << "match.capturedTexts :" << match.capturedTexts();
+            debugApp() << "match.capturedStart :" << match.capturedStart();
+            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+
+            result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
         }
         else
             break;
@@ -350,15 +358,19 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         return CStringPub::errorRegExpInvalid();
     }
 
-    debugApp() << "match.capturedLength:" << match.capturedLength();
-    debugApp() << "match.capturedTexts :" << match.capturedTexts();
+//    debugApp() << "match.capturedLength:" << match.capturedLength();
+//    debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+//    debugApp() << "match.capturedTexts :" << match.capturedTexts();
+//    debugApp() << "match.capturedStart :" << match.capturedStart();
+//    debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+//    debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
 
 //    if(match.capturedTexts().length() < 2)
 //    {
 //        return CStringPub::errorListLenthNg();
 //    }
 
-    result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
+//    result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
 
 #else
     QRegularExpression re(regbefore);

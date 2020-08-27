@@ -1227,6 +1227,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
         proctext = lefttext;
     }
 
+    debugApp() << "proctext:" << proctext;
     setRightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
 }
 
