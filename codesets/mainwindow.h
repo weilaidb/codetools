@@ -160,6 +160,9 @@ private:
     QTimer *pClipBoardTimer;
     int iClipBoardTimeout;
 
+    QTimer *pTimerBackgroundUpdate;
+    int iTimeoutBackgroundUpdate;
+
     //程序名
     QString m_apppath;
 private slots:
@@ -204,6 +207,7 @@ private slots:
     //text edit
     void proc_textEdit_textChanged();
     void proc_clipBoard_textChanged();
+    void proc_TimerBackgroundUpdate();
 
 
     //generate 添加右键菜单
@@ -218,8 +222,10 @@ private slots:
     void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
     void proc_frequse_config(QString configfilename);
+    void proc_action_background_update(bool bFlag);
 
 
+    void update_generate_menu_left();
     void slot_generate_menu_left(QPoint pos);
     void slot_generate_menu_right(QPoint pos);
     void slot_generate_menu_leftbottom(QPoint pos);

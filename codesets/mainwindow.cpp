@@ -129,6 +129,11 @@ void MainWindow::initActionSets()
     //check no exist path
 //    QObject::connect(ui->action_checknoexistpath, SIGNAL(triggered(bool)), this, SLOT(proc_action_checknoexistpath(bool)));
 
+    //background update
+    //由于SSD硬盘和机械硬盘检索的差异，反复右键可能在机械硬盘上反应极慢
+    QObject::connect(ui->action_background_update, SIGNAL(triggered(bool)), this, SLOT(proc_action_background_update(bool)));
+
+
 }
 
 
@@ -189,6 +194,10 @@ void MainWindow::initUiSets()
     pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
+    //后台数据更新频率，暂定为5分钟
+    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 5);
+    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
+
     m_iListFreqUseCnt = 10;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
@@ -208,22 +217,13 @@ void MainWindow::read_FreqUseFile()
     read_CfgFile2List(m_listfrequse, m_ListFreqUseFile, "reg/frequse.txt");
 }
 
-
-/**
- * @brief MainWindow::slot_generate_menu_left
- * @param pos
- * 左边显示生成的菜单
- */
-void MainWindow::slot_generate_menu_left(QPoint pos)
+void MainWindow::update_generate_menu_left()
 {
-    Q_UNUSED(pos)
+    debugApp() << "update_generate_menu_left!!";
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse);
     freeRightMouseList();
 
-    debugApp() << "right mouse clicked!!";
-
-    QCursor cur=this->cursor();
     pRightMouse = new QMenu(this);
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
     //    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
@@ -234,7 +234,32 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
         pRightMouse->addMenu((pMenuCustom));
     }
     nodes_menu_left(pRightMouse);
-    pRightMouse->exec(cur.pos()); //关联到光标
+}
+
+/**
+ * @brief MainWindow::slot_generate_menu_left
+ * @param pos
+ * 左边显示生成的菜单
+ */
+void MainWindow::slot_generate_menu_left(QPoint pos)
+{
+    if(ui->action_background_update->isChecked())
+    {
+
+    }
+
+    Q_UNUSED(pos)
+    debugApp() << "right mouse clicked!!";
+    QCursor cur=this->cursor();
+    if((CExpressPub::isFalse(CUIPub::isCheckedQAction(ui->action_background_update)))
+            || (CExpressPub::isNullPtr(pRightMouse)))
+    {
+        update_generate_menu_left();
+    }
+    if(pRightMouse)
+    {
+        pRightMouse->exec(cur.pos()); //关联到光标
+    }
 }
 
 /**
@@ -451,6 +476,7 @@ void MainWindow::procHistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_SwitchClearLeftText, ucType);
     CUIPub::procAction(m_pSettings, ui->action_ClipBoarChange, ucType);
     CUIPub::procAction(m_pSettings, ui->action_checknoexistpath, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_background_update, ucType);
 }
 
 void MainWindow::readHistorySetting()
@@ -1552,5 +1578,17 @@ void MainWindow::freeRightMouseList()
         }
     }
     m_lstRightMouse.clear();
+}
+
+void MainWindow::proc_action_background_update(bool bFlag)
+{
+    debugApp() << "bFlag:" << bFlag;
+    update_generate_menu_left();
+}
+
+
+void MainWindow::proc_TimerBackgroundUpdate()
+{
+    update_generate_menu_left();
 }
 

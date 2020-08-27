@@ -167,6 +167,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_DeleteCfgFile"/>
     <addaction name="action_ClipBoarChange"/>
     <addaction name="action_checknoexistpath"/>
+    <addaction name="action_background_update"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -343,6 +344,23 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>过滤不存在的路径</string>
+   </property>
+  </action>
+  <action name="action_background_update">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>后台更新</string>
+   </property>
+   <property name="toolTip">
+    <string comment="勾选为后台延时更新，非勾选则为实时更新" extracomment="勾选为后台延时更新，非勾选则为实时更新">勾选为后台延时更新，非勾选则为实时更新</string>
+   </property>
+   <property name="statusTip">
+    <string comment="勾选为后台延时更新，非勾选则为实时更新" extracomment="勾选为后台延时更新，非勾选则为实时更新">勾选为后台延时更新，非勾选则为实时更新</string>
    </property>
   </action>
  </widget>
