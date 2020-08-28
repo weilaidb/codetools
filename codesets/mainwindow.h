@@ -120,7 +120,7 @@ private:
     //常用文件打开列表
     QStringList m_listNormalUse;
     int m_iListNormalUseCnt;
-    QString m_ListOpenFile;
+    QString m_ListOpenFile; //文件列表配置文件
 
 private:
     QString openFilePathRecent;
@@ -223,6 +223,7 @@ private slots:
     void proc_action_TryAgain();
     void proc_frequse_config(QString configfilename);
     void proc_action_background_update(bool bFlag);
+    void proc_action_update(bool bFlag);
 
 
     void update_generate_menu_left();

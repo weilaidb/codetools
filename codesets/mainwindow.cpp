@@ -132,6 +132,7 @@ void MainWindow::initActionSets()
     //background update
     //由于SSD硬盘和机械硬盘检索的差异，反复右键可能在机械硬盘上反应极慢
     QObject::connect(ui->action_background_update, SIGNAL(triggered(bool)), this, SLOT(proc_action_background_update(bool)));
+    QObject::connect(ui->action_update, SIGNAL(triggered(bool)), this, SLOT(proc_action_update(bool)));
 
 
 }
@@ -198,7 +199,7 @@ void MainWindow::initUiSets()
     pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 5);
     connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
-    m_iListFreqUseCnt = 10;
+    m_iListFreqUseCnt = 20;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 
@@ -1437,6 +1438,7 @@ void MainWindow::proc_actionOpenConfigFile()
 
 void MainWindow::proc_actionOpenCfgMenu()
 {
+    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_ListOpenFile));
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileNameMenu));
@@ -1581,6 +1583,11 @@ void MainWindow::freeRightMouseList()
 }
 
 void MainWindow::proc_action_background_update(bool bFlag)
+{
+    debugApp() << "bFlag:" << bFlag;
+}
+
+void MainWindow::proc_action_update(bool bFlag)
 {
     debugApp() << "bFlag:" << bFlag;
     update_generate_menu_left();
