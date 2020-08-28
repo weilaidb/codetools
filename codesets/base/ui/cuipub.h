@@ -9,6 +9,7 @@
 #include <QTextEdit>
 #include <QTextBrowser>
 #include <QTimer>
+#include <QPushButton>
 
 /**
   ** 自定义右键菜单
@@ -74,6 +75,8 @@ public:
     static QString getTextBrowser(QTextBrowser *textBrowser);
     static void hideTextEdit(QTextEdit *pEdit);
     static void showTextEdit(QTextEdit *pEdit);
+    static void hidePushButton(QPushButton *pBtn);
+    static void showPushButton(QPushButton *pBtn);
 
     //打开路径
     static int execCmd(QString path);

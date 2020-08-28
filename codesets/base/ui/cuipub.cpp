@@ -646,3 +646,11 @@ QTimer *CUIPub::createTimer(int &iTimeout, int value)
     return pTimer;
 }
 
+void CUIPub::hidePushButton(QPushButton *pBtn)
+{
+    pBtn->hide();
+}
+void CUIPub::showPushButton(QPushButton *pBtn)
+{
+    pBtn->show();
+}

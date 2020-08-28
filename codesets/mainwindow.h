@@ -33,6 +33,7 @@ private:
     void initCheckBoxSets();
     void initVars();
     void initUiSets();
+    void initPushButtonSets();
     void readSetting();
     void procHistorySetting(int type);
     void readHistorySetting();
@@ -64,6 +65,7 @@ private:
     // right mouse list to free
     void appendRightMouseList(void *ptr);
     void freeRightMouseList();
+
 public:
     enum{
         TYPE_FILE,
@@ -253,5 +255,16 @@ private slots:
     //read file
     void read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename);
     void read_FreqUseFile();
+
+
+
+    //pushbutton
+    void proc_pushButton_left_clear  ()  ;
+    void proc_pushButton_left_paste  ()  ;
+    void proc_pushButton_tryagain    ()  ;
+    void proc_pushButton_right_clear ()  ;
+    void proc_pushButton_right_copy  ()  ;
+    void hidePushButtonSets();
+
 };
 #endif // MAINWINDOW_H

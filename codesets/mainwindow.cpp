@@ -52,6 +52,7 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     showVersion();
     initActionSets();
     initCheckBoxSets();
+    initPushButtonSets();
     initVars();
     initUiSets();
 
@@ -86,6 +87,37 @@ void MainWindow::initCheckBoxSets()
 
 }
 
+
+void MainWindow::hidePushButtonSets()
+{
+    if(CUIPub::isCheckedQAction(ui->action_hidebuttonswitch))
+    {
+        CUIPub::hidePushButton(ui->pushButton_left_clear  );
+        CUIPub::hidePushButton(ui->pushButton_left_paste  );
+        CUIPub::hidePushButton(ui->pushButton_tryagain    );
+        CUIPub::hidePushButton(ui->pushButton_right_clear );
+        CUIPub::hidePushButton(ui->pushButton_right_copy  );
+        return;
+    }
+
+    CUIPub::showPushButton(ui->pushButton_left_clear  );
+    CUIPub::showPushButton(ui->pushButton_left_paste  );
+    CUIPub::showPushButton(ui->pushButton_tryagain    );
+    CUIPub::showPushButton(ui->pushButton_right_clear );
+    CUIPub::showPushButton(ui->pushButton_right_copy  );
+}
+
+void MainWindow::initPushButtonSets()
+{
+    QObject::connect(ui->pushButton_left_clear, SIGNAL(clicked()), this, SLOT(proc_pushButton_left_clear()));
+    QObject::connect(ui->pushButton_left_paste, SIGNAL(clicked()), this, SLOT(proc_pushButton_left_paste()));
+    QObject::connect(ui->pushButton_tryagain, SIGNAL(clicked()), this, SLOT(proc_pushButton_tryagain()));
+    QObject::connect(ui->pushButton_right_clear, SIGNAL(clicked()), this, SLOT(proc_pushButton_right_clear()));
+    QObject::connect(ui->pushButton_right_copy, SIGNAL(clicked()), this, SLOT(proc_pushButton_right_copy()));
+
+
+    QObject::connect(ui->action_hidebuttonswitch, SIGNAL(triggered()), this, SLOT(hidePushButtonSets()));
+}
 
 void MainWindow::initActionSets()
 {
@@ -463,6 +495,7 @@ void MainWindow::readSetting()
     addMenuCodeFormatRecent();
     addMenuDocumentOpenRecent();
     addMenuDocumentSearchRecent();
+    hidePushButtonSets();
 }
 
 void MainWindow::procHistorySetting(int type)
@@ -478,6 +511,7 @@ void MainWindow::procHistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_ClipBoarChange, ucType);
     CUIPub::procAction(m_pSettings, ui->action_checknoexistpath, ucType);
     CUIPub::procAction(m_pSettings, ui->action_background_update, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_hidebuttonswitch, ucType);
 }
 
 void MainWindow::readHistorySetting()
@@ -1598,4 +1632,31 @@ void MainWindow::proc_TimerBackgroundUpdate()
 {
     update_generate_menu_left();
 }
+
+
+void MainWindow::proc_pushButton_left_clear()
+{
+    CUIPub::clearTextEdit(ui->textEdit);
+}
+
+void MainWindow::proc_pushButton_left_paste()
+{
+    CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
+}
+
+void MainWindow::proc_pushButton_tryagain()
+{
+    proc_action_TryAgain();
+}
+
+void MainWindow::proc_pushButton_right_clear()
+{
+    CUIPub::clearTextBrowser(ui->textBrowser);
+}
+
+void MainWindow::proc_pushButton_right_copy()
+{
+    CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
+}
+
 

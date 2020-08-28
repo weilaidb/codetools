@@ -44,7 +44,7 @@
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="pushButton_left_clear">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -55,7 +55,7 @@
              <string>清空</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushButton_left_paste">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -66,7 +66,7 @@
              <string>粘贴</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pushButton_tryagain">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -101,7 +101,7 @@ p, li { white-space: pre-wrap; }
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <widget class="QPushButton" name="pushButton_8">
+         <widget class="QPushButton" name="pushButton_right_clear">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -112,7 +112,7 @@ p, li { white-space: pre-wrap; }
            <string>清空</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="pushButton_right_copy">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -254,6 +254,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_checknoexistpath"/>
     <addaction name="action_background_update"/>
     <addaction name="action_update"/>
+    <addaction name="action_hidebuttonswitch"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
@@ -455,6 +456,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="action_hidebuttonswitch">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>简洁(无按钮)</string>
    </property>
   </action>
  </widget>
