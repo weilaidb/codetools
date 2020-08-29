@@ -17,6 +17,7 @@
 #include <sys/syscall.h>
 
 #include "basetypepub.h"
+#include "basedefinepub.h"
 
 #define NULL nullptr
 
