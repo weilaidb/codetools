@@ -48,6 +48,8 @@ public:
     static QString getCurrentPath(QString filename);
     static QString getSeparator();
     static void openSystemPathOrUrl(QString filenameOrUrl);
+    static quint64 dirFileSize(const QString path);
+    static qint64 fileSize(const QString path);
 };
 
 #endif // CFILEPUB_H
