@@ -1656,6 +1656,11 @@ void MainWindow::proc_pushButton_right_clear()
 
 void MainWindow::proc_pushButton_right_copy()
 {
+    if(CStringPub::strSimLen(CUIPub::getSelectTextEdit(ui->textBrowser)))
+    {
+        CUIPub::setClipBoardText(CUIPub::getSelectTextEdit(ui->textBrowser));
+        return;
+    }
     CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
 }
 
