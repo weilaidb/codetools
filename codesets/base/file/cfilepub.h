@@ -49,6 +49,7 @@ public:
     static QString getSeparator();
     static void openSystemPathOrUrl(QString filenameOrUrl);
     static quint64 dirFileSize(const QString path);
+    static qint64 fileSize(const QString path);
     static QString parentDir(QString filepath);
 };
 

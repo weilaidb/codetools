@@ -574,3 +574,8 @@ qint64 CFilePub::fileSize(const QString path)
     debugApp() << "file size:" << size;
     return size;
 }
+
+QString CFilePub::parentDir(QString filepath)
+{
+    return filepath + QDir::separator() + "..";
+}
