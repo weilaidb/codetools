@@ -547,3 +547,10 @@ QString CFilePub::getSeparator()
 {
     return QDir::separator();
 }
+
+QString CFilePub::parentDir(QString filepath)
+{
+    return filepath + QDir::separator() + "..";
+}
+
+

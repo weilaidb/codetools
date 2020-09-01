@@ -203,7 +203,7 @@ void MainWindow::initUiSets()
     //QTextEdit 右键菜单
     GEN_MENU_PUB(ui->textEdit, slot_generate_menu_left);
     GEN_MENU_PUB(ui->textBrowser, slot_generate_menu_right);
-    GEN_MENU_PUB(ui->textEdit_cfgTips, slot_generate_menu_leftbottom);
+//    GEN_MENU_PUB(ui->textEdit_cfgTips, slot_generate_menu_leftbottom);
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
@@ -227,8 +227,8 @@ void MainWindow::initUiSets()
     pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
     connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
-    //后台数据更新频率，暂定为5分钟
-    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 5);
+    //后台数据更新频率，暂定为1分钟
+    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
     connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
     m_iListFreqUseCnt = 20;
@@ -267,6 +267,7 @@ void MainWindow::update_generate_menu_left()
         pRightMouse->addMenu((pMenuCustom));
     }
     nodes_menu_left(pRightMouse);
+    nodes_menu_leftbottom(pRightMouse);
 }
 
 /**
@@ -383,7 +384,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
     QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectAllCopyLeft()));
-    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigBaseDir()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
 
     pMenu->addMenu(slot_frequse_menu());
@@ -481,11 +482,15 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     {
         return;
     }
-    QAction *pActionOpenCfgFile    = CUIPub::createAction("打开配置文件");
+    QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
+    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
     appendRightMouseList(pActionOpenCfgFile);
+    appendRightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
 
     pMenu->addAction(pActionOpenCfgFile);
+    pMenu->addAction(pActionOpenCfgDir);
 }
 
 
@@ -1459,7 +1464,7 @@ void MainWindow::proc_actionSelectAllCopyLeft()
 }
 
 
-void MainWindow::proc_actionOpenConfigDir()
+void MainWindow::proc_actionOpenConfigBaseDir()
 {
     CUIPub::explorerPathExt(CRegExpPub::getConfigBase());
 }
@@ -1467,6 +1472,12 @@ void MainWindow::proc_actionOpenConfigDir()
 void MainWindow::proc_actionOpenConfigFile()
 {
     CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+}
+
+void MainWindow::proc_actionOpenConfigDir()
+{
+    QString dirPath = CFilePub::parentDir(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+    CUIPub::explorerPathExt(dirPath);
 }
 
 

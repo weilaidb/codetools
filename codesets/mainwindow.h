@@ -246,8 +246,9 @@ private slots:
     void proc_actionPasteRight();
     void proc_actionSelectAllCopyRight();
     void proc_actionClearEmpty();
-    void proc_actionOpenConfigDir();
+    void proc_actionOpenConfigBaseDir();
     void proc_actionOpenConfigFile();
+    void proc_actionOpenConfigDir();
     void proc_actionOpenCfgMenu();
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();
