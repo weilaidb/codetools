@@ -5,8 +5,6 @@
 #include <QFileDialog>
 #include <qapplication.h>
 #include <csignpub.h>
-#include <csignpub.h>
-#include <cstringpub.h>
 #include <cstringpub.h>
 #include <QDesktopServices>
 #include <clogpub.h>
@@ -548,9 +546,31 @@ QString CFilePub::getSeparator()
     return QDir::separator();
 }
 
-QString CFilePub::parentDir(QString filepath)
+quint64 CFilePub::dirFileSize(const QString path)
 {
-    return filepath + QDir::separator() + "..";
+    QDir dir(path);
+    quint64 size = 0;
+    //dir.entryInfoList(QDir::Files)返回文件信息
+    foreach(QFileInfo fileInfo, dir.entryInfoList(QDir::Files))
+    {
+        //计算文件大小
+        size += fileInfo.size();
+    }
+    //dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot)返回所有子目录，并进行过滤
+    foreach(QString subDir, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        //若存在子目录，则递归调用dirFileSize()函数
+        size += dirFileSize(path + QDir::separator() + subDir);
+    }
+    return size;
 }
 
+qint64 CFilePub::fileSize(const QString path)
+{
+    QFileInfo fileInfo(path);
+    qint64 size = 0;
 
+    size += fileInfo.size();
+    debugApp() << "file size:" << size;
+    return size;
+}
