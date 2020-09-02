@@ -373,6 +373,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QAction *pActionSelectAllCopy = CUIPub::createAction("全选复制");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
+    QAction *pActionReload        = CUIPub::createAction("重新加载");
     appendRightMouseList(pActionClearLeft);
     appendRightMouseList(pActionPaste);
     appendRightMouseList(pActionSelectCopy);
@@ -386,6 +387,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QObject::connect(pActionSelectAllCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectAllCopyLeft()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigBaseDir()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
+    QObject::connect(pActionReload, SIGNAL(triggered()), this, SLOT(proc_actionReload()));
 
     pMenu->addMenu(slot_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
@@ -395,6 +397,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
+    pMenu->addAction(pActionReload);
 
 }
 
@@ -1487,6 +1490,12 @@ void MainWindow::proc_actionOpenCfgMenu()
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
     CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileNameMenu));
+}
+
+void MainWindow::proc_actionReload()
+{
+    CUIPub::clearTextEdit(ui->textEdit);
+    CUIPub::pushButtonEmitClick(ui->pushButton_tryagain);
 }
 
 

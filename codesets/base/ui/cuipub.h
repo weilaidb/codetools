@@ -77,6 +77,7 @@ public:
     static void showTextEdit(QTextEdit *pEdit);
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
+    static void pushButtonEmitClick(QPushButton *pBtn);
 
     //打开路径
     static int execCmd(QString path);

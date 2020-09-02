@@ -651,7 +651,17 @@ void CUIPub::hidePushButton(QPushButton *pBtn)
 {
     pBtn->hide();
 }
+
 void CUIPub::showPushButton(QPushButton *pBtn)
 {
     pBtn->show();
+}
+
+void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
+{
+    if(CExpressPub::isNullPtr(pBtn))
+    {
+        return;
+    }
+    emit pBtn->click();
 }
