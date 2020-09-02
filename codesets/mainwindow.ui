@@ -256,10 +256,17 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_update"/>
     <addaction name="action_hidebuttonswitch"/>
    </widget>
+   <widget class="QMenu" name="menu_9">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+    <addaction name="action_newwindow"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
+   <addaction name="menu_9"/>
    <addaction name="menu_8"/>
    <addaction name="menu_2"/>
   </widget>
@@ -467,6 +474,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>简洁(无按钮)</string>
+   </property>
+  </action>
+  <action name="action_newwindow">
+   <property name="text">
+    <string>新建</string>
    </property>
   </action>
  </widget>
