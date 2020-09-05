@@ -258,6 +258,7 @@ void MainWindow::read_FreqUseFile()
 
 void MainWindow::update_generate_menu_left()
 {
+    QMutexLocker update_locker(&m_lock);
     debugApp() << "update_generate_menu_left!!";
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse);

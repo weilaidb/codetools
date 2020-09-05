@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QTextEdit>
 #include <QTimer>
+#include <QMutex>
 #include <QMdiArea>
 #include "cnetthreadpub.h"
 #include "version.h"
@@ -169,7 +170,11 @@ private:
     //程序名
     QString m_apppath;
     //多文档
+//    QMutexLocker update_locker;
+    QMutex m_lock;
+    //多文档
     QMdiArea *m_mdiArea;
+	
 private slots:
     void proc_action_codeFormat_File();
     void proc_action_codeFormat_Directory();
