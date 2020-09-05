@@ -41,9 +41,9 @@ void TabWidget::actNewTab()
     QWidget *pTabNew = new QWidget();
     pTabNew->setObjectName(QString::fromUtf8("tab_new"));
     uitab->tabWidget->addTab(pTabNew, QString());
-    MainWindow *pMain = new MainWindow("test");
-    QLayout *pLayout = new QLayout(pMain);
-    uitab->tab->setLayout(pLayout);
+//    MainWindow *pMain = new MainWindow("test");
+//    QLayout *pLayout = new QLayout(pMain);
+//    uitab->tab->setLayout(pLayout);
 
 //    MainWindow w("test");
 //    w.show();
