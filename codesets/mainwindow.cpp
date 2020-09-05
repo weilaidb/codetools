@@ -31,6 +31,7 @@
 #include <QDesktopServices>
 #include <QException>
 #include <QFileDialog>
+#include <QMdiSubWindow>
 #include <QMessageBox>
 #include <QProcess>
 #include <QProgressBar>
@@ -57,6 +58,11 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     initUiSets();
 
     readSetting();
+
+//    //Create a MDI Area
+//    m_mdiArea = new QMdiArea;
+//    this->setCentralWidget(m_mdiArea);
+//    connect(ui->action_newwindow, SIGNAL(triggered()), this, SLOT(actNewWindow()));
 
 }
 
@@ -1684,4 +1690,18 @@ void MainWindow::proc_pushButton_right_copy()
     CUIPub::setClipBoardText(CUIPub::getTextBrowser(ui->textBrowser));
 }
 
+
+
+void MainWindow::actNewWindow()
+{
+//    QLabel *label = new QLabel(tr("MDI SubWindow!"));
+    QMainWindow *pSubMainWindow = new QMainWindow(nullptr);
+    QMdiSubWindow *subWin = new QMdiSubWindow;
+//    subWin->setWidget(label);
+    subWin->setWidget(pSubMainWindow);
+    subWin->setAttribute(Qt::WA_DeleteOnClose);
+    m_mdiArea->addSubWindow(subWin);
+    subWin->show();
+
+}
 

@@ -2,6 +2,7 @@
 #include "csignpub.h"
 #include "debugApp.h"
 #include "cstringpub.h"
+#include "cexpresspub.h"
 
 #include <cfilepub.h>
 #include <cprintpub.h>
@@ -33,6 +34,10 @@ void CLogPub::msgDefault(QString info)
 
 void CLogPub::msgDefault(char *pMsg)
 {
+    if(CExpressPub::isNullPtr(pMsg))
+    {
+        return;
+    }
     QString result =CStringPub::emptyString();
     result.append(CSignPub::signEnter());
     result.append(CStringPub::hexToString((BYTE *)pMsg));

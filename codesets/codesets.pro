@@ -102,6 +102,7 @@ SOURCES += \
     base/tree/ctreepub.cpp \
     main.cpp \
     mainwindow.cpp \
+    tabwidget.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp
 
 HEADERS += \
@@ -137,6 +138,7 @@ HEADERS += \
     public/include/debugApp.h \
     public/include/looppub.h \
     public/include/readmacro.h \
+    tabwidget.h \
     testcase/stringtest/testcase.h \
     version.h
 
@@ -160,7 +162,8 @@ unix {
 
 FORMS += \
     cdialogasktext.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    tabwidgets.ui
 
 
 # Default rules for deployment.

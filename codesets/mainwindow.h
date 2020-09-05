@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QTextEdit>
 #include <QTimer>
+#include <QMdiArea>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "basedefinepub.h"
@@ -167,6 +168,8 @@ private:
 
     //程序名
     QString m_apppath;
+    //多文档
+    QMdiArea *m_mdiArea;
 private slots:
     void proc_action_codeFormat_File();
     void proc_action_codeFormat_Directory();
@@ -267,6 +270,9 @@ private slots:
     void proc_pushButton_right_clear ()  ;
     void proc_pushButton_right_copy  ()  ;
     void hidePushButtonSets();
+
+    //mdi
+    void actNewWindow();
 
 };
 #endif // MAINWINDOW_H
