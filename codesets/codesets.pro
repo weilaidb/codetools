@@ -59,6 +59,7 @@ INCLUDEPATH += \
 LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
 
 
+
 }
 
 unix {
@@ -66,6 +67,10 @@ unix {
 
 }
 
+
+macx {
+
+}
 
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -87,8 +92,6 @@ SOURCES += \
     base/log/clogpub.cpp \
     base/map/cmappub.cpp \
     base/msgtips/cmsgtips.cpp \
-    base/mutex/cmutexpub.cpp \
-    base/mutex/csempub.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/print/cprintpub.cpp \
@@ -115,8 +118,6 @@ HEADERS += \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \
     base/file/cfilepub.h \
-    base/mutex/cmutexpub.h \
-    base/mutex/csempub.h \
     base/string/cstringpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
@@ -146,9 +147,14 @@ win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
 SOURCES += \
     base/office/cofficepub.cpp \
+    base/mutex/cmutexpub.cpp \
+    base/mutex/csempub.cpp \
+
 
 HEADERS += \
     base/office/cofficepub.h \
+    base/mutex/cmutexpub.h \
+    base/mutex/csempub.h \
 
 }
 
@@ -158,6 +164,9 @@ unix {
 
 }
 
+macx {
+
+}
 
 
 FORMS += \

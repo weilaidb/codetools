@@ -382,11 +382,11 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
     QAction *pActionReload        = CUIPub::createAction("重新加载");
     appendRightMouseList(pActionClearLeft);
-    appendRightMouseList(pActionPaste);
-    appendRightMouseList(pActionSelectCopy);
-    appendRightMouseList(pActionSelectAllCopy);
-    appendRightMouseList(pActionOpenCfgDir);
-    appendRightMouseList(pActionOpenCfgMenu);
+//    appendRightMouseList(pActionPaste);
+//    appendRightMouseList(pActionSelectCopy);
+//    appendRightMouseList(pActionSelectAllCopy);
+//    appendRightMouseList(pActionOpenCfgDir);
+//    appendRightMouseList(pActionOpenCfgMenu);
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_actionClearLeft()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
@@ -416,7 +416,7 @@ QMenu *MainWindow::slot_frequse_menu()
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
-        appendRightMouseList(pTmpAction);
+//        appendRightMouseList(pTmpAction);
     }
 
     if(pFreqUse)
@@ -465,11 +465,11 @@ void MainWindow::nodes_menu_right(QMenu *pMenu)
     QAction *pActionSelectCopy = CUIPub::createAction("复制");
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
     QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
-    appendRightMouseList(pActionClearRight);
-    appendRightMouseList(pActionPaste);
-    appendRightMouseList(pActionSelectCopy);
-    appendRightMouseList(pActionSelectAllCopy);
-    appendRightMouseList(pActionClearEmpty);
+//    appendRightMouseList(pActionClearRight);
+//    appendRightMouseList(pActionPaste);
+//    appendRightMouseList(pActionSelectCopy);
+//    appendRightMouseList(pActionSelectAllCopy);
+//    appendRightMouseList(pActionClearEmpty);
 
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_actionClearRight()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteRight()));
@@ -494,8 +494,8 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
-    appendRightMouseList(pActionOpenCfgFile);
-    appendRightMouseList(pActionOpenCfgDir);
+//    appendRightMouseList(pActionOpenCfgFile);
+//    appendRightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
 
@@ -1628,18 +1628,18 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
     CUIPub::explorerPathExt(pAction->text());
 }
 
-void MainWindow::appendRightMouseList(void *ptr)
+void MainWindow::appendRightMouseList(QAction *ptr)
 {
     m_lstRightMouse.append(ptr);
 }
 
 void MainWindow::freeRightMouseList()
 {
-    foreach (void *ptr, m_lstRightMouse) {
-        if(ptr){
-            delete ptr;
-        }
-    }
+//    foreach (QAction *ptr, m_lstRightMouse) {
+//        if(ptr){
+//            delete ptr;
+//        }
+//    }
     m_lstRightMouse.clear();
 }
 

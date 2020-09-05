@@ -65,7 +65,7 @@ private:
     void clrRightTextEdit();
 
     // right mouse list to free
-    void appendRightMouseList(void *ptr);
+    void appendRightMouseList(QAction *ptr);
     void freeRightMouseList();
 
 public:
@@ -102,7 +102,7 @@ private:
 
     /* 右键菜单 */
     QMenu *pRightMouse;
-    QList<void *> m_lstRightMouse;
+    QList<QAction *> m_lstRightMouse;
     //custom menu
     QMenu *pMenuCustom;
     QString m_FileNameMenu;
