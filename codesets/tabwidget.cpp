@@ -1,6 +1,7 @@
 #include "tabwidget.h"
 #include "mainwindow.h"
 #include "ui_tabwidgets.h"
+#include "ui_formcenter.h"
 
 #include <QLabel>
 #include <QMdiSubWindow>
@@ -8,6 +9,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TabWidget; }
+namespace Ui { class FormCenter; }
 QT_END_NAMESPACE
 
 
@@ -39,14 +41,9 @@ void TabWidget::actNewWindow()
 void TabWidget::actNewTab()
 {
     QWidget *pTabNew = new QWidget();
-    pTabNew->setObjectName(QString::fromUtf8("tab_new"));
-    uitab->tabWidget->addTab(pTabNew, QString());
-//    MainWindow *pMain = new MainWindow("test");
-//    QLayout *pLayout = new QLayout(pMain);
-//    uitab->tab->setLayout(pLayout);
-
-//    MainWindow w("test");
-//    w.show();
+    Ui::FormCenter *pUiCen = new Ui::FormCenter;
+    pUiCen->setupUi(pTabNew);
+    uitab->tabWidget->addTab(pTabNew, "Center");
 }
 
 void TabWidget::initUiSets()

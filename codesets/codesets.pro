@@ -103,6 +103,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    formcenter.cpp \
     main.cpp \
     mainwindow.cpp \
     tabwidget.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
+    formcenter.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basedefinepub.h \
@@ -171,6 +173,8 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
+    center.ui \
+    formcenter.ui \
     mainwindow.ui \
     tabwidgets.ui
 
