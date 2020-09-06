@@ -173,7 +173,6 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
-    center.ui \
     formcenter.ui \
     mainwindow.ui \
     tabwidgets.ui

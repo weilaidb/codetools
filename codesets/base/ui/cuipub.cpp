@@ -14,6 +14,7 @@
 #include <cfilepub.h>
 #include "debugApp.h"
 #ifdef WIN32
+#include <QTabWidget>
 #include <clogpub.h>
 #include <csignpub.h>
 #include <windows.h>
@@ -665,3 +666,10 @@ void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
     }
     emit pBtn->click();
 }
+
+void CUIPub::setTabName(QTabWidget *tabWidget, int index, const QString &name)
+{
+    tabWidget->setTabText(index, name);
+}
+
+

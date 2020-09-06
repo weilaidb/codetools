@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QMdiSubWindow>
 #include <QWidget>
+#include <cuipub.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TabWidget; }
@@ -16,40 +17,24 @@ QT_END_NAMESPACE
 TabWidget::TabWidget(QWidget *parent)
     : QMainWindow(parent)
     , uitab(new Ui::TabWidget)
+    , m_tabpos(2)
 {
     uitab->setupUi(this);
     initUiSets();
 
-//    //Create a MDI Area
-//    m_mdiArea = new QMdiArea;
-//    this->setCentralWidget(m_mdiArea);
-
     connect(uitab->actionnew, SIGNAL(triggered()), this, SLOT(actNewTab()));
-    actNewTab();
-
 }
 
-void TabWidget::actNewWindow()
-{
-    QLabel *label = new QLabel(tr("MDI SubWindow!"));
-    QMdiSubWindow *subWin = new QMdiSubWindow;
-    subWin->setWidget(label);
-    subWin->setAttribute(Qt::WA_DeleteOnClose);
-    m_mdiArea->addSubWindow(subWin);
-    subWin->show();
-}
 void TabWidget::actNewTab()
 {
     QWidget *pTabNew = new QWidget();
     Ui::FormCenter *pUiCen = new Ui::FormCenter;
     pUiCen->setupUi(pTabNew);
-    uitab->tabWidget->addTab(pTabNew, "Center");
+    uitab->tabWidget->addTab(pTabNew, QString("new %1").arg(++m_tabpos));
 }
 
 void TabWidget::initUiSets()
 {
-//    QLabel *label = new QLabel(tr("MDI SubWindow!"));
-//    ui->tab->setLayout(label);
-
-//    uitab->tab->setLayout();
+    CUIPub::setTabName(uitab->tabWidget, 0, "new 1");
+    CUIPub::setTabName(uitab->tabWidget, 1, "new 2");
 }

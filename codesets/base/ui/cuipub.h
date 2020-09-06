@@ -10,6 +10,7 @@
 #include <QTextBrowser>
 #include <QTimer>
 #include <QPushButton>
+#include <QTabWidget>
 
 /**
   ** 自定义右键菜单
@@ -102,6 +103,9 @@ public:
 
     //time
     static QTimer *createTimer(int &iTimeout, int value);
+
+    //QTabWidget *tabWidget
+    static void setTabName(QTabWidget *tabWidget, int index, const QString &name);
 public:
     enum{
         TYPE_READ = 1,

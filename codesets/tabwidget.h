@@ -19,11 +19,11 @@ public:
     void initUiSets();
 
 public slots:
-    void actNewWindow();
     void actNewTab();
 private:
     Ui::TabWidget *uitab;
     QMdiArea *m_mdiArea;
+    quint16 m_tabpos;
 };
 
 #endif // TABWIDGET_H
