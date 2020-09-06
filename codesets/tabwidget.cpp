@@ -17,12 +17,14 @@ QT_END_NAMESPACE
 TabWidget::TabWidget(QWidget *parent)
     : QMainWindow(parent)
     , uitab(new Ui::TabWidget)
-    , m_tabpos(2)
+    , m_tabpos(0)
+    , m_deftabcnt(5)
 {
     uitab->setupUi(this);
+    connect(uitab->actionnew, SIGNAL(triggered()), this, SLOT(actNewTab()));
+
     initUiSets();
 
-    connect(uitab->actionnew, SIGNAL(triggered()), this, SLOT(actNewTab()));
 }
 
 void TabWidget::actNewTab()
@@ -30,11 +32,15 @@ void TabWidget::actNewTab()
     QWidget *pTabNew = new QWidget();
     Ui::FormCenter *pUiCen = new Ui::FormCenter;
     pUiCen->setupUi(pTabNew);
-    uitab->tabWidget->addTab(pTabNew, QString("new %1").arg(++m_tabpos));
+    CUIPub::addTab(uitab->tabWidget, pTabNew, QString("new %1").arg(++m_tabpos));
 }
 
 void TabWidget::initUiSets()
 {
-    CUIPub::setTabName(uitab->tabWidget, 0, "new 1");
-    CUIPub::setTabName(uitab->tabWidget, 1, "new 2");
+    CUIPub::clearTab(uitab->tabWidget);
+    quint16 dwLp =  0;;
+    for(dwLp = 0;dwLp < m_deftabcnt;dwLp++)
+    {
+        emit uitab->actionnew->triggered();
+    }
 }

@@ -24,6 +24,7 @@ private:
     Ui::TabWidget *uitab;
     QMdiArea *m_mdiArea;
     quint16 m_tabpos;
+    quint16 m_deftabcnt;
 };
 
 #endif // TABWIDGET_H

@@ -106,6 +106,8 @@ public:
 
     //QTabWidget *tabWidget
     static void setTabName(QTabWidget *tabWidget, int index, const QString &name);
+    static int addTab(QTabWidget *tabWidget, QWidget *widget, const QString &name);
+    static void clearTab(QTabWidget *tabWidget);
 public:
     enum{
         TYPE_READ = 1,

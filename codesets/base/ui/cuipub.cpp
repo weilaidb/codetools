@@ -672,4 +672,14 @@ void CUIPub::setTabName(QTabWidget *tabWidget, int index, const QString &name)
     tabWidget->setTabText(index, name);
 }
 
+int CUIPub::addTab(QTabWidget *tabWidget, QWidget *widget, const QString &name)
+{
+    return tabWidget->addTab(widget, name);
+}
+
+void CUIPub::clearTab(QTabWidget *tabWidget)
+{
+    tabWidget->clear();
+}
+
 
