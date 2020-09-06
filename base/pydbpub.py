@@ -2,25 +2,59 @@
 
 import pymysql.cursors
 from datetime import datetime
-from pydbpub import *
 
-##表名
-##
-#before middle after
+def initDatabase(host, usr, pwd, port, charset):
+    # 连接数据库
+    connect = pymysql.Connect(
+        host=host,
+        user=usr,
+        passwd=pwd,
+        port=port,
+        # db=databasename,
+        charset=charset
+    )
+    return  connect
+
+
+def createDataBase(cursor,connect, databasename):
+    try:
+        # 执行 SQL 语句
+        sql = 'create database if not exists %s' % databasename
+        cursor.execute(sql)
+        # 提交修改
+        connect.commit()
+        print("creat database ok,", databasename)
+    except Exception as e:
+        # 发生错误时回滚
+        connect.rollback()
+        print("create database failed, reason:", e)
+
+
+def selectDataBase(connect, databasename):
+    connect.select_db(databasename)
+
 #
-def dbExpcreateTable(tablename):
-    sqlexp = '''
-        CREATE TABLE `%s` (
-        `id` int(200) unsigned NOT NULL AUTO_INCREMENT,
-        `name` varchar(200) NOT NULL COMMENT 'keyword',
-        `content` varchar(10000) NOT NULL COMMENT 'content for show',
-        PRIMARY KEY (`id`),
-        UNIQUE KEY `name_UNIQUE` (`name`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-      ''' % (tablename)
+# def dbExpcreateTable(tablename):
+#     sqlexp = '''
+#         CREATE TABLE `%s` (
+#         `id` int(200) unsigned NOT NULL AUTO_INCREMENT,
+#         `name` varchar(200) NOT NULL COMMENT 'keyword',
+#         `content` varchar(10000) NOT NULL COMMENT 'content for show',
+#         PRIMARY KEY (`id`),
+#         UNIQUE KEY `name_UNIQUE` (`name`)
+#     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+#       ''' % (tablename)
+#
+#     print ("sqlexp:%s" % sqlexp)
+#     return  sqlexp
+#
 
+def printdbinfo(tablename, sqlexp):
+    print ("tablename:%s" % tablename)
     print ("sqlexp:%s" % sqlexp)
-    return  sqlexp
+
+def dbExpDropTable(tablename):
+    return "drop table if exists %s" % tablename
 
 
 ##创建表，输入参数:
@@ -43,6 +77,18 @@ def createTable(cursor, connect, tablename):
         connect.rollback()
         print("create table failed, reason:", e)
 
+
+def insertTable(cursor,connect, tablename):
+    # 插入数据
+    for i in range(100):
+        try:
+            sql = '''INSERT INTO ''' + tablename + ''' (name, content) VALUES ( "%s", "%s")'''
+            data = ('test' + str(i * 12), '13512345678')
+            cursor.execute(sql % data)
+            connect.commit()
+            print('成功插入', cursor.rowcount, '条数据, curpos:', i + 1)
+        except Exception as e :
+            print('失败插入', cursor.rowcount, '条数据, reason:', e, 'curpos', i + 1)
 
 #data format
 # data = ('test' + str(i * 12), '13512345678')
