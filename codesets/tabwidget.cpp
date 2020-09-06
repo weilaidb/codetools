@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QMdiSubWindow>
 #include <QWidget>
+#include <clogpub.h>
+#include <ctextcodecpub.h>
 #include <cuipub.h>
 
 QT_BEGIN_NAMESPACE
@@ -14,18 +16,25 @@ namespace Ui { class FormCenter; }
 QT_END_NAMESPACE
 
 
-TabWidget::TabWidget(QWidget *parent)
+TabWidget::TabWidget(char *appexe, QWidget *parent)
     : QMainWindow(parent)
     , uitab(new Ui::TabWidget)
     , m_tabpos(0)
     , m_deftabcnt(3)
 {
+    m_apppath = CTextCodecPub::getGBKToUnicode(appexe);
+//    CLogPub::logDefault(m_apppath);
+    CLogPub::msgDefault(appexe); //发现“副本”这两个字的编码是B8B1 B1BE，为GB2312编码，appexe传递的数据为直接为中文编码
     uitab->setupUi(this);
-
+    showVersion();
     initUiSets();
 
 }
 
+void TabWidget::showVersion()
+{
+    uitab->statusbar->showMessage(APP_VERSION);
+}
 void TabWidget::initUiSets()
 {
     connect(uitab->actionnew, SIGNAL(triggered()), this, SLOT(actNewTab()));

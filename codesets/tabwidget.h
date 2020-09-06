@@ -15,13 +15,17 @@ class TabWidget : public QMainWindow
     Q_OBJECT
 
 public:
-    TabWidget(QWidget *parent = nullptr);
+    TabWidget(char *appexe, QWidget *parent = nullptr);
     void initUiSets();
+private:
+    void showVersion();
 
 public slots:
     void actNewTab();
 private:
     Ui::TabWidget *uitab;
+    //程序名
+    QString m_apppath;
     QMdiArea *m_mdiArea;
     quint16 m_tabpos;
     quint16 m_deftabcnt;

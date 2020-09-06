@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     w.show();
 #endif
 
-    TabWidget t;
+    TabWidget t(argv[0]);
     t.show();
 
     return a.exec();
