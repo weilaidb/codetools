@@ -1,7 +1,7 @@
 #include "tabwidget.h"
 #include "mainwindow.h"
 #include "ui_tabwidgets.h"
-#include "ui_formcenter.h"
+#include "formcenter.h"
 
 #include <QLabel>
 #include <QMdiSubWindow>
@@ -42,8 +42,8 @@ void TabWidget::initUiSets()
 void TabWidget::actNewTab()
 {
     QWidget *pTabNew = new QWidget();
-    Ui::FormCenter *pUiCen = new Ui::FormCenter;
-    pUiCen->setupUi(pTabNew);
+    FormCenter *uiCen = new FormCenter(pTabNew);
+    UNUSED(uiCen);
     CUIPub::addTab(uitab->tabWidget, pTabNew, QString("new %1").arg(++m_tabpos));
 }
 
