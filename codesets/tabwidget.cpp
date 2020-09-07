@@ -45,7 +45,7 @@ void TabWidget::initUiSets()
 
 
     CUIPub::clearTab(ui->tabWidget);
-    quint16 dwLp =  0;;
+    quint16 dwLp =  0;
     for(dwLp = 0;dwLp < m_deftabcnt;dwLp++)
     {
         emit ui->actionnew->triggered();
@@ -58,5 +58,6 @@ void TabWidget::actNewTab()
     FormCenter *uiCen = new FormCenter(pTabNew);
     Q_UNUSED(uiCen);
     CUIPub::addTab(ui->tabWidget, pTabNew, QString("new %1").arg(++m_tabpos));
+
 }
 

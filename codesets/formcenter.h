@@ -15,6 +15,15 @@ public:
     explicit FormCenter(QWidget *parent = nullptr);
     ~FormCenter();
 
+    //函数
+private:
+    void initButtonSets();
+
+
+private slots:
+    void proc_pushButton_tryagain();
+    void proc_action_TryAgain();
+
 private:
     Ui::FormCenter *ui;
 };

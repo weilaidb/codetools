@@ -18,16 +18,11 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Tab 1</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
        </attribute>
       </widget>
      </widget>
@@ -49,15 +44,6 @@
     </property>
     <addaction name="actionnew"/>
    </widget>
-   <addaction name="menu"/>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>23</height>
-    </rect>
-   </property>
    <widget class="QMenu" name="menuAyStle">
     <property name="title">
      <string>优化</string>
@@ -154,12 +140,13 @@
     <addaction name="action_update"/>
     <addaction name="action_hidebuttonswitch"/>
    </widget>
+   <addaction name="menu"/>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_8"/>
-   <addaction name="menu_2"/>   
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionnew">
@@ -360,7 +347,7 @@
    <property name="text">
     <string>简洁(无按钮)</string>
    </property>
-  </action>  
+  </action>
  </widget>
  <resources/>
  <connections/>
