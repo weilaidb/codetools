@@ -134,6 +134,30 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign,QStr
     return result;
 }
 
+void CStringPub::printStringList(QStringList &lists)
+{
+    debugApp() <<"lists count:" << lists.count();
+    quint32 dwCnt = 0;
+    foreach (QString item, lists) {
+        debugApp() << "No:" << ++dwCnt << ", " << item;
+    }
+
+}
+
+
+QStringList CStringPub::reverseStringList(QStringList &lists)
+{
+    QStringList newlist;
+    QStringList::reverse_iterator iter = lists.rbegin();
+    for(;iter != lists.rend();iter++)
+    {
+        newlist.append(*iter);
+    }
+    return newlist;
+}
+
+
+
 QStringList CStringPub::stringUnique(QStringList lists)
 {
     lists.removeDuplicates();
@@ -150,10 +174,21 @@ void CStringPub::addStringUniqueMax(QStringList &lists, QString str, int max)
 {
     lists.append(str);
     lists.removeDuplicates();
-    if(lists.count() > max)
+    while(lists.count() > max)
     {
         lists.removeFirst();
     }
+}
+//反序输出
+void CStringPub::addStringUniqueInverseMax(QStringList &lists, QString str, int max)
+{
+    lists.append(str);
+    lists.removeDuplicates();
+    while(lists.count() > max)
+    {
+        lists.removeFirst();
+    }
+    lists = reverseStringList(lists);
 }
 
 void CStringPub::addStringUniqueSortMax(QStringList &lists, QString str, int max)
