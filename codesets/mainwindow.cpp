@@ -1604,7 +1604,7 @@ void MainWindow::proc_clipBoard_textChanged()
 void MainWindow::proc_frequse_config(QString configfilename)
 {
     CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
-    CStringPub::addStringUniqueInverseMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
+    CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
 //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
 //    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);

@@ -191,6 +191,19 @@ void CStringPub::addStringUniqueInverseMax(QStringList &lists, QString str, int 
     lists = reverseStringList(lists);
 }
 
+//插入首节点,删除多余尾节点
+void CStringPub::addStringHeaderUniqueMax(QStringList &lists, QString str, int max)
+{
+    lists.insert(0, str);
+    lists.removeDuplicates();
+    while(lists.count() > max)
+    {
+        lists.removeLast();
+    }
+}
+
+
+
 void CStringPub::addStringUniqueSortMax(QStringList &lists, QString str, int max)
 {
     lists.append(str);
