@@ -12,6 +12,14 @@
 #define STR_MODE_ALALLINE_EXECMULTI          ("MODE_ALALLINE_EXECMULTI")    //左侧所有行内容，进行多次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
+/**
+  **
+  ** 自定义特殊符
+  **/
+#define SIGN_CUSTOM_NL        ("$NL")
+#define SIGN_CUSTOM_TB        ("$TB")
+#define SIGN_CUSTOM_SP        ("$SP")
+
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);

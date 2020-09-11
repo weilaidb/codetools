@@ -150,7 +150,7 @@ QString CRegExpPub::handlerPost_Pub(QString text)
 
 QString CRegExpPub::replaceSignsPub(QString text)
 {
-    return text.replace("$NL", "\n").replace("$TB", "    ");
+    return text.replace(SIGN_CUSTOM_NL, "\n").replace(SIGN_CUSTOM_TB, "    ");
 }
 
 QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match)
@@ -166,6 +166,10 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
         //        }
         //        else
         {
+            if(regafter.contains(SIGN_CUSTOM_SP))
+            {
+                regafter = regafter.replace(SIGN_CUSTOM_SP, " ");
+            }
             result = result.replace(match.captured(iLp),regafter);
         }
     }
