@@ -231,7 +231,7 @@ void MainWindow::initUiSets()
     pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
     connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
-    m_iListFreqUseCnt = 20;
+    m_iListFreqUseCnt = 15;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 
@@ -1604,7 +1604,7 @@ void MainWindow::proc_clipBoard_textChanged()
 void MainWindow::proc_frequse_config(QString configfilename)
 {
     CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
-    CStringPub::addStringUniqueSortMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
+    CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
 //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
 //    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);

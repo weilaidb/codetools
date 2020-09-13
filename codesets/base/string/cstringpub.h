@@ -37,8 +37,12 @@ public:
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);
+    static QStringList reverseStringList (QStringList &lists);
+    static void printStringList (QStringList &lists);
     static void addStringUnique(QStringList &lists, QString str);
     static void addStringUniqueMax(QStringList &lists, QString str, int max);
+    static void addStringUniqueInverseMax(QStringList &lists, QString str, int max);
+    static void addStringHeaderUniqueMax(QStringList &lists, QString str, int max);
     static void addStringUniqueSortMax(QStringList &lists, QString str, int max);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
     static QString getOpenFileNamesFilter(QStringList filters, QString sign);
