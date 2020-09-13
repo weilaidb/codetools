@@ -4,6 +4,7 @@
 
 #include <cexpresspub.h>
 #include <cfilepub.h>
+#include <csignpub.h>
 #include <cstringpub.h>
 #include <cuipub.h>
 
@@ -66,17 +67,7 @@ void SuperTest::proc_pushButton_load_test_dir()
     }
 
     config_cur_load_path(dirname);
-
-    QStringList namefilter;
-    namefilter << "*.*";
-    QStringList filelist = CFilePub::getFileAllAbsoluteNames(namefilter, dirname);
-    //    debugApp() << "filelist:" << filelist;
-    filelist = CStringPub::filterFileListInclude(file_content_txt, filelist);
-    filelist = CStringPub::filterFileListNoInclude(file_result_log, filelist);
-    debugApp() << "filtered filelist:" << filelist;
-
-    CUIPub::addListWidgetItems_ClearFirst(ui->listWidget_load_dir, filelist);
-
+    on_pushButton_reload_dir_clicked();
 }
 
 void SuperTest::config_cur_load_path(QString path)
@@ -99,5 +90,18 @@ void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item
     ENTERTIPS;
     item->setFlags(item->flags() | Qt::ItemIsEditable);
     CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(item->text()));
-    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(item->text() + "." + file_result_log));
+    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(item->text() + CSignPub::signDot() + file_result_log));
+}
+
+void SuperTest::on_pushButton_reload_dir_clicked()
+{
+    QStringList namefilter;
+    namefilter << "*.*";
+    QStringList filelist = CFilePub::getFileAllAbsoluteNames(namefilter, dir_cur_loaded);
+    //    debugApp() << "filelist:" << filelist;
+    filelist = CStringPub::filterFileListInclude(file_content_txt, filelist);
+    filelist = CStringPub::filterFileListNoInclude(file_result_log, filelist);
+    debugApp() << "filtered filelist:" << filelist;
+
+    CUIPub::addListWidgetItems_ClearFirst(ui->listWidget_load_dir, filelist);
 }

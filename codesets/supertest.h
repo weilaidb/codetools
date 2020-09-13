@@ -32,6 +32,8 @@ private slots:
     void on_pushButton_open_test_dir_clicked();
 
     void proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item);
+    void on_pushButton_reload_dir_clicked();
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;

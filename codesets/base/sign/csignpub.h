@@ -11,6 +11,7 @@
 #define SIGNDOUBLEFENHAO  ";;"
 #define SIGNDOUHAO  ","
 #define SIGNFENHAO  ";"
+#define SIGNDOT  "."
 #define SIGNFENHAOC  ';'
 
 
@@ -39,6 +40,7 @@ public:
     CSignPub();
 
     static QString signEnter();
+    static QString signDot();
     static const char *signEnterExt();
     static char signEnterS();
     static QString signEnterNL();

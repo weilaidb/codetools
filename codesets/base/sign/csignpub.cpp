@@ -10,6 +10,11 @@ QString CSignPub::signEnter()
     return SIGNENTER;
 }
 
+QString CSignPub::signDot()
+{
+    return SIGNDOT;
+}
+
 const char *CSignPub::signEnterExt()
 {
     return SIGNENTER;
