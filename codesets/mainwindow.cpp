@@ -201,9 +201,9 @@ void MainWindow::initUiSets()
     pRightMouse = nullptr;
     m_lstRightMouse.clear();
     //QTextEdit 右键菜单
-    GEN_MENU_PUB(ui->textEdit, slot_generate_menu_left);
-    GEN_MENU_PUB(ui->textBrowser, slot_generate_menu_right);
-//    GEN_MENU_PUB(ui->textEdit_cfgTips, slot_generate_menu_leftbottom);
+    GEN_MENU_PUB(ui->textEdit, proc_generate_menu_left);
+    GEN_MENU_PUB(ui->textBrowser, proc_generate_menu_right);
+//    GEN_MENU_PUB(ui->textEdit_cfgTips, proc_generate_menu_leftbottom);
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
@@ -262,7 +262,7 @@ void MainWindow::update_generate_menu_left()
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
     //    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
-    pMenuCustom = slot_fromfile_menu(m_FileNameMenu);
+    pMenuCustom = proc_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
     {
         pRightMouse->addMenu((pMenuCustom));
@@ -272,11 +272,11 @@ void MainWindow::update_generate_menu_left()
 }
 
 /**
- * @brief MainWindow::slot_generate_menu_left
+ * @brief MainWindow::proc_generate_menu_left
  * @param pos
  * 左边显示生成的菜单
  */
-void MainWindow::slot_generate_menu_left(QPoint pos)
+void MainWindow::proc_generate_menu_left(QPoint pos)
 {
     if(ui->action_background_update->isChecked())
     {
@@ -298,11 +298,11 @@ void MainWindow::slot_generate_menu_left(QPoint pos)
 }
 
 /**
- * @brief MainWindow::slot_generate_menu_right
+ * @brief MainWindow::proc_generate_menu_right
  * @param pos
  * 右边显示生成的菜单
  */
-void MainWindow::slot_generate_menu_right(QPoint pos)
+void MainWindow::proc_generate_menu_right(QPoint pos)
 {
     Q_UNUSED(pos)
     CUIPub::clearMenuAll(&pRightMouse);
@@ -313,7 +313,7 @@ void MainWindow::slot_generate_menu_right(QPoint pos)
     pRightMouse->exec(cur.pos()); //关联到光标
 }
 
-void MainWindow::slot_generate_menu_leftbottom(QPoint pos)
+void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
 {
     Q_UNUSED(pos)
     CUIPub::clearMenuAll(&pRightMouse);
@@ -325,7 +325,7 @@ void MainWindow::slot_generate_menu_leftbottom(QPoint pos)
 }
 
 
-QMenu *MainWindow::slot_fromfile_menu(QString filename)
+QMenu *MainWindow::proc_fromfile_menu(QString filename)
 {
     QStringList list = CFilePub::readFileAllFilterEmptyUniqueMulti(filename);
     QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_SingleL_ExecMulti);
@@ -390,10 +390,10 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
     QObject::connect(pActionReload, SIGNAL(triggered()), this, SLOT(proc_actionReload()));
 
-    pMenu->addMenu(slot_frequse_menu());
+    pMenu->addMenu(proc_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
-    pMenu->addMenu(slot_openfilelist_menu());
+    pMenu->addMenu(proc_openfilelist_menu());
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
@@ -402,7 +402,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
 
 }
 
-QMenu *MainWindow::slot_frequse_menu()
+QMenu *MainWindow::proc_frequse_menu()
 {
     QMenu *pFreqUse = new QMenu("常用配置列表");
     read_FreqUseFile();
@@ -421,7 +421,7 @@ QMenu *MainWindow::slot_frequse_menu()
     return pFreqUse;
 }
 
-QMenu *MainWindow::slot_openfilelist_menu()
+QMenu *MainWindow::proc_openfilelist_menu()
 {
     QMenu *pOpenFile = new QMenu("文件列表");
     m_listNormalUse = CFilePub::readFileAllFilterEmptyUniqueSort(m_ListOpenFile);

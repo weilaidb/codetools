@@ -234,12 +234,12 @@ private slots:
 
 
     void update_generate_menu_left();
-    void slot_generate_menu_left(QPoint pos);
-    void slot_generate_menu_right(QPoint pos);
-    void slot_generate_menu_leftbottom(QPoint pos);
-    QMenu *slot_fromfile_menu(QString filename);
-    QMenu *slot_frequse_menu();
-    QMenu *slot_openfilelist_menu();
+    void proc_generate_menu_left(QPoint pos);
+    void proc_generate_menu_right(QPoint pos);
+    void proc_generate_menu_leftbottom(QPoint pos);
+    QMenu *proc_fromfile_menu(QString filename);
+    QMenu *proc_frequse_menu();
+    QMenu *proc_openfilelist_menu();
     void nodes_menu_left(QMenu *pMenu);
     void nodes_menu_right(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
