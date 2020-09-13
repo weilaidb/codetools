@@ -166,7 +166,7 @@ void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringLis
 /**
  * @brief CUIPub::ReadHistorySettings
  */
-QSettings * CUIPub::readHistorySettings(QString &organization,
+QSettings * CUIPub::read_HistorySettings(QString &organization,
                                         const QString &application)
 {
     auto find_index = m_settingMap.find(bindKey(organization, application));

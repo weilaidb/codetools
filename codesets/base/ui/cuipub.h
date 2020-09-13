@@ -29,7 +29,7 @@ public:
     static void Map2Var(QSettings *pSetting, QString envkey, QMap<QString, QStringList> &inmap);
 
     static QString bindKey(QString &organization, const QString &application);
-    static QSettings *readHistorySettings(QString &organization, const QString &application);
+    static QSettings *read_HistorySettings(QString &organization, const QString &application);
     static QSettings *writeCurrentSettings(QString &organization,
                                            const QString &application);
     static void procStringList(QSettings *pSetting, QString name, QStringList &list, qint8 ucOperType);
