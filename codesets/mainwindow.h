@@ -51,21 +51,21 @@ private:
     void show_TextBrowerAppend(QString msg);
     void get_NameFilter();
     void add_MenuRecent(QStringList recent, QMenu *pMenu);
-    void addMenuCodeFormatRecent();
-    void addMenuDocumentOpenRecent();
-    void addMenuDocumentSearchRecent();
-    void updateRecent(QStringList &list, QMenu *pMenu);
-    void updateRecentAppend(QStringList &list, QString name, QMenu *pMenu);
+    void add_MenuCodeFormatRecent();
+    void add_MenuDocumentOpenRecent();
+    void add_MenuDocumentSearchRecent();
+    void update_Recent(QStringList &list, QMenu *pMenu);
+    void update_RecentAppend(QStringList &list, QString name, QMenu *pMenu);
     //获取对话框输入的文字
-    quint8 getDialogFindText(QString &findtext);
-    void setLeftTextEdit(QString str);
-    void clrLeftTextEdit();
-    void setRightTextEdit(QString str);
-    void clrRightTextEdit();
+    quint8 get_DialogFindText(QString &findtext);
+    void set_LeftTextEdit(QString str);
+    void clear_LeftTextEdit();
+    void set_RightTextEdit(QString str);
+    void clear_RightTextEdit();
 
     // right mouse list to free
-    void appendRightMouseList(QAction *ptr);
-    void freeRightMouseList();
+    void append_RightMouseList(QAction *ptr);
+    void free_RightMouseList();
 
 public:
     enum{
@@ -271,7 +271,7 @@ private slots:
     void proc_pushButton_tryagain    ()  ;
     void proc_pushButton_right_clear ()  ;
     void proc_pushButton_right_copy  ()  ;
-    void hidePushButtonSets();
+    void hide_PushButtonSets();
 
 };
 #endif // MAINWINDOW_H
