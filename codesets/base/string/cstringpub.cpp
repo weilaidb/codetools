@@ -482,4 +482,26 @@ string CStringPub::getDataOfStr(BYTE *pMsg, WORD32 dwLen)
     return res;
 }
 
+QStringList CStringPub::filterFileListInclude(QString filter, QStringList list)
+{
+    QStringList relist;
+    foreach (QString item, list) {
+        if(item.contains(filter)){
+            relist.append(item);
+        }
+    }
+    return relist;
+}
+//不包含字符串filter
+QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list)
+{
+    QStringList relist;
+    foreach (QString item, list) {
+        if(item.contains(filter)){
+            continue;
+        }
+        relist.append(item);
+    }
+    return relist;
+}
 

@@ -256,11 +256,18 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_update"/>
     <addaction name="action_hidebuttonswitch"/>
    </widget>
+   <widget class="QMenu" name="menu_9">
+    <property name="title">
+     <string>测试</string>
+    </property>
+    <addaction name="action_scan_test_dir"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_8"/>
+   <addaction name="menu_9"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -472,6 +479,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_newwindow">
    <property name="text">
     <string>新建</string>
+   </property>
+  </action>
+  <action name="action_scan_test_dir">
+   <property name="text">
+    <string>扫描测试目录</string>
    </property>
   </action>
  </widget>

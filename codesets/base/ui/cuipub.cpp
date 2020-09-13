@@ -665,3 +665,31 @@ void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
     }
     emit pBtn->click();
 }
+
+void CUIPub::addListWidgetItems(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItems(list);
+}
+
+void CUIPub::addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->clear();
+    pWidget->addItems(list);
+}
+
+void CUIPub::addListWidgetItem(QListWidget *pWidget, QString item)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItem(item);
+}

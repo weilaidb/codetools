@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_cdialogasktext.h"
+#include "ui_supertest.h"
+#include "supertest.h"
 #include "astyle_main.h"
 #include "debugApp.h"
 #include "basetypepub.h"
@@ -75,6 +77,15 @@ void MainWindow::init_Dialog()
     connect(uiDialog->pushButton_paste, SIGNAL(clicked()),this, SLOT(pasteDialogText()));
     Qt::WindowFlags flags=pDialog->windowFlags();
     pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
+}
+
+void MainWindow::init_SuperTest()
+{
+    //test
+    if(nullptr == pTw)
+    {
+        pTw = new SuperTest();
+    }
 }
 
 void MainWindow::show_Version()
@@ -166,6 +177,8 @@ void MainWindow::init_ActionSets()
     QObject::connect(ui->action_background_update, SIGNAL(triggered(bool)), this, SLOT(proc_action_background_update(bool)));
     QObject::connect(ui->action_update, SIGNAL(triggered(bool)), this, SLOT(proc_action_update(bool)));
 
+    //test for
+    QObject::connect(ui->action_scan_test_dir, SIGNAL(triggered(bool)), this, SLOT(proc_action_scan_test_dir(bool)));
 
 }
 
@@ -188,6 +201,7 @@ void MainWindow::init_Vars()
     m_thread_client = nullptr;
     m_thread_publish = nullptr;
     m_thread_subscribe = nullptr;
+    pTw = nullptr;
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -1646,6 +1660,14 @@ void MainWindow::proc_action_update(bool bFlag)
 {
     debugApp() << "bFlag:" << bFlag;
     update_generate_menu_left();
+}
+
+void MainWindow::proc_action_scan_test_dir(bool bFlag)
+{
+    debugApp() << "bFlag:" << bFlag;
+    //支持创建多个界面
+    pTw = new SuperTest();
+    pTw->show();
 }
 
 

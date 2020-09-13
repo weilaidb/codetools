@@ -10,6 +10,7 @@
 #include <QTextBrowser>
 #include <QTimer>
 #include <QPushButton>
+#include <QListWidget>
 
 /**
   ** 自定义右键菜单
@@ -102,6 +103,10 @@ public:
 
     //time
     static QTimer *createTimer(int &iTimeout, int value);
+    //QListWidget
+    static void addListWidgetItems(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItem(QListWidget *pWidget, QString item);
 public:
     enum{
         TYPE_READ = 1,

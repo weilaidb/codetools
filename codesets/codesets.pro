@@ -105,7 +105,9 @@ SOURCES += \
     base/tree/ctreepub.cpp \
     main.cpp \
     mainwindow.cpp \
-    testcase/stringtest/cstringpubcpp_main.cpp
+    supertest.cpp \
+    testcase/stringtest/cstringpubcpp_main.cpp \
+    testui.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
@@ -138,7 +140,9 @@ HEADERS += \
     public/include/debugApp.h \
     public/include/looppub.h \
     public/include/readmacro.h \
+    supertest.h \
     testcase/stringtest/testcase.h \
+    testui.h \
     version.h
 
 win32 {
@@ -169,7 +173,9 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    supertest.ui \
+    testui.ui
 
 
 # Default rules for deployment.

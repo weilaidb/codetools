@@ -11,10 +11,12 @@
 #include "version.h"
 #include "basedefinepub.h"
 #include "basetypepub.h"
+#include "supertest.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 namespace Ui { class CDialogAskText; }
+namespace Ui { class SuperTest; }
 QT_END_NAMESPACE
 
 
@@ -30,6 +32,7 @@ public:
 private:
     void show_Version();
     void init_Dialog();
+    void init_SuperTest();
     void init_ActionSets();
     void init_CheckBoxSets();
     void init_Vars();
@@ -98,6 +101,9 @@ private:
     Ui::CDialogAskText *uiDialog;
     QDialog *pDialog;
 
+    //test ui
+    Ui::SuperTest *uiTest;
+    SuperTest *pTw;
 
     /* 右键菜单 */
     QMenu *pRightMouse;
@@ -172,6 +178,8 @@ private:
     //QMutexLocker
 //    QMutexLocker update_locker;
     QMutex m_lock;
+
+
 private slots:
     void proc_action_codeFormat_File();
     void proc_action_codeFormat_Directory();
@@ -231,6 +239,7 @@ private slots:
     void proc_frequse_config(QString configfilename);
     void proc_action_background_update(bool bFlag);
     void proc_action_update(bool bFlag);
+    void proc_action_scan_test_dir(bool bFlag);
 
 
     void update_generate_menu_left();
