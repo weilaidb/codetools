@@ -245,12 +245,14 @@ private slots:
     void update_generate_menu_left();
     void proc_generate_menu_left(QPoint pos);
     void proc_generate_menu_right(QPoint pos);
+    void proc_generate_menu_cfgAfter(QPoint pos);
     void proc_generate_menu_leftbottom(QPoint pos);
     QMenu *proc_fromfile_menu(QString filename);
     QMenu *proc_frequse_menu();
     QMenu *proc_openfilelist_menu();
     void nodes_menu_left(QMenu *pMenu);
     void nodes_menu_right(QMenu *pMenu);
+    void nodes_menu_cfgAfter(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
@@ -260,6 +262,8 @@ private slots:
     void proc_actionPasteRight();
     void proc_actionSelectAllCopyRight();
     void proc_actionClearEmpty();
+    void proc_actionCovertOneLine();
+    void proc_actionCovertMulLine();
     void proc_actionOpenConfigBaseDir();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();

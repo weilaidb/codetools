@@ -218,6 +218,7 @@ void MainWindow::init_UiSets()
     GEN_MENU_PUB(ui->textEdit, proc_generate_menu_left);
     GEN_MENU_PUB(ui->textBrowser, proc_generate_menu_right);
 //    GEN_MENU_PUB(ui->textEdit_cfgTips, proc_generate_menu_leftbottom);
+    GEN_MENU_PUB(ui->textEdit_cfgAfter, proc_generate_menu_cfgAfter);
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
@@ -322,9 +323,20 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
     CUIPub::clearMenuAll(&pRightMouse);
 
     QCursor cur=this->cursor();
-    pRightMouse = new QMenu(this);
-    nodes_menu_right(pRightMouse);
-    pRightMouse->exec(cur.pos()); //关联到光标
+    QMenu *pTempRightMouse = new QMenu(this);
+    nodes_menu_right(pTempRightMouse);
+    pTempRightMouse->exec(cur.pos()); //关联到光标
+}
+
+void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
+{
+    Q_UNUSED(pos)
+//    CUIPub::clearMenuAll(&pRightMouse);
+
+    QCursor cur=this->cursor();
+    QMenu *pTempRightMouse = new QMenu(this);
+    nodes_menu_cfgAfter(pTempRightMouse);
+    pTempRightMouse->exec(cur.pos()); //关联到光标
 }
 
 void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
@@ -490,6 +502,24 @@ void MainWindow::nodes_menu_right(QMenu *pMenu)
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
     pMenu->addAction(pActionClearEmpty);
+
+}
+
+void MainWindow::nodes_menu_cfgAfter(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+
+    QAction *pActionCovertOneLine      = CUIPub::createAction("转一行");
+    QAction *pActionCovertMulLine      = CUIPub::createAction("转多行");
+
+    QObject::connect(pActionCovertOneLine, SIGNAL(triggered()), this, SLOT(proc_actionCovertOneLine()));
+    QObject::connect(pActionCovertMulLine, SIGNAL(triggered()), this, SLOT(proc_actionCovertMulLine()));
+
+    pMenu->addAction(pActionCovertOneLine);
+    pMenu->addAction(pActionCovertMulLine);
 
 }
 
@@ -1543,6 +1573,18 @@ void MainWindow::proc_actionSelectAllCopyRight()
 void MainWindow::proc_actionClearEmpty()
 {
     CUIPub::setPlainTextBrowser(ui->textBrowser, CStringPub::stringFilterEmpty(CUIPub::getTextBrowser(ui->textBrowser)));
+}
+
+void MainWindow::proc_actionCovertOneLine()
+{
+    QString text = CUIPub::getTextEdit(ui->textEdit_cfgAfter);
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace("\n", "$NL"));
+}
+
+void MainWindow::proc_actionCovertMulLine()
+{
+    QString text = CUIPub::getTextEdit(ui->textEdit_cfgAfter);
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace("$NL", "\n"));
 }
 
 

@@ -19,6 +19,7 @@ SuperTest::SuperTest(QWidget *parent) :
     init_Vars();
     init_UiSets();
 
+    read_Setting();
 }
 
 SuperTest::~SuperTest()
@@ -41,6 +42,10 @@ void SuperTest::init_Vars()
 {
     file_content_txt = "content.txt";
     file_result_log = "result.log";
+
+    m_organization = "weilaidb";
+    m_application = "supertest";
+
 }
 
 void SuperTest::init_UiSets()
@@ -169,3 +174,33 @@ void SuperTest::proc_actionOpenConfigDir()
     CUIPub::explorerPathExt(dirPath);
 }
 
+void SuperTest::closeEvent(QCloseEvent *event)
+{
+    debugApp() << "closeEvent";
+    write_HistorySetting();
+    event->accept();
+}
+
+void SuperTest::read_Setting()
+{
+    read_HistorySetting();
+}
+
+void SuperTest::proc_HistorySetting(int type)
+{
+    quint8 ucType = type;
+    m_pSettings = CUIPub::read_HistorySettings(m_organization,m_application);
+    CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
+    CUIPub::procString(m_pSettings, BINDSTRWORDS(dir_cur_loaded), ucType);
+}
+
+void SuperTest::read_HistorySetting()
+{
+    proc_HistorySetting(CUIPub::TYPE_READ);
+}
+
+
+void SuperTest::write_HistorySetting()
+{
+    proc_HistorySetting(CUIPub::TYPE_WRITE);
+}
