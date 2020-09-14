@@ -17,6 +17,7 @@ SuperTest::SuperTest(QWidget *parent) :
     init_PushButtonSets();
     init_ListWidget();
     init_Vars();
+    init_UiSets();
 
 }
 
@@ -41,6 +42,31 @@ void SuperTest::init_Vars()
     file_content_txt = "content.txt";
     file_result_log = "result.log";
 }
+
+void SuperTest::init_UiSets()
+{
+    pRightMouse = nullptr;
+    GEN_MENU_PUB(ui->textEdit_test_content, proc_generate_menu_left);
+    CUIPub::clearMenuAll(&pRightMouse);
+
+    pRightMouse = new QMenu(this);
+
+    nodes_menu_leftbottom(pRightMouse);
+
+}
+
+void SuperTest::proc_generate_menu_left(QPoint pos)
+{
+    Q_UNUSED(pos)
+    debugApp() << "right mouse clicked!!";
+    QCursor cur=this->cursor();
+
+    if(pRightMouse)
+    {
+        pRightMouse->exec(cur.pos()); //关联到光标
+    }
+}
+
 
 void SuperTest::init_ListWidget()
 {
@@ -91,6 +117,7 @@ void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item
     item->setFlags(item->flags() | Qt::ItemIsEditable);
     CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(item->text()));
     CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(item->text() + CSignPub::signDot() + file_result_log));
+    file_cur_item_load = item->text();
 }
 
 void SuperTest::on_pushButton_reload_dir_clicked()
@@ -105,3 +132,40 @@ void SuperTest::on_pushButton_reload_dir_clicked()
 
     CUIPub::addListWidgetItems_ClearFirst(ui->listWidget_load_dir, filelist);
 }
+
+void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
+    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
+//    append_RightMouseList(pActionOpenCfgFile);
+//    append_RightMouseList(pActionOpenCfgDir);
+    QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+
+    pMenu->addAction(pActionOpenCfgFile);
+    pMenu->addAction(pActionOpenCfgDir);
+}
+
+void SuperTest::proc_actionOpenConfigFile()
+{
+    if(0 == CStringPub::strSimLen(file_cur_item_load))
+    {
+        return;
+    }
+    CUIPub::explorerPathExt(file_cur_item_load);
+}
+
+void SuperTest::proc_actionOpenConfigDir()
+{
+    if(0 == CStringPub::strSimLen(file_cur_item_load))
+    {
+        return;
+    }
+    QString dirPath = CFilePub::parentDir(file_cur_item_load);
+    CUIPub::explorerPathExt(dirPath);
+}
+
