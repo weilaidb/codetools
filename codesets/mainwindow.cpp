@@ -212,7 +212,8 @@ void MainWindow::init_Vars()
 void MainWindow::init_UiSets()
 {
     //    this->setWindowIcon();
-    pRightMouse = nullptr;
+    pRightMouse_L = nullptr;
+    pRightMouse_R = nullptr;
     m_lstRightMouse.clear();
     //QTextEdit 右键菜单
     GEN_MENU_PUB(ui->textEdit, proc_generate_menu_left);
@@ -270,20 +271,20 @@ void MainWindow::update_generate_menu_left()
     QMutexLocker update_locker(&m_lock);
     debugApp() << "update_generate_menu_left!!";
     //此处删除会异常，正在显示的内容突然被删除
-    CUIPub::clearMenuAll(&pRightMouse);
+    CUIPub::clearMenuAll(&pRightMouse_L);
     free_RightMouseList();
 
-    pRightMouse = new QMenu(this);
+    pRightMouse_L = new QMenu(this);
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
-    //    pRightMouse->addMenu(CUIPub::copyMenu(ui->menuGenerate));
+    //    pRightMouse_L->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
     pMenuCustom = proc_fromfile_menu(m_FileNameMenu);
     if(pMenuCustom)
     {
-        pRightMouse->addMenu((pMenuCustom));
+        pRightMouse_L->addMenu((pMenuCustom));
     }
-    nodes_menu_left(pRightMouse);
-    nodes_menu_leftbottom(pRightMouse);
+    nodes_menu_left(pRightMouse_L);
+    nodes_menu_leftbottom(pRightMouse_L);
 }
 
 /**
@@ -302,13 +303,13 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
     debugApp() << "right mouse clicked!!";
     QCursor cur=this->cursor();
     if((CExpressPub::isFalse(CUIPub::isCheckedQAction(ui->action_background_update)))
-            || (CExpressPub::isNullPtr(pRightMouse)))
+            || (CExpressPub::isNullPtr(pRightMouse_L)))
     {
         update_generate_menu_left();
     }
-    if(pRightMouse)
+    if(pRightMouse_L)
     {
-        pRightMouse->exec(cur.pos()); //关联到光标
+        pRightMouse_L->exec(cur.pos()); //关联到光标
     }
 }
 
@@ -320,34 +321,34 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
 void MainWindow::proc_generate_menu_right(QPoint pos)
 {
     Q_UNUSED(pos)
-    CUIPub::clearMenuAll(&pRightMouse);
+    CUIPub::clearMenuAll(&pRightMouse_R);
 
     QCursor cur=this->cursor();
-    QMenu *pTempRightMouse = new QMenu(this);
-    nodes_menu_right(pTempRightMouse);
-    pTempRightMouse->exec(cur.pos()); //关联到光标
+    QMenu *pTempRightMouse_L = new QMenu(this);
+    nodes_menu_right(pTempRightMouse_L);
+    pTempRightMouse_L->exec(cur.pos()); //关联到光标
 }
 
 void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
 {
     Q_UNUSED(pos)
-//    CUIPub::clearMenuAll(&pRightMouse);
+//    CUIPub::clearMenuAll(&pRightMouse_L);
 
     QCursor cur=this->cursor();
-    QMenu *pTempRightMouse = new QMenu(this);
-    nodes_menu_cfgAfter(pTempRightMouse);
-    pTempRightMouse->exec(cur.pos()); //关联到光标
+    QMenu *pTempRightMouse_L = new QMenu(this);
+    nodes_menu_cfgAfter(pTempRightMouse_L);
+    pTempRightMouse_L->exec(cur.pos()); //关联到光标
 }
 
 void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
 {
     Q_UNUSED(pos)
-    CUIPub::clearMenuAll(&pRightMouse);
+    CUIPub::clearMenuAll(&pRightMouse_L);
 
     QCursor cur=this->cursor();
-    pRightMouse = new QMenu(this);
-    nodes_menu_leftbottom(pRightMouse);
-    pRightMouse->exec(cur.pos()); //关联到光标
+    pRightMouse_L = new QMenu(this);
+    nodes_menu_leftbottom(pRightMouse_L);
+    pRightMouse_L->exec(cur.pos()); //关联到光标
 }
 
 

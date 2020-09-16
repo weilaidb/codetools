@@ -106,7 +106,8 @@ private:
     SuperTest *pTw;
 
     /* 右键菜单 */
-    QMenu *pRightMouse;
+    QMenu *pRightMouse_L;
+    QMenu *pRightMouse_R;
     QList<QAction *> m_lstRightMouse;
     //custom menu
     QMenu *pMenuCustom;
