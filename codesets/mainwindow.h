@@ -286,5 +286,6 @@ private slots:
     void proc_pushButton_right_copy  ()  ;
     void hide_PushButtonSets();
 
+    void on_action_newwindow_self_triggered();
 };
 #endif // MAINWINDOW_H

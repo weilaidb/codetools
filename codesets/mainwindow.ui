@@ -255,6 +255,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_background_update"/>
     <addaction name="action_update"/>
     <addaction name="action_hidebuttonswitch"/>
+    <addaction name="action_newwindow_self"/>
    </widget>
    <widget class="QMenu" name="menu_9">
     <property name="title">
@@ -484,6 +485,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_scan_test_dir">
    <property name="text">
     <string>扫描测试目录</string>
+   </property>
+  </action>
+  <action name="action_newwindow_self">
+   <property name="text">
+    <string>新窗口</string>
    </property>
   </action>
  </widget>
