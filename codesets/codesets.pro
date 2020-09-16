@@ -103,6 +103,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    cdialognewut.cpp \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
@@ -132,6 +133,7 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
+    cdialognewut.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basedefinepub.h \
@@ -173,6 +175,7 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
+    cdialognewut.ui \
     mainwindow.ui \
     supertest.ui \
     testui.ui

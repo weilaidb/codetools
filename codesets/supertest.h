@@ -33,6 +33,7 @@ private:
     void proc_HistorySetting(int type);
     void read_HistorySetting();
     void write_HistorySetting();
+    QString getUtNamePrefix();
 
 
 private slots:
@@ -48,6 +49,8 @@ private slots:
     void proc_actionOpenConfigDir();
 
     void proc_generate_menu_left(QPoint pos);
+    void on_action_new_ut_instance_triggered();
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;

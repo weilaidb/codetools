@@ -164,6 +164,7 @@
      <string>文件</string>
     </property>
     <addaction name="action_scan_test_dir"/>
+    <addaction name="action_new_ut_instance"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -171,6 +172,11 @@
   <action name="action_scan_test_dir">
    <property name="text">
     <string>扫描测试目录</string>
+   </property>
+  </action>
+  <action name="action_new_ut_instance">
+   <property name="text">
+    <string>创建单元测试</string>
    </property>
   </action>
  </widget>

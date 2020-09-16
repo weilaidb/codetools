@@ -1,6 +1,7 @@
 #include "supertest.h"
 #include "ui_supertest.h"
 #include "debugApp.h"
+#include "cdialognewut.h"
 
 #include <cexpresspub.h>
 #include <cfilepub.h>
@@ -204,3 +205,23 @@ void SuperTest::write_HistorySetting()
 {
     proc_HistorySetting(CUIPub::TYPE_WRITE);
 }
+
+void SuperTest::on_action_new_ut_instance_triggered()
+{
+    CDialogNewUt *pDiaglog = new CDialogNewUt();
+
+    if(CStringPub::strSimLen(dir_cur_loaded))
+    {
+        QString newPath = dir_cur_loaded + getUtNamePrefix() + CSignPub::signDot();
+        pDiaglog->setPath(newPath);
+    }
+
+    pDiaglog->exec();
+}
+
+QString SuperTest::getUtNamePrefix()
+{
+    return file_content_txt;
+}
+
+

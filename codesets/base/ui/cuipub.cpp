@@ -453,6 +453,22 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
     pEdit->setText(text);
 }
 
+void CUIPub::setTextEditFocus(QTextEdit *pEdit)
+{
+    pEdit->setFocus();
+}
+
+void CUIPub::setTextEditmoveCursorEnd(QTextEdit *pEdit)
+{
+    pEdit->moveCursor(QTextCursor::End);
+}
+
+void CUIPub::setTextEditmoveCursorHead(QTextEdit *pEdit)
+{
+    pEdit->moveCursor(QTextCursor::Start);
+}
+
+
 void CUIPub::setPlainTextEdit(QTextEdit *pEdit, QString text)
 {
     pEdit->setPlainText(text);
