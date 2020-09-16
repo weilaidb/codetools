@@ -22,3 +22,8 @@ void CDialogNewUt::setPath(QString &path)
     CUIPub::setTextEditmoveCursorEnd(ui->textEdit);
 }
 
+QString CDialogNewUt::getPath()
+{
+    return CUIPub::getTextEdit(ui->textEdit);
+}
+

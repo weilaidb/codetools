@@ -16,6 +16,7 @@ public:
     ~CDialogNewUt();
 
     void setPath(QString &path);
+    QString getPath();
 
 private:
     Ui::CDialogNewUt *ui;

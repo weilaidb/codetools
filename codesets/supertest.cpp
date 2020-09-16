@@ -217,6 +217,10 @@ void SuperTest::on_action_new_ut_instance_triggered()
     }
 
     pDiaglog->exec();
+
+    debugApp() << pDiaglog->getPath();
+    CFilePub::createFileEmptyNoExist(pDiaglog->getPath());
+    on_pushButton_reload_dir_clicked();
 }
 
 QString SuperTest::getUtNamePrefix()
