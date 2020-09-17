@@ -709,3 +709,9 @@ void CUIPub::addListWidgetItem(QListWidget *pWidget, QString item)
     }
     pWidget->addItem(item);
 }
+
+void CUIPub::setLabelText(QLabel *pLabel, QString text)
+{
+    pLabel->setText(text);
+}
+

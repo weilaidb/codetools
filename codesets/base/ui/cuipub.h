@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QListWidget>
+#include <QLabel>
 
 /**
   ** 自定义右键菜单
@@ -110,6 +111,8 @@ public:
     static void addListWidgetItems(QListWidget *pWidget, QStringList list);
     static void addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list);
     static void addListWidgetItem(QListWidget *pWidget, QString item);
+    //QLabel
+    static void setLabelText(QLabel *pLabel, QString text);
 public:
     enum{
         TYPE_READ = 1,

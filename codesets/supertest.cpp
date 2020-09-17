@@ -146,14 +146,17 @@ void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
         return;
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
-    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
+    QAction *pActionOpenCfgDir     = CUIPub::createAction("打开当前配置文件夹");
+    QAction *pActionSaveFile       = CUIPub::createAction("保存");
 //    append_RightMouseList(pActionOpenCfgFile);
 //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+    QObject::connect(pActionSaveFile, SIGNAL(triggered()), this, SLOT(proc_actionSaveFile()));
 
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
+    pMenu->addAction(pActionSaveFile);
 }
 
 void SuperTest::proc_actionOpenConfigFile()
@@ -179,6 +182,17 @@ void SuperTest::proc_actionOpenConfigDir()
     CUIPub::explorerPathExt(dirPath);
 }
 
+void SuperTest::proc_actionSaveFile()
+{
+    if(0 == CStringPub::strSimLen(file_cur_item_load))
+    {
+        return;
+    }
+    CFilePub::writeFileWOnly(file_cur_item_load, CUIPub::getTextEdit(ui->textEdit_test_content));
+}
+
+
+
 void SuperTest::closeEvent(QCloseEvent *event)
 {
     debugApp() << "closeEvent";
@@ -197,6 +211,7 @@ void SuperTest::proc_HistorySetting(int type)
     m_pSettings = CUIPub::read_HistorySettings(m_organization,m_application);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(dir_cur_loaded), ucType);
+    CUIPub::setLabelText(ui->label_load_path, dir_cur_loaded);
 }
 
 void SuperTest::read_HistorySetting()
