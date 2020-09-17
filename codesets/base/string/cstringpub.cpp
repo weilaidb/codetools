@@ -329,6 +329,16 @@ QStringList CStringPub::wordNameFilter()
 }
 
 
+bool CStringPub::strSimLenFull(QString str)
+{
+    return (str.simplified().length() > 0);
+}
+
+bool CStringPub::strSimLenZero(QString str)
+{
+    return (str.simplified().length() == 0);
+}
+
 int CStringPub::strSimLen(QString str)
 {
     return str.simplified().length();

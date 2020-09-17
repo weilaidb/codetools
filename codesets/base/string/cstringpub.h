@@ -59,6 +59,8 @@ public:
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
     static int strSimLen(QString str);
+    static bool strSimLenZero(QString str);
+    static bool strSimLenFull(QString str);
     static QString strSim(QString str);
     static void clearString(QString &str);
     static void setString(QString &str, QString val);
