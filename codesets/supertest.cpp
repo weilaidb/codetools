@@ -172,6 +172,10 @@ void SuperTest::proc_actionOpenConfigDir()
         return;
     }
     QString dirPath = CFilePub::parentDir(file_cur_item_load);
+
+    debugApp() << "file_cur_item_load:" << file_cur_item_load;
+    debugApp() << "dirPath:" << dirPath;
+
     CUIPub::explorerPathExt(dirPath);
 }
 

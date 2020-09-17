@@ -577,5 +577,10 @@ qint64 CFilePub::fileSize(const QString path)
 
 QString CFilePub::parentDir(QString filepath)
 {
-    return filepath + QDir::separator() + "..";
+    QFile file(filepath);
+    //..必须添加/才行，即../
+    QString dirPath = filepath + QDir::separator() + "../";
+//    dirPath = QDir::toNativeSeparators(dirPath);
+    dirPath = QDir::fromNativeSeparators(dirPath);
+    return dirPath;
 }
