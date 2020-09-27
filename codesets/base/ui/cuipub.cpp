@@ -22,6 +22,7 @@
 #include "ctextcodecpub.h"
 #include "clogpub.h"
 #include "csignpub.h"
+#include "cmsgtips.h"
 
 #define MAX_LENGTH (20480)
 
@@ -714,4 +715,29 @@ void CUIPub::setLabelText(QLabel *pLabel, QString text)
 {
     pLabel->setText(text);
 }
+
+void CUIPub::showStatusBar(QStatusBar *statusbar, QString msg)
+{
+    if(CExpressPub::isNullPtr(statusbar))
+    {
+        return;
+    }
+    statusbar->showMessage(msg);
+}
+
+void CUIPub::showStatusBarTimerBoth(QStatusBar *statusbar, QString msg)
+{
+    if(CExpressPub::isNullPtr(statusbar))
+    {
+        return;
+    }
+    statusbar->showMessage(msg);
+    ShowTipsInfoWithShowTime(msg, 2000);
+}
+
+void CUIPub::showStatusBarTimerOnly(QString msg)
+{
+    ShowTipsInfoWithShowTime(msg, 2000);
+}
+
 

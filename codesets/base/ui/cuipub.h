@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QLabel>
+#include <QStatusBar>
 
 /**
   ** 自定义右键菜单
@@ -113,6 +114,11 @@ public:
     static void addListWidgetItem(QListWidget *pWidget, QString item);
     //QLabel
     static void setLabelText(QLabel *pLabel, QString text);
+    //StatusBar
+    static void showStatusBar(QStatusBar *statusbar, QString msg);
+    static void showStatusBarTimerBoth(QStatusBar *statusbar, QString msg);
+    static void showStatusBarTimerOnly(QString msg);
+
 public:
     enum{
         TYPE_READ = 1,

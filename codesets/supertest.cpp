@@ -137,6 +137,8 @@ void SuperTest::on_pushButton_reload_dir_clicked()
     debugApp() << "filtered filelist:" << filelist;
 
     CUIPub::addListWidgetItems_ClearFirst(ui->listWidget_load_dir, filelist);
+
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("用例个数:%1").arg(ui->listWidget_load_dir->count()));
 }
 
 void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
