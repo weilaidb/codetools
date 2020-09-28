@@ -48,6 +48,7 @@ private slots:
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
     void proc_actionSaveFile();
+    void proc_actionReloadFile();
 
     void proc_generate_menu_left(QPoint pos);
     void on_action_new_ut_instance_triggered();

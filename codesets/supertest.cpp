@@ -150,14 +150,17 @@ void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir     = CUIPub::createAction("打开当前配置文件夹");
     QAction *pActionSaveFile       = CUIPub::createAction("保存");
+    QAction *pActionReloadFile         = CUIPub::createAction("重新加载");
 //    append_RightMouseList(pActionOpenCfgFile);
 //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
     QObject::connect(pActionSaveFile, SIGNAL(triggered()), this, SLOT(proc_actionSaveFile()));
+    QObject::connect(pActionReloadFile, SIGNAL(triggered()), this, SLOT(proc_actionReloadFile()));
 
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
+    pMenu->addAction(pActionReloadFile);
     pMenu->addAction(pActionSaveFile);
 }
 
@@ -191,6 +194,16 @@ void SuperTest::proc_actionSaveFile()
         return;
     }
     CFilePub::writeFileWOnly(file_cur_item_load, CUIPub::getTextEdit(ui->textEdit_test_content));
+}
+
+void SuperTest::proc_actionReloadFile()
+{
+    if(0 == CStringPub::strSimLen(file_cur_item_load))
+    {
+        return;
+    }
+    CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(file_cur_item_load));
+    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(file_cur_item_load + CSignPub::signDot() + file_result_log));
 }
 
 
