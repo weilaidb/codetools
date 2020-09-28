@@ -101,21 +101,21 @@ void MainWindow::init_CheckBoxSets()
 
 void MainWindow::hide_PushButtonSets()
 {
+    QVector<QPushButton *> vecPushBtns;
+    vecPushBtns.append(ui->pushButton_left_clear  );
+    vecPushBtns.append(ui->pushButton_left_paste  );
+    vecPushBtns.append(ui->pushButton_tryagain    );
+    vecPushBtns.append(ui->pushButton_right_clear );
+    vecPushBtns.append(ui->pushButton_right_copy  );
+    vecPushBtns.append(ui->pushButton_clearTryAgainExt  );
+
     if(CUIPub::isCheckedQAction(ui->action_hidebuttonswitch))
     {
-        CUIPub::hidePushButton(ui->pushButton_left_clear  );
-        CUIPub::hidePushButton(ui->pushButton_left_paste  );
-        CUIPub::hidePushButton(ui->pushButton_tryagain    );
-        CUIPub::hidePushButton(ui->pushButton_right_clear );
-        CUIPub::hidePushButton(ui->pushButton_right_copy  );
+        CUIPub::hidePushButtons(vecPushBtns);
         return;
     }
 
-    CUIPub::showPushButton(ui->pushButton_left_clear  );
-    CUIPub::showPushButton(ui->pushButton_left_paste  );
-    CUIPub::showPushButton(ui->pushButton_tryagain    );
-    CUIPub::showPushButton(ui->pushButton_right_clear );
-    CUIPub::showPushButton(ui->pushButton_right_copy  );
+    CUIPub::showPushButtons(vecPushBtns);
 }
 
 void MainWindow::init_PushButtonSets()
@@ -1757,4 +1757,10 @@ void MainWindow::on_action_newwindow_self_triggered()
     char *exepath = (char *)"testme";
     MainWindow *pNewWindow = new MainWindow(exepath, nullptr);
     pNewWindow->show();
+}
+
+void MainWindow::on_pushButton_clearTryAgainExt_clicked()
+{
+    CUIPub::clearTextEdit(ui->textEdit);
+    emit ui->pushButton_tryagain->clicked();
 }

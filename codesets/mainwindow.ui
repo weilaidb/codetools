@@ -77,6 +77,11 @@
              <string>tryAgain</string>
             </property>
            </widget>
+           <widget class="QPushButton" name="pushButton_clearTryAgainExt">
+            <property name="text">
+             <string>clearTry</string>
+            </property>
+           </widget>
           </widget>
          </widget>
         </widget>

@@ -80,6 +80,8 @@ public:
     static void showTextEdit(QTextEdit *pEdit);
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
+    static void hidePushButtons(QVector<QPushButton *> &vec);
+    static void showPushButtons(QVector<QPushButton *> &vec);
     static void pushButtonEmitClick(QPushButton *pBtn);
     static void setTextEditFocus(QTextEdit *pEdit);
     static void setTextEditmoveCursorEnd(QTextEdit *pEdit);

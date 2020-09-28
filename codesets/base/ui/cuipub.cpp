@@ -674,6 +674,26 @@ void CUIPub::showPushButton(QPushButton *pBtn)
     pBtn->show();
 }
 
+void CUIPub::hidePushButtons(QVector<QPushButton *> &vec)
+{
+    int iLp =  0;;
+    for(iLp = 0;iLp < vec.size();iLp++)
+    {
+        hidePushButton(vec[iLp]);
+    }
+}
+
+void CUIPub::showPushButtons(QVector<QPushButton *> &vec)
+{
+    int iLp =  0;;
+    for(iLp = 0;iLp < vec.size();iLp++)
+    {
+        showPushButton(vec[iLp]);
+    }
+}
+
+
+
 void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
 {
     if(CExpressPub::isNullPtr(pBtn))

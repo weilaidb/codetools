@@ -288,5 +288,6 @@ private slots:
     void hide_PushButtonSets();
 
     void on_action_newwindow_self_triggered();
+    void on_pushButton_clearTryAgainExt_clicked();
 };
 #endif // MAINWINDOW_H
