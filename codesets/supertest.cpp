@@ -194,6 +194,7 @@ void SuperTest::proc_actionSaveFile()
         return;
     }
     CFilePub::writeFileWOnly(file_cur_item_load, CUIPub::getTextEdit(ui->textEdit_test_content));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("保存文件:%1").arg(file_cur_item_load));
 }
 
 void SuperTest::proc_actionReloadFile()
@@ -204,6 +205,7 @@ void SuperTest::proc_actionReloadFile()
     }
     CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(file_cur_item_load));
     CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(file_cur_item_load + CSignPub::signDot() + file_result_log));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("重新加载:%1").arg(file_cur_item_load));
 }
 
 
@@ -263,3 +265,8 @@ QString SuperTest::getUtNamePrefix()
 }
 
 
+
+void SuperTest::on_actionSave_triggered()
+{
+    proc_actionSaveFile();
+}

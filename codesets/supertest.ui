@@ -165,6 +165,8 @@
     </property>
     <addaction name="action_scan_test_dir"/>
     <addaction name="action_new_ut_instance"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -173,10 +175,24 @@
    <property name="text">
     <string>扫描测试目录</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="action_new_ut_instance">
    <property name="text">
     <string>创建单元测试</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>保存</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

@@ -53,6 +53,8 @@ private slots:
     void proc_generate_menu_left(QPoint pos);
     void on_action_new_ut_instance_triggered();
 
+    void on_actionSave_triggered();
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;
