@@ -38,6 +38,7 @@ private:
 
 private slots:
     void proc_pushButton_load_test_dir();
+    void proc_actionAbout();
 
     void on_pushButton_load_test_dir_clicked();
 
@@ -55,6 +56,8 @@ private slots:
 
     void on_actionSave_triggered();
 
+    void on_lineEdit_returnPressed();
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;
@@ -71,7 +74,8 @@ private:
     QSettings *m_pSettings;
     QString m_organization;
     QString m_application;
-
+    //Attention
+    QString m_AttentionFile;
 };
 
 #endif // SUPERTEST_H

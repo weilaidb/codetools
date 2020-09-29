@@ -87,6 +87,11 @@
          <string>重新加载</string>
         </property>
        </widget>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="placeholderText">
+         <string>输入过滤的内容</string>
+        </property>
+       </widget>
        <widget class="QLabel" name="label_load_path">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -168,7 +173,14 @@
     <addaction name="separator"/>
     <addaction name="actionSave"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="action_about"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_scan_test_dir">
@@ -193,6 +205,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>关于</string>
    </property>
   </action>
  </widget>

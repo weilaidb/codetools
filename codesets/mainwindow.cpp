@@ -1764,3 +1764,4 @@ void MainWindow::on_pushButton_clearTryAgainExt_clicked()
     CUIPub::clearTextEdit(ui->textEdit);
     emit ui->pushButton_tryagain->clicked();
 }
+

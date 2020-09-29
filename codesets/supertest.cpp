@@ -31,6 +31,7 @@ SuperTest::~SuperTest()
 void SuperTest::init_ActionSets()
 {
     QObject::connect(ui->action_scan_test_dir, SIGNAL(triggered()), this, SLOT(proc_pushButton_load_test_dir()));
+    QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_actionAbout()));
 }
 
 void SuperTest::init_PushButtonSets()
@@ -46,6 +47,7 @@ void SuperTest::init_Vars()
 
     m_organization = "weilaidb";
     m_application = "supertest";
+    m_AttentionFile = "reg/attention_st.txt";
 
 }
 
@@ -102,6 +104,11 @@ void SuperTest::proc_pushButton_load_test_dir()
     on_pushButton_reload_dir_clicked();
 }
 
+void SuperTest::proc_actionAbout()
+{
+    CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
+}
+
 void SuperTest::config_cur_load_path(QString path)
 {
     dir_cur_loaded = path;
@@ -136,9 +143,17 @@ void SuperTest::on_pushButton_reload_dir_clicked()
     filelist = CStringPub::filterFileListNoInclude(file_result_log, filelist);
     debugApp() << "filtered filelist:" << filelist;
 
+    QString findstr = CUIPub::getLineEdit(ui->lineEdit);
+    QString mode = "";
+    if(CStringPub::strSimLen(findstr))
+    {
+        filelist = CStringPub::filterFileListInclude(findstr, filelist);
+        mode = "[过滤模式]";
+    }
+
     CUIPub::addListWidgetItems_ClearFirst(ui->listWidget_load_dir, filelist);
 
-    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("用例个数:%1").arg(ui->listWidget_load_dir->count()));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("%1用例个数:%2").arg(mode).arg(ui->listWidget_load_dir->count()));
 }
 
 void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
@@ -252,10 +267,36 @@ void SuperTest::on_action_new_ut_instance_triggered()
         pDiaglog->setPath(newPath);
     }
 
-    pDiaglog->exec();
+    if(QDialog::Rejected == pDiaglog->exec())
+    {
+        return;
+    }
 
+
+    //支持同时创建多个文件用例
     debugApp() << pDiaglog->getPath();
-    CFilePub::createFileEmptyNoExist(pDiaglog->getPath());
+
+    QStringList strPathList =CStringPub::stringSplitbyNewLineFilterEmpty(pDiaglog->getPath());
+    if(1 == strPathList.size())
+    {
+        CFilePub::createFileEmptyNoExist(pDiaglog->getPath());
+    }
+    else
+    {
+        QString prefix = strPathList.at(0);
+        quint16 dsLp = 0;
+        foreach (QString item, strPathList) {
+            if(0 == dsLp)
+            {
+                dsLp++;
+                continue;
+            }
+            QString filelast = prefix + item;
+            CFilePub::createFileEmptyNoExist(filelast);
+        }
+    }
+
+
     on_pushButton_reload_dir_clicked();
 }
 
@@ -269,4 +310,10 @@ QString SuperTest::getUtNamePrefix()
 void SuperTest::on_actionSave_triggered()
 {
     proc_actionSaveFile();
+}
+
+void SuperTest::on_lineEdit_returnPressed()
+{
+    debugApp() << "on_lineEdit_returnPressed";
+    on_pushButton_reload_dir_clicked();
 }

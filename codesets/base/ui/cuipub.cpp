@@ -14,6 +14,7 @@
 #include <cfilepub.h>
 #include "debugApp.h"
 #ifdef WIN32
+#include <QLineEdit>
 #include <clogpub.h>
 #include <csignpub.h>
 #include <windows.h>
@@ -761,3 +762,8 @@ void CUIPub::showStatusBarTimerOnly(QString msg)
 }
 
 
+
+QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
+{
+    return pLineEdit->text();
+}
