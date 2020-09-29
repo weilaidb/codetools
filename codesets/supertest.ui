@@ -14,144 +14,152 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <widget class="QSplitter" name="splitter_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="QPushButton" name="pushButton_load_test_dir">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>41</height>
-         </size>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QSplitter" name="splitter_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>120</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>加载单元测试目录</string>
-        </property>
+        <widget class="QPushButton" name="pushButton_load_test_dir">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>加载单元测试目录</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_open_test_dir">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>打开目录</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_reload_dir">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>重新加载</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="placeholderText">
+          <string>输入过滤的内容</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>精确</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_load_path">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>441</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </widget>
-       <widget class="QPushButton" name="pushButton_open_test_dir">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>打开目录</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_reload_dir">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>41</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>重新加载</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="placeholderText">
-         <string>输入过滤的内容</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_load_path">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>441</width>
-          <height>41</height>
-         </size>
-        </property>
+      </item>
+      <item row="1" column="0">
+       <widget class="QListWidget" name="listWidget_load_dir">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>63</height>
+          <height>16777215</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
-        </property>
        </widget>
-      </widget>
-      <widget class="QListWidget" name="listWidget_load_dir">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="QTextEdit" name="textEdit_test_content">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>192</height>
-         </size>
+      </item>
+      <item row="2" column="0">
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="placeholderText">
-         <string>显示测试内容</string>
-        </property>
+        <widget class="QTextEdit" name="textEdit_test_content">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>192</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>显示测试内容</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="textEdit_test_result">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>192</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>显示测试结果内容</string>
+         </property>
+        </widget>
        </widget>
-       <widget class="QTextEdit" name="textEdit_test_result">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>192</height>
-         </size>
-        </property>
-        <property name="placeholderText">
-         <string>显示测试结果内容</string>
-        </property>
-       </widget>
-      </widget>
-     </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

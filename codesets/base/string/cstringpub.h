@@ -86,8 +86,8 @@ public:
     //cpp string
     static string getDataOfStr(BYTE *pMsg, WORD32 dwLen);
     //filter list
-    static QStringList filterFileListInclude(QString filter, QStringList list);
-    static QStringList filterFileListNoInclude(QString filter, QStringList list);
+    static QStringList filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    static QStringList filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 };
 
 #endif // CSTRINGPUB_H

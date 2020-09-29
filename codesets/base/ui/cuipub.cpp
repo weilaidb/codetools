@@ -767,3 +767,8 @@ QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
 {
     return pLineEdit->text();
 }
+
+bool CUIPub::getCheckBoxed(QCheckBox *pCheckBox)
+{
+    return pCheckBox->isChecked();
+}

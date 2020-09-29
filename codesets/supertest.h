@@ -58,6 +58,8 @@ private slots:
 
     void on_lineEdit_returnPressed();
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;

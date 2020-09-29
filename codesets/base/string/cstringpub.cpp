@@ -492,22 +492,22 @@ string CStringPub::getDataOfStr(BYTE *pMsg, WORD32 dwLen)
     return res;
 }
 
-QStringList CStringPub::filterFileListInclude(QString filter, QStringList list)
+QStringList CStringPub::filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
 {
     QStringList relist;
     foreach (QString item, list) {
-        if(item.contains(filter)){
+        if(item.contains(filter, cs)){
             relist.append(item);
         }
     }
     return relist;
 }
 //不包含字符串filter
-QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list)
+QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
 {
     QStringList relist;
     foreach (QString item, list) {
-        if(item.contains(filter)){
+        if(item.contains(filter, cs)){
             continue;
         }
         relist.append(item);

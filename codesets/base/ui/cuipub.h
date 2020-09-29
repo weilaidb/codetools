@@ -14,6 +14,7 @@
 #include <QLabel>
 #include <QStatusBar>
 #include <QLineEdit>
+#include <QCheckBox>
 
 /**
   ** 自定义右键菜单
@@ -101,6 +102,8 @@ public:
     static bool isCheckedQAction(QAction *pAction);
     static void setCheckedQAction(QAction *pAction, bool bflag);
     static bool getCheckedQAction(QAction *pAction);
+    //checkbox
+    static bool getCheckBoxed(QCheckBox *pCheckBox);
 
     //messgebox
     static int showBoxWarning(QString tips);
