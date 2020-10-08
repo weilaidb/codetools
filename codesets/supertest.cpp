@@ -79,7 +79,6 @@ void SuperTest::proc_generate_menu_left(QPoint pos)
 void SuperTest::init_ListWidget()
 {
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
-
 }
 
 void SuperTest::on_pushButton_load_test_dir_clicked()

@@ -3,6 +3,7 @@
 #include "ui_cdialogasktext.h"
 #include "ui_supertest.h"
 #include "supertest.h"
+#include "cdialogsearch.h"
 #include "astyle_main.h"
 #include "debugApp.h"
 #include "basetypepub.h"
@@ -254,6 +255,12 @@ void MainWindow::init_UiSets()
     //打开常用文件列表
     m_iListNormalUseCnt = 30;
     CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
+
+
+    //search result list widget, default hide
+    CUIPub::hideListWidget(ui->listWidget_searchresult);
+//    CUIPub::showListWidget(ui->listWidget_searchresult);
+
 }
 
 void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename)
@@ -1765,3 +1772,65 @@ void MainWindow::on_pushButton_clearTryAgainExt_clicked()
     emit ui->pushButton_tryagain->clicked();
 }
 
+
+void MainWindow::on_action_search_triggered()
+{
+    SHOWCURFUNC;
+    CDialogSearch *pDiaglogKey = new CDialogSearch();
+    if(QDialog::Rejected == pDiaglogKey->exec())
+    {
+        delete pDiaglogKey;
+        return;
+    }
+    debugApp() << pDiaglogKey->getKey();
+    QString findKey = pDiaglogKey->getKey();
+    if(0 == CStringPub::strSimLen(findKey))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("请输入关键字"));
+        CUIPub::clearHideListWidget(ui->listWidget_searchresult);
+        delete pDiaglogKey;
+        return;
+    }
+
+    //文件中的菜单列表
+    QStringList menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
+    Qt::CaseSensitivity cs = pDiaglogKey->getCaseSentived();
+    QStringList resultlist = CStringPub::emptyStringList();
+
+    //查看文件内容是否查找，文件名和内容都查找
+    if(pDiaglogKey->getFileContented())
+    {
+        foreach (QString item, menuList) {
+            QString filename = CRegExpPub::getRegExpFileNameTips(item);
+            if(item.contains(findKey,cs) || CFilePub::readFileAll(filename).contains(findKey,cs))
+            {
+                resultlist.append(item);
+            }
+        }
+    }
+    else
+    {
+        resultlist = CStringPub::filterFileListInclude(findKey, menuList, cs);
+    }
+
+
+
+    if(CExpressPub::isZero(resultlist.size()))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("未找到"));
+        CUIPub::clearHideListWidget(ui->listWidget_searchresult);
+        delete pDiaglogKey;
+        return;
+    }
+    CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
+    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+
+    delete pDiaglogKey;
+}
+
+void MainWindow::proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item)
+{
+    QAction *tempAction = CUIPub::createActionData("tempAction", item->text());
+    proc_action_gen_custom_action(tempAction);
+    delete tempAction;
+}

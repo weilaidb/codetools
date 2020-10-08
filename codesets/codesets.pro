@@ -104,6 +104,7 @@ SOURCES += \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
     cdialognewut.cpp \
+    cdialogsearch.cpp \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
     cdialognewut.h \
+    cdialogsearch.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basedefinepub.h \
@@ -176,6 +178,7 @@ macx {
 FORMS += \
     cdialogasktext.ui \
     cdialognewut.ui \
+    cdialogsearch.ui \
     mainwindow.ui \
     supertest.ui \
     testui.ui

@@ -42,6 +42,7 @@ public:
     static void procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, QString name, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType);
+    static void procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType);
 
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);
@@ -81,6 +82,10 @@ public:
     static QString getTextBrowser(QTextBrowser *textBrowser);
     static void hideTextEdit(QTextEdit *pEdit);
     static void showTextEdit(QTextEdit *pEdit);
+    static void hideListWidget(QListWidget *pWdt);
+    static void showListWidget(QListWidget *pWdt);
+    static void clearListWidget(QListWidget *pWdt);
+    static void clearHideListWidget(QListWidget *pWdt);
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
     static void hidePushButtons(QVector<QPushButton *> &vec);
@@ -117,6 +122,8 @@ public:
     static QTimer *createTimer(int &iTimeout, int value);
     //QListWidget
     static void addListWidgetItems(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItemsAndShow(QListWidget *pWidget, QStringList list);
+    static void clearAddListWidgetItemsAndShow(QListWidget *pWidget, QStringList list);
     static void addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list);
     static void addListWidgetItem(QListWidget *pWidget, QString item);
     //QLabel

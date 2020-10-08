@@ -20,7 +20,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter_10">
+     <widget class="QSplitter" name="splitter_5">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -152,6 +152,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </widget>
+      <widget class="QListWidget" name="listWidget_searchresult"/>
      </widget>
     </item>
    </layout>
@@ -261,6 +262,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_update"/>
     <addaction name="action_hidebuttonswitch"/>
     <addaction name="action_newwindow_self"/>
+    <addaction name="action_search"/>
    </widget>
    <widget class="QMenu" name="menu_9">
     <property name="title">
@@ -495,6 +497,14 @@ p, li { white-space: pre-wrap; }
   <action name="action_newwindow_self">
    <property name="text">
     <string>新窗口</string>
+   </property>
+  </action>
+  <action name="action_search">
+   <property name="text">
+    <string>查找</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

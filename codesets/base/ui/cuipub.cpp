@@ -145,6 +145,24 @@ void CUIPub::procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType)
     }
 }
 
+void CUIPub::procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pCheckBox->setChecked(pSetting->value(pCheckBox->text()).toBool());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pCheckBox->text(),pCheckBox->isChecked());
+    }
+        break;
+    default:
+        break;
+    }
+}
+
 
 void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
 {
@@ -713,6 +731,29 @@ void CUIPub::addListWidgetItems(QListWidget *pWidget, QStringList list)
     pWidget->addItems(list);
 }
 
+void CUIPub::addListWidgetItemsAndShow(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItems(list);
+    pWidget->show();
+}
+
+void CUIPub::clearAddListWidgetItemsAndShow(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->clear();
+    pWidget->addItems(list);
+    pWidget->show();
+}
+
+
+
 void CUIPub::addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list)
 {
     if(CExpressPub::isNullPtr(pWidget))
@@ -772,3 +813,28 @@ bool CUIPub::getCheckBoxed(QCheckBox *pCheckBox)
 {
     return pCheckBox->isChecked();
 }
+
+void CUIPub::hideListWidget(QListWidget *pWdt)
+{
+    pWdt->hide();
+}
+
+void CUIPub::showListWidget(QListWidget *pWdt)
+{
+    pWdt->show();
+}
+
+
+void CUIPub::clearListWidget(QListWidget *pWdt)
+{
+    pWdt->clear();
+}
+
+
+void CUIPub::clearHideListWidget(QListWidget *pWdt)
+{
+    pWdt->clear();
+    pWdt->hide();
+}
+
+
