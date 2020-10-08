@@ -69,8 +69,17 @@ QStringList CStringPub::stringSplitbyNewLine(const QString str)
 
 QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
 {
+    return stringSplitbyCharFilterEmpty(str, '\n');
+}
+
+QStringList CStringPub::stringSplitbySpaceFilterEmpty(const QString str)
+{
+    return stringSplitbyCharFilterEmpty(str, ' ');
+}
+
+QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, const char sign)
+{
     QStringList result;
-    const char sign = '\n';
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
         if(item.simplified().isEmpty())
@@ -82,6 +91,7 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
 
     return result;
 }
+
 
 QStringList CStringPub::stringSplitbyNewLineFilterEmptyUnique(const QString str)
 {
@@ -492,11 +502,12 @@ string CStringPub::getDataOfStr(BYTE *pMsg, WORD32 dwLen)
     return res;
 }
 
+//support multikey by space in filter
 QStringList CStringPub::filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
 {
     QStringList relist;
     foreach (QString item, list) {
-        if(item.contains(filter, cs)){
+        if(filterKeySpaceInclude(filter, item, cs)){
             relist.append(item);
         }
     }
@@ -515,3 +526,21 @@ QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list
     return relist;
 }
 
+
+bool CStringPub::filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs)
+{
+    QStringList keyList = stringSplitbySpaceFilterEmpty(keySpace);
+    quint16 wCount = 0;
+    foreach (QString item, keyList) {
+        if(orgtext.contains(item,cs))
+        {
+            wCount++;
+        }
+    }
+
+    if(wCount == keyList.size())
+    {
+        return true;
+    }
+    return false;
+}

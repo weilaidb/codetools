@@ -48,7 +48,7 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     m_apppath = CTextCodecPub::getGBKToUnicode(appexe);
-//    CLogPub::logDefault(m_apppath);
+    //    CLogPub::logDefault(m_apppath);
     CLogPub::msgDefault(appexe); //发现“副本”这两个字的编码是B8B1 B1BE，为GB2312编码，appexe传递的数据为直接为中文编码
 
     ui->setupUi(this);
@@ -171,7 +171,7 @@ void MainWindow::init_ActionSets()
 
 
     //check no exist path
-//    QObject::connect(ui->action_checknoexistpath, SIGNAL(triggered(bool)), this, SLOT(proc_action_checknoexistpath(bool)));
+    //    QObject::connect(ui->action_checknoexistpath, SIGNAL(triggered(bool)), this, SLOT(proc_action_checknoexistpath(bool)));
 
     //background update
     //由于SSD硬盘和机械硬盘检索的差异，反复右键可能在机械硬盘上反应极慢
@@ -219,7 +219,7 @@ void MainWindow::init_UiSets()
     //QTextEdit 右键菜单
     GEN_MENU_PUB(ui->textEdit, proc_generate_menu_left);
     GEN_MENU_PUB(ui->textBrowser, proc_generate_menu_right);
-//    GEN_MENU_PUB(ui->textEdit_cfgTips, proc_generate_menu_leftbottom);
+    //    GEN_MENU_PUB(ui->textEdit_cfgTips, proc_generate_menu_leftbottom);
     GEN_MENU_PUB(ui->textEdit_cfgAfter, proc_generate_menu_cfgAfter);
 
     //自定义菜单，从文件读取
@@ -259,7 +259,7 @@ void MainWindow::init_UiSets()
 
     //search result list widget, default hide
     CUIPub::hideListWidget(ui->listWidget_searchresult);
-//    CUIPub::showListWidget(ui->listWidget_searchresult);
+    //    CUIPub::showListWidget(ui->listWidget_searchresult);
 
 }
 
@@ -339,7 +339,7 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
 void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
 {
     Q_UNUSED(pos)
-//    CUIPub::clearMenuAll(&pRightMouse_L);
+    //    CUIPub::clearMenuAll(&pRightMouse_L);
 
     QCursor cur=this->cursor();
     QMenu *pTempRightMouse_L = new QMenu(this);
@@ -410,11 +410,11 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
     QAction *pActionReload        = CUIPub::createAction("重新加载");
     append_RightMouseList(pActionClearLeft);
-//    append_RightMouseList(pActionPaste);
-//    append_RightMouseList(pActionSelectCopy);
-//    append_RightMouseList(pActionSelectAllCopy);
-//    append_RightMouseList(pActionOpenCfgDir);
-//    append_RightMouseList(pActionOpenCfgMenu);
+    //    append_RightMouseList(pActionPaste);
+    //    append_RightMouseList(pActionSelectCopy);
+    //    append_RightMouseList(pActionSelectAllCopy);
+    //    append_RightMouseList(pActionOpenCfgDir);
+    //    append_RightMouseList(pActionOpenCfgMenu);
 
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_actionClearLeft()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
@@ -444,7 +444,7 @@ QMenu *MainWindow::proc_frequse_menu()
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
-//        append_RightMouseList(pTmpAction);
+        //        append_RightMouseList(pTmpAction);
     }
 
     if(pFreqUse)
@@ -493,11 +493,11 @@ void MainWindow::nodes_menu_right(QMenu *pMenu)
     QAction *pActionSelectCopy = CUIPub::createAction("复制");
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
     QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
-//    append_RightMouseList(pActionClearRight);
-//    append_RightMouseList(pActionPaste);
-//    append_RightMouseList(pActionSelectCopy);
-//    append_RightMouseList(pActionSelectAllCopy);
-//    append_RightMouseList(pActionClearEmpty);
+    //    append_RightMouseList(pActionClearRight);
+    //    append_RightMouseList(pActionPaste);
+    //    append_RightMouseList(pActionSelectCopy);
+    //    append_RightMouseList(pActionSelectAllCopy);
+    //    append_RightMouseList(pActionClearEmpty);
 
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_actionClearRight()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteRight()));
@@ -540,8 +540,8 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
-//    append_RightMouseList(pActionOpenCfgFile);
-//    append_RightMouseList(pActionOpenCfgDir);
+    //    append_RightMouseList(pActionOpenCfgFile);
+    //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
 
@@ -642,14 +642,14 @@ void MainWindow::proc_action_codeFormat_Del_Config()
 void MainWindow::proc_action_about()
 {
     debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
-//    debugApp() << CStringPub::getCurrentExePath();
+    //    debugApp() << CStringPub::getCurrentExePath();
     CLogPub::logDefault(m_apppath);
     show_Status(QString("当前版本是:") + APP_VERSION
-               + CSignPub::signEnter()
-               + CStringPub::getDateTime()
-               + CSignPub::signEnter()
-               + CAlgorithmPub::getMd5SumOfFile(m_apppath)
-               );
+                + CSignPub::signEnter()
+                + CStringPub::getDateTime()
+                + CSignPub::signEnter()
+                + CAlgorithmPub::getMd5SumOfFile(m_apppath)
+                );
 }
 
 void MainWindow::proc_action_attention()
@@ -956,7 +956,7 @@ void MainWindow::add_MenuDocumentSearchRecent()
 
 void MainWindow::set_LeftTextEdit(QString str)
 {
-//    ui->textEdit->setText(str);
+    //    ui->textEdit->setText(str);
     ui->textEdit->setPlainText(str);
 }
 
@@ -967,7 +967,7 @@ void MainWindow::clear_LeftTextEdit()
 
 void MainWindow::set_RightTextEdit(QString str)
 {
-//    ui->textBrowser->setText(str);
+    //    ui->textBrowser->setText(str);
     ui->textBrowser->setPlainText(str);
 }
 
@@ -1266,7 +1266,7 @@ void MainWindow::proc_action_net_server()
     EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
 #else
     EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
-#endif
+        #endif
 }
 
 void MainWindow::proc_threadmessage(const QString& info)
@@ -1638,7 +1638,7 @@ void MainWindow::proc_textEdit_textChanged()
     }
 
     oldText = curText;
-//    proc_action_TryAgain();
+    //    proc_action_TryAgain();
     pCheckLeftTimer->stop();
 
 }
@@ -1669,8 +1669,8 @@ void MainWindow::proc_frequse_config(QString configfilename)
 {
     CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
     CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
-//    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
-//    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
+    //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
+    //    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
 }
 
@@ -1693,11 +1693,11 @@ void MainWindow::append_RightMouseList(QAction *ptr)
 
 void MainWindow::free_RightMouseList()
 {
-//    foreach (QAction *ptr, m_lstRightMouse) {
-//        if(ptr){
-//            delete ptr;
-//        }
-//    }
+    //    foreach (QAction *ptr, m_lstRightMouse) {
+    //        if(ptr){
+    //            delete ptr;
+    //        }
+    //    }
     m_lstRightMouse.clear();
 }
 
@@ -1777,32 +1777,33 @@ void MainWindow::on_action_search_triggered()
 {
     SHOWCURFUNC;
     CDialogSearch *pDiaglogKey = new CDialogSearch();
+    //文件中的菜单列表
+    QStringList menuList = CStringPub::emptyStringList();
+    Qt::CaseSensitivity cs;
+    QStringList resultlist = CStringPub::emptyStringList();
+    QString findKey = CStringPub::emptyString();
+
     if(QDialog::Rejected == pDiaglogKey->exec())
     {
-        delete pDiaglogKey;
-        return;
+        goto ENDLABEL;
     }
     debugApp() << pDiaglogKey->getKey();
-    QString findKey = pDiaglogKey->getKey();
+    findKey = pDiaglogKey->getKey();
+    cs = pDiaglogKey->getCaseSentived();
     if(0 == CStringPub::strSimLen(findKey))
     {
         CUIPub::showStatusBarTimerOnly(QString("请输入关键字"));
-        CUIPub::clearHideListWidget(ui->listWidget_searchresult);
-        delete pDiaglogKey;
-        return;
+        goto ENDLABEL;
     }
 
-    //文件中的菜单列表
-    QStringList menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
-    Qt::CaseSensitivity cs = pDiaglogKey->getCaseSentived();
-    QStringList resultlist = CStringPub::emptyStringList();
-
+    menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
     //查看文件内容是否查找，文件名和内容都查找
     if(pDiaglogKey->getFileContented())
     {
         foreach (QString item, menuList) {
             QString filename = CRegExpPub::getRegExpFileNameTips(item);
-            if(item.contains(findKey,cs) || CFilePub::readFileAll(filename).contains(findKey,cs))
+            if(CStringPub::filterKeySpaceInclude(findKey, item, cs)
+                    || CStringPub::filterKeySpaceInclude(findKey, CFilePub::readFileAll(filename), cs))
             {
                 resultlist.append(item);
             }
@@ -1813,18 +1814,19 @@ void MainWindow::on_action_search_triggered()
         resultlist = CStringPub::filterFileListInclude(findKey, menuList, cs);
     }
 
-
-
     if(CExpressPub::isZero(resultlist.size()))
     {
         CUIPub::showStatusBarTimerOnly(QString("未找到"));
-        CUIPub::clearHideListWidget(ui->listWidget_searchresult);
-        delete pDiaglogKey;
-        return;
+        goto ENDLABEL;
     }
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
 
+    delete pDiaglogKey;
+    return;
+
+ENDLABEL:
+    CUIPub::clearHideListWidget(ui->listWidget_searchresult);
     delete pDiaglogKey;
 }
 

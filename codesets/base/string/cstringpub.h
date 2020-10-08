@@ -31,6 +31,8 @@ public:
     //return list by \n
     static QStringList stringSplitbyNewLine(const QString str);
     //return list by \n, filter a line with nothing
+    static QStringList stringSplitbyCharFilterEmpty(const QString str, const char sign);
+    static QStringList stringSplitbySpaceFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUniqueSort(const QString str);
@@ -88,6 +90,8 @@ public:
     //filter list
     static QStringList filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
     static QStringList filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //查找关键字包括多个，以空格分隔
+    static bool filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 };
 
 #endif // CSTRINGPUB_H
