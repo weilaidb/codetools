@@ -60,6 +60,7 @@ void CDialogSearch::proc_HistorySetting(int type)
     m_pSettings = CUIPub::read_HistorySettings(m_organization,m_application);
     CUIPub::procCheckBox(m_pSettings, ui->checkBox_caseSensitive, ucType);
     CUIPub::procCheckBox(m_pSettings, ui->checkBox_findFileContent, ucType);
+    CUIPub::procLineEdit(m_pSettings, ui->lineEdit, ucType);
 }
 
 void CDialogSearch::read_HistorySetting()

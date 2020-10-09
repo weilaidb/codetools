@@ -163,6 +163,23 @@ void CUIPub::procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOpe
     }
 }
 
+void CUIPub::procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pLineEdit->setText(pSetting->value(pLineEdit->objectName()).toString());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pLineEdit->objectName(),pLineEdit->text());
+    }
+        break;
+    default:
+        break;
+    }
+}
 
 void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
 {

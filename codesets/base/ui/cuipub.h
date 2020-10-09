@@ -43,6 +43,7 @@ public:
     static void procAction(QSettings *pSetting, QAction *pAction, QString name, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType);
     static void procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType);
+    static void procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOperType);
 
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);
