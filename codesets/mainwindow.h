@@ -255,6 +255,7 @@ private slots:
     void nodes_menu_right(QMenu *pMenu);
     void nodes_menu_cfgAfter(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
+    void nodes_menu_rightbottom(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();
@@ -268,6 +269,8 @@ private slots:
     void proc_actionOpenConfigBaseDir();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
+    void proc_actionOpenConfigFileR();
+    void proc_actionOpenConfigDirR();
     void proc_actionOpenCfgMenu();
     void proc_actionReload();
     void proc_actionEditCfgFile();

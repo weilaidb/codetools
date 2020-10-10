@@ -333,6 +333,7 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
     QCursor cur=this->cursor();
     QMenu *pTempRightMouse_L = new QMenu(this);
     nodes_menu_right(pTempRightMouse_L);
+    nodes_menu_rightbottom(pTempRightMouse_L);
     pTempRightMouse_L->exec(cur.pos()); //关联到光标
 }
 
@@ -544,6 +545,23 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+
+    pMenu->addAction(pActionOpenCfgFile);
+    pMenu->addAction(pActionOpenCfgDir);
+}
+
+void MainWindow::nodes_menu_rightbottom(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
+    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
+    //    append_RightMouseList(pActionOpenCfgFile);
+    //    append_RightMouseList(pActionOpenCfgDir);
+    QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFileR()));
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDirR()));
 
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
@@ -1533,6 +1551,17 @@ void MainWindow::proc_actionOpenConfigFile()
 void MainWindow::proc_actionOpenConfigDir()
 {
     QString dirPath = CFilePub::parentDir(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+    CUIPub::explorerPathExt(dirPath);
+}
+
+void MainWindow::proc_actionOpenConfigFileR()
+{
+    CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNameAfter(m_EditConfig));
+}
+
+void MainWindow::proc_actionOpenConfigDirR()
+{
+    QString dirPath = CFilePub::parentDir(CRegExpPub::getRegExpFileNameAfter(m_EditConfig));
     CUIPub::explorerPathExt(dirPath);
 }
 
