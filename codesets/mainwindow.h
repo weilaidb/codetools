@@ -297,5 +297,6 @@ private slots:
 
 
     void proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item);
+    void on_pushButton_left_clear_clicked();
 };
 #endif // MAINWINDOW_H

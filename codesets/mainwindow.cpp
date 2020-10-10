@@ -1881,3 +1881,8 @@ void MainWindow::updateListWidgetFrequse()
 }
 
 
+
+void MainWindow::on_pushButton_left_clear_clicked()
+{
+    CUIPub::setTextEditFocus(ui->textEdit);
+}
