@@ -855,3 +855,9 @@ void CUIPub::clearHideListWidget(QListWidget *pWdt)
 }
 
 
+void CUIPub::setSpliterFactor(QSplitter *pSpliter, int index, int stretch)
+{
+    pSpliter->setStretchFactor(index, stretch);
+}
+
+

@@ -293,6 +293,7 @@ private slots:
     void on_action_newwindow_self_triggered();
     void on_pushButton_clearTryAgainExt_clicked();
     void on_action_search_triggered();
+    void updateListWidgetFrequse();
 
 
     void proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item);

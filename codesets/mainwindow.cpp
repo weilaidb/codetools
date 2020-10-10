@@ -261,6 +261,9 @@ void MainWindow::init_UiSets()
     CUIPub::hideListWidget(ui->listWidget_searchresult);
     //    CUIPub::showListWidget(ui->listWidget_searchresult);
 
+    //ui spliter 分割比例
+    CUIPub::setSpliterFactor(ui->splitter_10, 0, 3);
+    CUIPub::setSpliterFactor(ui->splitter_10, 1, 7);
 }
 
 void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename)
@@ -441,6 +444,8 @@ QMenu *MainWindow::proc_frequse_menu()
 {
     QMenu *pFreqUse = new QMenu("常用配置列表");
     read_FreqUseFile();
+    //更新频繁使用列表
+    updateListWidgetFrequse();
     debugApp() << m_listfrequse.count();
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
@@ -1851,6 +1856,9 @@ void MainWindow::on_action_search_triggered()
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
 
+    //更新左侧常用列表
+    updateListWidgetFrequse();
+
     delete pDiaglogKey;
     return;
 
@@ -1865,3 +1873,11 @@ void MainWindow::proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem 
     proc_action_gen_custom_action(tempAction);
     delete tempAction;
 }
+
+void MainWindow::updateListWidgetFrequse()
+{
+    CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_listfrequse);
+    QObject::connect(ui->listWidget_frequse, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+}
+
+

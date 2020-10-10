@@ -15,6 +15,7 @@
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QCheckBox>
+#include <QSplitter>
 
 /**
   ** 自定义右键菜单
@@ -133,6 +134,9 @@ public:
     static void showStatusBar(QStatusBar *statusbar, QString msg);
     static void showStatusBarTimerBoth(QStatusBar *statusbar, QString msg);
     static void showStatusBarTimerOnly(QString msg);
+    //QSplitter
+    //分割比例
+    static void setSpliterFactor(QSplitter *pSpliter, int index, int stretch);
 
 public:
     enum{
