@@ -16,6 +16,7 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QSplitter>
+#include <QComboBox>
 
 /**
   ** 自定义右键菜单
@@ -45,6 +46,7 @@ public:
     static void procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType);
     static void procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType);
     static void procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOperType);
+    static void procComboBox(QSettings *pSetting, QComboBox *pComboBox, qint8 ucOperType);
 
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);
@@ -72,6 +74,7 @@ public:
     static int getSelectLine(QTextEdit *pEdit);
     static QString getTextEdit(QTextEdit *pEdit);
     static QString getLineEdit(QLineEdit *pLineEdit);
+    static QString getComBox(QComboBox *pcomboBox);
     static int getTextEditLen(QTextEdit *pEdit);
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
@@ -96,6 +99,10 @@ public:
     static void setTextEditFocus(QTextEdit *pEdit);
     static void setTextEditmoveCursorEnd(QTextEdit *pEdit);
     static void setTextEditmoveCursorHead(QTextEdit *pEdit);
+    static void setComBoxFocus(QComboBox *pComboBox);
+    static void clearComBoxFocus(QComboBox *pComboBox);
+    static void setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel);
+    static void setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV);
 
     //打开路径
     static int execCmd(QString path);

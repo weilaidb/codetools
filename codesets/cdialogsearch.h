@@ -2,6 +2,7 @@
 #define CDIALOGSEARCH_H
 
 #include <QDialog>
+#include <QListWidget>
 #include <QSettings>
 
 namespace Ui {
@@ -27,9 +28,9 @@ private:
 public:
     void closeEvent(QCloseEvent *event);
 
-
 private:
     void init_Vars();
+    void init_UiSets();
     void read_Setting();
     void proc_HistorySetting(int type);
     void read_HistorySetting();
@@ -38,6 +39,8 @@ private:
     QSettings *m_pSettings;
     QString m_organization;
     QString m_application;
+    QStringList m_searchList;
+    QListWidget *m_pListWidget;
 
 };
 

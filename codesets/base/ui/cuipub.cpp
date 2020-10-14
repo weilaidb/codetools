@@ -181,6 +181,24 @@ void CUIPub::procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOpe
     }
 }
 
+void CUIPub::procComboBox(QSettings *pSetting, QComboBox *pComboBox, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pComboBox->setCurrentText(pSetting->value(pComboBox->objectName()).toString());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pComboBox->objectName(),pComboBox->currentText());
+    }
+        break;
+    default:
+        break;
+    }
+}
+
 void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
 {
     switch (ucOperType) {
@@ -826,6 +844,11 @@ QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
     return pLineEdit->text();
 }
 
+QString CUIPub::getComBox(QComboBox *pcomboBox)
+{
+    return pcomboBox->currentText();
+}
+
 bool CUIPub::getCheckBoxed(QCheckBox *pCheckBox)
 {
     return pCheckBox->isChecked();
@@ -859,5 +882,27 @@ void CUIPub::setSpliterFactor(QSplitter *pSpliter, int index, int stretch)
 {
     pSpliter->setStretchFactor(index, stretch);
 }
+
+
+void CUIPub::setComBoxFocus(QComboBox *pComboBox)
+{
+    pComboBox->setFocus();
+}
+
+void CUIPub::clearComBoxFocus(QComboBox *pComboBox)
+{
+    pComboBox->clear();
+}
+
+void CUIPub::setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel)
+{
+    pComboBox->setModel(pModel);
+}
+
+void CUIPub::setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV)
+{
+    pComboBox->setView(pV);
+}
+
 
 
