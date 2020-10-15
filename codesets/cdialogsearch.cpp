@@ -66,6 +66,9 @@ void CDialogSearch::init_UiSets()
     CUIPub::setComBoxModel(ui->comboBox, m_pListWidget->model());
     CUIPub::setComBoxView(ui->comboBox, m_pListWidget);
 
+    //comboBox的当前值被前面的覆盖了，需要重新处理
+    CUIPub::procComboBox(m_pSettings, ui->comboBox, CUIPub::TYPE_READ);
+
 }
 
 void CDialogSearch::read_Setting()
