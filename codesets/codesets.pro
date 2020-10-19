@@ -22,6 +22,10 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+## release版本不输出
+#DEFINES += QT_NO_DEBUG_OUTPUT
+
+
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
     base/msgtips/ \

@@ -1806,6 +1806,23 @@ void MainWindow::on_pushButton_clearTryAgainExt_clicked()
     emit ui->pushButton_tryagain->clicked();
 }
 
+void MainWindow::proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey,QStringList &resultlist)
+{
+    foreach (QString item, menuList) {
+        QString filename = CRegExpPub::getRegExpFileNameTips(item);
+        QString filenameAfter = CRegExpPub::getRegExpFileNameAfter(item);
+        QString filenameBefore = CRegExpPub::getRegExpFileNameBefore(item);
+        if(CStringPub::filterKeySpaceInclude(findKey, item, cs)
+                || CStringPub::filterKeySpaceInclude(findKey, CFilePub::readFileAll(filename), cs)
+                || CStringPub::filterKeySpaceInclude(findKey, CFilePub::readFileAll(filenameAfter), cs)
+                || CStringPub::filterKeySpaceInclude(findKey, CFilePub::readFileAll(filenameBefore), cs)
+                )
+        {
+            resultlist.append(item);
+        }
+    }
+}
+
 
 void MainWindow::on_action_search_triggered()
 {
@@ -1834,14 +1851,7 @@ void MainWindow::on_action_search_triggered()
     //查看文件内容是否查找，文件名和内容都查找
     if(pDiaglogKey->getFileContented())
     {
-        foreach (QString item, menuList) {
-            QString filename = CRegExpPub::getRegExpFileNameTips(item);
-            if(CStringPub::filterKeySpaceInclude(findKey, item, cs)
-                    || CStringPub::filterKeySpaceInclude(findKey, CFilePub::readFileAll(filename), cs))
-            {
-                resultlist.append(item);
-            }
-        }
+        proc_search_filecontent(menuList,cs,findKey,resultlist);
     }
     else
     {

@@ -299,7 +299,7 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QStringList regbefore
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-            qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
         }
         else
             break;
@@ -342,7 +342,7 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-            qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
             debugApp() << "match.capturedLength:" << match.capturedLength();
             debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
             debugApp() << "match.capturedTexts :" << match.capturedTexts();
@@ -391,14 +391,14 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
     while (iter.hasNext()) {
         QRegularExpressionMatch match = iter.next();
         /* 打印获取每次匹配到的结果 */
-        qDebug() << "Index: " << QString::number(count)
+        debugApp() << "Index: " << QString::number(count)
                  << "Result: " << match.captured(0);
 
         QStringList capturedTexts = match.capturedTexts();
         /* 去除结果列表的第一个后得到组捕获列表。 */
         capturedTexts.removeFirst();
 
-        qDebug() << "Index: " << QString::number(count)
+        debugApp() << "Index: " << QString::number(count)
                  << "Capture List: " << capturedTexts;
         result = result.replace(match.captured(0),regafter);
         count++;
@@ -428,7 +428,7 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QS
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-            qDebug()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
         }
         else
             break;

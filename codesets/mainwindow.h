@@ -293,6 +293,7 @@ private slots:
     void on_action_newwindow_self_triggered();
     void on_pushButton_clearTryAgainExt_clicked();
     void on_action_search_triggered();
+    void proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey, QStringList &resultlist);
     void updateListWidgetFrequse();
 
 
