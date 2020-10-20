@@ -60,7 +60,6 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     init_UiSets();
 
     read_Setting();
-
 }
 
 MainWindow::~MainWindow()
@@ -83,9 +82,9 @@ void MainWindow::init_Dialog()
 void MainWindow::init_SuperTest()
 {
     //test
-    if(nullptr == pTw)
+    if(nullptr == pMulWinTest)
     {
-        pTw = new SuperTest();
+        pMulWinTest = new SuperTest();
     }
 }
 
@@ -202,7 +201,7 @@ void MainWindow::init_Vars()
     m_thread_client = nullptr;
     m_thread_publish = nullptr;
     m_thread_subscribe = nullptr;
-    pTw = nullptr;
+    pMulWinTest = nullptr;
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -212,14 +211,12 @@ void MainWindow::init_Vars()
 
 void MainWindow::init_UiSets()
 {
-    //    this->setWindowIcon();
     pRightMouse_L = nullptr;
     pRightMouse_R = nullptr;
     m_lstRightMouse.clear();
     //QTextEdit 右键菜单
     GEN_MENU_PUB(ui->textEdit, proc_generate_menu_left);
     GEN_MENU_PUB(ui->textBrowser, proc_generate_menu_right);
-    //    GEN_MENU_PUB(ui->textEdit_cfgTips, proc_generate_menu_leftbottom);
     GEN_MENU_PUB(ui->textEdit_cfgAfter, proc_generate_menu_cfgAfter);
 
     //自定义菜单，从文件读取
@@ -248,18 +245,16 @@ void MainWindow::init_UiSets()
     pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
     connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
-    m_iListFreqUseCnt = 15;
+    m_dwLstFreqUseCnt = 15;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
 
     //打开常用文件列表
-    m_iListNormalUseCnt = 30;
+    m_dwLstNormalUseCnt = 30;
     CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
-
 
     //search result list widget, default hide
     CUIPub::hideListWidget(ui->listWidget_searchresult);
-    //    CUIPub::showListWidget(ui->listWidget_searchresult);
 
     //ui spliter 分割比例
     CUIPub::setSpliterFactor(ui->splitter_10, 0, 3);
@@ -304,11 +299,6 @@ void MainWindow::update_generate_menu_left()
  */
 void MainWindow::proc_generate_menu_left(QPoint pos)
 {
-    if(ui->action_background_update->isChecked())
-    {
-
-    }
-
     Q_UNUSED(pos)
     debugApp() << "right mouse clicked!!";
     QCursor cur=this->cursor();
@@ -317,10 +307,11 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
     {
         update_generate_menu_left();
     }
-    if(pRightMouse_L)
+    if(nullptr == pRightMouse_L)
     {
-        pRightMouse_L->exec(cur.pos()); //关联到光标
+        return;
     }
+    pRightMouse_L->exec(cur.pos()); //关联到光标
 }
 
 /**
@@ -997,23 +988,6 @@ void MainWindow::set_RightTextEdit(QString str)
 void MainWindow::clear_RightTextEdit()
 {
     ui->textBrowser->setText("");
-}
-
-void MainWindow::proc_action_mysql_testdatabase()
-{
-    QString hostName;
-    QString dbName;
-    QString userName;
-    QString password;
-    //    QSqlDatabase dbconn;
-
-    hostName = "localhost";   // 主机名
-    dbName = "alldb";   // 数据库名称
-    userName = "root";   // 用户名
-    password = "Zzerp123";   // 密码
-
-    CSqlPub::openDb(hostName, dbName, userName, password);
-
 }
 
 QStringList MainWindow::proc_action_office_auto_pub(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist)
@@ -1702,7 +1676,7 @@ void MainWindow::proc_clipBoard_textChanged()
 void MainWindow::proc_frequse_config(QString configfilename)
 {
     CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
-    CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_iListFreqUseCnt);
+    CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_dwLstFreqUseCnt);
     //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
     //    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
     CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
@@ -1750,8 +1724,8 @@ void MainWindow::proc_action_scan_test_dir(bool bFlag)
 {
     debugApp() << "bFlag:" << bFlag;
     //支持创建多个界面
-    pTw = new SuperTest();
-    pTw->show();
+    pMulWinTest = new SuperTest();
+    pMulWinTest->show();
 }
 
 

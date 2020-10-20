@@ -103,7 +103,7 @@ private:
 
     //test ui
     Ui::SuperTest *uiTest;
-    SuperTest *pTw;
+    SuperTest *pMulWinTest;
 
     /* 右键菜单 */
     QMenu *pRightMouse_L;
@@ -123,13 +123,13 @@ private:
     QString m_FileMode_AllL_ExecMulti;
     //常用列表 configfile, 显示的最大数量
     QStringList m_listfrequse;
-    int m_iListFreqUseCnt;
+    quint32 m_dwLstFreqUseCnt;
     QString m_ListFreqUseFile;
     //注意事项
     QString m_AttentionFile;
     //常用文件打开列表
     QStringList m_listNormalUse;
-    int m_iListNormalUseCnt;
+    quint32 m_dwLstNormalUseCnt;
     QString m_ListOpenFile; //文件列表配置文件
 
 private:
@@ -192,8 +192,6 @@ private slots:
     void proc_action_about();
     void proc_action_attention();
 
-    //mysql
-    void proc_action_mysql_testdatabase();
     //office
     QStringList proc_action_office_auto_pub(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist);
     void proc_action_office_open_pub(QString filter, QStringList filterlist, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);

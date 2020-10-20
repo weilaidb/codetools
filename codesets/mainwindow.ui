@@ -217,12 +217,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_about"/>
     <addaction name="action_attention"/>
    </widget>
-   <widget class="QMenu" name="menu_3">
-    <property name="title">
-     <string>数据库</string>
-    </property>
-    <addaction name="action_mysql_testdatabase"/>
-   </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
      <string>文档</string>
@@ -288,7 +282,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_scan_test_dir"/>
    </widget>
    <addaction name="menuAyStle"/>
-   <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_8"/>
