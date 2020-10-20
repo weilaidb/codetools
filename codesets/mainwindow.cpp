@@ -259,6 +259,12 @@ void MainWindow::init_UiSets()
     //ui spliter 分割比例
     CUIPub::setSpliterFactor(ui->splitter_10, 0, 3);
     CUIPub::setSpliterFactor(ui->splitter_10, 1, 7);
+
+    CUIPub::setSpliterFactor(ui->splitter_2, 0, 4);
+    CUIPub::setSpliterFactor(ui->splitter_2, 1, 2);
+    CUIPub::setSpliterFactor(ui->splitter_2, 2, 4);
+
+
 }
 
 void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename)
