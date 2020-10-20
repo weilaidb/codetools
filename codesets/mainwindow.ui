@@ -281,11 +281,21 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_scan_test_dir"/>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>字符处理</string>
+    </property>
+    <addaction name="action_trim_line_firstspace"/>
+    <addaction name="action_trim_line_endspace"/>
+    <addaction name="action_trim_line_space"/>
+    <addaction name="action_clear_allspace"/>
+   </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_8"/>
    <addaction name="menu_9"/>
+   <addaction name="menu_3"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -523,6 +533,26 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="action_trim_line_firstspace">
+   <property name="text">
+    <string>除行首空格</string>
+   </property>
+  </action>
+  <action name="action_trim_line_endspace">
+   <property name="text">
+    <string>除行尾空格</string>
+   </property>
+  </action>
+  <action name="action_trim_line_space">
+   <property name="text">
+    <string>除行空格</string>
+   </property>
+  </action>
+  <action name="action_clear_allspace">
+   <property name="text">
+    <string>除行所有空格</string>
    </property>
   </action>
  </widget>

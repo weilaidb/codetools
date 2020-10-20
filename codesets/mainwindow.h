@@ -298,5 +298,10 @@ private slots:
     void proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item);
     void on_pushButton_left_clear_clicked();
     void on_actionclearTry_triggered();
+    void proc_character_trim_pub(const QString &pattern);
+    void on_action_trim_line_firstspace_triggered();
+    void on_action_trim_line_endspace_triggered();
+    void on_action_trim_line_space_triggered();
+    void on_action_clear_allspace_triggered();
 };
 #endif // MAINWINDOW_H
