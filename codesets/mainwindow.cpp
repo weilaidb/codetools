@@ -1865,6 +1865,7 @@ void MainWindow::on_action_search_triggered()
     }
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
 
     //更新左侧常用列表
     updateListWidgetFrequse();
@@ -1888,6 +1889,7 @@ void MainWindow::updateListWidgetFrequse()
 {
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_listfrequse);
     QObject::connect(ui->listWidget_frequse, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
 }
 
 
@@ -1895,4 +1897,9 @@ void MainWindow::updateListWidgetFrequse()
 void MainWindow::on_pushButton_left_clear_clicked()
 {
     CUIPub::setTextEditFocus(ui->textEdit);
+}
+
+void MainWindow::on_actionclearTry_triggered()
+{
+    on_pushButton_clearTryAgainExt_clicked();
 }

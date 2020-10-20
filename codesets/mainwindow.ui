@@ -271,6 +271,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_EditCfgFile"/>
     <addaction name="action_SwitchClearLeftText"/>
     <addaction name="action_TryAgain"/>
+    <addaction name="actionclearTry"/>
     <addaction name="action_DeleteCfgFile"/>
     <addaction name="action_ClipBoarChange"/>
     <addaction name="action_checknoexistpath"/>
@@ -521,6 +522,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionclearTry">
+   <property name="text">
+    <string>clearTry</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>
