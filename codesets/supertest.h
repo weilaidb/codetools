@@ -60,6 +60,10 @@ private slots:
 
     void on_checkBox_stateChanged(int arg1);
 
+    void on_pushButton_save_clicked();
+
+    void on_pushButton_reload_clicked();
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;

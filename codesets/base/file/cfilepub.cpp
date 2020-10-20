@@ -426,7 +426,8 @@ QStringList CFilePub::getFileAllAbsoluteNames(QStringList nameFilters, const QSt
     QFileInfoList infolist = getAllFileList(nameFilters, filePath);
 //    debugApp() << "infolist:" << infolist.size();
     foreach (QFileInfo info, infolist) {
-        files += info.absolutePath() + QDir::separator() + info.fileName();
+        QString temp = info.absolutePath() + QDir::separator() + info.fileName();
+        files += QDir::toNativeSeparators(temp);
     }
 
     return files;

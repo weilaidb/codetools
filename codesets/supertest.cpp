@@ -61,6 +61,9 @@ void SuperTest::init_UiSets()
 
     nodes_menu_leftbottom(pRightMouse);
 
+    CUIPub::setSpliterFactor(ui->splitter_4, 0, 4);
+    CUIPub::setSpliterFactor(ui->splitter_4, 1, 6);
+
 }
 
 void SuperTest::proc_generate_menu_left(QPoint pos)
@@ -79,6 +82,7 @@ void SuperTest::proc_generate_menu_left(QPoint pos)
 void SuperTest::init_ListWidget()
 {
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
 }
 
 void SuperTest::on_pushButton_load_test_dir_clicked()
@@ -321,4 +325,14 @@ void SuperTest::on_checkBox_stateChanged(int arg1)
 {
     Q_UNUSED(arg1);
     on_pushButton_reload_dir_clicked();
+}
+
+void SuperTest::on_pushButton_save_clicked()
+{
+    proc_actionSaveFile();
+}
+
+void SuperTest::on_pushButton_reload_clicked()
+{
+    proc_actionReloadFile();
 }
