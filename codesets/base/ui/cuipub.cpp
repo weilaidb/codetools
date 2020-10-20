@@ -849,7 +849,7 @@ QString CUIPub::getComBox(QComboBox *pcomboBox)
     return pcomboBox->currentText();
 }
 
-bool CUIPub::getCheckBoxed(QCheckBox *pCheckBox)
+bool CUIPub::isCheckedQCheckBox(QCheckBox *pCheckBox)
 {
     return pCheckBox->isChecked();
 }

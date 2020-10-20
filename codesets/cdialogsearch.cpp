@@ -42,15 +42,14 @@ Qt::CaseSensitivity CDialogSearch::getCaseSentived()
 
 bool CDialogSearch::getFileContented()
 {
-    return ui->checkBox_findFileContent->isChecked();
+    return CUIPub::isCheckedQCheckBox(ui->checkBox_findFileContent);
 }
 
 void CDialogSearch::init_Vars()
 {
-    m_key.clear();
-
-    m_organization = "weilaidb";
-    m_application = "CDialogSearch";
+    CStringPub::clearString(m_key);
+    CStringPub::setString(m_organization, "weilaidb");
+    CStringPub::setString(m_application, "CDialogSearch");
 }
 
 void CDialogSearch::init_UiSets()
@@ -59,9 +58,9 @@ void CDialogSearch::init_UiSets()
     CUIPub::clearComBoxFocus(ui->comboBox);
 
     m_pListWidget = new QListWidget (this) ;
-    m_pListWidget->clear();
+    CUIPub::clearListWidget(m_pListWidget);
     foreach (QString item, m_searchList) {
-        m_pListWidget->addItem(item);
+        CUIPub::addListWidgetItem(m_pListWidget, item);
     }
     CUIPub::setComBoxModel(ui->comboBox, m_pListWidget->model());
     CUIPub::setComBoxView(ui->comboBox, m_pListWidget);

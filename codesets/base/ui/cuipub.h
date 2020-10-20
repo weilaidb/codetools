@@ -117,7 +117,7 @@ public:
     static void setCheckedQAction(QAction *pAction, bool bflag);
     static bool getCheckedQAction(QAction *pAction);
     //checkbox
-    static bool getCheckBoxed(QCheckBox *pCheckBox);
+    static bool isCheckedQCheckBox(QCheckBox *pCheckBox);
 
     //messgebox
     static int showBoxWarning(QString tips);

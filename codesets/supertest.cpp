@@ -150,7 +150,7 @@ void SuperTest::on_pushButton_reload_dir_clicked()
     QString mode = "";
     if(CStringPub::strSimLen(findstr))
     {
-        Qt::CaseSensitivity cs = (CUIPub::getCheckBoxed(ui->checkBox) == true) ? Qt::CaseSensitive : Qt::CaseInsensitive;
+        Qt::CaseSensitivity cs = (CUIPub::isCheckedQCheckBox(ui->checkBox) == true) ? Qt::CaseSensitive : Qt::CaseInsensitive;
         filelist = CStringPub::filterFileListInclude(findstr, filelist, cs);
         mode = "[过滤模式]";
     }
