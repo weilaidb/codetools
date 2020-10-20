@@ -1770,14 +1770,6 @@ void MainWindow::proc_pushButton_right_copy()
 }
 
 
-
-void MainWindow::on_action_newwindow_self_triggered()
-{
-    char *exepath = (char *)"testme";
-    MainWindow *pNewWindow = new MainWindow(exepath, nullptr);
-    pNewWindow->show();
-}
-
 void MainWindow::on_pushButton_clearTryAgainExt_clicked()
 {
     CUIPub::clearTextEdit(ui->textEdit);
