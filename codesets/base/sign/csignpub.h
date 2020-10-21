@@ -8,6 +8,7 @@
 #define SIGNENTERLR         "\r\n"
 #define SIGN_RE_SPACE         "\\s+"
 #define SIGNSPACE         "  "
+#define SIGNSPACENONE     ""
 #define SIGNDOUBLEFENHAO  ";;"
 #define SIGNDOUHAO  ","
 #define SIGNFENHAO  ";"
@@ -45,6 +46,7 @@ public:
     static char signEnterS();
     static QString signEnterNL();
     static QString signRESpace();
+    static QString signSpace();
     static char signLXie();
     static QString signFenHao();
     static char signFenHaoC();

@@ -34,6 +34,10 @@ QString CSignPub::signRESpace()
 {
     return SIGN_RE_SPACE;
 }
+QString CSignPub::signSpace()
+{
+    return SIGNSPACENONE;
+}
 
 char CSignPub::signLXie()
 {

@@ -905,4 +905,8 @@ void CUIPub::setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV)
 }
 
 
+QString CUIPub::getLabelEdit(QLabel *pLabel)
+{
+    return pLabel->text();
+}
 

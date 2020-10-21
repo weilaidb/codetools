@@ -27,6 +27,7 @@ private:
     void init_Vars();
     void init_UiSets();
     void init_ListWidget();
+    void init_CheckBoxSets();
     void config_cur_load_path(QString path);
     void nodes_menu_leftbottom(QMenu *pMenu);
     void read_Setting();
@@ -45,11 +46,13 @@ private slots:
     void on_pushButton_open_test_dir_clicked();
 
     void proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item);
+    QString proc_itemWholePathOnCheckBox(QListWidgetItem *item);
     void on_pushButton_reload_dir_clicked();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
     void proc_actionSaveFile();
     void proc_actionReloadFile();
+    void proc_checkBox_fullPath_stateChaned(int);
 
     void proc_generate_menu_left(QPoint pos);
     void on_action_new_ut_instance_triggered();

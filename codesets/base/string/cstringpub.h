@@ -92,6 +92,9 @@ public:
     static QStringList filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
     //查找关键字包括多个，以空格分隔
     static bool filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+
+    //QDir
+    static QString toNativeSeparators(QString dir);
 };
 
 #endif // CSTRINGPUB_H

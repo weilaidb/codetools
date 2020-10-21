@@ -38,6 +38,7 @@ public:
     static QStringList getFileNames(QStringList nameFilters, const QString path);
     static QStringList getFileAbsoluteNames(QStringList nameFilters, const QString path);
     static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);
+    static QStringList getFileAllRelateNames(QStringList nameFilters, const QString filePath);
     static QFileInfoList getAllFileList(QStringList nameFilters, QString path);
 //file dialog
     static QStringList getOpenDiagFiles(QString &openFilePathRecent, QString filter);

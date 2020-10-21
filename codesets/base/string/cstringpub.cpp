@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <QDir>
 
 
 CStringPub::CStringPub()
@@ -543,4 +544,9 @@ bool CStringPub::filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::Ca
         return true;
     }
     return false;
+}
+
+QString CStringPub::toNativeSeparators(QString dir)
+{
+    return  QDir::toNativeSeparators(dir);
 }

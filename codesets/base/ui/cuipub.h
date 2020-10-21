@@ -69,6 +69,7 @@ public:
     static void startProgress();
 
     //获取选中文本
+    static QString getLabelEdit(QLabel *pLabel);
     static QString getSelectTextEdit(QTextEdit *pEdit);
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);

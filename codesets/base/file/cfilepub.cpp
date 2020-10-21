@@ -433,6 +433,24 @@ QStringList CFilePub::getFileAllAbsoluteNames(QStringList nameFilters, const QSt
     return files;
 }
 
+QStringList CFilePub::getFileAllRelateNames(QStringList nameFilters, const QString filePath)
+{
+    QStringList files;
+    files.clear();
+    QFileInfoList infolist = getAllFileList(nameFilters, filePath);
+    //    debugApp() << "infolist:" << infolist.size();
+    foreach (QFileInfo info, infolist) {
+        QString temp = info.absolutePath() + QDir::separator() + info.fileName();
+        temp = CStringPub::toNativeSeparators(temp).replace(CStringPub::toNativeSeparators(filePath), CSignPub::signSpace());
+        files += QDir::toNativeSeparators(temp);
+
+//        debugApp() << "temp:" << temp;
+//        debugApp() << "temp after:" << temp;
+    }
+
+    return files;
+}
+
 /**
  * @brief CFilePub::getAllFileList 遍历文件文件夹信息列表
  * @param nameFilters

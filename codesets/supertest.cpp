@@ -17,6 +17,7 @@ SuperTest::SuperTest(QWidget *parent) :
     init_ActionSets();
     init_PushButtonSets();
     init_ListWidget();
+    init_CheckBoxSets();
     init_Vars();
     init_UiSets();
 
@@ -85,6 +86,11 @@ void SuperTest::init_ListWidget()
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
 }
 
+void SuperTest::init_CheckBoxSets()
+{
+    QObject::connect(ui->checkBox_fullPath, SIGNAL(stateChanged(int)), this, SLOT(proc_checkBox_fullPath_stateChaned(int)));
+}
+
 void SuperTest::on_pushButton_load_test_dir_clicked()
 {
     //    debugApp() << "proc_pushButton_load_test_dir";
@@ -131,16 +137,38 @@ void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item
 {
     ENTERTIPS;
     item->setFlags(item->flags() | Qt::ItemIsEditable);
-    CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(item->text()));
-    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(item->text() + CSignPub::signDot() + file_result_log));
-    file_cur_item_load = item->text();
+    CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item)));
+    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item) + CSignPub::signDot() + file_result_log));
+    file_cur_item_load = proc_itemWholePathOnCheckBox(item);
+}
+
+QString SuperTest::proc_itemWholePathOnCheckBox(QListWidgetItem *item)
+{
+    if(CUIPub::isCheckedQCheckBox(ui->checkBox_fullPath))
+    {
+        return CStringPub::toNativeSeparators(item->text());
+    }
+    else
+    {
+        QString relatePath  = item->text();
+        relatePath = CUIPub::getLabelEdit(ui->label_load_path) + QDir::separator() + relatePath;
+        return CStringPub::toNativeSeparators(relatePath);
+    }
 }
 
 void SuperTest::on_pushButton_reload_dir_clicked()
 {
     QStringList namefilter;
     namefilter << "*.*";
-    QStringList filelist = CFilePub::getFileAllAbsoluteNames(namefilter, dir_cur_loaded);
+    QStringList filelist = CStringPub::emptyStringList();
+    if(CUIPub::isCheckedQCheckBox(ui->checkBox_fullPath))
+    {
+        filelist = CFilePub::getFileAllAbsoluteNames(namefilter, dir_cur_loaded);
+    }
+    else
+    {
+        filelist = CFilePub::getFileAllRelateNames(namefilter, dir_cur_loaded);
+    }
     //    debugApp() << "filelist:" << filelist;
     filelist = CStringPub::filterFileListInclude(file_content_txt, filelist);
     filelist = CStringPub::filterFileListNoInclude(file_result_log, filelist);
@@ -170,8 +198,8 @@ void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
     QAction *pActionOpenCfgDir     = CUIPub::createAction("打开当前配置文件夹");
     QAction *pActionSaveFile       = CUIPub::createAction("保存");
     QAction *pActionReloadFile         = CUIPub::createAction("重新加载");
-//    append_RightMouseList(pActionOpenCfgFile);
-//    append_RightMouseList(pActionOpenCfgDir);
+    //    append_RightMouseList(pActionOpenCfgFile);
+    //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
     QObject::connect(pActionSaveFile, SIGNAL(triggered()), this, SLOT(proc_actionSaveFile()));
@@ -248,6 +276,9 @@ void SuperTest::proc_HistorySetting(int type)
     CUIPub::procString(m_pSettings, BINDSTRWORDS(openFilePathRecent), ucType);
     CUIPub::procString(m_pSettings, BINDSTRWORDS(dir_cur_loaded), ucType);
     CUIPub::setLabelText(ui->label_load_path, dir_cur_loaded);
+    CUIPub::setLabelText(ui->label_load_path, dir_cur_loaded);
+    CUIPub::procCheckBox(m_pSettings, ui->checkBox, ucType);
+    CUIPub::procCheckBox(m_pSettings, ui->checkBox_fullPath, ucType);
 }
 
 void SuperTest::read_HistorySetting()
@@ -335,4 +366,9 @@ void SuperTest::on_pushButton_save_clicked()
 void SuperTest::on_pushButton_reload_clicked()
 {
     proc_actionReloadFile();
+}
+
+void SuperTest::proc_checkBox_fullPath_stateChaned(int)
+{
+    on_pushButton_reload_dir_clicked();
 }
