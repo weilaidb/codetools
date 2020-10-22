@@ -3,6 +3,7 @@
 #include "debugApp.h"
 #include "cdialognewut.h"
 
+#include <QMessageBox>
 #include <cexpresspub.h>
 #include <cfilepub.h>
 #include <csignpub.h>
@@ -59,11 +60,22 @@ void SuperTest::init_UiSets()
     CUIPub::clearMenuAll(&pRightMouse);
 
     pRightMouse = new QMenu(this);
-
     nodes_menu_leftbottom(pRightMouse);
+
+    pRightMouseListWidget = new QMenu(this);
+    nodes_menu_listwidget(pRightMouseListWidget);
+    QObject::connect(pRightMouseListWidget, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_RightMouseListWidget(QAction *)));
+
 
     CUIPub::setSpliterFactor(ui->splitter_4, 0, 4);
     CUIPub::setSpliterFactor(ui->splitter_4, 1, 6);
+
+
+    //自定义菜单
+    ui->listWidget_load_dir->setContextMenuPolicy(Qt::CustomContextMenu);
+    QObject::connect(ui->listWidget_load_dir, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(proc_customContextMenuRequested(QPoint)));
+
+    //    customContextMenuRequested(const QPoint &pos);
 
 }
 
@@ -137,20 +149,21 @@ void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item
 {
     ENTERTIPS;
     item->setFlags(item->flags() | Qt::ItemIsEditable);
-    CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item)));
-    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item) + CSignPub::signDot() + file_result_log));
-    file_cur_item_load = proc_itemWholePathOnCheckBox(item);
+    CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item->text())));
+    CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item->text()) + CSignPub::signDot() + file_result_log));
+    file_cur_item_load = proc_itemWholePathOnCheckBox(item->text());
 }
 
-QString SuperTest::proc_itemWholePathOnCheckBox(QListWidgetItem *item)
+//获取全路径
+QString SuperTest::proc_itemWholePathOnCheckBox(QString text)
 {
     if(CUIPub::isCheckedQCheckBox(ui->checkBox_fullPath))
     {
-        return CStringPub::toNativeSeparators(item->text());
+        return CStringPub::toNativeSeparators(text);
     }
     else
     {
-        QString relatePath  = item->text();
+        QString relatePath  = text;
         relatePath = CUIPub::getLabelEdit(ui->label_load_path) + QDir::separator() + relatePath;
         return CStringPub::toNativeSeparators(relatePath);
     }
@@ -210,6 +223,21 @@ void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
     pMenu->addAction(pActionReloadFile);
     pMenu->addAction(pActionSaveFile);
 }
+
+//自定义菜单
+void SuperTest::nodes_menu_listwidget(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionDeleteItem    = CUIPub::createAction("删除节点");
+    QObject::connect(pActionDeleteItem, SIGNAL(triggered()), this, SLOT(proc_actionDeleteItem()));
+    pMenu->addAction(pActionDeleteItem);
+
+}
+
+
 
 void SuperTest::proc_actionOpenConfigFile()
 {
@@ -371,4 +399,66 @@ void SuperTest::on_pushButton_reload_clicked()
 void SuperTest::proc_checkBox_fullPath_stateChaned(int)
 {
     on_pushButton_reload_dir_clicked();
+}
+
+//菜单右键显示
+void SuperTest::proc_customContextMenuRequested(QPoint)
+{
+    QCursor cur=this->cursor();
+
+    if(pRightMouseListWidget)
+    {
+        pRightMouseListWidget->exec(cur.pos()); //关联到光标
+    }
+}
+
+
+void SuperTest::proc_menu_RightMouseListWidget(QAction *pAction)
+{
+    debugApp() << CUIPub::getQActionText(pAction);
+    QListWidgetItem * item = CUIPub::getListWidgetCurrentItem(ui->listWidget_load_dir);
+    CHECK_NULLPOINTER_RETURN(item);
+
+    QList<QListWidgetItem*> pListSelct = CUIPub::getListWidgetSelectedItems(ui->listWidget_load_dir);
+    debugApp() << "select list size:" << pListSelct.size();
+    if(0 == pListSelct.size())
+    {
+        int ch = QMessageBox::warning(NULL, "Warning",
+                                      QString("Are you sure to delete file 【%1】?\n").arg(item->text()),
+                                      QMessageBox::Yes | QMessageBox::No,
+                                      QMessageBox::No);
+
+        if ( ch != QMessageBox::Yes )
+            return;
+        //删除文件
+        CFilePub::deleteFile(proc_itemWholePathOnCheckBox(item->text()));
+
+        CUIPub::getListWidgetTakeItem(ui->listWidget_load_dir, item);
+        delete item;
+        return;
+    }
+
+    //删除文件列表
+    QString showText = CStringPub::emptyString();
+    showText += CSignPub::signEnter();
+    foreach (QListWidgetItem *pItem, pListSelct) {
+        showText += pItem->text() + CSignPub::signEnter();
+    }
+
+    int ch = QMessageBox::warning(NULL, "Warning",
+                                  QString("Are you sure to delete these files 【%1】?\n").arg(showText),
+                                  QMessageBox::Yes | QMessageBox::No,
+                                  QMessageBox::No);
+
+    if ( ch != QMessageBox::Yes )
+        return;
+    foreach (QListWidgetItem *pItem, pListSelct) {
+        CFilePub::deleteFile(proc_itemWholePathOnCheckBox(pItem->text()));
+
+        CUIPub::getListWidgetTakeItem(ui->listWidget_load_dir, item);
+        delete pItem;
+    }
+
+
+
 }

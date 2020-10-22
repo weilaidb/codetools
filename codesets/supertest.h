@@ -30,6 +30,7 @@ private:
     void init_CheckBoxSets();
     void config_cur_load_path(QString path);
     void nodes_menu_leftbottom(QMenu *pMenu);
+    void nodes_menu_listwidget(QMenu *pMenu);
     void read_Setting();
     void proc_HistorySetting(int type);
     void read_HistorySetting();
@@ -46,7 +47,7 @@ private slots:
     void on_pushButton_open_test_dir_clicked();
 
     void proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item);
-    QString proc_itemWholePathOnCheckBox(QListWidgetItem *item);
+    QString proc_itemWholePathOnCheckBox(QString text);
     void on_pushButton_reload_dir_clicked();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
@@ -67,6 +68,10 @@ private slots:
 
     void on_pushButton_reload_clicked();
 
+    //右键菜单
+    void proc_customContextMenuRequested(QPoint);
+    void proc_menu_RightMouseListWidget(QAction *pAction);
+
 private:
     Ui::SuperTest *ui;
     QString openFilePathRecent;
@@ -77,6 +82,7 @@ private:
 
     /* 右键菜单 */
     QMenu *pRightMouse;
+    QMenu *pRightMouseListWidget;
 
 
     //QSettings

@@ -92,6 +92,12 @@ public:
     static void showListWidget(QListWidget *pWdt);
     static void clearListWidget(QListWidget *pWdt);
     static void clearHideListWidget(QListWidget *pWdt);
+    static QListWidgetItem *getListWidgetCurrentItem(QListWidget *pWdt);
+    static QList<QListWidgetItem*> getListWidgetSelectedItems(QListWidget *pWdt);
+    static int getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem);
+    static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, int curIndex);
+    static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, QListWidgetItem *pItem);
+
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
     static void hidePushButtons(QVector<QPushButton *> &vec);
@@ -117,6 +123,7 @@ public:
     static bool isCheckedQAction(QAction *pAction);
     static void setCheckedQAction(QAction *pAction, bool bflag);
     static bool getCheckedQAction(QAction *pAction);
+    static QString getQActionText(QAction *pAction);
     //checkbox
     static bool isCheckedQCheckBox(QCheckBox *pCheckBox);
 

@@ -680,6 +680,11 @@ bool CUIPub::getCheckedQAction(QAction *pAction)
     return pAction->isChecked();
 }
 
+QString CUIPub::getQActionText(QAction *pAction)
+{
+    return pAction->text();
+}
+
 int CUIPub::showBoxWarning(QString tips)
 {
     return QMessageBox::warning(NULL, "Title", tips,
@@ -875,6 +880,32 @@ void CUIPub::clearHideListWidget(QListWidget *pWdt)
 {
     pWdt->clear();
     pWdt->hide();
+}
+
+QListWidgetItem * CUIPub::getListWidgetCurrentItem(QListWidget *pWdt)
+{
+    return pWdt->currentItem();
+}
+
+QList<QListWidgetItem*> CUIPub::getListWidgetSelectedItems(QListWidget *pWdt)
+{
+    return pWdt->selectedItems();
+}
+
+int CUIPub::getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem)
+{
+    return pWdt->row(pItem);
+}
+
+QListWidgetItem *CUIPub::getListWidgetTakeItem(QListWidget *pWdt, int curIndex)
+{
+    return pWdt->takeItem(curIndex);
+}
+
+QListWidgetItem *CUIPub::getListWidgetTakeItem(QListWidget *pWdt, QListWidgetItem *pItem)
+{
+    int curIndex = getListWidgetRow(pWdt, pItem);
+    return getListWidgetTakeItem(pWdt, curIndex);;
 }
 
 

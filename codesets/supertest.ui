@@ -98,7 +98,7 @@
          <string>输入过滤的内容</string>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QCheckBox" name="checkBox">
@@ -167,6 +167,15 @@
          <font>
           <pointsize>14</pointsize>
          </font>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::MultiSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="selectionRectVisible">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QSplitter" name="splitter">
