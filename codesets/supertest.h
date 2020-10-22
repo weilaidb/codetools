@@ -47,6 +47,7 @@ private slots:
     void on_pushButton_open_test_dir_clicked();
 
     void proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item);
+    void OnListWidgetCurrentListChanged(int index);
     QString proc_itemWholePathOnCheckBox(QString text);
     void on_pushButton_reload_dir_clicked();
     void proc_actionOpenConfigFile();
@@ -91,6 +92,10 @@ private:
     QString m_application;
     //Attention
     QString m_AttentionFile;
+
+    //ListWidget
+    int m_RenameIndex;
+    QString m_RenamePrev;
 };
 
 #endif // SUPERTEST_H

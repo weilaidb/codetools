@@ -908,6 +908,16 @@ QListWidgetItem *CUIPub::getListWidgetTakeItem(QListWidget *pWdt, QListWidgetIte
     return getListWidgetTakeItem(pWdt, curIndex);;
 }
 
+int CUIPub::getListWidgetCurrentRow(QListWidget *pWdt)
+{
+    return pWdt->currentRow();
+}
+
+QString CUIPub::getListWidgetItemText(QListWidget *pWdt, int Index)
+{
+    return pWdt->item(Index)->text();
+}
+
 
 void CUIPub::setSpliterFactor(QSplitter *pSpliter, int index, int stretch)
 {

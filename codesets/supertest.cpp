@@ -96,6 +96,8 @@ void SuperTest::init_ListWidget()
 {
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_load_dir, SIGNAL(currentRowChanged(int)), this, SLOT(OnListWidgetCurrentListChanged(int)));
+
 }
 
 void SuperTest::init_CheckBoxSets()
@@ -152,6 +154,39 @@ void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item
     CUIPub::setTextEdit(ui->textEdit_test_content, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item->text())));
     CUIPub::setTextEdit(ui->textEdit_test_result, CFilePub::readFileAll(proc_itemWholePathOnCheckBox(item->text()) + CSignPub::signDot() + file_result_log));
     file_cur_item_load = proc_itemWholePathOnCheckBox(item->text());
+
+    m_RenameIndex = CUIPub::getListWidgetCurrentRow(ui->listWidget_load_dir); //用来保存需要修改名称的index
+    m_RenamePrev = CUIPub::getListWidgetCurrentItem(ui->listWidget_load_dir)->text(); //用来保存需要修改前的名称
+}
+
+
+void SuperTest::OnListWidgetCurrentListChanged(int index)
+{
+    ENTERTIPS;
+    printf("index : %d(%#x)\n", index, index);
+
+    if(0 == CStringPub::strSimLen(m_RenamePrev))
+    {
+        return;
+    }
+
+    if(CUIPub::getListWidgetItemText(ui->listWidget_load_dir, m_RenameIndex) == m_RenamePrev)
+    {
+        return;
+    }
+
+
+    QString fileNamePre = proc_itemWholePathOnCheckBox(m_RenamePrev);
+    QString fileNameAft = proc_itemWholePathOnCheckBox(CUIPub::getListWidgetItemText(ui->listWidget_load_dir, m_RenameIndex));
+//    debugApp() << "fileNamePre:" << fileNamePre;
+//    debugApp() << "fileNameAft:" << fileNameAft;
+
+    bool ok = QFile::rename(fileNamePre, fileNameAft);
+    if (!ok)
+    {
+        QMessageBox::information(NULL, tr("Error"), tr("Rename Failed"));
+        return;
+    }
 }
 
 //获取全路径
@@ -462,3 +497,4 @@ void SuperTest::proc_menu_RightMouseListWidget(QAction *pAction)
 
 
 }
+

@@ -141,9 +141,6 @@ void MainWindow::init_ActionSets()
     //about
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about()));
     QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attention()));
-    //mysql
-    QObject::connect(ui->action_mysql_testdatabase, SIGNAL(triggered()), this, SLOT(proc_action_mysql_testdatabase()));
-
 
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open()));

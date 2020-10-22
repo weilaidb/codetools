@@ -95,8 +95,10 @@ public:
     static QListWidgetItem *getListWidgetCurrentItem(QListWidget *pWdt);
     static QList<QListWidgetItem*> getListWidgetSelectedItems(QListWidget *pWdt);
     static int getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem);
+    static int getListWidgetCurrentRow(QListWidget *pWdt);
     static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, int curIndex);
     static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, QListWidgetItem *pItem);
+    static QString getListWidgetItemText(QListWidget *pWdt, int Index);
 
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
