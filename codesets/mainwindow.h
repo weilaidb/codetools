@@ -294,7 +294,7 @@ private slots:
     void updateListWidgetFrequse();
 
 
-    void proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item);
+    void proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item);
     void on_pushButton_left_clear_clicked();
     void on_actionclearTry_triggered();
     void proc_character_trim_pub(const QString &pattern);

@@ -1831,8 +1831,7 @@ void MainWindow::on_action_search_triggered()
         goto ENDLABEL;
     }
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
-    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
-    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
 
     //更新左侧常用列表
     updateListWidgetFrequse();
@@ -1845,7 +1844,7 @@ ENDLABEL:
     delete pDiaglogKey;
 }
 
-void MainWindow::proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *item)
+void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
 {
     QAction *tempAction = CUIPub::createActionData("tempAction", item->text());
     proc_action_gen_custom_action(tempAction);
@@ -1855,8 +1854,7 @@ void MainWindow::proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem 
 void MainWindow::updateListWidgetFrequse()
 {
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_listfrequse);
-    QObject::connect(ui->listWidget_frequse, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
-    QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
 }
 
 

@@ -94,8 +94,7 @@ void SuperTest::proc_generate_menu_left(QPoint pos)
 
 void SuperTest::init_ListWidget()
 {
-    QObject::connect(ui->listWidget_load_dir, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
-    QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *)));
+    QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemClicked(QListWidgetItem *)));
     QObject::connect(ui->listWidget_load_dir, SIGNAL(currentRowChanged(int)), this, SLOT(OnListWidgetCurrentListChanged(int)));
 
 }
@@ -147,7 +146,7 @@ void SuperTest::on_pushButton_open_test_dir_clicked()
     }
 }
 
-void SuperTest::proc_listWidget_load_dir_ItemDoubleClicked(QListWidgetItem *item)
+void SuperTest::proc_listWidget_load_dir_ItemClicked(QListWidgetItem *item)
 {
     ENTERTIPS;
     item->setFlags(item->flags() | Qt::ItemIsEditable);
