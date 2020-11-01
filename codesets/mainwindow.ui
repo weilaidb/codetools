@@ -271,6 +271,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_checknoexistpath"/>
     <addaction name="action_background_update"/>
     <addaction name="action_update"/>
+    <addaction name="action_manycontent_proc"/>
     <addaction name="action_hidebuttonswitch"/>
     <addaction name="action_newwindow_self"/>
     <addaction name="action_search"/>
@@ -553,6 +554,14 @@ p, li { white-space: pre-wrap; }
   <action name="action_clear_allspace">
    <property name="text">
     <string>除行所有空格</string>
+   </property>
+  </action>
+  <action name="action_manycontent_proc">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>多处理</string>
    </property>
   </action>
  </widget>

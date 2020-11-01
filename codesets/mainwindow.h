@@ -48,6 +48,7 @@ private:
     void free_Argv();
     void proc_AstyleInstance(QStringList filelist);
     void show_Status(QString msg);
+    void show_StatusOnly(QString msg);
     void show_StatusTimer(QString msg);
     void show_StatusTimerWindowTitle(QString msg);
     void show_TextBrower(QString msg);

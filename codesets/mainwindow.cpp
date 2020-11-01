@@ -39,6 +39,11 @@
 #include <QProgressBar>
 #include <csignpub.h>
 
+/**
+  **处理内容最大值
+  **/
+#define MANYCONTENTMAX    500
+
 
 extern int AyStyleMain(int argc, char** argv);
 
@@ -588,6 +593,7 @@ void MainWindow::proc_HistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_checknoexistpath, ucType);
     CUIPub::procAction(m_pSettings, ui->action_background_update, ucType);
     CUIPub::procAction(m_pSettings, ui->action_hidebuttonswitch, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_manycontent_proc, ucType);
 }
 
 void MainWindow::read_HistorySetting()
@@ -831,6 +837,11 @@ void MainWindow::show_Status(QString msg)
     {
         show_StatusTimer(msg);
     }
+}
+
+void MainWindow::show_StatusOnly(QString msg)
+{
+    ui->statusbar->showMessage(msg);
 }
 
 void MainWindow::show_StatusTimer(QString msg)
@@ -1348,6 +1359,12 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     }
 
     debugApp() << "proctext:" << proctext;
+    if(CUIPub::isCheckedQAction(ui->action_manycontent_proc) && CStringPub::strSimLen(proctext) >= MANYCONTENTMAX)
+    {
+        show_StatusTimer(QString("内容超过处理范围%1").arg(MANYCONTENTMAX));
+        set_RightTextEdit(proctext);
+        return;
+    }
     set_RightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
 }
 
