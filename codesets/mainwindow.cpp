@@ -1359,7 +1359,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     }
 
     debugApp() << "proctext:" << proctext;
-    if(CUIPub::isCheckedQAction(ui->action_manycontent_proc) && CStringPub::strSimLen(proctext) >= MANYCONTENTMAX)
+    if(!CUIPub::isCheckedQAction(ui->action_manycontent_proc) && CStringPub::strSimLen(proctext) >= MANYCONTENTMAX)
     {
         show_StatusTimer(QString("内容超过处理范围%1").arg(MANYCONTENTMAX));
         set_RightTextEdit(proctext);
