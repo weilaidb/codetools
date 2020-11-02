@@ -105,6 +105,8 @@ public:
     static void hidePushButtons(QVector<QPushButton *> &vec);
     static void showPushButtons(QVector<QPushButton *> &vec);
     static void pushButtonEmitClick(QPushButton *pBtn);
+    static void setBtnMenu(QPushButton *pBtn, QMenu *pMenu);
+
     static void setTextEditFocus(QTextEdit *pEdit);
     static void setTextEditmoveCursorEnd(QTextEdit *pEdit);
     static void setTextEditmoveCursorHead(QTextEdit *pEdit);

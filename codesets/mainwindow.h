@@ -71,6 +71,9 @@ private:
     void append_RightMouseList(QAction *ptr);
     void free_RightMouseList();
 
+    //spliter
+    void procRightSplitter();
+
 public:
     enum{
         TYPE_FILE,
@@ -181,6 +184,8 @@ private:
 //    QMutexLocker update_locker;
     QMutex m_lock;
 
+    //pop menu
+    QMenu *pPopMenu;
 
 private slots:
     void proc_action_codeFormat_File();
@@ -255,6 +260,7 @@ private slots:
     void nodes_menu_cfgAfter(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
     void nodes_menu_rightbottom(QMenu *pMenu);
+    void nodes_menu_find(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();

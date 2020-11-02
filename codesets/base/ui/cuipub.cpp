@@ -762,6 +762,21 @@ void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
     emit pBtn->click();
 }
 
+void CUIPub::setBtnMenu(QPushButton *pBtn, QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pBtn))
+    {
+        return;
+    }
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+
+    pBtn->setMenu(pMenu);
+}
+
+
 void CUIPub::addListWidgetItems(QListWidget *pWidget, QStringList list)
 {
     if(CExpressPub::isNullPtr(pWidget))

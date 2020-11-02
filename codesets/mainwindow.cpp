@@ -258,13 +258,29 @@ void MainWindow::init_UiSets()
     //search result list widget, default hide
     CUIPub::hideListWidget(ui->listWidget_searchresult);
 
-    //ui spliter 分割比例
-    CUIPub::setSpliterFactor(ui->splitter_10, 0, 3);
-    CUIPub::setSpliterFactor(ui->splitter_10, 1, 7);
-    //中间三栏 分割比例
+    //整体 分割比例
+    CUIPub::setSpliterFactor(ui->splitter_5, 0, 3);
+    CUIPub::setSpliterFactor(ui->splitter_5, 1, 7);
+    //中间水平 三栏 分割比例
     CUIPub::setSpliterFactor(ui->splitter_2, 0, 4);
     CUIPub::setSpliterFactor(ui->splitter_2, 1, 2);
     CUIPub::setSpliterFactor(ui->splitter_2, 2, 4);
+
+    //右侧垂直 三栏 分割比例
+    procRightSplitter();
+
+
+//右上两栏
+    CUIPub::setSpliterFactor(ui->splitter,0,5);
+    CUIPub::setSpliterFactor(ui->splitter,1,5);
+
+    //自定义点ME弹出菜单
+    pPopMenu = new QMenu;
+    nodes_menu_find(pPopMenu);
+    nodes_menu_leftbottom(pPopMenu);
+
+    CUIPub::setBtnMenu(ui->pushButton_PopMenuClickMe, pPopMenu);
+
 }
 
 void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QString filename)
@@ -567,6 +583,17 @@ void MainWindow::nodes_menu_rightbottom(QMenu *pMenu)
 
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
+}
+
+void MainWindow::nodes_menu_find(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionFind    = CUIPub::createAction("查找");
+    QObject::connect(pActionFind, SIGNAL(triggered()), this, SLOT(on_action_search_triggered()));
+    pMenu->addAction(pActionFind);
 }
 
 
@@ -1471,6 +1498,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
         CUIPub::hideTextEdit(ui->textEdit_cfgTips);
         CUIPub::hideTextEdit(ui->textEdit_cfgBefore);
         CUIPub::hideTextEdit(ui->textEdit_cfgAfter);
+        procRightSplitter();
     }
     else
     {
@@ -1482,6 +1510,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
         {
             show_StatusTimerWindowTitle(QString("进入编辑配置文件模式"));
         }
+        procRightSplitter();
 
         CUIPub::showTextEdit(ui->textEdit_cfgTips);
         CUIPub::showTextEdit(ui->textEdit_cfgBefore);
@@ -1922,3 +1951,37 @@ void MainWindow::on_action_clear_allspace_triggered()
 {
     proc_character_trim_pub("\\s");
 }
+
+void MainWindow::procRightSplitter()
+{
+    debugApp() << "ui->splitter_3->count():" << ui->splitter_3->count();
+//    int len = ui->splitter_3->count();
+    QWidget *pW1 = ui->splitter_3->widget(0);
+    QWidget *pW2 = ui->splitter_3->widget(1);
+    QWidget *pW3 = ui->splitter_3->widget(2);
+
+//    debugApp() << "pW1->isHidden():" << pW1->isHidden();
+//    debugApp() << "pW2->isHidden():" << pW2->isHidden();
+//    debugApp() << "pW3->isHidden():" << pW3->isHidden();
+//    pW1->isVisible();
+    debugApp() << "pW1->isVisible():" << pW1->isVisible();
+    debugApp() << "pW2->isVisible():" << pW2->isVisible();
+    debugApp() << "pW3->isVisible():" << pW3->isVisible();
+
+    if(!pW2->isVisible())
+    {
+        CUIPub::setSpliterFactor(ui->splitter_3, 0, 7);
+        CUIPub::setSpliterFactor(ui->splitter_3, 1, 3);
+    }
+    else
+    {
+        CUIPub::setSpliterFactor(ui->splitter_3, 0, 4);
+        CUIPub::setSpliterFactor(ui->splitter_3, 1, 4);
+        CUIPub::setSpliterFactor(ui->splitter_3, 2, 2);
+    }
+
+    ui->splitter_3->refresh();
+    ui->splitter_3->update();
+
+}
+
