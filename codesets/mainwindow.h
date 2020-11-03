@@ -309,5 +309,8 @@ private slots:
     void on_action_trim_line_endspace_triggered();
     void on_action_trim_line_space_triggered();
     void on_action_clear_allspace_triggered();
+    void on_pushButton_mainfind_clicked();
+    void on_pushButton_mainfind_clicked_pub(int reverse);
+    void on_pushButton_mainfindreverse_clicked();
 };
 #endif // MAINWINDOW_H

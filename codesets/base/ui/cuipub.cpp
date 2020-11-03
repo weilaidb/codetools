@@ -482,6 +482,11 @@ QString CUIPub::getTextEdit(QTextEdit *pEdit)
     return pEdit->toPlainText();
 }
 
+bool CUIPub::findTextEdit(QTextEdit *pEdit,QString findtext, QTextDocument::FindFlags options)
+{
+    return pEdit->find(findtext, options);
+}
+
 int CUIPub::getTextEditLen(QTextEdit *pEdit)
 {
     return pEdit->toPlainText().length();
@@ -861,7 +866,12 @@ void CUIPub::showStatusBarTimerOnly(QString msg)
 
 QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
 {
-    return pLineEdit->text();
+    return pLineEdit->text().trimmed();
+}
+
+bool CUIPub::isLineEditEmpty(QLineEdit *pLineEdit)
+{
+    return pLineEdit->text().trimmed().isEmpty();
 }
 
 QString CUIPub::getComBox(QComboBox *pcomboBox)

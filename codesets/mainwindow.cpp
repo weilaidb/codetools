@@ -1954,34 +1954,83 @@ void MainWindow::on_action_clear_allspace_triggered()
 
 void MainWindow::procRightSplitter()
 {
-    debugApp() << "ui->splitter_3->count():" << ui->splitter_3->count();
-//    int len = ui->splitter_3->count();
-    QWidget *pW1 = ui->splitter_3->widget(0);
-    QWidget *pW2 = ui->splitter_3->widget(1);
-    QWidget *pW3 = ui->splitter_3->widget(2);
+//    debugApp() << "ui->splitter_3->count():" << ui->splitter_3->count();
+////    int len = ui->splitter_3->count();
+//    QWidget *pW1 = ui->splitter_3->widget(0);
+//    QWidget *pW2 = ui->splitter_3->widget(1);
+//    QWidget *pW3 = ui->splitter_3->widget(2);
 
-//    debugApp() << "pW1->isHidden():" << pW1->isHidden();
-//    debugApp() << "pW2->isHidden():" << pW2->isHidden();
-//    debugApp() << "pW3->isHidden():" << pW3->isHidden();
-//    pW1->isVisible();
-    debugApp() << "pW1->isVisible():" << pW1->isVisible();
-    debugApp() << "pW2->isVisible():" << pW2->isVisible();
-    debugApp() << "pW3->isVisible():" << pW3->isVisible();
+////    pW1->isVisible();
+//    debugApp() << "pW1->isVisible():" << pW1->isVisible();
+//    debugApp() << "pW2->isVisible():" << pW2->isVisible();
+//    debugApp() << "pW3->isVisible():" << pW3->isVisible();
 
-    if(!pW2->isVisible())
-    {
-        CUIPub::setSpliterFactor(ui->splitter_3, 0, 7);
-        CUIPub::setSpliterFactor(ui->splitter_3, 1, 3);
-    }
-    else
-    {
-        CUIPub::setSpliterFactor(ui->splitter_3, 0, 4);
-        CUIPub::setSpliterFactor(ui->splitter_3, 1, 4);
-        CUIPub::setSpliterFactor(ui->splitter_3, 2, 2);
-    }
+//    if(!pW2->isVisible())
+//    {
+//        CUIPub::setSpliterFactor(ui->splitter_3, 0, 7);
+//        CUIPub::setSpliterFactor(ui->splitter_3, 1, 3);
+//    }
+//    else
+//    {
+//        CUIPub::setSpliterFactor(ui->splitter_3, 0, 4);
+//        CUIPub::setSpliterFactor(ui->splitter_3, 1, 4);
+//        CUIPub::setSpliterFactor(ui->splitter_3, 2, 2);
+//    }
 
-    ui->splitter_3->refresh();
-    ui->splitter_3->update();
+//    ui->splitter_3->refresh();
+//    ui->splitter_3->update();
 
 }
 
+
+void MainWindow::on_pushButton_mainfind_clicked()
+{
+    if (CUIPub::isLineEditEmpty(ui->lineEdit_mainsearch))
+    {
+        ShowTipsInfo(QString::fromLocal8Bit("search text null!"));
+        return;
+    }
+
+    on_pushButton_mainfind_clicked_pub(0);
+}
+
+
+
+
+void MainWindow::on_pushButton_mainfindreverse_clicked()
+{
+    if (CUIPub::isLineEditEmpty(ui->lineEdit_mainsearch))
+    {
+        ShowTipsInfo(QString::fromLocal8Bit("search text null!"));
+        return;
+    }
+
+    on_pushButton_mainfind_clicked_pub(1);
+}
+
+void MainWindow::on_pushButton_mainfind_clicked_pub(int reverse)
+{
+    QString findtext = CUIPub::getLineEdit(ui->lineEdit_mainsearch);
+    QString text = CUIPub::getTextEdit(ui->textEdit).trimmed();
+
+    ui->textEdit->setFocus();
+
+    QTextDocument::FindFlags options = 0;
+    //精确查找
+    if (CUIPub::isCheckedQCheckBox(ui->checkBox_preciousfind))
+    {
+        options |= QTextDocument::FindCaseSensitively;
+    }
+
+    //反向查找
+    if(reverse > 0)
+    {
+        options |= QTextDocument::FindBackward;
+    }
+
+    if(!CUIPub::findTextEdit(ui->textEdit, findtext,options))
+    {
+        ShowTipsInfo(QString::fromLocal8Bit("找不到 \"%1\"").arg(findtext));
+    }
+
+}
