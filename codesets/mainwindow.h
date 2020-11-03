@@ -312,5 +312,6 @@ private slots:
     void on_pushButton_mainfind_clicked();
     void on_pushButton_mainfind_clicked_pub(int reverse);
     void on_pushButton_mainfindreverse_clicked();
+    void on_lineEdit_mainsearch_returnPressed();
 };
 #endif // MAINWINDOW_H

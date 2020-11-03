@@ -1988,7 +1988,7 @@ void MainWindow::on_pushButton_mainfind_clicked_pub(int reverse)
     QString findtext = CUIPub::getLineEdit(ui->lineEdit_mainsearch);
     QString text = CUIPub::getTextEdit(ui->textEdit).trimmed();
 
-    ui->textEdit->setFocus();
+//    ui->textEdit->setFocus();
 
     QTextDocument::FindFlags options = 0;
     //精确查找
@@ -2010,7 +2010,13 @@ void MainWindow::on_pushButton_mainfind_clicked_pub(int reverse)
 
     if(!CUIPub::findTextEdit(ui->textEdit, findtext,options))
     {
-        ShowTipsInfo(QString::fromLocal8Bit("找不到 \"%1\"").arg(findtext));
+        ShowTipsInfo(QString::fromLocal8Bit("到过界限 \"%1\"").arg(findtext));
     }
 
+}
+
+void MainWindow::on_lineEdit_mainsearch_returnPressed()
+{
+    ENTERTIPS;
+    on_pushButton_mainfind_clicked();
 }
