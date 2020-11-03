@@ -43,7 +43,7 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -152,6 +152,19 @@
                 </property>
                 <property name="text">
                  <string>精确</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_wholeword">
+                <property name="maximumSize">
+                 <size>
+                  <width>47</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>全字</string>
                 </property>
                </widget>
               </item>

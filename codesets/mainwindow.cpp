@@ -1954,31 +1954,6 @@ void MainWindow::on_action_clear_allspace_triggered()
 
 void MainWindow::procRightSplitter()
 {
-//    debugApp() << "ui->splitter_3->count():" << ui->splitter_3->count();
-////    int len = ui->splitter_3->count();
-//    QWidget *pW1 = ui->splitter_3->widget(0);
-//    QWidget *pW2 = ui->splitter_3->widget(1);
-//    QWidget *pW3 = ui->splitter_3->widget(2);
-
-////    pW1->isVisible();
-//    debugApp() << "pW1->isVisible():" << pW1->isVisible();
-//    debugApp() << "pW2->isVisible():" << pW2->isVisible();
-//    debugApp() << "pW3->isVisible():" << pW3->isVisible();
-
-//    if(!pW2->isVisible())
-//    {
-//        CUIPub::setSpliterFactor(ui->splitter_3, 0, 7);
-//        CUIPub::setSpliterFactor(ui->splitter_3, 1, 3);
-//    }
-//    else
-//    {
-//        CUIPub::setSpliterFactor(ui->splitter_3, 0, 4);
-//        CUIPub::setSpliterFactor(ui->splitter_3, 1, 4);
-//        CUIPub::setSpliterFactor(ui->splitter_3, 2, 2);
-//    }
-
-//    ui->splitter_3->refresh();
-//    ui->splitter_3->update();
 
 }
 
@@ -2020,6 +1995,11 @@ void MainWindow::on_pushButton_mainfind_clicked_pub(int reverse)
     if (CUIPub::isCheckedQCheckBox(ui->checkBox_preciousfind))
     {
         options |= QTextDocument::FindCaseSensitively;
+    }
+    //全字匹配
+    if (CUIPub::isCheckedQCheckBox(ui->checkBox_wholeword))
+    {
+        options |= QTextDocument::FindWholeWords;
     }
 
     //反向查找
