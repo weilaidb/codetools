@@ -1772,6 +1772,7 @@ void MainWindow::proc_action_scan_test_dir(bool bFlag)
     debugApp() << "bFlag:" << bFlag;
     //支持创建多个界面
     pMulWinTest = new SuperTest();
+    pMulWinTest->setAttribute(Qt::WA_DeleteOnClose, true);
     pMulWinTest->show();
 }
 

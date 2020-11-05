@@ -357,6 +357,7 @@ void SuperTest::write_HistorySetting()
 void SuperTest::on_action_new_ut_instance_triggered()
 {
     CDialogNewUt *pDiaglog = new CDialogNewUt();
+    pDiaglog->setAttribute(Qt::WA_DeleteOnClose, true);
 
     if(CStringPub::strSimLen(dir_cur_loaded))
     {
