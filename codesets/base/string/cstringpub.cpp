@@ -147,10 +147,10 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign,QStr
 
 void CStringPub::printStringList(QStringList &lists)
 {
-    debugApp() <<"lists count:" << lists.count();
+    ////debugApp() <<"lists count:" << lists.count();
     quint32 dwCnt = 0;
     foreach (QString item, lists) {
-        debugApp() << "No:" << ++dwCnt << ", " << item;
+        ////debugApp() << "No:" << ++dwCnt << ", " << item;
     }
 
 }
@@ -312,7 +312,7 @@ QStringList CStringPub::actionNameList(QAction *action)
 {
     QStringList autolist;
     autolist.append(action->iconText());
-    debugApp() << "actionname:" << action->iconText();
+    ////debugApp() << "actionname:" << action->iconText();
     return autolist;
 }
 

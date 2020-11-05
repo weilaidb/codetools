@@ -10,7 +10,7 @@ CMapPub::CMapPub()
 void CMapPub::insertMapFileMode(QString str, QString val)
 {
     getMapFileModeInstance()->insert(str,val);
-//    debugApp() << "getMapFileModeInstance()->size():" << getMapFileModeInstance()->size();
+//    ////debugApp() << "getMapFileModeInstance()->size():" << getMapFileModeInstance()->size();
 
 }
 

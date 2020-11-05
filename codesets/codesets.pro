@@ -112,8 +112,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
-    testcase/stringtest/cstringpubcpp_main.cpp \
-    testui.cpp
+    testcase/stringtest/cstringpubcpp_main.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
@@ -150,7 +149,6 @@ HEADERS += \
     public/include/readmacro.h \
     supertest.h \
     testcase/stringtest/testcase.h \
-    testui.h \
     version.h
 
 win32 {
@@ -184,8 +182,7 @@ FORMS += \
     cdialognewut.ui \
     cdialogsearch.ui \
     mainwindow.ui \
-    supertest.ui \
-    testui.ui
+    supertest.ui
 
 
 # Default rules for deployment.

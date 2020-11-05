@@ -29,7 +29,7 @@
 
 
 
-#define SHOWCURFUNC debugApp() << __FUNCTION__
+#define SHOWCURFUNC ////debugApp() << __FUNCTION__
 
 
 #endif // BASEDEFINEPUB_H

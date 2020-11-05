@@ -18,7 +18,7 @@ WORD32 CSqlPub::openDb(QString hostName,QString dbName, QString userName, QStrin
     qDebug("database open status: %d\n", dbconn.open());
 
     QSqlError error = dbconn.lastError();
-    debugApp() << error.text();
+    ////debugApp() << error.text();
 
     dbconn.close();
     return 0;

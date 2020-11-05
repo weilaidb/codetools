@@ -473,7 +473,7 @@ int CUIPub::getSelectLine(QTextEdit *pTextEdit)
 
 QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
 {
-    //    debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
+    //    ////debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
     return pEdit->document()->findBlockByLineNumber(getSelectLine(pEdit)).text();
 }
 

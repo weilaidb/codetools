@@ -102,25 +102,25 @@ void CPrintPub::printArray(char **argv, int size)
 void CPrintPub::printStringList(QStringList list)
 {
     foreach (QString item, list) {
-        debugApp() << item;
+        ////debugApp() << item;
     }
 }
 
 void CPrintPub::printStringListTip(QStringList list, QString tip)
 {
-    debugApp() << "-----:[" <<tip << "] begin!";
+    ////debugApp() << "-----:[" <<tip << "] begin!";
     foreach (QString item, list) {
-        debugApp() << item;
+        ////debugApp() << item;
     }
-    debugApp() << "-----:[" <<tip << "] end!";
+    ////debugApp() << "-----:[" <<tip << "] end!";
 }
 
 
 void CPrintPub::printString(QString str)
 {
-    debugApp() << str;
+    ////debugApp() << str;
 }
 void CPrintPub::printStringTip(QString str, QString tip)
 {
-    debugApp() << tip << " : " << str;
+    ////debugApp() << tip << " : " << str;
 }

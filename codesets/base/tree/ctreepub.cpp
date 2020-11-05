@@ -39,7 +39,7 @@ void CTreePub::procSubNode(QString filename)
     }
 
     pos = strKey.lastIndexOf(CSignPub::signLXie());
-    //    debugApp() << "pos:" << pos <<" , "<< strKey;
+    //    ////debugApp() << "pos:" << pos <<" , "<< strKey;
     m_menuIter = m_menuSubNode.find(strKey);
     if((m_menuSubNode.end() == m_menuIter)
             && setSubNode(tNode, false, strKey))
@@ -51,7 +51,7 @@ void CTreePub::procSubNode(QString filename)
     {
         strKey = strKey.mid(0,pos);
         pos = strKey.lastIndexOf(CSignPub::signLXie());
-        //        debugApp() << "pos:" << pos <<" , "<< strKey;
+        //        ////debugApp() << "pos:" << pos <<" , "<< strKey;
         m_menuIter = m_menuSubNode.find(strKey);
         if((m_menuSubNode.end() == m_menuSubNode.find(strKey))
                 && setSubNode(tNode, true, strKey))
@@ -77,8 +77,8 @@ void CTreePub::initSubNode(T_SubNode &node)
 
 void CTreePub::printSubNode(T_SubNode &node)
 {
-    debugApp() << "isMenu:" << node.m_isMenu << ", name:" << node.m_name << ", path:" << node.m_path
-               << ", parent:" << node.m_parent  ;
+    ////debugApp() << "isMenu:" << node.m_isMenu << ", name:" << node.m_name << ", path:" << node.m_path
+//               << ", parent:" << node.m_parent  ;
 }
 
 bool CTreePub::setSubNode(T_SubNode &node, bool isMenu, QString path)
@@ -111,7 +111,7 @@ bool CTreePub::setSubNode(T_SubNode &node, bool isMenu, QString path)
 
 void CTreePub::showMenuSubNode()
 {
-    debugApp() << "show menu subnoce";
+    ////debugApp() << "show menu subnoce";
     for(m_menuIter = m_menuSubNode.begin(); m_menuIter != m_menuSubNode.end(); m_menuIter++)
     {
         T_SubNode tNode;
@@ -165,7 +165,7 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
         }
         else
         {
-            debugApp() << "parent menu no exist!!";
+            ////debugApp() << "parent menu no exist!!";
         }
     }
 

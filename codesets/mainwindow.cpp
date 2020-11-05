@@ -296,7 +296,7 @@ void MainWindow::read_FreqUseFile()
 void MainWindow::update_generate_menu_left()
 {
     QMutexLocker update_locker(&m_lock);
-    debugApp() << "update_generate_menu_left!!";
+    ////debugApp() << "update_generate_menu_left!!";
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse_L);
     free_RightMouseList();
@@ -322,7 +322,7 @@ void MainWindow::update_generate_menu_left()
 void MainWindow::proc_generate_menu_left(QPoint pos)
 {
     Q_UNUSED(pos)
-    debugApp() << "right mouse clicked!!";
+    ////debugApp() << "right mouse clicked!!";
     QCursor cur=this->cursor();
     if((CExpressPub::isFalse(CUIPub::isCheckedQAction(ui->action_background_update)))
             || (CExpressPub::isNullPtr(pRightMouse_L)))
@@ -459,7 +459,7 @@ QMenu *MainWindow::proc_frequse_menu()
     read_FreqUseFile();
     //更新频繁使用列表
     updateListWidgetFrequse();
-    debugApp() << m_listfrequse.count();
+    ////debugApp() << m_listfrequse.count();
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
@@ -649,7 +649,7 @@ void MainWindow::proc_menu_codeFormat_Recent(QAction *action)
 void MainWindow::proc_action_codeFormat_Directory()
 {
     QStringList autolist;
-    //    debugApp() << "proc_action_codeFormat_Directory";
+    //    ////debugApp() << "proc_action_codeFormat_Directory";
     proc_action_codeFormat_Pub(TYPE_DIR,autolist);
 }
 
@@ -660,7 +660,7 @@ void MainWindow::proc_action_codeFormat_Directory()
 void MainWindow::proc_action_codeFormat_File()
 {
     QStringList autolist;
-    //    debugApp() << "proc_action_codeFormat_File";
+    //    ////debugApp() << "proc_action_codeFormat_File";
     proc_action_codeFormat_Pub(TYPE_FILES,autolist);
 }
 
@@ -689,8 +689,8 @@ void MainWindow::proc_action_codeFormat_Del_Config()
 
 void MainWindow::proc_action_about()
 {
-    debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
-    //    debugApp() << CStringPub::getCurrentExePath();
+    ////debugApp() << CAlgorithmPub::getMd5SumOfFile(m_apppath);
+    //    ////debugApp() << CStringPub::getCurrentExePath();
     CLogPub::logDefault(m_apppath);
     show_Status(QString("当前版本是:") + APP_VERSION
                 + CSignPub::signEnter()
@@ -708,7 +708,7 @@ void MainWindow::proc_action_attention()
 
 void MainWindow::proc_action_codeFormat_Pub(int openType,QStringList autolist)
 {
-    debugApp() << "proc_action_codeFormat_Pub";
+    ////debugApp() << "proc_action_codeFormat_Pub";
     get_NameFilter();
 
     switch (openType) {
@@ -722,7 +722,7 @@ void MainWindow::proc_action_codeFormat_Pub(int openType,QStringList autolist)
         {
             return;
         }
-        debugApp() << "Open Files:" << openfiles;
+        ////debugApp() << "Open Files:" << openfiles;
         openFilePathRecent = openfiles.at(0);
         recentfiles_codeformat.append(openfiles);
         proc_AstyleInstance(openfiles);
@@ -732,7 +732,7 @@ void MainWindow::proc_action_codeFormat_Pub(int openType,QStringList autolist)
     case TYPE_FILES_NOUI:
     {
         /*打开一个dialog对话框，选择一个文件*/
-        debugApp() << "Open Files:" << autolist;
+        ////debugApp() << "Open Files:" << autolist;
         proc_AstyleInstance(autolist);
         recentfiles_codeformat.append(autolist);
     }
@@ -761,7 +761,7 @@ void MainWindow::proc_action_codeFormat_Pub(int openType,QStringList autolist)
         {
             return;
         }
-        debugApp() << "Open Dir:" << openDirPath;
+        ////debugApp() << "Open Dir:" << openDirPath;
         recentfiles_codeformat.append(openDirPath);
         QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
         proc_AstyleInstance(openfiles);
@@ -848,7 +848,7 @@ void MainWindow::proc_AstyleInstance(QStringList filelist)
 
     dwArgc = get_AstyleFmt(filelist);
     AyStyleMain(dwArgc, m_argvp);
-    debugApp() << "Astyle done:" << filelist;
+    ////debugApp() << "Astyle done:" << filelist;
     free_Argv();
     CPrintPub::canclePrintToFile();
 
@@ -1120,7 +1120,7 @@ void MainWindow::proc_action_office_action_pub(quint8 ucActionType, QStringList 
             {
                 continue;
             }
-            debugApp() << "[OpenFile]" + item ;
+            ////debugApp() << "[OpenFile]" + item ;
             result+="[OpenFile]" + item + SIGNENTER;
             result+=singres + SIGNENTER;
             cur++;
@@ -1206,7 +1206,7 @@ quint8 MainWindow::get_DialogFindText(QString &findtext)
     delete pDialog;
     delete uiDialog;
 
-    debugApp() << "Word Find Text:" << findtext;
+    ////debugApp() << "Word Find Text:" << findtext;
     set_LeftTextEdit("Word Find Text:" + findtext);
 
     return ucresult;
@@ -1258,7 +1258,7 @@ void MainWindow::proc_menu_document_search_recent(QAction *action)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    debugApp() << "closeEvent";
+    ////debugApp() << "closeEvent";
     write_HistorySetting();
     event->accept();
 }
@@ -1307,17 +1307,17 @@ void MainWindow::proc_action_net_server()
 
 void MainWindow::proc_threadmessage(const QString& info)
 {
-    debugApp() << "recv message:" << info;
+    ////debugApp() << "recv message:" << info;
 }
 
 void MainWindow::proc_threadprogress(int progress)
 {
-    debugApp() << "progress:" << progress;
+    ////debugApp() << "progress:" << progress;
 }
 
 void MainWindow::proc_threadfinished()
 {
-    debugApp() << "threadfinished:" ;
+    ////debugApp() << "threadfinished:" ;
 }
 
 
@@ -1362,8 +1362,8 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     QString lefttext  = CUIPub::getTextEdit(ui->textEdit);
     QString proctext  = CStringPub::emptyString();
 
-    debugApp() << "keyword:" << keyword;
-    debugApp() << "linewords:" << linewords;
+    ////debugApp() << "keyword:" << keyword;
+    ////debugApp() << "linewords:" << linewords;
 
     if(CExpressPub::isZero(CStringPub::strSimLen(keyword)) && CExpressPub::isZero(CStringPub::strSimLen(lefttext)))
     {
@@ -1385,7 +1385,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
         proctext = lefttext;
     }
 
-    debugApp() << "proctext:" << proctext;
+    ////debugApp() << "proctext:" << proctext;
     if(!CUIPub::isCheckedQAction(ui->action_manycontent_proc) && CStringPub::strSimLen(proctext) >= MANYCONTENTMAX)
     {
         show_StatusTimer(QString("内容超过处理范围%1").arg(MANYCONTENTMAX));
@@ -1399,8 +1399,8 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
 {
     QString proctext  = CStringPub::emptyString();
 
-    debugApp() << "configfilename:" << configfilename;
-    debugApp() << "type          :" << type;
+    ////debugApp() << "configfilename:" << configfilename;
+    ////debugApp() << "type          :" << type;
     CUIPub::setPlainTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
@@ -1440,8 +1440,8 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
  */
 void MainWindow::proc_action_gen_custom_action(QAction *pAction)
 {
-    debugApp() << "custom action:" << pAction->text();
-    debugApp() << "custom data  :" << pAction->data();
+    ////debugApp() << "custom action:" << pAction->text();
+    ////debugApp() << "custom data  :" << pAction->data();
 
     QString totalstr = pAction->data().toString();
     QStringList actlist = CStringPub::stringSplit(totalstr, CSignPub::signFenHaoC());
@@ -1758,18 +1758,18 @@ void MainWindow::free_RightMouseList()
 
 void MainWindow::proc_action_background_update(bool bFlag)
 {
-    debugApp() << "bFlag:" << bFlag;
+    ////debugApp() << "bFlag:" << bFlag;
 }
 
 void MainWindow::proc_action_update(bool bFlag)
 {
-    debugApp() << "bFlag:" << bFlag;
+    ////debugApp() << "bFlag:" << bFlag;
     update_generate_menu_left();
 }
 
 void MainWindow::proc_action_scan_test_dir(bool bFlag)
 {
-    debugApp() << "bFlag:" << bFlag;
+    ////debugApp() << "bFlag:" << bFlag;
     //支持创建多个界面
     pMulWinTest = new SuperTest();
     pMulWinTest->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -1852,7 +1852,7 @@ void MainWindow::on_action_search_triggered()
     {
         goto ENDLABEL;
     }
-    debugApp() << pDiaglogKey->getKey();
+    ////debugApp() << pDiaglogKey->getKey();
     findKey = pDiaglogKey->getKey();
     cs = pDiaglogKey->getCaseSentived();
     if(0 == CStringPub::strSimLen(findKey))

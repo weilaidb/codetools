@@ -82,7 +82,7 @@ void SuperTest::init_UiSets()
 void SuperTest::proc_generate_menu_left(QPoint pos)
 {
     Q_UNUSED(pos)
-    debugApp() << "right mouse clicked!!";
+    ////////debugApp() << "right mouse clicked!!";
     QCursor cur=this->cursor();
 
     if(pRightMouse)
@@ -106,13 +106,13 @@ void SuperTest::init_CheckBoxSets()
 
 void SuperTest::on_pushButton_load_test_dir_clicked()
 {
-    //    debugApp() << "proc_pushButton_load_test_dir";
+    //    ////////debugApp() << "proc_pushButton_load_test_dir";
 }
 
 
 void SuperTest::proc_pushButton_load_test_dir()
 {
-    debugApp() << "proc_pushButton_load_test_dir";
+    ////////debugApp() << "proc_pushButton_load_test_dir";
     //    QString filter = "*.*;;";
     //    QStringList getFileNames = CFilePub::getOpenDiagFiles(openFilePathRecent, filter);
     QString tips = "请选择扫描的测试的目录";
@@ -177,8 +177,8 @@ void SuperTest::OnListWidgetCurrentListChanged(int index)
 
     QString fileNamePre = proc_itemWholePathOnCheckBox(m_RenamePrev);
     QString fileNameAft = proc_itemWholePathOnCheckBox(CUIPub::getListWidgetItemText(ui->listWidget_load_dir, m_RenameIndex));
-//    debugApp() << "fileNamePre:" << fileNamePre;
-//    debugApp() << "fileNameAft:" << fileNameAft;
+//    ////////debugApp() << "fileNamePre:" << fileNamePre;
+//    ////////debugApp() << "fileNameAft:" << fileNameAft;
 
     bool ok = QFile::rename(fileNamePre, fileNameAft);
     if (!ok)
@@ -216,10 +216,10 @@ void SuperTest::on_pushButton_reload_dir_clicked()
     {
         filelist = CFilePub::getFileAllRelateNames(namefilter, dir_cur_loaded);
     }
-    //    debugApp() << "filelist:" << filelist;
+    //    ////////debugApp() << "filelist:" << filelist;
     filelist = CStringPub::filterFileListInclude(file_content_txt, filelist);
     filelist = CStringPub::filterFileListNoInclude(file_result_log, filelist);
-    debugApp() << "filtered filelist:" << filelist;
+    ////////debugApp() << "filtered filelist:" << filelist;
 
     QString findstr = CUIPub::getLineEdit(ui->lineEdit);
     QString mode = "";
@@ -290,8 +290,8 @@ void SuperTest::proc_actionOpenConfigDir()
     }
     QString dirPath = CFilePub::parentDir(file_cur_item_load);
 
-    debugApp() << "file_cur_item_load:" << file_cur_item_load;
-    debugApp() << "dirPath:" << dirPath;
+    ////////debugApp() << "file_cur_item_load:" << file_cur_item_load;
+    ////////debugApp() << "dirPath:" << dirPath;
 
     CUIPub::explorerPathExt(dirPath);
 }
@@ -321,7 +321,7 @@ void SuperTest::proc_actionReloadFile()
 
 void SuperTest::closeEvent(QCloseEvent *event)
 {
-    debugApp() << "closeEvent";
+    ////////debugApp() << "closeEvent";
     write_HistorySetting();
     event->accept();
 }
@@ -372,7 +372,7 @@ void SuperTest::on_action_new_ut_instance_triggered()
 
 
     //支持同时创建多个文件用例
-    debugApp() << pDiaglog->getPath();
+    ////////debugApp() << pDiaglog->getPath();
 
     QStringList strPathList =CStringPub::stringSplitbyNewLineFilterEmpty(pDiaglog->getPath());
     if(1 == strPathList.size())
@@ -450,12 +450,12 @@ void SuperTest::proc_customContextMenuRequested(QPoint)
 
 void SuperTest::proc_menu_RightMouseListWidget(QAction *pAction)
 {
-    debugApp() << CUIPub::getQActionText(pAction);
+    ////////debugApp() << CUIPub::getQActionText(pAction);
     QListWidgetItem * item = CUIPub::getListWidgetCurrentItem(ui->listWidget_load_dir);
     CHECK_NULLPOINTER_RETURN(item);
 
     QList<QListWidgetItem*> pListSelct = CUIPub::getListWidgetSelectedItems(ui->listWidget_load_dir);
-    debugApp() << "select list size:" << pListSelct.size();
+    ////////debugApp() << "select list size:" << pListSelct.size();
     if(0 == pListSelct.size())
     {
         int ch = QMessageBox::warning(NULL, "Warning",

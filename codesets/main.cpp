@@ -4,7 +4,7 @@
 #include <QDebug>
 #include "ctextcodecpub.h"
 #include "supertest.h"
-#include "testui.h"
+//#include "testui.h"
 
 #if 1
 int main(int argc, char *argv[])

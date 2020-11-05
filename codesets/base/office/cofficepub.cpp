@@ -157,7 +157,7 @@ QString COfficePub::readWord(QString filepath)
     m_pRange=m_docx->querySubObject("Range()");
     docx_text_info=m_pRange->property("Text").toString();
     delete m_pRange;
-    debugApp()<<docx_text_info << endl;
+    ////debugApp()<<docx_text_info << endl;
     //m_docx->dynamicCall("SaveAs(const QString&)", filepath);
     //m_docx->dynamicCall("Save()");
     m_docx->dynamicCall("Close()");
@@ -186,7 +186,7 @@ QString COfficePub::readWordFindText(QString filepath)
     m_pRange=m_docx->querySubObject("Range()");
     docx_text_info=m_pRange->property("Text").toString();
     delete m_pRange;
-    //    debugApp()<<docx_text_info << endl;
+    //    ////debugApp()<<docx_text_info << endl;
     //m_docx->dynamicCall("SaveAs(const QString&)", filepath);
     //m_docx->dynamicCall("Save()");
     m_docx->dynamicCall("Close()");

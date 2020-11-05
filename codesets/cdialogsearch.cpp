@@ -99,7 +99,7 @@ void CDialogSearch::write_HistorySetting()
 
 void CDialogSearch::closeEvent(QCloseEvent *event)
 {
-    debugApp() << "closeEvent";
+    ////debugApp() << "closeEvent";
     write_HistorySetting();
     event->accept();
 }
