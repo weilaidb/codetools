@@ -228,15 +228,15 @@ void MainWindow::init_UiSets()
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
 
-    pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
-    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
+//    pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
+//    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
 
-    pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
-    connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
+//    pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
+//    connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
-    //后台数据更新频率，暂定为1分钟
-    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
-    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
+//    //后台数据更新频率，暂定为1分钟
+//    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
+//    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
     m_dwLstFreqUseCnt = 15;
     read_FreqUseFile();
@@ -1638,34 +1638,34 @@ void MainWindow::proc_action_TryAgain()
 
 void MainWindow::proc_textEdit_textChanged()
 {
-    if(CUIPub::getCheckedQAction(ui->action_EditCfgFile)
-            ||CUIPub::getCheckedQAction(ui->action_DeleteCfgFile))
-    {
-        return;
-    }
+//    if(CUIPub::getCheckedQAction(ui->action_EditCfgFile)
+//            ||CUIPub::getCheckedQAction(ui->action_DeleteCfgFile))
+//    {
+//        return;
+//    }
 
 
-    static QString oldText = CStringPub::emptyString();
-    static QString curText = CStringPub::emptyString();
+//    static QString oldText = CStringPub::emptyString();
+//    static QString curText = CStringPub::emptyString();
 
-    curText = CUIPub::getTextEdit(ui->textEdit);
-    if(CExpressPub::isEmpty(curText))
-    {
-        pCheckLeftTimer->stop();
-        oldText = curText;
-        return;
-    }
+//    curText = CUIPub::getTextEdit(ui->textEdit);
+//    if(CExpressPub::isEmpty(curText))
+//    {
+//        pCheckLeftTimer->stop();
+//        oldText = curText;
+//        return;
+//    }
 
-    if(curText != oldText)
-    {
-        pCheckLeftTimer->start(iTimeout);
-        oldText = curText;
-        return;
-    }
+//    if(curText != oldText)
+//    {
+//        pCheckLeftTimer->start(iTimeout);
+//        oldText = curText;
+//        return;
+//    }
 
-    oldText = curText;
-    //    proc_action_TryAgain();
-    pCheckLeftTimer->stop();
+//    oldText = curText;
+//    //    proc_action_TryAgain();
+//    pCheckLeftTimer->stop();
 
 }
 
