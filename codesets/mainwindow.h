@@ -32,7 +32,6 @@ public:
 private:
     void show_Version();
     void init_Dialog();
-    void init_SuperTest();
     void init_ActionSets();
     void init_CheckBoxSets();
     void init_Vars();
@@ -66,10 +65,6 @@ private:
     void clear_LeftTextEdit();
     void set_RightTextEdit(QString str);
     void clear_RightTextEdit();
-
-    // right mouse list to free
-    void append_RightMouseList(QAction *ptr);
-    void free_RightMouseList();
 
     //spliter
     void procRightSplitter();

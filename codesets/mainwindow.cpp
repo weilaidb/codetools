@@ -84,15 +84,6 @@ void MainWindow::init_Dialog()
     pDialog->setWindowFlags(flags | Qt::MSWindowsFixedSizeDialogHint);
 }
 
-void MainWindow::init_SuperTest()
-{
-    //test
-    if(nullptr == pMulWinTest)
-    {
-        pMulWinTest = new SuperTest();
-    }
-}
-
 void MainWindow::show_Version()
 {
     ui->statusbar->showMessage(APP_VERSION);
@@ -299,7 +290,6 @@ void MainWindow::update_generate_menu_left()
     ////debugApp() << "update_generate_menu_left!!";
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse_L);
-    free_RightMouseList();
 
     pRightMouse_L = new QMenu(this);
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
@@ -426,13 +416,6 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
     QAction *pActionReload        = CUIPub::createAction("重新加载");
-    append_RightMouseList(pActionClearLeft);
-    //    append_RightMouseList(pActionPaste);
-    //    append_RightMouseList(pActionSelectCopy);
-    //    append_RightMouseList(pActionSelectAllCopy);
-    //    append_RightMouseList(pActionOpenCfgDir);
-    //    append_RightMouseList(pActionOpenCfgMenu);
-
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_actionClearLeft()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
     QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
@@ -463,7 +446,6 @@ QMenu *MainWindow::proc_frequse_menu()
     foreach (QString item, m_listfrequse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
-        //        append_RightMouseList(pTmpAction);
     }
 
     if(pFreqUse)
@@ -489,7 +471,6 @@ QMenu *MainWindow::proc_openfilelist_menu()
         }
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pOpenFile->addAction(pTmpAction);
-        append_RightMouseList(pTmpAction);
     }
 
     if(pOpenFile)
@@ -512,12 +493,6 @@ void MainWindow::nodes_menu_right(QMenu *pMenu)
     QAction *pActionSelectCopy = CUIPub::createAction("复制");
     QAction *pActionSelectAllCopy  = CUIPub::createAction("全选复制");
     QAction *pActionClearEmpty     = CUIPub::createAction("清除空行");
-    //    append_RightMouseList(pActionClearRight);
-    //    append_RightMouseList(pActionPaste);
-    //    append_RightMouseList(pActionSelectCopy);
-    //    append_RightMouseList(pActionSelectAllCopy);
-    //    append_RightMouseList(pActionClearEmpty);
-
     QObject::connect(pActionClearRight, SIGNAL(triggered()), this, SLOT(proc_actionClearRight()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteRight()));
     QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
@@ -559,8 +534,6 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
-    //    append_RightMouseList(pActionOpenCfgFile);
-    //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
 
@@ -576,8 +549,6 @@ void MainWindow::nodes_menu_rightbottom(QMenu *pMenu)
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
-    //    append_RightMouseList(pActionOpenCfgFile);
-    //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFileR()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDirR()));
 
@@ -1739,21 +1710,6 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
     }
     show_StatusTimerWindowTitle("打开配置文件" + pAction->text());
     CUIPub::explorerPathExt(pAction->text());
-}
-
-void MainWindow::append_RightMouseList(QAction *ptr)
-{
-    m_lstRightMouse.append(ptr);
-}
-
-void MainWindow::free_RightMouseList()
-{
-    //    foreach (QAction *ptr, m_lstRightMouse) {
-    //        if(ptr){
-    //            delete ptr;
-    //        }
-    //    }
-    m_lstRightMouse.clear();
 }
 
 void MainWindow::proc_action_background_update(bool bFlag)

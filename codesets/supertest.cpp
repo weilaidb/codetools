@@ -245,8 +245,6 @@ void SuperTest::nodes_menu_leftbottom(QMenu *pMenu)
     QAction *pActionOpenCfgDir     = CUIPub::createAction("打开当前配置文件夹");
     QAction *pActionSaveFile       = CUIPub::createAction("保存");
     QAction *pActionReloadFile         = CUIPub::createAction("重新加载");
-    //    append_RightMouseList(pActionOpenCfgFile);
-    //    append_RightMouseList(pActionOpenCfgDir);
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
     QObject::connect(pActionSaveFile, SIGNAL(triggered()), this, SLOT(proc_actionSaveFile()));
