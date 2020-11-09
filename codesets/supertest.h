@@ -28,6 +28,7 @@ private:
     void init_UiSets();
     void init_ListWidget();
     void init_CheckBoxSets();
+    void deinit_ListWidget();
     void config_cur_load_path(QString path);
     void nodes_menu_leftbottom(QMenu *pMenu);
     void nodes_menu_listwidget(QMenu *pMenu);

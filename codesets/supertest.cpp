@@ -95,9 +95,18 @@ void SuperTest::proc_generate_menu_left(QPoint pos)
 void SuperTest::init_ListWidget()
 {
     QObject::connect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemClicked(QListWidgetItem *)));
-    QObject::connect(ui->listWidget_load_dir, SIGNAL(currentRowChanged(int)), this, SLOT(OnListWidgetCurrentListChanged(int)));
+//    QObject::connect(ui->listWidget_load_dir, SIGNAL(currentRowChanged(int)), this, SLOT(OnListWidgetCurrentListChanged(int)));
 
 }
+
+void SuperTest::deinit_ListWidget()
+{
+    QObject::disconnect(ui->listWidget_load_dir, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_load_dir_ItemClicked(QListWidgetItem *)));
+    QObject::disconnect(ui->listWidget_load_dir, SIGNAL(currentRowChanged(int)), this, SLOT(OnListWidgetCurrentListChanged(int)));
+
+}
+
+
 
 void SuperTest::init_CheckBoxSets()
 {
@@ -264,7 +273,7 @@ void SuperTest::nodes_menu_listwidget(QMenu *pMenu)
         return;
     }
     QAction *pActionDeleteItem    = CUIPub::createAction("删除节点");
-    QObject::connect(pActionDeleteItem, SIGNAL(triggered()), this, SLOT(proc_actionDeleteItem()));
+//    QObject::connect(pActionDeleteItem, SIGNAL(triggered()), this, SLOT(proc_actionDeleteItem()));
     pMenu->addAction(pActionDeleteItem);
 
 }
@@ -448,6 +457,7 @@ void SuperTest::proc_customContextMenuRequested(QPoint)
 
 void SuperTest::proc_menu_RightMouseListWidget(QAction *pAction)
 {
+    Q_UNUSED(pAction);
     ////////debugApp() << CUIPub::getQActionText(pAction);
     QListWidgetItem * item = CUIPub::getListWidgetCurrentItem(ui->listWidget_load_dir);
     CHECK_NULLPOINTER_RETURN(item);
@@ -485,12 +495,16 @@ void SuperTest::proc_menu_RightMouseListWidget(QAction *pAction)
 
     if ( ch != QMessageBox::Yes )
         return;
+
     foreach (QListWidgetItem *pItem, pListSelct) {
         CFilePub::deleteFile(proc_itemWholePathOnCheckBox(pItem->text()));
 
         CUIPub::getListWidgetTakeItem(ui->listWidget_load_dir, item);
         delete pItem;
+        emit ui->pushButton_reload_dir->clicked();
     }
+
+
 
 
 
