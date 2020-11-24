@@ -1376,7 +1376,7 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
     CUIPub::setPlainTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
-    if(CUIPub::getCheckedQAction(ui->action_checknoexistpath))
+    if(CUIPub::getCheckedQAction(ui->action_autoconvertaf))
     {
         proc_actionCovertMulLine();
     }
@@ -1466,7 +1466,7 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
     {
         if(CExpressPub::isFull(m_EditConfig))
         {
-            if(CUIPub::getCheckedQAction(ui->action_checknoexistpath))
+            if(CUIPub::getCheckedQAction(ui->action_autoconvertaf))
             {
                 proc_actionCovertOneLine();
             }
