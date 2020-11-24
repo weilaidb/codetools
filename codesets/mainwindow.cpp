@@ -592,6 +592,7 @@ void MainWindow::proc_HistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_background_update, ucType);
     CUIPub::procAction(m_pSettings, ui->action_hidebuttonswitch, ucType);
     CUIPub::procAction(m_pSettings, ui->action_manycontent_proc, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_autoconvertaf, ucType);
 }
 
 void MainWindow::read_HistorySetting()
@@ -1375,6 +1376,10 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
     CUIPub::setPlainTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
+    if(CUIPub::getCheckedQAction(ui->action_checknoexistpath))
+    {
+        proc_actionCovertMulLine();
+    }
 }
 
 void MainWindow::proc_action_editinginfo(QString configfilename, int type)
@@ -1461,6 +1466,10 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
     {
         if(CExpressPub::isFull(m_EditConfig))
         {
+            if(CUIPub::getCheckedQAction(ui->action_checknoexistpath))
+            {
+                proc_actionCovertOneLine();
+            }
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgTips)   , CRegExpPub::FILE_TIPS  );
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgBefore) , CRegExpPub::FILE_BEFORE);
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgAfter)  , CRegExpPub::FILE_AFTER );
@@ -1612,13 +1621,13 @@ void MainWindow::proc_actionClearEmpty()
 void MainWindow::proc_actionCovertOneLine()
 {
     QString text = CUIPub::getTextEdit(ui->textEdit_cfgAfter);
-    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace("\n", "$NL"));
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace("\n", SIGN_CUSTOM_NL));
 }
 
 void MainWindow::proc_actionCovertMulLine()
 {
     QString text = CUIPub::getTextEdit(ui->textEdit_cfgAfter);
-    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace("$NL", "\n"));
+    CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter,text.replace(SIGN_CUSTOM_NL, "\n"));
 }
 
 

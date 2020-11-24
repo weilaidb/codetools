@@ -19,6 +19,7 @@
 #define SIGN_CUSTOM_NL        ("$NL")
 #define SIGN_CUSTOM_TB        ("$TB")
 #define SIGN_CUSTOM_SP        ("$SP")
+#define SIGN_CUSTOM_DATE        ("$DATE")
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);

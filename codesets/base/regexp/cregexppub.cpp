@@ -8,6 +8,7 @@
 #include "cmappub.h"
 #include "basepub.h"
 
+#include <QDateTime>
 #include <cmappub.h>
 
 T_GenCode g_GenCode[] =
@@ -150,7 +151,13 @@ QString CRegExpPub::handlerPost_Pub(QString text)
 
 QString CRegExpPub::replaceSignsPub(QString text)
 {
-    return text.replace(SIGN_CUSTOM_NL, "\n").replace(SIGN_CUSTOM_TB, "    ");
+    QDateTime curDateTime=QDateTime::currentDateTime();
+
+    return text.replace(SIGN_CUSTOM_NL, "\n")
+            .replace(SIGN_CUSTOM_TB, "    ")
+            .replace(SIGN_CUSTOM_SP, " ")
+            .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
+            ;
 }
 
 QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match)
