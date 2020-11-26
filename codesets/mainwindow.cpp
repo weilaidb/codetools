@@ -228,19 +228,20 @@ void MainWindow::init_UiSets()
     //配置默认关闭
     emit ui->action_EditCfgFile->triggered(false);
 
-//    pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
-//    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
+    //    pCheckLeftTimer = CUIPub::createTimer(iTimeout, 600);
+    //    connect(pCheckLeftTimer, SIGNAL(timeout()), this, SLOT(proc_textEdit_textChanged()));
 
-//    pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
-//    connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
+    //    pClipBoardTimer = CUIPub::createTimer(iClipBoardTimeout, 600);
+    //    connect(pClipBoardTimer, SIGNAL(timeout()), this, SLOT(proc_clipBoard_textChanged()));
 
-//    //后台数据更新频率，暂定为1分钟
-//    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
-//    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
+    //    //后台数据更新频率，暂定为1分钟
+    //    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
+    //    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
     m_dwLstFreqUseCnt = 15;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
+    CFilePub::createFileEmptyNoExistAndVar(m_contentmaxfilename, "reg/contentmax.txt");
 
     //打开常用文件列表
     m_dwLstNormalUseCnt = 30;
@@ -261,7 +262,7 @@ void MainWindow::init_UiSets()
     procRightSplitter();
 
 
-//右上两栏
+    //右上两栏
     CUIPub::setSpliterFactor(ui->splitter,0,5);
     CUIPub::setSpliterFactor(ui->splitter,1,5);
 
@@ -1279,11 +1280,13 @@ void MainWindow::proc_action_net_server()
 
 void MainWindow::proc_threadmessage(const QString& info)
 {
+    UNUSED(info);
     ////debugApp() << "recv message:" << info;
 }
 
 void MainWindow::proc_threadprogress(int progress)
 {
+    UNUSED(progress);
     ////debugApp() << "progress:" << progress;
 }
 
@@ -1358,11 +1361,26 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     }
 
     ////debugApp() << "proctext:" << proctext;
-    if(!CUIPub::isCheckedQAction(ui->action_manycontent_proc) && CStringPub::strSimLen(proctext) >= MANYCONTENTMAX)
+    quint32 dwContentMax = MANYCONTENTMAX;
+
+    if(false == CUIPub::isCheckedQAction(ui->action_manycontent_proc))
     {
-        show_StatusTimer(QString("内容超过处理范围%1").arg(MANYCONTENTMAX));
-        set_RightTextEdit(proctext);
-        return;
+        QStringList listContentMax = CFilePub::readFileAllFilterEmptyUnique(m_contentmaxfilename);
+        if(listContentMax.size())
+        {
+            bool ok = false;
+            uint value = listContentMax.at(0).toUInt(&ok,10);
+            if(ok == true)
+            {
+                dwContentMax = value;
+            }
+        }
+        if(CStringPub::strSimLen(proctext) >= dwContentMax)
+        {
+            show_StatusTimer(QString("内容超过处理范围%1").arg(dwContentMax));
+            set_RightTextEdit(proctext);
+            return;
+        }
     }
     set_RightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
 }
@@ -1647,34 +1665,34 @@ void MainWindow::proc_action_TryAgain()
 
 void MainWindow::proc_textEdit_textChanged()
 {
-//    if(CUIPub::getCheckedQAction(ui->action_EditCfgFile)
-//            ||CUIPub::getCheckedQAction(ui->action_DeleteCfgFile))
-//    {
-//        return;
-//    }
+    //    if(CUIPub::getCheckedQAction(ui->action_EditCfgFile)
+    //            ||CUIPub::getCheckedQAction(ui->action_DeleteCfgFile))
+    //    {
+    //        return;
+    //    }
 
 
-//    static QString oldText = CStringPub::emptyString();
-//    static QString curText = CStringPub::emptyString();
+    //    static QString oldText = CStringPub::emptyString();
+    //    static QString curText = CStringPub::emptyString();
 
-//    curText = CUIPub::getTextEdit(ui->textEdit);
-//    if(CExpressPub::isEmpty(curText))
-//    {
-//        pCheckLeftTimer->stop();
-//        oldText = curText;
-//        return;
-//    }
+    //    curText = CUIPub::getTextEdit(ui->textEdit);
+    //    if(CExpressPub::isEmpty(curText))
+    //    {
+    //        pCheckLeftTimer->stop();
+    //        oldText = curText;
+    //        return;
+    //    }
 
-//    if(curText != oldText)
-//    {
-//        pCheckLeftTimer->start(iTimeout);
-//        oldText = curText;
-//        return;
-//    }
+    //    if(curText != oldText)
+    //    {
+    //        pCheckLeftTimer->start(iTimeout);
+    //        oldText = curText;
+    //        return;
+    //    }
 
-//    oldText = curText;
-//    //    proc_action_TryAgain();
-//    pCheckLeftTimer->stop();
+    //    oldText = curText;
+    //    //    proc_action_TryAgain();
+    //    pCheckLeftTimer->stop();
 
 }
 
@@ -1723,17 +1741,20 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
 
 void MainWindow::proc_action_background_update(bool bFlag)
 {
+    Q_UNUSED(bFlag);
     ////debugApp() << "bFlag:" << bFlag;
 }
 
 void MainWindow::proc_action_update(bool bFlag)
 {
+    Q_UNUSED(bFlag);
     ////debugApp() << "bFlag:" << bFlag;
     update_generate_menu_left();
 }
 
 void MainWindow::proc_action_scan_test_dir(bool bFlag)
 {
+    Q_UNUSED(bFlag);
     ////debugApp() << "bFlag:" << bFlag;
     //支持创建多个界面
     pMulWinTest = new SuperTest();
@@ -1954,7 +1975,7 @@ void MainWindow::on_pushButton_mainfind_clicked_pub(int reverse)
     QString findtext = CUIPub::getLineEdit(ui->lineEdit_mainsearch);
     QString text = CUIPub::getTextEdit(ui->textEdit).trimmed();
 
-//    ui->textEdit->setFocus();
+    //    ui->textEdit->setFocus();
 
     QTextDocument::FindFlags options = 0;
     //精确查找

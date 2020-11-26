@@ -131,6 +131,8 @@ private:
     quint32 m_dwLstNormalUseCnt;
     QString m_ListOpenFile; //文件列表配置文件
 
+    QString m_contentmaxfilename;
+
 private:
     QString openFilePathRecent;
     QString openDirPathRecent;

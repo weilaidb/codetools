@@ -350,9 +350,9 @@ bool CStringPub::strSimLenZero(QString str)
     return (str.simplified().length() == 0);
 }
 
-int CStringPub::strSimLen(QString str)
+unsigned int CStringPub::strSimLen(QString str)
 {
-    return str.simplified().length();
+    return (unsigned int)str.simplified().length();
 }
 
 QString CStringPub::strSim(QString str)

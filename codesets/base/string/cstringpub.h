@@ -60,7 +60,7 @@ public:
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
-    static int strSimLen(QString str);
+    static unsigned int strSimLen(QString str);
     static bool strSimLenZero(QString str);
     static bool strSimLenFull(QString str);
     static QString strSim(QString str);
