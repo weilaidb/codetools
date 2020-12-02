@@ -172,6 +172,11 @@ void MainWindow::init_ActionSets()
 
     //test for
     QObject::connect(ui->action_scan_test_dir, SIGNAL(triggered(bool)), this, SLOT(proc_action_scan_test_dir(bool)));
+    //ascii <--> string
+    QObject::connect(ui->actionascii_to_string, SIGNAL(triggered(bool)), this, SLOT(proc_actionascii_to_string()));
+    QObject::connect(ui->actionascii_to_string_10, SIGNAL(triggered(bool)), this, SLOT(proc_actionascii_to_string_10()));
+    QObject::connect(ui->actionstring_to_ascii, SIGNAL(triggered(bool)), this, SLOT(proc_actionstring_to_ascii()));
+    QObject::connect(ui->actionstring_to_ascii_10, SIGNAL(triggered(bool)), this, SLOT(proc_actionstring_to_ascii_10()));
 
 }
 
@@ -2007,3 +2012,105 @@ void MainWindow::on_lineEdit_mainsearch_returnPressed()
     ENTERTIPS;
     on_pushButton_mainfind_clicked();
 }
+
+//ASCII转字符串
+int ascii_to_str(char *dst, int *src, int len)
+{
+    unsigned int dwLp =  0;
+    for(dwLp = 0;dwLp < len;dwLp++)
+    {
+        dst[dwLp] = src[dwLp];
+    }
+
+    return 0;
+}
+
+void MainWindow::proc_actionascii_to_string_pub(int hexflag)
+{
+
+    QString result("");
+    QString input_string = CUIPub::getTextEdit(ui->textEdit);
+    debugApp() << "input_string:" << input_string << "input_string lenth:" << input_string.length();
+
+    //字符串为奇数时前面补0
+    if(0 != input_string.length() %2)
+    {
+        input_string = "0" + input_string;
+    }
+
+    char buf[3];
+    WORD32 dwLp =  0;
+    int iStrLen = input_string.length();
+    for(dwLp = 0; dwLp < iStrLen; dwLp+=2)
+    {
+        memset(buf, 0, sizeof(buf));
+        buf[dwLp%2] = input_string.at(dwLp).toLatin1();
+        buf[(dwLp + 1)%2] = input_string.at(dwLp + 1).toLatin1();
+        buf[2] = '\0';
+//        debugApp() << "buf:" << buf ;
+        int num = 0;
+        if(16 == hexflag)
+        {
+            num = strtol(buf, NULL, 16);
+        }
+        else
+        {
+            num = strtol(buf, NULL, 10);
+        }
+        memset(buf, 0, sizeof(buf));
+        ascii_to_str(buf, &num, 1);
+        debugApp() << "num:" << num << ", buf:" << buf ;
+        result.append(buf);
+    }
+
+    CUIPub::setTextBrowser(ui->textBrowser, result);
+}
+
+void MainWindow::proc_actionascii_to_string_10()
+{
+    proc_actionascii_to_string_pub(10);
+}
+
+void MainWindow::proc_actionascii_to_string()
+{
+    proc_actionascii_to_string_pub(16);
+}
+
+void MainWindow::proc_actionstring_to_asciipub(int hexflag)
+{
+    QString input_string = CUIPub::getTextEdit(ui->textEdit);
+    QByteArray byte = input_string.toUtf8();
+    unsigned char *pBuffer = (unsigned char *)malloc(input_string.size());
+    if(NULL == pBuffer)
+    {
+        return;
+    }
+    memset((void *)pBuffer,0,input_string.size());
+
+    for(int i = 0; i < input_string.size(); i++)
+
+    {
+//        qDebug() << int(byte.at(i));
+        pBuffer[i] = int(byte.at(i));
+    }
+
+    CUIPub::setTextBrowser(ui->textBrowser, CStringPub::getStringOfData(pBuffer, input_string.size(), hexflag));
+
+    if(NULL != pBuffer)
+    {
+        free(pBuffer);
+        pBuffer = NULL;
+    }
+
+}
+
+void MainWindow::proc_actionstring_to_ascii()
+{
+    proc_actionstring_to_asciipub(16);
+}
+
+void MainWindow::proc_actionstring_to_ascii_10()
+{
+    proc_actionstring_to_asciipub(10);
+}
+

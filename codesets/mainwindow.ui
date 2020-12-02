@@ -395,6 +395,10 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_trim_line_endspace"/>
     <addaction name="action_trim_line_space"/>
     <addaction name="action_clear_allspace"/>
+    <addaction name="actionstring_to_ascii"/>
+    <addaction name="actionstring_to_ascii_10"/>
+    <addaction name="actionascii_to_string"/>
+    <addaction name="actionascii_to_string_10"/>
    </widget>
    <addaction name="menuAyStle"/>
    <addaction name="menu_4"/>
@@ -678,6 +682,26 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>自动转</string>
+   </property>
+  </action>
+  <action name="actionascii_to_string">
+   <property name="text">
+    <string>ASCII(16)转字符串</string>
+   </property>
+  </action>
+  <action name="actionstring_to_ascii">
+   <property name="text">
+    <string>字符串转ASCII(16)</string>
+   </property>
+  </action>
+  <action name="actionstring_to_ascii_10">
+   <property name="text">
+    <string>字符串转ASCII(10)</string>
+   </property>
+  </action>
+  <action name="actionascii_to_string_10">
+   <property name="text">
+    <string>ASCII(10)转字符串</string>
    </property>
   </action>
  </widget>

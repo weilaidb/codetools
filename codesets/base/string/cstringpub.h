@@ -75,6 +75,7 @@ public:
     static QString stringSelfMenu();
     static bool atStringList(QString str, QStringList list);
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
+    static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);
 
     //version
     static void printDateTime();

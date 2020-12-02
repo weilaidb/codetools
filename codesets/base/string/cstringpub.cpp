@@ -550,3 +550,23 @@ QString CStringPub::toNativeSeparators(QString dir)
 {
     return  QDir::toNativeSeparators(dir);
 }
+//BYTE数组转换成字符串显示
+QString CStringPub::getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag)
+{
+    QString result("");
+    WORD32 dwLp =  0;
+    char buf[4] = {0};
+    for(dwLp = 0;dwLp < dwLen;dwLp++)
+    {
+        if(16 == hexflag)
+        {
+            snprintf(buf,sizeof(buf),"%02x",pStr[dwLp]);
+        }
+        else
+        {
+            snprintf(buf,sizeof(buf),"%02u ",pStr[dwLp]);
+        }
+        result.append(buf);
+    }
+    return result;
+}

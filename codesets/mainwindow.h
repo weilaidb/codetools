@@ -243,6 +243,13 @@ private slots:
     void proc_action_update(bool bFlag);
     void proc_action_scan_test_dir(bool bFlag);
 
+    void proc_actionascii_to_string();
+    void proc_actionascii_to_string_10();
+    void proc_actionascii_to_string_pub(int hexflag);
+    void proc_actionstring_to_ascii();
+    void proc_actionstring_to_ascii_10();
+    void proc_actionstring_to_asciipub(int hexflag);
+
 
     void update_generate_menu_left();
     void proc_generate_menu_left(QPoint pos);
