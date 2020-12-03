@@ -20,6 +20,7 @@
 #define SIGN_CUSTOM_TB        ("$TB")
 #define SIGN_CUSTOM_SP        ("$SP")
 #define SIGN_CUSTOM_DATE        ("$DATE")
+#define SIGN_CUSTOM_DATEX        ("$DATEX")  //日期以_号连接
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);

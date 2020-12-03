@@ -156,6 +156,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
     return text.replace(SIGN_CUSTOM_NL, "\n")
             .replace(SIGN_CUSTOM_TB, "    ")
             .replace(SIGN_CUSTOM_SP, " ")
+            .replace(SIGN_CUSTOM_DATEX, curDateTime.toString("yyyy-MM-dd_hhmmss"))
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 }
