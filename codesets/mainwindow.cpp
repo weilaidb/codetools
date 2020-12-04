@@ -275,6 +275,7 @@ void MainWindow::init_UiSets()
     pPopMenu = new QMenu;
     nodes_menu_find(pPopMenu);
     nodes_menu_leftbottom(pPopMenu);
+    nodes_menu_left_little(pPopMenu);
 
     CUIPub::setBtnMenu(ui->pushButton_PopMenuClickMe, pPopMenu);
 
@@ -439,6 +440,24 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
     pMenu->addAction(pActionReload);
+
+}
+
+//
+void MainWindow::nodes_menu_left_little(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+
+    QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
+    QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
+    QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigBaseDir()));
+    QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
+
+    pMenu->addAction(pActionOpenCfgDir);
+    pMenu->addAction(pActionOpenCfgMenu);
 
 }
 

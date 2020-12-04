@@ -260,6 +260,7 @@ private slots:
     QMenu *proc_frequse_menu();
     QMenu *proc_openfilelist_menu();
     void nodes_menu_left(QMenu *pMenu);
+    void nodes_menu_left_little(QMenu *pMenu);
     void nodes_menu_right(QMenu *pMenu);
     void nodes_menu_cfgAfter(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
