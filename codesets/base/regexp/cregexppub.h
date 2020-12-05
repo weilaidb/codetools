@@ -75,6 +75,8 @@ public:
     //set
     static QString setRegExpByFile(QString filename, QString content);
     //get
+    static QString getFileSuffix(QString filename);
+    static QString getRenameFile(QString filename);
     static QString getRegExpFileNameBefore(QString filename);
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpFileNameTips(QString filename);

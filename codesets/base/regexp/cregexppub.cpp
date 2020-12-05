@@ -37,19 +37,39 @@ CRegExpPub::CRegExpPub()
 
 }
 
+
+
+QString CRegExpPub::getFileSuffix(QString filename)
+{
+    //改名为.txt结尾的名称
+    return filename + ".txt";
+}
+
+QString CRegExpPub::getRenameFile(QString filename)
+{
+    QFile file(filename);
+    if(file.exists())
+    {
+        file.rename(getFileSuffix(filename));
+    }
+    file.close();
+
+    return getFileSuffix(filename);
+}
+
 QString CRegExpPub::getRegExpFileNameBefore(QString filename)
 {
-    return dirbefore + CStringPub::strSim(filename);
+    return getRenameFile(dirbefore + CStringPub::strSim(filename));
 }
 
 QString CRegExpPub::getRegExpFileNameAfter(QString filename)
 {
-    return dirafter  +  CStringPub::strSim(filename);
+    return getRenameFile(dirafter  +  CStringPub::strSim(filename));
 }
 
 QString CRegExpPub::getRegExpFileNameTips(QString filename)
 {
-    return dirtips  +  CStringPub::strSim(filename) + ".tip";
+    return getRenameFile(dirtips  +  CStringPub::strSim(filename) + ".tip");
 }
 
 
