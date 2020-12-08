@@ -19,8 +19,10 @@
 #define SIGN_CUSTOM_NL        ("$NL")
 #define SIGN_CUSTOM_TB        ("$TB")
 #define SIGN_CUSTOM_SP        ("$SP")
-#define SIGN_CUSTOM_DATE        ("$DATE")
-#define SIGN_CUSTOM_DATEX        ("$DATEX")  //日期以_号连接
+#define SIGN_CUSTOM_DATE      ("$DATE")
+#define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
+#define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
+#define SIGN_CUSTOM_D2H       ("$H2D")    //decimal to hexadecimal
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
