@@ -27,6 +27,13 @@ T_GenCode g_GenCode[] =
     DEF_ITEM_INT_STR(COMMON_OPERATIONS      ,CRegExpPub::handlerRegExp_Pub, CRegExpPub::handlerTip, CRegExpPub::handlerPost_Pub),
 };
 
+//进制转换
+T_SignPub g_ScaleSignPub[] =
+{
+    {SIGN_CUSTOM_H2D, "\\s*[0-9a-fA-F]+\\s*"},
+    {SIGN_CUSTOM_D2H, "\\d+"},
+};
+
 const QString CRegExpPub::dirbase    = ("reg/");
 const QString CRegExpPub::dirbefore  = ("reg/before/");
 const QString CRegExpPub::dirafter   = ("reg/after/");
@@ -173,12 +180,127 @@ QString CRegExpPub::replaceSignsPub(QString text)
 {
     QDateTime curDateTime=QDateTime::currentDateTime();
 
-    return text.replace(SIGN_CUSTOM_NL, "\n")
+    text = text.replace(SIGN_CUSTOM_NL, "\n")
             .replace(SIGN_CUSTOM_TB, "    ")
             .replace(SIGN_CUSTOM_SP, " ")
             .replace(SIGN_CUSTOM_DATEX, curDateTime.toString("yyyy-MM-dd_hhmmss"))
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
+
+    text = replaceSignsItemPub(text);
+//    replaceSignsItemTestPub(text);
+    return text;
+}
+
+//按函数处理
+//g_ScaleSignPub
+QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
+{
+    CHECK_NULLPOINTER_RETURN_STR(temp, dealText);
+    g_ScaleSignPub;
+    if(QString(SIGN_CUSTOM_H2D) == QString(temp->m_funname))
+    {
+        //十六进制转十进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 16);
+        dealText = QString("%1").arg(dec);
+    }
+    else if(QString(SIGN_CUSTOM_D2H) == QString(temp->m_funname))
+    {
+        //十六进制转十进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 10);
+//        dealText = QString("%1").arg(dec);
+//        dealText = QString("%1").arg(dec, 4, 16, QLatinlChar('0'));
+    }
+
+
+
+
+    return dealText;
+}
+
+//特殊符号处理，比如进制转换，大小写等
+QString CRegExpPub::replaceSignsItemPub(QString text)
+{
+    debugApp() << "bftext:" << text;
+
+    //处理进制转换
+    P_SignPub temp = NULL;
+    QString filterstr("");
+    WORD32 dwLp =  0;
+    for(dwLp = 0;dwLp < ARRAYSIZE(g_ScaleSignPub);dwLp++)
+    {
+        temp = &g_ScaleSignPub[dwLp];
+        filterstr = QString("\\%1\\(%2\\)").arg(temp->m_funname).arg(temp->m_filterregexp);
+        debugApp() << "filterstr:" << filterstr;
+        QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption | QRegularExpression::DotMatchesEverythingOption);
+        int index = 0;
+        QRegularExpressionMatch match;
+        do {
+            match = regularExpression.match(text, index);
+            if(match.hasMatch()) {
+                index = match.capturedEnd();
+                debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+                QString dealText = match.captured(0);
+                QString afText = dealText;
+                afText = afText.replace(temp->m_funname,"").replace("(", "").replace(")","");
+                debugApp() << "afText1:" << afText;
+                afText = replaceSignsItemFuncPub(afText, temp);
+                debugApp() << "afText2:" << afText;
+                debugApp() << "dealText:" << dealText;
+                debugApp() << "text1   :" << text;
+                text = text.replace(dealText, afText);
+                debugApp() << "text2   :" << text;
+            }
+            else
+                break;
+        } while(index < text.length());
+
+        debugApp() << "match.caput1:" << match.capturedTexts();
+
+        //        if(match.capturedTexts().length() < 2)
+        //        {
+        //            return CStringPub::errorListLenthNg();
+        //        }
+
+
+    }
+
+
+    return text;
+}
+
+QString CRegExpPub::replaceSignsItemTestPub(QString text)
+{
+    debugApp() << "bftext:" << text;
+    text = "$H2D(123)";
+    /* 此处为何必须都加\\  */
+    QString filterstr = ".*\\$H2D\\(\\d+\\).*";
+    debugApp() << "bftext   :" << text;
+    debugApp() << "filterstr:" << filterstr;
+
+    QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption | QRegularExpression::DotMatchesEverythingOption);
+    int index = 0;
+    QRegularExpressionMatch match;
+    do {
+        match = regularExpression.match(text, index);
+        if(match.hasMatch()) {
+            index = match.capturedEnd();
+            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+        }
+        else
+            break;
+    } while(index < text.length());
+
+    debugApp() << "match.caput1:" << match.capturedTexts();
+
+    //        if(match.capturedTexts().length() < 2)
+    //        {
+    //            return CStringPub::errorListLenthNg();
+    //        }
+
+    return text;
 }
 
 QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match)

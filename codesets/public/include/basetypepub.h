@@ -19,6 +19,10 @@ typedef unsigned long long WORD64;
 typedef int (*handler_retint_nopara)(void);
 
 
+#ifndef ARRAYSIZE
+#define ARRAYSIZE(A) ((unsigned int)(sizeof(A)/sizeof(A[0])))
+#endif
+
 
 
 #endif // BASETYPEPUB_H

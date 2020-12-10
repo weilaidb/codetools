@@ -22,7 +22,7 @@
 #define SIGN_CUSTOM_DATE      ("$DATE")
 #define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
 #define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
-#define SIGN_CUSTOM_D2H       ("$H2D")    //decimal to hexadecimal
+#define SIGN_CUSTOM_D2H       ("$D2H")    //decimal to hexadecimal
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
@@ -53,6 +53,13 @@ enum EUM_CLASSTYPE{
     COMMON_OPERATIONS, //公共使用
     EDIT_CFGFILE_OPERATIONS, //编辑配置
 };
+
+typedef struct T_SignPub{
+    const char *m_funname; //函数名
+    const char *m_filterregexp; //过滤正则表达式
+//    const char *m_funname; //函数名
+}T_SignPub, *P_SignPub;
+
 
 
 
@@ -94,6 +101,9 @@ public:
                                    , QString &regexpmode);
     static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
+    static QString replaceSignsItemPub(QString text);
+    static QString replaceSignsItemFuncPub(QString dealText, P_SignPub temp);
+    static QString replaceSignsItemTestPub(QString text);
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
     static QString replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
