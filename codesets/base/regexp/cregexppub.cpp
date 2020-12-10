@@ -31,7 +31,14 @@ T_GenCode g_GenCode[] =
 T_SignPub g_ScaleSignPub[] =
 {
     {SIGN_CUSTOM_H2D, "\\s*[0-9a-fA-F]+\\s*"},
-    {SIGN_CUSTOM_D2H, "\\d+"},
+    {SIGN_CUSTOM_D2H, "\\s*\\d+\\s*"},
+
+    {SIGN_CUSTOM_H2B, "\\s*[0-9a-fA-F]+\\s*"},
+    {SIGN_CUSTOM_B2H, "\\s*[0-1]+\\s*"},
+
+    {SIGN_CUSTOM_D2B, "\\s*[0-9]+\\s*"},
+    {SIGN_CUSTOM_B2D, "\\s*[0-1]+\\s*"},
+
     {SIGN_CUSTOM_UPP, "[\\w\\s]+"},
     {SIGN_CUSTOM_LOW, "[\\w\\s]+"},
 };
@@ -214,6 +221,39 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         ulong dec = dealText.toULong(&ok, 10);
         dealText = QString::number(dec,16).right(4);//裁剪字符串前面多余的f
     }
+
+    else if(QString(SIGN_CUSTOM_H2B) == QString(temp->m_funname))
+    {
+        //十六进制转二进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 16);
+        dealText = QString::number(dec,2);
+    }
+    else if(QString(SIGN_CUSTOM_B2H) == QString(temp->m_funname))
+    {
+        //二进制转十六进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 2);
+//        debugApp() << temp->m_funname <<", dec:" << dec;
+        dealText = QString::number(dec,16);
+    }
+    else if(QString(SIGN_CUSTOM_D2B) == QString(temp->m_funname))
+    {
+        //十进制转二进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 10);
+//        debugApp() << temp->m_funname <<", dec:" << dec;
+        dealText = QString::number(dec,2);
+    }
+    else if(QString(SIGN_CUSTOM_B2D) == QString(temp->m_funname))
+    {
+        //二进制转十进制
+        bool ok;
+        ulong dec = dealText.toULong(&ok, 2);
+//        debugApp() << temp->m_funname <<", dec:" << dec;
+        dealText = QString::number(dec,10);
+    }
+
     else if(QString(SIGN_CUSTOM_UPP) == QString(temp->m_funname))
     {
         dealText = dealText.toUpper();
