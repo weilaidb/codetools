@@ -210,12 +210,8 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         //十六进制转十进制
         bool ok;
         ulong dec = dealText.toULong(&ok, 10);
-//        dealText = QString("%1").arg(dec);
-//        dealText = QString("%1").arg(dec, 4, 16, QLatinlChar('0'));
+        dealText = QString::number(dec,16).right(4);//裁剪字符串前面多余的f
     }
-
-
-
 
     return dealText;
 }
