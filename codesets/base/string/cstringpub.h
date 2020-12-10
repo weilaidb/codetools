@@ -96,6 +96,9 @@ public:
 
     //QDir
     static QString toNativeSeparators(QString dir);
+
+    //进制转换
+    static QString scaleConvertPub(QString text, quint8 from, quint8 to);
 };
 
 #endif // CSTRINGPUB_H

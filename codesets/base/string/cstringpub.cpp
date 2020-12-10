@@ -570,3 +570,19 @@ QString CStringPub::getStringOfData(unsigned char *pStr, unsigned int dwLen, int
     }
     return result;
 }
+
+QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
+{
+    bool ok;
+    ulong dec = text.toULong(&ok, from);
+    if(16 == to)
+    {
+        text = QString::number(dec,to).right(4); //裁剪字符串前面多余的f
+    }
+    else
+    {
+        text = QString::number(dec,to);
+    }
+    return text;
+}
+

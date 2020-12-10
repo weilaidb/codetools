@@ -210,50 +210,34 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
     if(QString(SIGN_CUSTOM_H2D) == QString(temp->m_funname))
     {
         //十六进制转十进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 16);
-        dealText = QString("%1").arg(dec);
+        dealText = CStringPub::scaleConvertPub(dealText, 16, 10);
     }
     else if(QString(SIGN_CUSTOM_D2H) == QString(temp->m_funname))
     {
         //十进制转十六进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 10);
-        dealText = QString::number(dec,16).right(4);//裁剪字符串前面多余的f
+        dealText = CStringPub::scaleConvertPub(dealText, 10, 16);
     }
 
     else if(QString(SIGN_CUSTOM_H2B) == QString(temp->m_funname))
     {
         //十六进制转二进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 16);
-        dealText = QString::number(dec,2);
+        dealText = CStringPub::scaleConvertPub(dealText, 16, 2);
     }
     else if(QString(SIGN_CUSTOM_B2H) == QString(temp->m_funname))
     {
         //二进制转十六进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 2);
-//        debugApp() << temp->m_funname <<", dec:" << dec;
-        dealText = QString::number(dec,16);
+        dealText = CStringPub::scaleConvertPub(dealText, 2, 16);
     }
     else if(QString(SIGN_CUSTOM_D2B) == QString(temp->m_funname))
     {
         //十进制转二进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 10);
-//        debugApp() << temp->m_funname <<", dec:" << dec;
-        dealText = QString::number(dec,2);
+        dealText = CStringPub::scaleConvertPub(dealText, 10, 2);
     }
     else if(QString(SIGN_CUSTOM_B2D) == QString(temp->m_funname))
     {
         //二进制转十进制
-        bool ok;
-        ulong dec = dealText.toULong(&ok, 2);
-//        debugApp() << temp->m_funname <<", dec:" << dec;
-        dealText = QString::number(dec,10);
+        dealText = CStringPub::scaleConvertPub(dealText, 2, 10);
     }
-
     else if(QString(SIGN_CUSTOM_UPP) == QString(temp->m_funname))
     {
         dealText = dealText.toUpper();
