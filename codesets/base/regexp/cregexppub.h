@@ -23,6 +23,8 @@
 #define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
 #define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
 #define SIGN_CUSTOM_D2H       ("$D2H")    //decimal to hexadecimal
+#define SIGN_CUSTOM_UPP       ("$UP")     //转大写
+#define SIGN_CUSTOM_LOW       ("$LO")     //转小写
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);

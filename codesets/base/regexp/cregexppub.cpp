@@ -32,6 +32,8 @@ T_SignPub g_ScaleSignPub[] =
 {
     {SIGN_CUSTOM_H2D, "\\s*[0-9a-fA-F]+\\s*"},
     {SIGN_CUSTOM_D2H, "\\d+"},
+    {SIGN_CUSTOM_UPP, "[\\w\\s]+"},
+    {SIGN_CUSTOM_LOW, "[\\w\\s]+"},
 };
 
 const QString CRegExpPub::dirbase    = ("reg/");
@@ -207,10 +209,18 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
     }
     else if(QString(SIGN_CUSTOM_D2H) == QString(temp->m_funname))
     {
-        //十六进制转十进制
+        //十进制转十六进制
         bool ok;
         ulong dec = dealText.toULong(&ok, 10);
         dealText = QString::number(dec,16).right(4);//裁剪字符串前面多余的f
+    }
+    else if(QString(SIGN_CUSTOM_UPP) == QString(temp->m_funname))
+    {
+        dealText = dealText.toUpper();
+    }
+    else if(QString(SIGN_CUSTOM_LOW) == QString(temp->m_funname))
+    {
+        dealText = dealText.toLower();
     }
 
     return dealText;
