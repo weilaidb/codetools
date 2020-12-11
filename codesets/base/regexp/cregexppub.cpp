@@ -339,7 +339,10 @@ QString CRegExpPub::replaceSignsItemTestPub(QString text)
     return text;
 }
 
-QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match)
+QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount
+                                       , QRegularExpressionMatch match
+                                       , int &index
+                                       )
 {
     QString result(text);
     int iLp = 0;
@@ -368,7 +371,17 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
 
     if(iCount)
     {
-        result = result.replace(match.captured(0),toreplace);
+//        result = result.replace(match.captured(0),toreplace);
+        debugApp() << "result  bf:" << result;
+        debugApp() << "toreplace:" << toreplace;
+        debugApp() << "match.capturedStart():" << match.capturedStart();
+        debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
+//        result = result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
+        //replace替换后的字符比替换前的长的话，后会后面的给覆盖掉呢？
+//        result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
+        result = result.left(match.capturedStart()) + toreplace + result.mid(match.capturedEnd(), result.length());
+        index = MAX(match.capturedEnd(),match.capturedStart() + toreplace.length());
+//        debugApp() << "new index  :" << index;
 //        debugApp() << "result  af:" << result;
     }
 
@@ -538,7 +551,7 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
     QRegularExpressionMatch match;
     quint32 dwMaxLoopCnt = 10000;
     do {
-        match = regularExpression.match(text, index);
+        match = regularExpression.match(result, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
 //            debugApp() << "------------------ out loop-------------";
@@ -553,12 +566,12 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
 //            debugApp() << "result  bf:" << result;
 //            debugApp() << "regularExpression.captureCount():" << regularExpression.captureCount();
 
-            result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match);
+            result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match,index);
 //            debugApp() << "result  af:" << result;
         }
         else
             break;
-    } while(index < text.length() && --dwMaxLoopCnt);
+    } while(index < result.length() && --dwMaxLoopCnt);
 
     if(0 == dwMaxLoopCnt)
     {

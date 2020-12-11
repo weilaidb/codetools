@@ -112,7 +112,7 @@ public:
     static QString replaceSignsItemFuncPub(QString dealText, P_SignPub temp);
     static QString replaceSignsItemTestPub(QString text);
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
-    static QString replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match);
+    static QString replaceSeqMultiPub(QString text, QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match, int &index);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
