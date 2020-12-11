@@ -343,6 +343,8 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
 {
     QString result(text);
     int iLp = 0;
+
+    QString toreplace = regafter;
     for(iLp = iStartSeq; iLp <= iCount; iLp++)
     {
         //内容替换
@@ -356,16 +358,20 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
             {
                 regafter = regafter.replace(SIGN_CUSTOM_SP, " ");
             }
-            QString toreplace = regafter;
-            toreplace = toreplace.replace(QString("\\%1").arg(iStartSeq),match.captured(iLp));
+            toreplace = toreplace.replace(QString("\\%1").arg(iLp),match.captured(iLp));
 //            debugApp() << ">>> in:";
 //            debugApp() << "match.captured(iLp)  bf:" << match.captured(iLp);
 //            debugApp() << "toreplace  bf:" << toreplace;
 //            debugApp() << "result  bf:" << result;
-            result = result.replace(match.captured(iLp),toreplace);
-//            debugApp() << "result  af:" << result;
         }
     }
+
+    if(iCount)
+    {
+        result = result.replace(match.captured(0),toreplace);
+//        debugApp() << "result  af:" << result;
+    }
+
 
     CPrintPub::printStringTip(result, "replaceSeqMultiPub before");
     //    result = replaceSignsPub(result);
@@ -535,13 +541,14 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
+//            debugApp() << "------------------ out loop-------------";
 //            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
-//            debugApp() << "match.capturedLength:" << match.capturedLength();
-//            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+////            debugApp() << "match.capturedLength:" << match.capturedLength();
+////            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
 //            debugApp() << "match.capturedTexts :" << match.capturedTexts();
-//            debugApp() << "match.capturedStart :" << match.capturedStart();
-//            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
-//            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+////            debugApp() << "match.capturedStart :" << match.capturedStart();
+////            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+////            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
 //            debugApp() << "reg after :" << regafter;
 //            debugApp() << "result  bf:" << result;
 //            debugApp() << "regularExpression.captureCount():" << regularExpression.captureCount();
