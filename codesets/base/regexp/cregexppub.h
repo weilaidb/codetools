@@ -29,6 +29,7 @@
 #define SIGN_CUSTOM_B2D       ("$B2D")    //binary to decimal
 #define SIGN_CUSTOM_UPP       ("$UP")     //转大写
 #define SIGN_CUSTOM_LOW       ("$LO")     //转小写
+#define SIGN_CUSTOM_0XDOT     ("$0XDOT")  //报文添加0x和逗号
 
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);

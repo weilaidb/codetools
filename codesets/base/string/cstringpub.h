@@ -99,6 +99,9 @@ public:
 
     //进制转换
     static QString scaleConvertPub(QString text, quint8 from, quint8 to);
+    static QString toUpper(QString text);
+    static QString toLower(QString text);
+    static QString add0xDot(QString text);
 };
 
 #endif // CSTRINGPUB_H

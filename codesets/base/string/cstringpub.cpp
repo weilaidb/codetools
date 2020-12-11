@@ -586,3 +586,19 @@ QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
     return text;
 }
 
+QString CStringPub::toUpper(QString text)
+{
+    return text.toUpper();
+}
+
+QString CStringPub::toLower(QString text)
+{
+    return text.toLower();
+}
+
+QString CStringPub::add0xDot(QString text)
+{
+    return "0x" + text + ",";
+}
+
+

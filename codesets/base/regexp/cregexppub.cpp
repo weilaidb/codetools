@@ -41,6 +41,8 @@ T_SignPub g_ScaleSignPub[] =
 
     {SIGN_CUSTOM_UPP, "[\\w\\s]+"},
     {SIGN_CUSTOM_LOW, "[\\w\\s]+"},
+
+//    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
 
 const QString CRegExpPub::dirbase    = ("reg/");
@@ -240,12 +242,16 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
     }
     else if(QString(SIGN_CUSTOM_UPP) == QString(temp->m_funname))
     {
-        dealText = dealText.toUpper();
+        dealText = CStringPub::toUpper(dealText);
     }
     else if(QString(SIGN_CUSTOM_LOW) == QString(temp->m_funname))
     {
-        dealText = dealText.toLower();
+        dealText = CStringPub::toLower(dealText);
     }
+//    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
+//    {
+//        dealText = CStringPub::add0xDot(dealText);
+//    }
 
     return dealText;
 }
@@ -337,7 +343,7 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
 {
     QString result(text);
     int iLp = 0;
-    for(iLp = iStartSeq; iLp < iCount; iLp++)
+    for(iLp = iStartSeq; iLp <= iCount; iLp++)
     {
         //内容替换
         //        if(regafter.contains(QString("\\%1").arg(iLp)))
@@ -350,7 +356,14 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
             {
                 regafter = regafter.replace(SIGN_CUSTOM_SP, " ");
             }
-            result = result.replace(match.captured(iLp),regafter);
+            QString toreplace = regafter;
+            toreplace = toreplace.replace(QString("\\%1").arg(iStartSeq),match.captured(iLp));
+//            debugApp() << ">>> in:";
+//            debugApp() << "match.captured(iLp)  bf:" << match.captured(iLp);
+//            debugApp() << "toreplace  bf:" << toreplace;
+//            debugApp() << "result  bf:" << result;
+            result = result.replace(match.captured(iLp),toreplace);
+//            debugApp() << "result  af:" << result;
         }
     }
 
@@ -506,8 +519,8 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
 {
     Q_UNUSED(mode);
     QString result = text;
-    ////debugApp() << "reg before:" << regbefore;
-    ////debugApp() << "reg after :" << regafter;
+    debugApp() << "reg before:" << regbefore;
+    debugApp() << "reg after :" << regafter;
 
 #if 1
     QRegularExpression regularExpression(regbefore
@@ -522,15 +535,19 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-            ////debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
-            ////debugApp() << "match.capturedLength:" << match.capturedLength();
-            ////debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
-            ////debugApp() << "match.capturedTexts :" << match.capturedTexts();
-            ////debugApp() << "match.capturedStart :" << match.capturedStart();
-            ////debugApp() << "match.capturedEnd   :" << match.capturedEnd();
-            ////debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+//            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+//            debugApp() << "match.capturedLength:" << match.capturedLength();
+//            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+//            debugApp() << "match.capturedTexts :" << match.capturedTexts();
+//            debugApp() << "match.capturedStart :" << match.capturedStart();
+//            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+//            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+//            debugApp() << "reg after :" << regafter;
+//            debugApp() << "result  bf:" << result;
+//            debugApp() << "regularExpression.captureCount():" << regularExpression.captureCount();
 
-            result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
+            result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match);
+//            debugApp() << "result  af:" << result;
         }
         else
             break;
@@ -542,12 +559,13 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         return CStringPub::errorRegExpInvalid();
     }
 
-//    ////debugApp() << "match.capturedLength:" << match.capturedLength();
-//    ////debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
-//    ////debugApp() << "match.capturedTexts :" << match.capturedTexts();
-//    ////debugApp() << "match.capturedStart :" << match.capturedStart();
-//    ////debugApp() << "match.capturedEnd   :" << match.capturedEnd();
-//    ////debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+//    debugApp() << "================lalst";
+//    debugApp() << "match.capturedLength:" << match.capturedLength();
+//    debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+//    debugApp() << "match.capturedTexts :" << match.capturedTexts();
+//    debugApp() << "match.capturedStart :" << match.capturedStart();
+//    debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+//    debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
 
 //    if(match.capturedTexts().length() < 2)
 //    {
@@ -658,14 +676,18 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         quint32 dwLp = 0;
         strtmp = text;
 
+        //替换表达式替换处理一下，因为保存的内容是一行数据。
+        QStringList toregafter = CStringPub::stringSplitbyNewLine(replaceSignsPub(regafter.at(0)));
+
         foreach (QString reg, regbefore) {
-            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, regafter.at(dwLp), mode,error);
+            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, toregafter.at(dwLp), mode,error);
             if(CExpressPub::isFull(CStringPub::strSimLen(error)))
             {
                 return error;
             }
             dwLp++;
         }
+        debugApp() << "proc count:" << dwLp;
         result += strtmp + SIGNENTER;
     }
 
