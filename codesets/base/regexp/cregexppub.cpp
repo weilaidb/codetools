@@ -378,8 +378,8 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
         debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
 //        result = result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
         //replace替换后的字符比替换前的长的话，后会后面的给覆盖掉呢？
-//        result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
-        result = result.left(match.capturedStart()) + toreplace + result.mid(match.capturedEnd(), result.length());
+        result.replace(match.capturedStart(), match.capturedLength(),toreplace);
+//        result = result.left(match.capturedStart()) + toreplace + result.mid(match.capturedEnd(), result.length());
         index = MAX(match.capturedEnd(),match.capturedStart() + toreplace.length());
 //        debugApp() << "new index  :" << index;
 //        debugApp() << "result  af:" << result;
@@ -698,6 +698,15 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
 
         //替换表达式替换处理一下，因为保存的内容是一行数据。
         QStringList toregafter = CStringPub::stringSplitbyNewLine(replaceSignsPub(regafter.at(0)));
+        if(toregafter.size() < regbefore.size())
+        {
+
+            WORD32 dwLp =  0;
+            for(dwLp = 0;dwLp < (regbefore.size() - toregafter.size()) ;dwLp++)
+            {
+                toregafter.append("");
+            }
+        }
 
         foreach (QString reg, regbefore) {
             strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, toregafter.at(dwLp), mode,error);
