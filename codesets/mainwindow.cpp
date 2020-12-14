@@ -1418,11 +1418,31 @@ void MainWindow::proc_action_edit_pub(QString configfilename, int type)
     CUIPub::setPlainTextEdit(ui->textEdit_cfgTips, CRegExpPub::handlerTip(configfilename, type,CRegExpPub::FILE_TIPS));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgBefore, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_BEFORE));
     CUIPub::setPlainTextEdit(ui->textEdit_cfgAfter, CRegExpPub::handlerTip(configfilename, type, CRegExpPub::FILE_AFTER));
-    if(CUIPub::getCheckedQAction(ui->action_autoconvertaf))
+    if(proc_action_edit_convertline_pub(configfilename))
     {
         proc_actionCovertMulLine();
     }
 }
+
+bool MainWindow::proc_action_edit_convertline_pub(QString configfilename)
+{
+    if(false == CUIPub::getCheckedQAction(ui->action_autoconvertaf))
+    {
+        return false;
+    }
+    QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_AllL_ExecMulti);
+
+
+    foreach (QString item, modelist_alll_execmulti) {
+        if(configfilename == item)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 
 void MainWindow::proc_action_editinginfo(QString configfilename, int type)
 {
@@ -1508,10 +1528,12 @@ void MainWindow::proc_action_EditCfgFile(bool checked)
     {
         if(CExpressPub::isFull(m_EditConfig))
         {
-            if(CUIPub::getCheckedQAction(ui->action_autoconvertaf))
+            if(proc_action_edit_convertline_pub(m_EditConfig))
             {
                 proc_actionCovertOneLine();
             }
+            debugApp() << "save config :" << m_EditConfig;
+
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgTips)   , CRegExpPub::FILE_TIPS  );
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgBefore) , CRegExpPub::FILE_BEFORE);
             CRegExpPub::handlerTipSave(m_EditConfig, 0, CUIPub::getTextEdit(ui->textEdit_cfgAfter)  , CRegExpPub::FILE_AFTER );

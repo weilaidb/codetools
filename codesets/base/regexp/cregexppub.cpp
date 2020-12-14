@@ -208,7 +208,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
 QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
 {
     CHECK_NULLPOINTER_RETURN_STR(temp, dealText);
-    g_ScaleSignPub;
+//    g_ScaleSignPub;
     if(QString(SIGN_CUSTOM_H2D) == QString(temp->m_funname))
     {
         //十六进制转十进制
@@ -371,11 +371,11 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
 
     if(iCount)
     {
-//        result = result.replace(match.captured(0),toreplace);
-        debugApp() << "result  bf:" << result;
-        debugApp() << "toreplace:" << toreplace;
-        debugApp() << "match.capturedStart():" << match.capturedStart();
-        debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
+////        result = result.replace(match.captured(0),toreplace);
+//        debugApp() << "result  bf:" << result;
+//        debugApp() << "toreplace:" << toreplace;
+//        debugApp() << "match.capturedStart():" << match.capturedStart();
+//        debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
 //        result = result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
         //replace替换后的字符比替换前的长的话，后会后面的给覆盖掉呢？
         result.replace(match.capturedStart(), match.capturedLength(),toreplace);
@@ -693,11 +693,13 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     }
     else if(mode == STR_MODE_ALALLINE_EXECMULTI)
     {
+        //不自动转$NL和\n的转换。
         quint32 dwLp = 0;
         strtmp = text;
 
+        debugApp() << "regafter:" << regafter;
         //替换表达式替换处理一下，因为保存的内容是一行数据。
-        QStringList toregafter = CStringPub::stringSplitbyNewLine(replaceSignsPub(regafter.at(0)));
+        QStringList toregafter = regafter;
         if(toregafter.size() < regbefore.size())
         {
 
@@ -709,7 +711,9 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         }
 
         foreach (QString reg, regbefore) {
-            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, toregafter.at(dwLp), mode,error);
+            QString toregaftertemp = replaceSignsPub(toregafter.at(dwLp));
+            debugApp() << "toregaftertemp:" << toregaftertemp;
+            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, toregaftertemp, mode,error);
             if(CExpressPub::isFull(CStringPub::strSimLen(error)))
             {
                 return error;
