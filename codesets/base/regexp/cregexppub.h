@@ -8,8 +8,9 @@
 #include "cfilepub.h"
 
 #define STR_MODE_NONE                        ("MODE_NONE")
-#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
 #define STR_MODE_ALALLINE_EXECMULTI          ("MODE_ALALLINE_EXECMULTI")    //左侧所有行内容，进行多次处理（右侧）
+#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
+#define STR_MODE_SINGLELINE_EXECSINGLE       ("MODE_SINGLELINE_EXECSINGLE")  //左侧一行内容，进行一次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 /**
@@ -31,6 +32,8 @@
 #define SIGN_CUSTOM_LOW       ("$LO")     //转小写
 #define SIGN_CUSTOM_0XDOT     ("$0XDOT")  //报文添加0x和逗号
 
+#define LASTWITH(ARR)  ARR[ARR.size() - 1]
+#define MIDWITH(ARR, LP)  ARR[LP]
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
@@ -81,8 +84,9 @@ public:
 
     enum EUM_MODE{
         MODE_NONE,
-        MODE_SINGLELINE_EXECMULTI,
         MODE_ALLLINE_EXECMULTI,
+        MODE_SINGLELINE_EXECMULTI,
+        MODE_SINGLELINE_EXECSINGLE,
         MODE_MUL2ONE,
     };
 
@@ -117,6 +121,7 @@ public:
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
     static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error);
+    static QString procRegExpLineLack(QStringList strlisttmp, QStringList &reg2list, QStringList regcmplist);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);

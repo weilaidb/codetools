@@ -118,8 +118,9 @@ private:
       ** 多行 单处理
       ** 多行 多处理
       **/
-    QString m_FileMode_SingleL_ExecMulti;
     QString m_FileMode_AllL_ExecMulti;
+    QString m_FileMode_SingleL_ExecMulti;
+    QString m_FileMode_SingleL_ExecSingle;//一行执行对应的行，执行与模式数量不对齐的话，中间项参考前面项
     //常用列表 configfile, 显示的最大数量
     QStringList m_listfrequse;
     quint32 m_dwLstFreqUseCnt;

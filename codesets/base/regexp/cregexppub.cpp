@@ -11,6 +11,9 @@
 #include <QDateTime>
 #include <cmappub.h>
 
+
+
+
 T_GenCode g_GenCode[] =
 {
     DEF_ITEM_INT_STR(CONSTRUCTOR            ,NULL,NULL,NULL),
@@ -664,6 +667,39 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QS
     return result;
 }
 
+QString CRegExpPub::procRegExpLineLack(QStringList strlisttmp, QStringList &reg2list, QStringList regcmplist)
+{
+    quint32 dwLp = 0;
+
+    dwLp =  0;
+    for(dwLp = 0;dwLp < (strlisttmp.size());dwLp++)
+    {
+        reg2list.append("");
+    }
+
+    if(regcmplist.size() > 0)
+    {
+        //第1个
+        reg2list[0] = regcmplist[0];
+    }
+
+    //最后一个
+    if(regcmplist.size() > 0)
+    {
+        LASTWITH(reg2list) = LASTWITH(regcmplist);
+    }
+
+    //处理中间
+    if(regcmplist.size() > 1)
+    {
+        dwLp =  0;
+        for(dwLp = 1;dwLp < (reg2list.size() - 1 );dwLp++)
+        {
+            MIDWITH(reg2list, dwLp) = MIDWITH(regcmplist, regcmplist.size() - 2);
+        }
+    }
+}
+
 QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
 {
     QString result = CStringPub::emptyString();
@@ -703,7 +739,7 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         if(toregafter.size() < regbefore.size())
         {
 
-            WORD32 dwLp =  0;
+            dwLp =  0;
             for(dwLp = 0;dwLp < (regbefore.size() - toregafter.size()) ;dwLp++)
             {
                 toregafter.append("");
@@ -711,9 +747,9 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         }
 
         foreach (QString reg, regbefore) {
-            QString toregaftertemp = replaceSignsPub(toregafter.at(dwLp));
-            debugApp() << "toregaftertemp:" << toregaftertemp;
-            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, toregaftertemp, mode,error);
+            QString to2regaftertemp = replaceSignsPub(toregafter.at(dwLp));
+            debugApp() << "to2regaftertemp:" << to2regaftertemp;
+            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, to2regaftertemp, mode,error);
             if(CExpressPub::isFull(CStringPub::strSimLen(error)))
             {
                 return error;
@@ -723,6 +759,43 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         debugApp() << "proc count:" << dwLp;
         result += strtmp + SIGNENTER;
     }
+    else if(mode == STR_MODE_SINGLELINE_EXECSINGLE)
+    {
+        //不自动转$NL和\n的转换。
+        quint32 dwLp = 0;
+//        strtmp = text;
+        QStringList strlisttmp = CStringPub::stringSplitbyNewLine(text);
+        QStringList reg2beforenew = CStringPub::emptyStringList();
+        QStringList reg2afternew = CStringPub::emptyStringList();
+
+
+
+        debugApp() << "regafter:" << regafter;
+        //替换表达式替换处理一下，因为保存的内容是一行数据。
+        QStringList toregafter = CStringPub::stringSplitbyNewLine(replaceSignsPub(regafter.at(0)));
+        //文本数据行数大于模式行数时，模式行数首行和末行保留，中间剩余行数与倒数第二行相同
+        procRegExpLineLack(strlisttmp, reg2beforenew, regbefore);
+        procRegExpLineLack(strlisttmp, reg2afternew, toregafter);
+
+        debugApp() << "toregafter:" << toregafter;
+        debugApp() << "reg2beforenew:" << reg2beforenew;
+        debugApp() << "reg2afternew:" << reg2afternew;
+
+        dwLp =  0;
+        foreach (QString reg, reg2beforenew) {
+            QString to2regaftertemp = replaceSignsPub(reg2afternew.at(dwLp));
+            debugApp() << "strlisttmp.at(" << dwLp <<"):" << strlisttmp.at(dwLp);
+            debugApp() << "reg:" << reg;
+            debugApp() << "to2regaftertemp:" << to2regaftertemp;
+            strtmp = handlerRegExp_Pub_Single(strlisttmp.at(dwLp), reg, to2regaftertemp, mode);
+            debugApp() << "strtmp:" << strtmp;
+            result += strtmp + SIGNENTER;
+            dwLp++;
+        }
+        debugApp() << "proc count:" << dwLp;
+
+    }
+
 
     return result;
 }

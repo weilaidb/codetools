@@ -223,6 +223,10 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
     {
         mode = CSignPub::signFenHao() + STR_MODE_ALALLINE_EXECMULTI;
     }
+    else if(tNode.m_mode == CRegExpPub::MODE_SINGLELINE_EXECSINGLE)
+    {
+        mode = CSignPub::signFenHao() + STR_MODE_SINGLELINE_EXECSINGLE;
+    }
     tNode.u.m_pAction->setData(tNode.m_path + mode);
     pMenu->addAction(tNode.u.m_pAction);
 
