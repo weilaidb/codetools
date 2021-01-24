@@ -75,6 +75,8 @@ public:
     static int getSelectLine(QTextEdit *pEdit);
     static QString getTextEdit(QTextEdit *pEdit);
     static bool findTextEdit(QTextEdit *pEdit,QString findtext, QTextDocument::FindFlags options);
+    static void setLineEdit(QLineEdit *pLineEdit, QString text);
+    static void setLineEditFocus(QLineEdit *pLineEdit);
     static QString getLineEdit(QLineEdit *pLineEdit);
     static bool isLineEditEmpty(QLineEdit *pLineEdit);
     static QString getComBox(QComboBox *pcomboBox);

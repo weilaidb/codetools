@@ -400,12 +400,28 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionascii_to_string"/>
     <addaction name="actionascii_to_string_10"/>
    </widget>
+   <widget class="QMenu" name="menu_10">
+    <property name="title">
+     <string>新建</string>
+    </property>
+    <addaction name="action_newusernode"/>
+    <addaction name="action_newstandnode"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="action_delspace"/>
+    <addaction name="action_dellastspacesort"/>
+   </widget>
+   <addaction name="menu_10"/>
    <addaction name="menuAyStle"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
    <addaction name="menu_8"/>
    <addaction name="menu_9"/>
    <addaction name="menu_3"/>
+   <addaction name="menuTools"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -702,6 +718,32 @@ p, li { white-space: pre-wrap; }
   <action name="actionascii_to_string_10">
    <property name="text">
     <string>ASCII(10)转字符串</string>
+   </property>
+  </action>
+  <action name="action_newstandnode">
+   <property name="text">
+    <string>新建标准节点</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="action_newusernode">
+   <property name="text">
+    <string>新建用户节点</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_delspace">
+   <property name="text">
+    <string>除空格</string>
+   </property>
+  </action>
+  <action name="action_dellastspacesort">
+   <property name="text">
+    <string>除尾并排列</string>
    </property>
   </action>
  </widget>

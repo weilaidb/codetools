@@ -12,6 +12,7 @@
 #include "basedefinepub.h"
 #include "basetypepub.h"
 #include "supertest.h"
+#include "cdialognewnode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -110,6 +111,8 @@ private:
     QList<QAction *> m_lstRightMouse;
     //custom menu
     QMenu *pMenuCustom;
+    QString m_FileNameMenu_stand;
+    QString m_FileNameMenu_user;
     QString m_FileNameMenu;
     /**
       ** 模式：
@@ -252,6 +255,13 @@ private slots:
     void proc_actionstring_to_ascii_10();
     void proc_actionstring_to_asciipub(int hexflag);
 
+    void proc_action_newstandnode();
+    void proc_action_newusernode();
+    void proc_newnode_more(CDialogNewNode *pDiaglog);
+    bool proc_newnode_check(CDialogNewNode *pDiaglog);
+    //tools
+    void proc_action_delspace();
+    void proc_action_dellastspacesort();
 
     void update_generate_menu_left();
     void proc_generate_menu_left(QPoint pos);

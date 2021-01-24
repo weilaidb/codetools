@@ -216,6 +216,19 @@ QStringList CFilePub::readFileAllFilterEmptyUniqueMulti(QString filename)
     return result;
 }
 
+//判断文件行是否相等
+bool CFilePub::checkFileExistLine(QString filename, QString line)
+{
+    QStringList list = readFileAllFilterEmptyUnique(filename);
+    foreach (QString item, list) {
+        if(CStringPub::strSim(line) == CStringPub::strSim(item))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
 {
     return CStringPub::stringSplitbyNewLineFilterEmptyUnique(CFilePub::readFileAll(filename));

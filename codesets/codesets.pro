@@ -107,6 +107,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    cdialognewnode.cpp \
     cdialognewut.cpp \
     cdialogsearch.cpp \
     main.cpp \
@@ -137,6 +138,7 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
+    cdialognewnode.h \
     cdialognewut.h \
     cdialogsearch.h \
     libs/libzmq-v141-4_3_2/zmq.h \
@@ -179,6 +181,7 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
+    cdialognewnode.ui \
     cdialognewut.ui \
     cdialogsearch.ui \
     mainwindow.ui \

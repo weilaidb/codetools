@@ -94,6 +94,45 @@ QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, const ch
 }
 
 
+QStringList CStringPub::stringSplitbyNewLineTrimEnd(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.replace(QRegExp("\\s*$"), ""));
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimHeader(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.replace(QRegExp("^\\s*"), ""));
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimAll(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.simplified());
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimEnd(const QStringList list)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    foreach (QString item, list) {
+        listresult.append(item.replace(QRegExp("\\s*$"), ""));
+    }
+    return listresult;
+}
+
 QStringList CStringPub::stringSplitbyNewLineFilterEmptyUnique(const QString str)
 {
     QStringList result;

@@ -30,6 +30,10 @@ public:
     static QStringList stringSplit(const QString str , const char sign);
     //return list by \n
     static QStringList stringSplitbyNewLine(const QString str);
+    static QStringList stringSplitbyNewLineTrimEnd(const QString str);
+    static QStringList stringSplitbyNewLineTrimHeader(const QString str);
+    static QStringList stringSplitbyNewLineTrimAll(const QString str);
+    static QStringList stringSplitbyNewLineTrimEnd(const QStringList list);
     //return list by \n, filter a line with nothing
     static QStringList stringSplitbyCharFilterEmpty(const QString str, const char sign);
     static QStringList stringSplitbySpaceFilterEmpty(const QString str);

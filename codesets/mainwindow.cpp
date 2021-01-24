@@ -4,6 +4,7 @@
 #include "ui_supertest.h"
 #include "supertest.h"
 #include "cdialogsearch.h"
+#include "cdialognewnode.h"
 #include "astyle_main.h"
 #include "debugApp.h"
 #include "basetypepub.h"
@@ -178,6 +179,14 @@ void MainWindow::init_ActionSets()
     QObject::connect(ui->actionstring_to_ascii, SIGNAL(triggered(bool)), this, SLOT(proc_actionstring_to_ascii()));
     QObject::connect(ui->actionstring_to_ascii_10, SIGNAL(triggered(bool)), this, SLOT(proc_actionstring_to_ascii_10()));
 
+    //new node name
+    QObject::connect(ui->action_newstandnode, SIGNAL(triggered(bool)), this, SLOT(proc_action_newstandnode()));
+    QObject::connect(ui->action_newusernode, SIGNAL(triggered(bool)), this, SLOT(proc_action_newusernode()));
+
+    //tools
+    QObject::connect(ui->action_delspace, SIGNAL(triggered(bool)), this, SLOT(proc_action_delspace()));
+    QObject::connect(ui->action_dellastspacesort, SIGNAL(triggered(bool)), this, SLOT(proc_action_dellastspacesort()));
+
 }
 
 
@@ -219,7 +228,9 @@ void MainWindow::init_UiSets()
 
     //自定义菜单，从文件读取
     pMenuCustom = nullptr;
-    CFilePub::createFileEmptyNoExistAndVar(m_FileNameMenu, "reg/selfmenu.txt;reg/selfmenu_user.txt");
+    m_FileNameMenu_stand = "reg/selfmenu.txt";
+    m_FileNameMenu_user  = "reg/selfmenu_user.txt";
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameMenu, m_FileNameMenu_stand + ";" + m_FileNameMenu_user);
     /**
       ** 模式：
       ** 单行 多处理
@@ -2160,4 +2171,139 @@ void MainWindow::proc_actionstring_to_ascii_10()
 {
     proc_actionstring_to_asciipub(10);
 }
+
+
+void MainWindow::proc_action_newstandnode()
+{
+    CDialogNewNode *pDiaglog = new CDialogNewNode();
+    pDiaglog->setType(CDialogNewNode::NEWSTANDMODE);
+
+    if(QDialog::Rejected == pDiaglog->exec())
+    {
+        return;
+    }
+    proc_newnode_more(pDiaglog);
+    delete pDiaglog;
+}
+
+void MainWindow::proc_action_newusernode()
+{
+
+    CDialogNewNode *pDiaglog = new CDialogNewNode();
+    pDiaglog->setType(CDialogNewNode::NEWUSERMODE);
+
+    if(QDialog::Rejected == pDiaglog->exec())
+    {
+        return;
+    }
+    proc_newnode_more(pDiaglog);
+    delete pDiaglog;
+}
+
+void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
+{
+    QString newNodeName = pDiaglog->getName();
+    debugApp() << newNodeName;
+    if(CStringPub::strSimLenZero(newNodeName))
+    {
+        CUIPub::showStatusBarTimerOnly("请输入内容");
+        return;
+    }
+
+    //检测节点是否存在
+    switch (pDiaglog->getType()) {
+    case CDialogNewNode::NEWSTANDMODE:
+    {
+        if(proc_newnode_check(pDiaglog))
+        {
+            return;
+        }
+        QStringList filelines = CFilePub::readFileAllFilterEmptyUniqueSort(m_FileNameMenu_stand);
+        filelines.append(newNodeName);
+        filelines.sort();
+        if(CStringPub::strSimLen(CFilePub::writeFileWOnly(m_FileNameMenu_stand,filelines)))
+        {
+            CUIPub::showStatusBarTimerOnly(QString("成功[标准] %1").arg(newNodeName));
+        }
+        else
+        {
+            CUIPub::showStatusBarTimerOnly(QString("失败[标准] %1").arg(newNodeName));
+        }
+    }
+        break;
+    case CDialogNewNode::NEWUSERMODE:
+    {
+        if(proc_newnode_check(pDiaglog))
+        {
+            return;
+        }
+        QStringList filelines = CFilePub::readFileAllFilterEmptyUniqueSort(m_FileNameMenu_user);
+        filelines.append(newNodeName);
+        filelines.sort();
+        if(CStringPub::strSimLen(CFilePub::writeFileWOnly(m_FileNameMenu_user,filelines)))
+        {
+            CUIPub::showStatusBarTimerOnly(QString("成功[用户] %1").arg(newNodeName));
+        }
+        else
+        {
+            CUIPub::showStatusBarTimerOnly(QString("失败[用户] %1").arg(newNodeName));
+        }
+    }
+        break;
+    default:
+        CUIPub::showStatusBarTimerOnly("非法模式，请确认");
+        break;
+    }
+
+}
+
+bool MainWindow::proc_newnode_check(CDialogNewNode *pDiaglog)
+{
+    QString newNodeName = pDiaglog->getName();
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_stand, newNodeName))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("节点已存在 %1 [标准]").arg(newNodeName));
+        return true;
+    }
+
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_user, newNodeName))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("节点已存在 %1 [用户]").arg(newNodeName));
+        return true;
+    }
+
+    return false;
+}
+
+void MainWindow::proc_action_delspace()
+{
+    QString result("");
+
+    QString input_string = CUIPub::getTextEdit(ui->textEdit);
+    QStringList list = CStringPub::stringSplitbyNewLineTrimAll(input_string);
+
+    result = CStringPub::stringList2StringEnter(list);
+    CUIPub::setTextBrowser(ui->textBrowser, result);
+}
+
+void MainWindow::proc_action_dellastspacesort()
+{
+    QString result("");
+
+    QString input_string = CUIPub::getTextEdit(ui->textEdit);
+    QStringList list = CStringPub::stringSplitbyNewLineFilterEmptyUniqueSort(input_string);
+    list = CStringPub::stringSplitbyNewLineTrimEnd(list);
+    //定义排序算法，按长度大小 +字符大小
+    qSort(list.begin(), list.end(), [](const QString& s1, const QString& s2)
+    {
+        if(s1.length() < s2.length())
+        {
+            return true;
+        }
+        return s1.toInt() < s2.toInt();
+    });
+    result = CStringPub::stringList2StringEnter(list);
+    CUIPub::setTextBrowser(ui->textBrowser, result);
+}
+
 

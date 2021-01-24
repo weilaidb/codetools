@@ -22,6 +22,7 @@ public:
     static bool createFileContentNoExist(QString filename, QString content);
     static bool createDirNoExist(QString dirname);
     static bool createDirExt(QString dirname);
+    static bool checkFileExistLine(QString filename, QString line);
     static QString readFileAll(QString filename);
     static QStringList readFileAllFilterEmptyUnique(QString filename);
     static QStringList readFileAllFilterEmptyUniqueNoExistAndVar(QString &m_Var,QString filename);

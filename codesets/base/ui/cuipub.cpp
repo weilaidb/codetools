@@ -864,6 +864,16 @@ void CUIPub::showStatusBarTimerOnly(QString msg)
 
 
 
+void CUIPub::setLineEdit(QLineEdit *pLineEdit, QString text)
+{
+    pLineEdit->setText(text);
+}
+
+void CUIPub::setLineEditFocus(QLineEdit *pLineEdit)
+{
+    pLineEdit->setFocus();
+}
+
 QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
 {
     return pLineEdit->text().trimmed();
