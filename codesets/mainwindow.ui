@@ -743,7 +743,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_dellastspacesort">
    <property name="text">
-    <string>除尾并排列</string>
+    <string>除空格排序</string>
    </property>
   </action>
  </widget>

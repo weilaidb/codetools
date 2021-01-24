@@ -1,6 +1,9 @@
 #include "cdialognewnode.h"
 #include "ui_cdialognewnode.h"
+#include "debugApp.h"
 
+#include <QCloseEvent>
+#include <cstringpub.h>
 #include <cuipub.h>
 #include <cuipub.h>
 
@@ -9,6 +12,11 @@ CDialogNewNode::CDialogNewNode(QWidget *parent) :
     ui(new Ui::CDialogNewNode)
 {
     ui->setupUi(this);
+
+    init_Vars();
+    read_Setting();
+    init_UiSets();
+
 }
 
 CDialogNewNode::~CDialogNewNode()
@@ -57,3 +65,48 @@ QString CDialogNewNode::getTypeText()
     return result;
 }
 
+
+void CDialogNewNode::closeEvent(QCloseEvent *event)
+{
+    ////debugApp() << "closeEvent";
+    write_HistorySetting();
+    event->accept();
+}
+
+void CDialogNewNode::read_HistorySetting()
+{
+    proc_HistorySetting(CUIPub::TYPE_READ);
+}
+
+
+void CDialogNewNode::write_HistorySetting()
+{
+    proc_HistorySetting(CUIPub::TYPE_WRITE);
+}
+
+void CDialogNewNode::read_Setting()
+{
+    read_HistorySetting();
+}
+
+void CDialogNewNode::proc_HistorySetting(int type)
+{
+    quint8 ucType = type;
+    m_pSettings = CUIPub::read_HistorySettings(m_organization,m_application);
+    CUIPub::procLineEdit(m_pSettings, ui->lineEdit, ucType);
+    debugApp() << "ucType:" << ucType;
+}
+
+
+void CDialogNewNode::init_Vars()
+{
+    CStringPub::clearString(m_name);
+    CStringPub::setString(m_organization, "weilaidb");
+    CStringPub::setString(m_application, "CDialogNewNode");
+}
+
+
+void CDialogNewNode::init_UiSets()
+{
+
+}

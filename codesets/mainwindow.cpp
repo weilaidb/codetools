@@ -2197,6 +2197,7 @@ void MainWindow::proc_action_newusernode()
         return;
     }
     proc_newnode_more(pDiaglog);
+
     delete pDiaglog;
 }
 
@@ -2255,6 +2256,7 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
         break;
     }
 
+    pDiaglog->write_HistorySetting();
 }
 
 bool MainWindow::proc_newnode_check(CDialogNewNode *pDiaglog)
