@@ -1798,8 +1798,11 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
         CUIPub::explorerPathExt(m_ListOpenFile);
         return;
     }
-    show_StatusTimerWindowTitle("打开配置文件" + pAction->text());
-    CUIPub::explorerPathExt(pAction->text());
+    QString openPathAll = pAction->text();
+    QString openPathReal = CStringPub::replaceReg2Empty(openPathAll, "[【[].*[]】]");
+
+    show_StatusTimerWindowTitle("打开配置文件" + openPathAll);
+    CUIPub::explorerPathExt(openPathReal);
 }
 
 void MainWindow::proc_action_background_update(bool bFlag)

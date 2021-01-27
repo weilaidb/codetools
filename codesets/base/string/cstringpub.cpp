@@ -643,3 +643,15 @@ QString CStringPub::add0xDot(QString text)
 }
 
 
+
+QString CStringPub::replaceReg(QString text, QString regexp, QString after)
+{
+    return text.replace(QRegExp(regexp), after);
+}
+
+QString CStringPub::replaceReg2Empty(QString text, QString regexp)
+{
+    return replaceReg(text, regexp, "");
+}
+
+
