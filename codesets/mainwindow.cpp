@@ -1666,11 +1666,19 @@ void MainWindow::proc_actionOpenConfigDirR()
 
 void MainWindow::proc_actionOpenCfgMenu()
 {
-    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_ListOpenFile));
-    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_AllL_ExecMulti));
-    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecMulti));
-    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileMode_SingleL_ExecSingle));
-    CUIPub::explorerPathExt(CFilePub::getCurrentPath(m_FileNameMenu));
+    QStringList list  = CStringPub::emptyStringList();
+    list.append(m_ListOpenFile);
+    list.append(m_FileMode_AllL_ExecMulti);
+    list.append(m_FileMode_SingleL_ExecMulti);
+    list.append(m_FileMode_SingleL_ExecSingle);
+    list.append(m_FileNameMenu);
+    int seq = 0;
+    foreach (QString item, list) {
+        CUIPub::explorerPathExt(CFilePub::getCurrentPath(item));
+        if(0 == seq++){
+            _sleep(1500);
+        }
+    }
 }
 
 void MainWindow::proc_actionReload()
