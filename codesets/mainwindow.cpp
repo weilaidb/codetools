@@ -501,11 +501,23 @@ QMenu *MainWindow::proc_openfilelist_menu()
 {
     QMenu *pOpenFile = new QMenu("文件列表");
     m_listNormalUse = CFilePub::readFileAllFilterEmptyUniqueSort(m_ListOpenFile);
+    //定义排序算法，按长度大小 +字符大小
+    //想去除特殊符号后排序
+    qSort(m_listNormalUse.begin(), m_listNormalUse.end(), [](const QString& s1, const QString& s2)
+    {
+        QString s1temp = CStringPub::replaceRegLRKuohao2Empty(s1);
+        QString s2temp = CStringPub::replaceRegLRKuohao2Empty(s2);
+        if(s1temp.length() < s2temp.length())
+        {
+            return true;
+        }
+        return s1temp.toInt() < s2temp.toInt();
+    });
     foreach (QString item, m_listNormalUse) {
         if(CUIPub::getCheckedQAction(ui->action_checknoexistpath)
-                &&CStringPub::contain(item, "^\\w:"))
+                &&CStringPub::contain(CStringPub::replaceRegLRKuohao2Empty(item), "^\\w:"))
         {
-            if(CFilePub::pathNoExist(item))
+            if(CFilePub::pathNoExist(CStringPub::replaceRegLRKuohao2Empty(item)))
             {
                 continue;
             }
@@ -1799,7 +1811,7 @@ void MainWindow::proc_action_openfilelist(QAction *pAction)
         return;
     }
     QString openPathAll = pAction->text();
-    QString openPathReal = CStringPub::replaceReg2Empty(openPathAll, "[【[].*[]】]");
+    QString openPathReal = CStringPub::replaceRegLRKuohao2Empty(openPathAll);
 
     show_StatusTimerWindowTitle("打开配置文件" + openPathAll);
     CUIPub::explorerPathExt(openPathReal);
@@ -1899,6 +1911,7 @@ void MainWindow::on_action_search_triggered()
     Qt::CaseSensitivity cs;
     QStringList resultlist = CStringPub::emptyStringList();
     QString findKey = CStringPub::emptyString();
+
 
     if(QDialog::Rejected == pDiaglogKey->exec())
     {

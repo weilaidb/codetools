@@ -83,6 +83,7 @@ public:
     //replace
     static QString replaceReg(QString text, QString regexp, QString after);
     static QString replaceReg2Empty(QString text, QString regexp);
+    static QString replaceRegLRKuohao2Empty(QString text);
 
     //version
     static void printDateTime();

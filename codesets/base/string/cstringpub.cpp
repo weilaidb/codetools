@@ -653,5 +653,8 @@ QString CStringPub::replaceReg2Empty(QString text, QString regexp)
 {
     return replaceReg(text, regexp, "");
 }
-
+QString CStringPub::replaceRegLRKuohao2Empty(QString text)
+{
+    return replaceReg(text, "[【[].*[]】]", "");
+}
 
