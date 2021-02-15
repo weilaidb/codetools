@@ -590,6 +590,8 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
 
+    pActionOpenCfgFile->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+O", nullptr));
+
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
 }
@@ -1910,7 +1912,7 @@ void MainWindow::proc_search_filecontent(QStringList menuList, Qt::CaseSensitivi
 }
 
 
-void MainWindow::on_action_search_triggered()
+void MainWindow::on_action_search_triggered_handle(int flag)
 {
     SHOWCURFUNC;
     CDialogSearch *pDiaglogKey = new CDialogSearch();
@@ -1921,7 +1923,7 @@ void MainWindow::on_action_search_triggered()
     QString findKey = CStringPub::emptyString();
 
 
-    if(QDialog::Rejected == pDiaglogKey->exec())
+    if(flag > 0 && QDialog::Rejected == pDiaglogKey->exec())
     {
         goto ENDLABEL;
     }
@@ -1962,6 +1964,11 @@ void MainWindow::on_action_search_triggered()
 ENDLABEL:
     CUIPub::clearHideListWidget(ui->listWidget_searchresult);
     delete pDiaglogKey;
+}
+
+void MainWindow::on_action_search_triggered()
+{
+    on_action_search_triggered_handle(1);
 }
 
 void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
@@ -2277,10 +2284,14 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
         break;
     default:
         CUIPub::showStatusBarTimerOnly("非法模式，请确认");
+        return;
         break;
     }
 
     pDiaglog->write_HistorySetting();
+    //重新执行查找过程
+    on_action_search_triggered_handle(0);
+
 }
 
 bool MainWindow::proc_newnode_check(CDialogNewNode *pDiaglog)

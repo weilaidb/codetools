@@ -669,10 +669,10 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QS
 
 QString CRegExpPub::procRegExpLineLack(QStringList strlisttmp, QStringList &reg2list, QStringList regcmplist)
 {
-    quint32 dwLp = 0;
+    int iLp = 0;
 
-    dwLp =  0;
-    for(dwLp = 0;dwLp < (strlisttmp.size());dwLp++)
+    iLp =  0;
+    for(iLp = 0;iLp < (strlisttmp.size());iLp++)
     {
         reg2list.append("");
     }
@@ -692,12 +692,47 @@ QString CRegExpPub::procRegExpLineLack(QStringList strlisttmp, QStringList &reg2
     //处理中间
     if(regcmplist.size() > 1)
     {
-        dwLp =  0;
-        for(dwLp = 1;dwLp < (reg2list.size() - 1 );dwLp++)
+        iLp =  0;
+        for(iLp = 1;iLp < (reg2list.size() - 1 );iLp++)
         {
-            MIDWITH(reg2list, dwLp) = MIDWITH(regcmplist, regcmplist.size() - 2);
+            MIDWITH(reg2list, iLp) = MIDWITH(regcmplist, regcmplist.size() - 2);
         }
     }
+
+    return "";
+}
+
+QString CRegExpPub::handlerRegExp_Special(QString text,QStringList regbefore, QStringList regafter, QString mode)
+{
+    UNUSED( text );
+    UNUSED( regafter );
+    debugApp() << "regbefore:"<<regbefore;
+    //默认为一对一
+    if(CExpressPub::isEmpty(mode))
+    {
+        if(1 == regbefore.size())
+        {
+            if ("(.*)" == regbefore.at(0))
+            {
+                debugApp() << "--special deal";
+                return "special deal";
+            }
+            else
+            {
+                debugApp() << "--not special sign";
+            }
+        }
+        else
+        {
+            debugApp() << "--reg before size  bigger than 1";
+        }
+    }
+    else
+    {
+        debugApp() << "--no support mode";
+    }
+
+    return "";
 }
 
 QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
@@ -707,7 +742,13 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     QString strtmp = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
 
-    ////debugApp() << "mode:" << mode;
+    //特殊处理
+    //十进制转十六进制显示异常
+//    if(handlerRegExp_Special(text, regbefore, regafter, mode).size() > 0)
+//    {
+//        return text;
+//    }
+    debugApp() << "mode:" << mode;
     //默认为一对一
     if(CExpressPub::isEmpty(mode))
     {
@@ -718,11 +759,11 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     else if(mode == STR_MODE_SINGLELINE_EXECMULTI)
     {
         foreach (QString item, list) {
-            quint32 dwLp = 0;
+            int iLp = 0;
             strtmp = item;
             foreach (QString reg, regbefore) {
-                strtmp = handlerRegExp_Pub_Single(strtmp, reg, regafter.at(dwLp), mode);
-                dwLp++;
+                strtmp = handlerRegExp_Pub_Single(strtmp, reg, regafter.at(iLp), mode);
+                iLp++;
             }
             result += strtmp + SIGNENTER;
         }
@@ -730,7 +771,7 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     else if(mode == STR_MODE_ALALLINE_EXECMULTI)
     {
         //不自动转$NL和\n的转换。
-        quint32 dwLp = 0;
+        int iLp = 0;
         strtmp = text;
 
         debugApp() << "regafter:" << regafter;
@@ -739,30 +780,30 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         if(toregafter.size() < regbefore.size())
         {
 
-            dwLp =  0;
-            for(dwLp = 0;dwLp < (regbefore.size() - toregafter.size()) ;dwLp++)
+            iLp =  0;
+            for(iLp = 0;iLp < (regbefore.size() - toregafter.size()) ;iLp++)
             {
                 toregafter.append("");
             }
         }
 
         foreach (QString reg, regbefore) {
-            QString to2regaftertemp = replaceSignsPub(toregafter.at(dwLp));
+            QString to2regaftertemp = replaceSignsPub(toregafter.at(iLp));
             debugApp() << "to2regaftertemp:" << to2regaftertemp;
             strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, to2regaftertemp, mode,error);
             if(CExpressPub::isFull(CStringPub::strSimLen(error)))
             {
                 return error;
             }
-            dwLp++;
+            iLp++;
         }
-        debugApp() << "proc count:" << dwLp;
+        debugApp() << "proc count:" << iLp;
         result += strtmp + SIGNENTER;
     }
     else if(mode == STR_MODE_SINGLELINE_EXECSINGLE)
     {
         //不自动转$NL和\n的转换。
-        quint32 dwLp = 0;
+        int iLp = 0;
 //        strtmp = text;
         QStringList strlisttmp = CStringPub::stringSplitbyNewLine(text);
         QStringList reg2beforenew = CStringPub::emptyStringList();
@@ -781,18 +822,18 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         debugApp() << "reg2beforenew:" << reg2beforenew;
         debugApp() << "reg2afternew:" << reg2afternew;
 
-        dwLp =  0;
+        iLp =  0;
         foreach (QString reg, reg2beforenew) {
-            QString to2regaftertemp = replaceSignsPub(reg2afternew.at(dwLp));
-            debugApp() << "strlisttmp.at(" << dwLp <<"):" << strlisttmp.at(dwLp);
+            QString to2regaftertemp = replaceSignsPub(reg2afternew.at(iLp));
+            debugApp() << "strlisttmp.at(" << iLp <<"):" << strlisttmp.at(iLp);
             debugApp() << "reg:" << reg;
             debugApp() << "to2regaftertemp:" << to2regaftertemp;
-            strtmp = handlerRegExp_Pub_Single(strlisttmp.at(dwLp), reg, to2regaftertemp, mode);
+            strtmp = handlerRegExp_Pub_Single(strlisttmp.at(iLp), reg, to2regaftertemp, mode);
             debugApp() << "strtmp:" << strtmp;
             result += strtmp + SIGNENTER;
-            dwLp++;
+            iLp++;
         }
-        debugApp() << "proc count:" << dwLp;
+        debugApp() << "proc count:" << iLp;
 
     }
 

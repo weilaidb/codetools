@@ -314,6 +314,7 @@ private slots:
 
     void on_pushButton_clearTryAgainExt_clicked();
     void on_action_search_triggered();
+    void on_action_search_triggered_handle(int flag);
     void proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey, QStringList &resultlist);
     void updateListWidgetFrequse();
 
