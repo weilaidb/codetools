@@ -351,7 +351,10 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
     int iLp = 0;
 
     QString toreplace = regafter;
-    for(iLp = iStartSeq; iLp <= iCount; iLp++)
+    //>=10时，替换出现异常
+    //反向替换
+//    for(iLp = iStartSeq; iLp <= iCount; iLp++)
+    for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
         //内容替换
         //        if(regafter.contains(QString("\\%1").arg(iLp)))
@@ -399,7 +402,8 @@ QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegu
 {
     QString result(text);
     int iLp = 0;
-    for(iLp = iStartSeq; iLp < iCount; iLp++)
+//    for(iLp = iStartSeq; iLp < iCount; iLp++)
+    for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
         //内容替换
         result = result.replace(QString("\\%1").arg(iLp), match.captured(iLp));
