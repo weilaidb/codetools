@@ -11,7 +11,8 @@
 #include <QDateTime>
 #include <cmappub.h>
 
-
+//原始的替换存在bug，目前使用10个循环来替换掉可能没有替换掉的内容
+#define REGINLOOPMAX (10)
 
 
 T_GenCode g_GenCode[] =
@@ -273,30 +274,43 @@ QString CRegExpPub::replaceSignsItemPub(QString text)
         temp = &g_ScaleSignPub[dwLp];
         filterstr = QString("\\%1\\(%2\\)").arg(temp->m_funname).arg(temp->m_filterregexp);
         debugApp() << "filterstr:" << filterstr;
-        QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption | QRegularExpression::DotMatchesEverythingOption);
-        int index = 0;
-        QRegularExpressionMatch match;
-        do {
-            match = regularExpression.match(text, index);
-            if(match.hasMatch()) {
-                index = match.capturedEnd();
-                debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
-                QString dealText = match.captured(0);
-                QString afText = dealText;
-                afText = afText.replace(temp->m_funname,"").replace("(", "").replace(")","");
-                debugApp() << "afText1:" << afText;
-                afText = replaceSignsItemFuncPub(afText, temp);
-                debugApp() << "afText2:" << afText;
-                debugApp() << "dealText:" << dealText;
-                debugApp() << "text1   :" << text;
-                text = text.replace(dealText, afText);
-                debugApp() << "text2   :" << text;
-            }
-            else
-                break;
-        } while(index < text.length());
 
-        debugApp() << "match.caput1:" << match.capturedTexts();
+        //原始的替换存在bug，目前使用10个循环来替换掉可能没有替换掉的内容
+        WORD32 dwLp2 =  0;
+        for(dwLp2 = 0;dwLp2 < REGINLOOPMAX;dwLp2++)
+        {
+
+            QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption
+                                                 | QRegularExpression::DotMatchesEverythingOption
+//                                                 | QRegularExpression::DontCaptureOption
+                                                 );
+            int index = 0;
+            QRegularExpressionMatch match;
+            do {
+                debugApp() << "---->>:" ;
+                match = regularExpression.match(text, index);
+                if(match.hasMatch()) {
+                    index = match.capturedEnd();
+                    debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+                    QString dealText = match.captured(0);
+                    QString afText = dealText;
+                    afText = afText.replace(temp->m_funname,"").replace("(", "").replace(")","");
+                    debugApp() << "afText1:" << afText;
+                    afText = replaceSignsItemFuncPub(afText, temp);
+                    debugApp() << "afText2:" << afText;
+                    debugApp() << "dealText:" << dealText;
+                    debugApp() << "text1   :" << text;
+                    text = text.replace(dealText, afText);
+                    debugApp() << "text2   :" << text;
+                }
+                else
+                    break;
+            } while(index < text.length());
+
+            debugApp() << "match.caput1:" << match.capturedTexts();
+        }
+
+
 
         //        if(match.capturedTexts().length() < 2)
         //        {
@@ -367,7 +381,11 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
             {
                 regafter = regafter.replace(SIGN_CUSTOM_SP, " ");
             }
-            toreplace = toreplace.replace(QString("\\%1").arg(iLp),match.captured(iLp));
+            //待替换的字符存在多个条目，此处只替换一次，可能替换未完成
+            do{
+                toreplace = toreplace.replace(QString("\\%1").arg(iLp),match.captured(iLp));
+            }while(toreplace.contains(QString("\\%1").arg(iLp)));
+
 //            debugApp() << ">>> in:";
 //            debugApp() << "match.captured(iLp)  bf:" << match.captured(iLp);
 //            debugApp() << "toreplace  bf:" << toreplace;
@@ -406,7 +424,9 @@ QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegu
     for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
         //内容替换
-        result = result.replace(QString("\\%1").arg(iLp), match.captured(iLp));
+        do{
+            result = result.replace(QString("\\%1").arg(iLp), match.captured(iLp));
+        }while(result.contains(QString("\\%1").arg(iLp)));
     }
 
     CPrintPub::printStringTip(result, "replaceSeqPub before");
