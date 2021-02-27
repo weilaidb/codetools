@@ -4,6 +4,8 @@
 #include <QString>
 
 
+#define STR_ERROR ("error")
+#define STR_ERROR_CFGFILE_NOEXIST ("the config file or config not exist")
 
 
 #define UNSED(A) (void)A;
@@ -89,9 +91,12 @@ public:
     static bool isFalse(bool bok);
     static bool isTrue(bool bok);
     static bool isNullPtr(void *Ptr);
+    static bool isOkPtr(void *Ptr);
     static bool isIndexXieLine(QString path);
     static bool isSame(QString str, QString other);
     static bool isIn(QString str, QString other);
+    static QString errorStd();
+    static QString errorConfigFileNoExist();
 };
 
 #endif // CEXPRESSPUB_H

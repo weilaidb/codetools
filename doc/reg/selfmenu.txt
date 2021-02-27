@@ -1,6 +1,7 @@
+
 C/INCLUDE/GENERATE
 C/INCLUDE/FILTER
-C/INCLUDE/����ͷ�ļ�
+C/INCLUDE/常用头文件
 C/MAIN
 C/PRINT/SWITCH
 C/PRINT/DEFINE
@@ -16,16 +17,45 @@ C/ARRAYSIZE
 DEFINE/FILTER
 DEFINE/GENERATE
 DEFINE/GENERATESTRINGSAME
+DEFINE/UNUSED
 
 CXX/INCLUDE/GENERATE
 CXX/INCLUDE/FILTER
-CXX/INCLUDE/����ͷ�ļ�
+CXX/INCLUDE/常用头文件
 CXX/DECLARE_TO_IMPLEMENT
 CXX/ARRAYSIZE
 
 
 QT/PRINT/debugApp
+QT/UI/Menu
+QT/UI/Action
+QT/UI/Settings
+QT/UI/Desktop/Width
+QT/UI/Desktop/Heigth
+QT/UI/Desktop/SetCenter
+QT/UI/progressBar
+QT/UI/ClipBoard/getClipBoardText
+QT/UI/ClipBoard/setClipBoardText
+QT/UI/QTextEdit/getSelectTextEdit
+QT/UI/QTextEdit/getSelectLine
+QT/UI/QTextEdit/getSelectLineTextEdit
+QT/UI/QTextEdit/getTextEdit
+QT/UI/QTextEdit/getTextEditLen
+QT/UI/QTextEdit/clearTextEdit
+QT/UI/QTextEdit/hideTextEdit
+QT/UI/QTextEdit/showTextEdit
+QT/UI/QTextEdit/setTextEdit
+QT/UI/execCmd
 
 BASH/usage
 
 MAKEFILE/test
+
+Python/Print
+正则表达式/所有转一行_替换为NL
+Pthread/Create
+
+
+
+
+

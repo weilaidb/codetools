@@ -50,6 +50,11 @@ bool CExpressPub::isNullPtr(void *Ptr)
     return (nullptr == Ptr);
 }
 
+bool CExpressPub::isOkPtr(void *Ptr)
+{
+    return (nullptr != Ptr);
+}
+
 bool CExpressPub::isIndexXieLine(QString path)
 {
     return (-1 != path.lastIndexOf(CSignPub::signLXie()));
@@ -63,5 +68,15 @@ bool CExpressPub::isSame(QString str, QString other)
 bool CExpressPub::isIn(QString str, QString other)
 {
     return (str.contains(other));
+}
+
+QString CExpressPub::errorStd()
+{
+    return STR_ERROR;
+}
+
+QString CExpressPub::errorConfigFileNoExist()
+{
+    return STR_ERROR_CFGFILE_NOEXIST;
 }
 

@@ -44,7 +44,7 @@ void CMsgTips::proc_timeout()
 void CMsgTips::SetTipsInfo(QString s)
 {
     str = s;
-    label->setText(QString::fromLocal8Bit(str.toLocal8Bit()));
+    label->setText(QString::fromUtf8(str.toUtf8()));
     label->setStyleSheet("QLabel{font: bold italic large \"Times New Roman\";font-size:25px;color:rgb(55,100,255);height:50px;border:4px solid rgb(155,200,33);background-color: rgba(0,0,0,30);border-radius:15px;selection-color:pink}");
     label->setWordWrap(false);
     label->adjustSize(); //自动调整大小

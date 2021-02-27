@@ -10,6 +10,16 @@ QString CSignPub::signEnter()
     return SIGNENTER;
 }
 
+const char *CSignPub::signEnterExt()
+{
+    return SIGNENTER;
+}
+
+char CSignPub::signEnterS()
+{
+    return SIGNENTERS;
+}
+
 QString CSignPub::signEnterNL()
 {
     return SIGNENTERLR;

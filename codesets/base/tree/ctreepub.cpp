@@ -39,7 +39,7 @@ void CTreePub::procSubNode(QString filename)
     }
 
     pos = strKey.lastIndexOf(CSignPub::signLXie());
-//    debugApp() << "pos:" << pos <<" , "<< strKey;
+    //    debugApp() << "pos:" << pos <<" , "<< strKey;
     m_menuIter = m_menuSubNode.find(strKey);
     if((m_menuSubNode.end() == m_menuIter)
             && setSubNode(tNode, false, strKey))
@@ -51,7 +51,7 @@ void CTreePub::procSubNode(QString filename)
     {
         strKey = strKey.mid(0,pos);
         pos = strKey.lastIndexOf(CSignPub::signLXie());
-//        debugApp() << "pos:" << pos <<" , "<< strKey;
+        //        debugApp() << "pos:" << pos <<" , "<< strKey;
         m_menuIter = m_menuSubNode.find(strKey);
         if((m_menuSubNode.end() == m_menuSubNode.find(strKey))
                 && setSubNode(tNode, true, strKey))
@@ -60,7 +60,7 @@ void CTreePub::procSubNode(QString filename)
         }
     }
 
-    //    showMenuSubNode();
+//    showMenuSubNode();
 
 }
 
@@ -131,7 +131,7 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
   *生成多级菜单
   *根路径
   */
-//        printSubNode(tNode);
+        //        printSubNode(tNode);
         //root node
         if(CExpressPub::isZero(tNode.m_parent.length()))
         {
@@ -211,40 +211,44 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
     {
         tNode.u.m_pMenu = new QMenu(tNode.m_name);
         pMenu->addMenu(tNode.u.m_pMenu);
+        return;
     }
-    else
+
+    tNode.u.m_pAction = new QAction(tNode.m_name);
+    if(tNode.m_mode == CRegExpPub::MODE_SINGLELINE_EXECMULTI)
     {
-        tNode.u.m_pAction = new QAction(tNode.m_name);
-        if(tNode.m_mode == CRegExpPub::MODE_SINGLELINE_EXECMULTI)
-        {
-            mode = CSignPub::signFenHao() + STR_MODE_SINGLELINE_EXECMULTI;
-        }
-        tNode.u.m_pAction->setData(tNode.m_path + mode);
-        pMenu->addAction(tNode.u.m_pAction);
+        mode = CSignPub::signFenHao() + STR_MODE_SINGLELINE_EXECMULTI;
     }
+    else if(tNode.m_mode == CRegExpPub::MODE_ALLLINE_EXECMULTI)
+    {
+        mode = CSignPub::signFenHao() + STR_MODE_ALALLINE_EXECMULTI;
+    }
+    tNode.u.m_pAction->setData(tNode.m_path + mode);
+    pMenu->addAction(tNode.u.m_pAction);
+
 }
 
 
 
 #if 0
 //测试
-    Q_UNUSED(pos);
-    pRightMouse = new QMenu(this);
+Q_UNUSED(pos);
+pRightMouse = new QMenu(this);
 
-    CTreePub::freeTreeMenu();
+CTreePub::freeTreeMenu();
 
-    CTreePub::procSubNode("A/B/C/D/E/F");
-    CTreePub::procSubNode("A/B/C/D/E/G");
-    CTreePub::procSubNode("A/B/C/D/E/G/H");
-    CTreePub::showMenuSubNode();
+CTreePub::procSubNode("A/B/C/D/E/F");
+CTreePub::procSubNode("A/B/C/D/E/G");
+CTreePub::procSubNode("A/B/C/D/E/G/H");
+CTreePub::showMenuSubNode();
 
-    QCursor cur=this->cursor();
-    QMenu *pTreeMenu = CTreePub::getTreeMenu();
-    if(pTreeMenu)
-    {
-        pRightMouse->addMenu(pTreeMenu);
-    }
-    pRightMouse->exec(cur.pos()); //关联到光标
-    return;
+QCursor cur=this->cursor();
+QMenu *pTreeMenu = CTreePub::getTreeMenu();
+if(pTreeMenu)
+{
+    pRightMouse->addMenu(pTreeMenu);
+}
+pRightMouse->exec(cur.pos()); //关联到光标
+return;
 
 #endif

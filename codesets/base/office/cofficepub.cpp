@@ -2,7 +2,8 @@
 #include "cuipub.h"
 #include "debugApp.h"
 #include "cstringpub.h"
-#include "signpub.h"
+#include "basepub.h"
+#include "csignpub.h"
 
 COfficePub::COfficePub()
 {
@@ -86,7 +87,7 @@ void COfficePub::openFile(QString filePath)
 
 void COfficePub::closeFile(bool isSave /*=false*/)
 {
-    isSave = isSave;
+    UNUSED(isSave);
     if (officeContent)
     {
         if (currentFilePath.endsWith(".ppt") || currentFilePath.endsWith(".pptx") ||currentFilePath.endsWith(".pptm"))
@@ -111,7 +112,7 @@ void COfficePub::Save()
 
 void COfficePub::SaveAs( QString newFilePath )
 {
-    newFilePath = newFilePath;
+    UNUSED(newFilePath);
 }
 
 
@@ -123,7 +124,7 @@ void COfficePub::testWord()
     //获取所有的工作文档
     QAxObject *pDocuments = pWord->querySubObject("Documents");
     //以文件template.dot为模版新建一个文档
-    pDocuments->dynamicCall("Add(QString)", QString::fromLocal8Bit("E:/template.dot"));
+    pDocuments->dynamicCall("Add(QString)", QString::fromUtf8("E:/template.dot"));
     //获取当前激活的文档
     QAxObject *pDocument = pWord->querySubObject("ActiveDocument");
     //获取文档中名字为code的标签

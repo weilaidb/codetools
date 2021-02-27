@@ -1,7 +1,6 @@
 QT       += core gui
 QT       += sql
-#QMAKE_CXXFLAGS += -std=c++11
-#CONFIG += c++11
+
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
 QT       += axcontainer
@@ -25,7 +24,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
-    base/include/ \
     base/msgtips/ \
     base/mysql/ \
     base/dialog/ \
@@ -38,9 +36,16 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/print/ \
     base/tree/ \
     base/map/ \
+    base/codec/ \
+    base/log/ \
+    base/file/ \
+    base/ui/ \
+    base/string/ \
+    base/algorithm/ \
     base/net/zeromq/ \
     cppbase/string/ \
-    cppbase/include/ \
+    cppbase/mutex/ \
+    testcase/stringtest/ \
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
@@ -54,6 +59,7 @@ INCLUDEPATH += \
 LIBS += -L$$PWD/libs/libzmq-v141-4_3_2  -lzmq-v141-mt-4_3_2
 
 
+
 }
 
 unix {
@@ -61,6 +67,10 @@ unix {
 
 }
 
+
+macx {
+
+}
 
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -74,69 +84,79 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.cpp \
     AStyle_3_1_windows/AStyle/src/ASResource.cpp \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
+    base/algorithm/calgorithmpub.cpp \
+    base/codec/ctextcodecpub.cpp \
     base/define/cdefinepub.cpp \
     base/dialog/cdialogpub.cpp \
     base/express/cexpresspub.cpp \
+    base/log/clogpub.cpp \
     base/map/cmappub.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
-    base/return/creturnpub.cpp \
     base/sign/csignpub.cpp \
-    base/source/cfilepub.cpp \
-    base/source/cstringpub.cpp \
-    base/source/cuipub.cpp \
+    base/file/cfilepub.cpp \
+    base/string/cstringpub.cpp \
+    base/ui/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
-    cppbase/string/cstringpubcpp.cpp \
-    cppbase/string/testcase/cstringpubcpp_main.cpp \
+    formcenter.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tabwidget.cpp \
+    testcase/stringtest/cstringpubcpp_main.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
     AStyle_3_1_windows/AStyle/src/astyle.h \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
+    base/algorithm/calgorithmpub.h \
+    base/codec/ctextcodecpub.h \
     base/define/cdefinepub.h \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \
-    base/include/cfilepub.h \
-    base/include/cstringpub.h \
-    base/include/cuipub.h \
+    base/file/cfilepub.h \
+    base/string/cstringpub.h \
+    base/ui/cuipub.h \
+    base/log/clogpub.h \
     base/map/cmappub.h \
     base/msgtips/cmsgtips.h \
     base/mysql/csqlpub.h \
     base/net/zeromq/cnetpub.h \
     base/print/cprintpub.h \
     base/regexp/cregexppub.h \
-    base/return/creturnpub.h \
     base/sign/csignpub.h \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
-    cppbase/include/cppbasetype.h \
-    cppbase/include/readmacro.h \
-    cppbase/include/testcase.h \
-    cppbase/string/cstringpubcpp.h \
+    formcenter.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
+    public/include/basedefinepub.h \
+    public/include/basepub.h \
     public/include/basetypepub.h \
     public/include/debugApp.h \
-    public/include/filepub.h \
     public/include/looppub.h \
-    public/include/signpub.h \
+    public/include/readmacro.h \
+    tabwidget.h \
+    testcase/stringtest/testcase.h \
     version.h
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
 SOURCES += \
     base/office/cofficepub.cpp \
+    base/mutex/cmutexpub.cpp \
+    base/mutex/csempub.cpp \
+
 
 HEADERS += \
     base/office/cofficepub.h \
+    base/mutex/cmutexpub.h \
+    base/mutex/csempub.h \
 
 }
 
@@ -146,11 +166,16 @@ unix {
 
 }
 
+macx {
+
+}
 
 
 FORMS += \
     cdialogasktext.ui \
-    mainwindow.ui
+    formcenter.ui \
+    mainwindow.ui \
+    tabwidgets.ui
 
 
 # Default rules for deployment.
@@ -169,6 +194,7 @@ RC_FILE = \
 
 DISTFILES += \
     doc/代码替换说明.txt \
+    images/fohand.ico \
     images/myapp.rc \
     libs/libzmq-v141-4_3_2/libsodium.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \

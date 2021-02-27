@@ -28,7 +28,7 @@ void CPrintPub::myMessageOutput(QtMsgType type, const QMessageLogContext &contex
     static QMutex mutex;
     mutex.lock();
 
-    QByteArray localMsg = msg.toLocal8Bit();
+    QByteArray localMsg = msg.toUtf8();
 
     QString strMsg("");
     switch(type)
@@ -57,7 +57,7 @@ void CPrintPub::myMessageOutput(QtMsgType type, const QMessageLogContext &contex
 
     // 输出信息至文件中（读写、追加形式）
 //    qDebug() << "filename:" << m_filename;
-//    QFile file(m_filename.toLocal8Bit().data());
+//    QFile file(m_filename.toUtf8().data());
     QFile file("asytle.log");
     file.open(QIODevice::ReadWrite | QIODevice::Append);
     QTextStream stream(&file);

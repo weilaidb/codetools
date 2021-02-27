@@ -9,6 +9,7 @@
 
 #define STR_MODE_NONE                        ("MODE_NONE")
 #define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
+#define STR_MODE_ALALLINE_EXECMULTI          ("MODE_ALALLINE_EXECMULTI")    //左侧所有行内容，进行多次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
 
@@ -55,6 +56,7 @@ public:
     enum EUM_MODE{
         MODE_NONE,
         MODE_SINGLELINE_EXECMULTI,
+        MODE_ALLLINE_EXECMULTI,
         MODE_MUL2ONE,
     };
 
@@ -67,8 +69,8 @@ public:
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpFileNameTips(QString filename);
     static QString getRegExpFileNamePub(QString filename, int filetype);
-    static QString getRegExpByFile(QString filename);
-    static QStringList getRegExpsByFile(QString filename);
+    static QString getRegExpByFile(QString filename, QString content);
+    static QStringList getRegExpsByFile(QString filename,QString content);
     static QString getFileNameByClassType(quint32 dwClasstype);
     static QString procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text);
     static QString checkRegExpFile(QString classconfig, quint32 dwClasstype
@@ -76,11 +78,14 @@ public:
                                    , QStringList &regexpsaft
                                    , QStringList &regexpstip
                                    , QString &regexpmode);
+    static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
-    static QString replaceSeqPub(QString text, quint32 dwStartSeq, quint32 dwCount, QRegularExpressionMatch match);
+    static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
+    static QString replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
+    static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);
@@ -89,8 +94,10 @@ public:
 //    static QString handlerTip_Setter();
 
     static const QString getConfigBefore();
+    static const QString getConfigBase();
 
 private:
+    static const QString dirbase;
     static const QString dirbefore;
     static const QString dirafter;
     static const QString dirtips;
