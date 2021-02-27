@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += sql
-
+#QMAKE_CXXFLAGS += -std=c++11
+#CONFIG += c++11
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
 QT       += axcontainer
