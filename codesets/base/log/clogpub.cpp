@@ -2,7 +2,6 @@
 #include "csignpub.h"
 #include "debugApp.h"
 #include "cstringpub.h"
-#include "cexpresspub.h"
 
 #include <cfilepub.h>
 #include <cprintpub.h>
@@ -25,7 +24,7 @@ void CLogPub::msgDefault(QString info)
     info.append(CSignPub::signEnter());
     QByteArray ba = info.toLatin1();
     char *mm = ba.data();
-//    debugApp()<< mm <<endl;  //调试时，在console中输出
+//    ////debugApp()<< mm <<endl;  //调试时，在console中输出
     string cppstr = CStringPub::getDataOfStr((BYTE *)mm, strlen(mm));
 //    cout << cppstr << endl;  //调试时，在console中输出
     CFilePub::writeFileAppend(m_logDefaultFileName, info);
@@ -34,10 +33,6 @@ void CLogPub::msgDefault(QString info)
 
 void CLogPub::msgDefault(char *pMsg)
 {
-    if(CExpressPub::isNullPtr(pMsg))
-    {
-        return;
-    }
     QString result =CStringPub::emptyString();
     result.append(CSignPub::signEnter());
     result.append(CStringPub::hexToString((BYTE *)pMsg));

@@ -2,12 +2,7 @@
 
 #include <QTextCodec>
 #ifdef WIN32
-#include <cexpresspub.h>
-#include <cstringpub.h>
 #include <windows.h>
-#else
-#include "cexpresspub.h"
-#include "cstringpub.h"
 #endif
 
 CTextCodecPub::CTextCodecPub()
@@ -98,10 +93,6 @@ char*  CTextCodecPub::convertQString2buf(QString single, char *szLogin)
 //GBK转Unicode编码
 QString CTextCodecPub::getGBKToUnicode(char *text)
 {
-    if(CExpressPub::isNullPtr(text))
-    {
-        return CStringPub::emptyString();
-    }
     return getGBKTextCodec()->toUnicode(text);
 }
 

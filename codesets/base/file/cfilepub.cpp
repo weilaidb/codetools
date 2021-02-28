@@ -151,8 +151,8 @@ bool CFilePub::createFileEmptyNoExist(QString filename)
     {
         return false;
     }
-    debugApp() << "create dirName          :" << dirName(filename);
-    debugApp() << "writeFileOnlly filename :" << filename;
+    ////////debugApp() << "create dirName          :" << dirName(filename);
+    ////////debugApp() << "writeFileOnlly filename :" << filename;
 
     writeFileOnlly(filename, CStringPub::emptyString());
     return ok;
@@ -169,8 +169,8 @@ bool CFilePub::createFileContentNoExist(QString filename, QString content)
     {
         return false;
     }
-//    debugApp() << "create dirName          :" << dirName(filename);
-//    debugApp() << "writeFileOnlly filename :" << filename;
+//    ////////debugApp() << "create dirName          :" << dirName(filename);
+//    ////////debugApp() << "writeFileOnlly filename :" << filename;
 
     writeFileOnlly(filename, content);
     return ok;
@@ -214,6 +214,19 @@ QStringList CFilePub::readFileAllFilterEmptyUniqueMulti(QString filename)
     }
 
     return result;
+}
+
+//判断文件行是否相等
+bool CFilePub::checkFileExistLine(QString filename, QString line)
+{
+    QStringList list = readFileAllFilterEmptyUnique(filename);
+    foreach (QString item, list) {
+        if(CStringPub::strSim(line) == CStringPub::strSim(item))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 QStringList CFilePub::readFileAllFilterEmptyUnique(QString filename)
@@ -424,9 +437,28 @@ QStringList CFilePub::getFileAllAbsoluteNames(QStringList nameFilters, const QSt
     QStringList files;
     files.clear();
     QFileInfoList infolist = getAllFileList(nameFilters, filePath);
-//    debugApp() << "infolist:" << infolist.size();
+//    ////////debugApp() << "infolist:" << infolist.size();
     foreach (QFileInfo info, infolist) {
-        files += info.absolutePath() + QDir::separator() + info.fileName();
+        QString temp = info.absolutePath() + QDir::separator() + info.fileName();
+        files += QDir::toNativeSeparators(temp);
+    }
+
+    return files;
+}
+
+QStringList CFilePub::getFileAllRelateNames(QStringList nameFilters, const QString filePath)
+{
+    QStringList files;
+    files.clear();
+    QFileInfoList infolist = getAllFileList(nameFilters, filePath);
+    //    ////////debugApp() << "infolist:" << infolist.size();
+    foreach (QFileInfo info, infolist) {
+        QString temp = info.absolutePath() + QDir::separator() + info.fileName();
+        temp = CStringPub::toNativeSeparators(temp).replace(CStringPub::toNativeSeparators(filePath), CSignPub::signSpace());
+        files += QDir::toNativeSeparators(temp);
+
+//        ////////debugApp() << "temp:" << temp;
+//        ////////debugApp() << "temp after:" << temp;
     }
 
     return files;
@@ -444,9 +476,9 @@ QFileInfoList CFilePub::getAllFileList(QStringList nameFilters, QString path)
     QFileInfoList file_list   = dir.entryInfoList(nameFilters, QDir::Files| QDir::NoSymLinks|QDir::Readable|QDir::Writable, QDir::Name);
     QFileInfoList folder_list = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
 
-//    debugApp() << "dirpath    :" << path;
-//    debugApp() << "file_list  :" << file_list.size();
-//    debugApp() << "folder_list:" << folder_list.size();
+//    ////////debugApp() << "dirpath    :" << path;
+//    ////////debugApp() << "file_list  :" << file_list.size();
+//    ////////debugApp() << "folder_list:" << folder_list.size();
 
     for(int i = 0; i != folder_list.size(); i++)
     {
@@ -470,7 +502,7 @@ QStringList CFilePub::getOpenDiagFiles(QString &openFilePathRecent,QString filte
     {
         return openfiles;
     }
-    debugApp() << "Open Files:" << openfiles;
+    ////////debugApp() << "Open Files:" << openfiles;
     return  openfiles;
 }
 
@@ -486,7 +518,7 @@ QStringList CFilePub::getOpenDiagFilesRecent(QString &openFilePathRecent,QString
         return openfiles;
     }
     openFilePathRecent = openfiles.at(0);
-    debugApp() << "Open Files:" << openfiles;
+    ////////debugApp() << "Open Files:" << openfiles;
     return  openfiles;
 }
 
@@ -514,7 +546,7 @@ QStringList CFilePub::getExistDirAllFiles(QString tips, QString &recent, QString
         return CStringPub::emptyStringList();
     }
     recent = openDirPath;
-    debugApp() << "Open Dir:" << openDirPath;
+    ////////debugApp() << "Open Dir:" << openDirPath;
     recentlist.append(openDirPath);
     QStringList openfiles = CFilePub::getFileAllAbsoluteNames(nameFilters, openDirPath);
     return openfiles;
@@ -571,11 +603,16 @@ qint64 CFilePub::fileSize(const QString path)
     qint64 size = 0;
 
     size += fileInfo.size();
-    debugApp() << "file size:" << size;
+    ////////debugApp() << "file size:" << size;
     return size;
 }
 
 QString CFilePub::parentDir(QString filepath)
 {
-    return filepath + QDir::separator() + "..";
+    QFile file(filepath);
+    //..必须添加/才行，即../
+    QString dirPath = filepath + QDir::separator() + "../";
+//    dirPath = QDir::toNativeSeparators(dirPath);
+    dirPath = QDir::fromNativeSeparators(dirPath);
+    return dirPath;
 }

@@ -73,7 +73,7 @@ void CNetThreadPub::runDefault()
         emit progress(((float)count / m_runCount) * 100);
         emit message(QString("CNetThreadPub::run times:%1").arg(count));
         doSomething();
-        //        debugApp() << "thread runing:" << count;
+        //        ////debugApp() << "thread runing:" << count;
         if(m_runCount == count)
         {
             break;

@@ -10,6 +10,11 @@ QString CSignPub::signEnter()
     return SIGNENTER;
 }
 
+QString CSignPub::signDot()
+{
+    return SIGNDOT;
+}
+
 const char *CSignPub::signEnterExt()
 {
     return SIGNENTER;
@@ -28,6 +33,10 @@ QString CSignPub::signEnterNL()
 QString CSignPub::signRESpace()
 {
     return SIGN_RE_SPACE;
+}
+QString CSignPub::signSpace()
+{
+    return SIGNSPACENONE;
 }
 
 char CSignPub::signLXie()

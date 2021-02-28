@@ -8,10 +8,34 @@
 #include "cfilepub.h"
 
 #define STR_MODE_NONE                        ("MODE_NONE")
-#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
 #define STR_MODE_ALALLINE_EXECMULTI          ("MODE_ALALLINE_EXECMULTI")    //左侧所有行内容，进行多次处理（右侧）
+#define STR_MODE_SINGLELINE_EXECMULTI        ("MODE_SINGLELINE_EXECMULTI")  //左侧一行内容，进行多次处理（右侧）
+#define STR_MODE_SINGLELINE_EXECSINGLE       ("MODE_SINGLELINE_EXECSINGLE")  //左侧一行内容，进行一次处理（右侧）
 #define STR_MODE_MUL2ONE        ("MODE_MUL2ONE")
 
+/**
+  **
+  ** 自定义特殊符
+  **/
+#define SIGN_CUSTOM_NL        ("$NL")
+#define SIGN_CUSTOM_TB        ("$TB")
+#define SIGN_CUSTOM_SP        ("$SP")
+#define SIGN_CUSTOM_DATE      ("$DATE")
+#define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
+#define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
+#define SIGN_CUSTOM_D2H       ("$D2H")    //decimal to hexadecimal
+#define SIGN_CUSTOM_H2B       ("$H2B")    //hexadecimal to binary
+#define SIGN_CUSTOM_B2H       ("$B2H")    //binary to hexadecimal
+#define SIGN_CUSTOM_D2B       ("$D2B")    //decimal to binary
+#define SIGN_CUSTOM_B2D       ("$B2D")    //binary to decimal
+#define SIGN_CUSTOM_UPP       ("$UP")     //转大写
+#define SIGN_CUSTOM_LOW       ("$LO")     //转小写
+#define SIGN_CUSTOM_0XDOT     ("$0XDOT")  //报文添加0x和逗号
+#define SIGN_CUSTOM_FORFXIE   ("$FORFX")  //生成递增的反斜线 \1\2\3...
+#define SIGN_CUSTOM_FORW      ("$FORW")   //生成相同个数的内容(\w{2})(\w{2})...(\w{2})(.*)
+
+#define LASTWITH(ARR)  ARR[ARR.size() - 1]
+#define MIDWITH(ARR, LP)  ARR[LP]
 
 typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
@@ -42,6 +66,13 @@ enum EUM_CLASSTYPE{
     EDIT_CFGFILE_OPERATIONS, //编辑配置
 };
 
+typedef struct T_SignPub{
+    const char *m_funname; //函数名
+    const char *m_filterregexp; //过滤正则表达式
+//    const char *m_funname; //函数名
+}T_SignPub, *P_SignPub;
+
+
 
 
 class CRegExpPub
@@ -55,8 +86,9 @@ public:
 
     enum EUM_MODE{
         MODE_NONE,
-        MODE_SINGLELINE_EXECMULTI,
         MODE_ALLLINE_EXECMULTI,
+        MODE_SINGLELINE_EXECMULTI,
+        MODE_SINGLELINE_EXECSINGLE,
         MODE_MUL2ONE,
     };
 
@@ -65,6 +97,8 @@ public:
     //set
     static QString setRegExpByFile(QString filename, QString content);
     //get
+    static QString getFileSuffix(QString filename);
+    static QString getRenameFile(QString filename);
     static QString getRegExpFileNameBefore(QString filename);
     static QString getRegExpFileNameAfter(QString filename);
     static QString getRegExpFileNameTips(QString filename);
@@ -80,12 +114,17 @@ public:
                                    , QString &regexpmode);
     static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
+    static QString replaceSignsItemPub(QString text);
+    static QString replaceSignsItemFuncPub(QString dealText, P_SignPub temp);
+    static QString replaceSignsItemTestPub(QString text);
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
-    static QString replaceSeqMultiPub(QString text,QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match);
+    static QString replaceSeqMultiPub(QString text, QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match, int &index);
     static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
+    static QString handlerRegExp_Special(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
     static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error);
+    static QString procRegExpLineLack(QStringList strlisttmp, QStringList &reg2list, QStringList regcmplist);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);

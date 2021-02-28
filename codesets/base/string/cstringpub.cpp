@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <QDir>
 
 
 CStringPub::CStringPub()
@@ -69,8 +70,17 @@ QStringList CStringPub::stringSplitbyNewLine(const QString str)
 
 QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
 {
+    return stringSplitbyCharFilterEmpty(str, '\n');
+}
+
+QStringList CStringPub::stringSplitbySpaceFilterEmpty(const QString str)
+{
+    return stringSplitbyCharFilterEmpty(str, ' ');
+}
+
+QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, const char sign)
+{
     QStringList result;
-    const char sign = '\n';
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
         if(item.simplified().isEmpty())
@@ -81,6 +91,46 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
     }
 
     return result;
+}
+
+
+QStringList CStringPub::stringSplitbyNewLineTrimEnd(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.replace(QRegExp("\\s*$"), ""));
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimHeader(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.replace(QRegExp("^\\s*"), ""));
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimAll(const QString str)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
+    foreach (QString item, listtemp) {
+        listresult.append(item.simplified());
+    }
+    return listresult;
+}
+
+QStringList CStringPub::stringSplitbyNewLineTrimEnd(const QStringList list)
+{
+    QStringList listresult = CStringPub::emptyStringList();
+    foreach (QString item, list) {
+        listresult.append(item.replace(QRegExp("\\s*$"), ""));
+    }
+    return listresult;
 }
 
 QStringList CStringPub::stringSplitbyNewLineFilterEmptyUnique(const QString str)
@@ -134,6 +184,30 @@ QString CStringPub::stringSplitFindText(const QString str , const char sign,QStr
     return result;
 }
 
+void CStringPub::printStringList(QStringList &lists)
+{
+    ////debugApp() <<"lists count:" << lists.count();
+    quint32 dwCnt = 0;
+    foreach (QString item, lists) {
+        ////debugApp() << "No:" << ++dwCnt << ", " << item;
+    }
+
+}
+
+
+QStringList CStringPub::reverseStringList(QStringList &lists)
+{
+    QStringList newlist;
+    QStringList::reverse_iterator iter = lists.rbegin();
+    for(;iter != lists.rend();iter++)
+    {
+        newlist.append(*iter);
+    }
+    return newlist;
+}
+
+
+
 QStringList CStringPub::stringUnique(QStringList lists)
 {
     lists.removeDuplicates();
@@ -150,11 +224,35 @@ void CStringPub::addStringUniqueMax(QStringList &lists, QString str, int max)
 {
     lists.append(str);
     lists.removeDuplicates();
-    if(lists.count() > max)
+    while(lists.count() > max)
     {
         lists.removeFirst();
     }
 }
+//反序输出
+void CStringPub::addStringUniqueInverseMax(QStringList &lists, QString str, int max)
+{
+    lists.append(str);
+    lists.removeDuplicates();
+    while(lists.count() > max)
+    {
+        lists.removeFirst();
+    }
+    lists = reverseStringList(lists);
+}
+
+//插入首节点,删除多余尾节点
+void CStringPub::addStringHeaderUniqueMax(QStringList &lists, QString str, int max)
+{
+    lists.insert(0, str);
+    lists.removeDuplicates();
+    while(lists.count() > max)
+    {
+        lists.removeLast();
+    }
+}
+
+
 
 void CStringPub::addStringUniqueSortMax(QStringList &lists, QString str, int max)
 {
@@ -253,7 +351,7 @@ QStringList CStringPub::actionNameList(QAction *action)
 {
     QStringList autolist;
     autolist.append(action->iconText());
-    debugApp() << "actionname:" << action->iconText();
+    ////debugApp() << "actionname:" << action->iconText();
     return autolist;
 }
 
@@ -281,9 +379,19 @@ QStringList CStringPub::wordNameFilter()
 }
 
 
-int CStringPub::strSimLen(QString str)
+bool CStringPub::strSimLenFull(QString str)
 {
-    return str.simplified().length();
+    return (str.simplified().length() > 0);
+}
+
+bool CStringPub::strSimLenZero(QString str)
+{
+    return (str.simplified().length() == 0);
+}
+
+unsigned int CStringPub::strSimLen(QString str)
+{
+    return (unsigned int)str.simplified().length();
 }
 
 QString CStringPub::strSim(QString str)
@@ -434,4 +542,119 @@ string CStringPub::getDataOfStr(BYTE *pMsg, WORD32 dwLen)
     return res;
 }
 
+//support multikey by space in filter
+QStringList CStringPub::filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
+{
+    QStringList relist;
+    foreach (QString item, list) {
+        if(filterKeySpaceInclude(filter, item, cs)){
+            relist.append(item);
+        }
+    }
+    return relist;
+}
+//不包含字符串filter
+QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
+{
+    QStringList relist;
+    foreach (QString item, list) {
+        if(item.contains(filter, cs)){
+            continue;
+        }
+        relist.append(item);
+    }
+    return relist;
+}
+
+
+bool CStringPub::filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs)
+{
+    QStringList keyList = stringSplitbySpaceFilterEmpty(keySpace);
+    quint16 wCount = 0;
+    foreach (QString item, keyList) {
+        if(orgtext.contains(item,cs))
+        {
+            wCount++;
+        }
+    }
+
+    if(wCount == keyList.size())
+    {
+        return true;
+    }
+    return false;
+}
+
+QString CStringPub::toNativeSeparators(QString dir)
+{
+    return  QDir::toNativeSeparators(dir);
+}
+//BYTE数组转换成字符串显示
+QString CStringPub::getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag)
+{
+    QString result("");
+    WORD32 dwLp =  0;
+    char buf[4] = {0};
+    for(dwLp = 0;dwLp < dwLen;dwLp++)
+    {
+        if(16 == hexflag)
+        {
+            snprintf(buf,sizeof(buf),"%02x",pStr[dwLp]);
+        }
+        else
+        {
+            snprintf(buf,sizeof(buf),"%02u ",pStr[dwLp]);
+        }
+        result.append(buf);
+    }
+    return result;
+}
+
+QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
+{
+    bool ok;
+    qulonglong dec = text.toULongLong(&ok, from);
+    if(16 == to)
+    {
+        text = QString::number(dec,to);
+//        debugApp() << "text:" << text;
+//        text = QString::number(dec,to).right(4); //裁剪字符串前面多余的f
+    }
+    else
+    {
+        text = QString::number(dec,to);
+    }
+    return text;
+}
+
+QString CStringPub::toUpper(QString text)
+{
+    return text.toUpper();
+}
+
+QString CStringPub::toLower(QString text)
+{
+    return text.toLower();
+}
+
+QString CStringPub::add0xDot(QString text)
+{
+    return "0x" + text + ",";
+}
+
+
+
+QString CStringPub::replaceReg(QString text, QString regexp, QString after)
+{
+    return text.replace(QRegExp(regexp), after);
+}
+
+QString CStringPub::replaceReg2Empty(QString text, QString regexp)
+{
+    return replaceReg(text, regexp, "");
+}
+QString CStringPub::replaceRegLRKuohao2Empty(QString text)
+{
+    return replaceReg(text, "[【[].*[]】]", "");
+}
 

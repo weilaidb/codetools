@@ -14,7 +14,7 @@
 #include <cfilepub.h>
 #include "debugApp.h"
 #ifdef WIN32
-#include <QTabWidget>
+#include <QLineEdit>
 #include <clogpub.h>
 #include <csignpub.h>
 #include <windows.h>
@@ -23,6 +23,7 @@
 #include "ctextcodecpub.h"
 #include "clogpub.h"
 #include "csignpub.h"
+#include "cmsgtips.h"
 
 #define MAX_LENGTH (20480)
 
@@ -144,6 +145,59 @@ void CUIPub::procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType)
     }
 }
 
+void CUIPub::procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pCheckBox->setChecked(pSetting->value(pCheckBox->text()).toBool());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pCheckBox->text(),pCheckBox->isChecked());
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void CUIPub::procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pLineEdit->setText(pSetting->value(pLineEdit->objectName()).toString());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pLineEdit->objectName(),pLineEdit->text());
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void CUIPub::procComboBox(QSettings *pSetting, QComboBox *pComboBox, qint8 ucOperType)
+{
+    switch (ucOperType) {
+    case TYPE_READ:
+    {
+        pComboBox->setCurrentText(pSetting->value(pComboBox->objectName()).toString());
+    }
+        break;
+    case TYPE_WRITE:
+    {
+        pSetting->setValue(pComboBox->objectName(),pComboBox->currentText());
+    }
+        break;
+    default:
+        break;
+    }
+}
 
 void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType)
 {
@@ -167,7 +221,7 @@ void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringLis
 /**
  * @brief CUIPub::ReadHistorySettings
  */
-QSettings * CUIPub::readHistorySettings(QString &organization,
+QSettings * CUIPub::read_HistorySettings(QString &organization,
                                         const QString &application)
 {
     auto find_index = m_settingMap.find(bindKey(organization, application));
@@ -419,13 +473,18 @@ int CUIPub::getSelectLine(QTextEdit *pTextEdit)
 
 QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
 {
-    //    debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
+    //    ////debugApp() << "getSelectLine  :" << getSelectLine(pEdit);
     return pEdit->document()->findBlockByLineNumber(getSelectLine(pEdit)).text();
 }
 
 QString CUIPub::getTextEdit(QTextEdit *pEdit)
 {
     return pEdit->toPlainText();
+}
+
+bool CUIPub::findTextEdit(QTextEdit *pEdit,QString findtext, QTextDocument::FindFlags options)
+{
+    return pEdit->find(findtext, options);
 }
 
 int CUIPub::getTextEditLen(QTextEdit *pEdit)
@@ -453,6 +512,22 @@ void CUIPub::setTextEdit(QTextEdit *pEdit, QString text)
 {
     pEdit->setText(text);
 }
+
+void CUIPub::setTextEditFocus(QTextEdit *pEdit)
+{
+    pEdit->setFocus();
+}
+
+void CUIPub::setTextEditmoveCursorEnd(QTextEdit *pEdit)
+{
+    pEdit->moveCursor(QTextCursor::End);
+}
+
+void CUIPub::setTextEditmoveCursorHead(QTextEdit *pEdit)
+{
+    pEdit->moveCursor(QTextCursor::Start);
+}
+
 
 void CUIPub::setPlainTextEdit(QTextEdit *pEdit, QString text)
 {
@@ -610,6 +685,11 @@ bool CUIPub::getCheckedQAction(QAction *pAction)
     return pAction->isChecked();
 }
 
+QString CUIPub::getQActionText(QAction *pAction)
+{
+    return pAction->text();
+}
+
 int CUIPub::showBoxWarning(QString tips)
 {
     return QMessageBox::warning(NULL, "Title", tips,
@@ -637,7 +717,7 @@ bool CUIPub::showBoxInfoIsYes(QString tips)
 bool CUIPub::showBoxInfoIsNo(QString tips)
 {
     return QMessageBox::No == QMessageBox::information(NULL, "Title", tips,
-                                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                                       QMessageBox::Ok, QMessageBox::Ok);
 }
 
 QTimer *CUIPub::createTimer(int &iTimeout, int value)
@@ -658,6 +738,26 @@ void CUIPub::showPushButton(QPushButton *pBtn)
     pBtn->show();
 }
 
+void CUIPub::hidePushButtons(QVector<QPushButton *> &vec)
+{
+    int iLp =  0;;
+    for(iLp = 0;iLp < vec.size();iLp++)
+    {
+        hidePushButton(vec[iLp]);
+    }
+}
+
+void CUIPub::showPushButtons(QVector<QPushButton *> &vec)
+{
+    int iLp =  0;;
+    for(iLp = 0;iLp < vec.size();iLp++)
+    {
+        showPushButton(vec[iLp]);
+    }
+}
+
+
+
 void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
 {
     if(CExpressPub::isNullPtr(pBtn))
@@ -667,19 +767,222 @@ void CUIPub::pushButtonEmitClick(QPushButton *pBtn)
     emit pBtn->click();
 }
 
-void CUIPub::setTabName(QTabWidget *tabWidget, int index, const QString &name)
+void CUIPub::setBtnMenu(QPushButton *pBtn, QMenu *pMenu)
 {
-    tabWidget->setTabText(index, name);
+    if(CExpressPub::isNullPtr(pBtn))
+    {
+        return;
+    }
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+
+    pBtn->setMenu(pMenu);
 }
 
-int CUIPub::addTab(QTabWidget *tabWidget, QWidget *widget, const QString &name)
+
+void CUIPub::addListWidgetItems(QListWidget *pWidget, QStringList list)
 {
-    return tabWidget->addTab(widget, name);
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItems(list);
 }
 
-void CUIPub::clearTab(QTabWidget *tabWidget)
+void CUIPub::addListWidgetItemsAndShow(QListWidget *pWidget, QStringList list)
 {
-    tabWidget->clear();
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItems(list);
+    pWidget->show();
 }
 
+void CUIPub::clearAddListWidgetItemsAndShow(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->clear();
+    pWidget->addItems(list);
+    pWidget->show();
+}
+
+
+
+void CUIPub::addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->clear();
+    pWidget->addItems(list);
+}
+
+void CUIPub::addListWidgetItem(QListWidget *pWidget, QString item)
+{
+    if(CExpressPub::isNullPtr(pWidget))
+    {
+        return;
+    }
+    pWidget->addItem(item);
+}
+
+void CUIPub::setLabelText(QLabel *pLabel, QString text)
+{
+    pLabel->setText(text);
+}
+
+void CUIPub::showStatusBar(QStatusBar *statusbar, QString msg)
+{
+    if(CExpressPub::isNullPtr(statusbar))
+    {
+        return;
+    }
+    statusbar->showMessage(msg);
+}
+
+void CUIPub::showStatusBarTimerBoth(QStatusBar *statusbar, QString msg)
+{
+    if(CExpressPub::isNullPtr(statusbar))
+    {
+        return;
+    }
+    statusbar->showMessage(msg);
+    ShowTipsInfoWithShowTime(msg, 2000);
+}
+
+void CUIPub::showStatusBarTimerOnly(QString msg)
+{
+    ShowTipsInfoWithShowTime(msg, 2000);
+}
+
+
+
+void CUIPub::setLineEdit(QLineEdit *pLineEdit, QString text)
+{
+    pLineEdit->setText(text);
+}
+
+void CUIPub::setLineEditFocus(QLineEdit *pLineEdit)
+{
+    pLineEdit->setFocus();
+}
+
+QString CUIPub::getLineEdit(QLineEdit *pLineEdit)
+{
+    return pLineEdit->text().trimmed();
+}
+
+bool CUIPub::isLineEditEmpty(QLineEdit *pLineEdit)
+{
+    return pLineEdit->text().trimmed().isEmpty();
+}
+
+QString CUIPub::getComBox(QComboBox *pcomboBox)
+{
+    return pcomboBox->currentText();
+}
+
+bool CUIPub::isCheckedQCheckBox(QCheckBox *pCheckBox)
+{
+    return pCheckBox->isChecked();
+}
+
+void CUIPub::hideListWidget(QListWidget *pWdt)
+{
+    pWdt->hide();
+}
+
+void CUIPub::showListWidget(QListWidget *pWdt)
+{
+    pWdt->show();
+}
+
+
+void CUIPub::clearListWidget(QListWidget *pWdt)
+{
+    pWdt->clear();
+}
+
+
+void CUIPub::clearHideListWidget(QListWidget *pWdt)
+{
+    pWdt->clear();
+    pWdt->hide();
+}
+
+QListWidgetItem * CUIPub::getListWidgetCurrentItem(QListWidget *pWdt)
+{
+    return pWdt->currentItem();
+}
+
+QList<QListWidgetItem*> CUIPub::getListWidgetSelectedItems(QListWidget *pWdt)
+{
+    return pWdt->selectedItems();
+}
+
+int CUIPub::getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem)
+{
+    return pWdt->row(pItem);
+}
+
+QListWidgetItem *CUIPub::getListWidgetTakeItem(QListWidget *pWdt, int curIndex)
+{
+    return pWdt->takeItem(curIndex);
+}
+
+QListWidgetItem *CUIPub::getListWidgetTakeItem(QListWidget *pWdt, QListWidgetItem *pItem)
+{
+    int curIndex = getListWidgetRow(pWdt, pItem);
+    return getListWidgetTakeItem(pWdt, curIndex);;
+}
+
+int CUIPub::getListWidgetCurrentRow(QListWidget *pWdt)
+{
+    return pWdt->currentRow();
+}
+
+QString CUIPub::getListWidgetItemText(QListWidget *pWdt, int Index)
+{
+    return pWdt->item(Index)->text();
+}
+
+
+void CUIPub::setSpliterFactor(QSplitter *pSpliter, int index, int stretch)
+{
+    pSpliter->setStretchFactor(index, stretch);
+}
+
+
+void CUIPub::setComBoxFocus(QComboBox *pComboBox)
+{
+    pComboBox->setFocus();
+}
+
+void CUIPub::clearComBoxFocus(QComboBox *pComboBox)
+{
+    pComboBox->clear();
+}
+
+void CUIPub::setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel)
+{
+    pComboBox->setModel(pModel);
+}
+
+void CUIPub::setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV)
+{
+    pComboBox->setView(pV);
+}
+
+
+QString CUIPub::getLabelEdit(QLabel *pLabel)
+{
+    return pLabel->text();
+}
 

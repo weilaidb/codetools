@@ -22,6 +22,10 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+## release版本不输出
+#DEFINES += QT_NO_DEBUG_OUTPUT
+
+
 INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     public/include/ \
     base/msgtips/ \
@@ -103,10 +107,12 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
-    formcenter.cpp \
+    cdialognewnode.cpp \
+    cdialognewut.cpp \
+    cdialogsearch.cpp \
     main.cpp \
     mainwindow.cpp \
-    tabwidget.cpp \
+    supertest.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp
 
 HEADERS += \
@@ -132,7 +138,9 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
-    formcenter.h \
+    cdialognewnode.h \
+    cdialognewut.h \
+    cdialogsearch.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
     public/include/basedefinepub.h \
@@ -141,7 +149,7 @@ HEADERS += \
     public/include/debugApp.h \
     public/include/looppub.h \
     public/include/readmacro.h \
-    tabwidget.h \
+    supertest.h \
     testcase/stringtest/testcase.h \
     version.h
 
@@ -173,9 +181,11 @@ macx {
 
 FORMS += \
     cdialogasktext.ui \
-    formcenter.ui \
+    cdialognewnode.ui \
+    cdialognewut.ui \
+    cdialogsearch.ui \
     mainwindow.ui \
-    tabwidgets.ui
+    supertest.ui
 
 
 # Default rules for deployment.

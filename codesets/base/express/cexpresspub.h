@@ -74,6 +74,31 @@ do{  \
     }\
 }while(0)
 
+//检测非法指针
+#define CHECK_NULLPOINTER_RETURN(ptr) \
+do{  \
+    if(nullptr == ptr) \
+    { \
+        return; \
+    } \
+}while(0)
+
+#define CHECK_NULLPOINTER_RETURN_EMPTYSTR(ptr) \
+    do{  \
+    if(nullptr == ptr) \
+{ \
+    return ""; \
+    } \
+    }while(0)
+
+#define CHECK_NULLPOINTER_RETURN_STR(ptr,str) \
+    do{  \
+    if(nullptr == ptr) \
+{ \
+    return str; \
+    } \
+    }while(0)
+
 
 /**
  * @brief The CExpressPub class

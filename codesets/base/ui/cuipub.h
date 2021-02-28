@@ -10,7 +10,13 @@
 #include <QTextBrowser>
 #include <QTimer>
 #include <QPushButton>
-#include <QTabWidget>
+#include <QListWidget>
+#include <QLabel>
+#include <QStatusBar>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QSplitter>
+#include <QComboBox>
 
 /**
   ** 自定义右键菜单
@@ -30,7 +36,7 @@ public:
     static void Map2Var(QSettings *pSetting, QString envkey, QMap<QString, QStringList> &inmap);
 
     static QString bindKey(QString &organization, const QString &application);
-    static QSettings *readHistorySettings(QString &organization, const QString &application);
+    static QSettings *read_HistorySettings(QString &organization, const QString &application);
     static QSettings *writeCurrentSettings(QString &organization,
                                            const QString &application);
     static void procStringList(QSettings *pSetting, QString name, QStringList &list, qint8 ucOperType);
@@ -38,6 +44,9 @@ public:
     static void procMap(QSettings *pSetting, QString name, QMap<QString, QStringList> &map, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, QString name, qint8 ucOperType);
     static void procAction(QSettings *pSetting, QAction *pAction, qint8 ucOperType);
+    static void procCheckBox(QSettings *pSetting, QCheckBox *pCheckBox, qint8 ucOperType);
+    static void procLineEdit(QSettings *pSetting, QLineEdit *pLineEdit, qint8 ucOperType);
+    static void procComboBox(QSettings *pSetting, QComboBox *pComboBox, qint8 ucOperType);
 
     static void clearMenuAll(QMenu **ppMenu);
     static void clearMenuItems(QMenu *pMenu);
@@ -60,10 +69,17 @@ public:
     static void startProgress();
 
     //获取选中文本
+    static QString getLabelEdit(QLabel *pLabel);
     static QString getSelectTextEdit(QTextEdit *pEdit);
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);
     static QString getTextEdit(QTextEdit *pEdit);
+    static bool findTextEdit(QTextEdit *pEdit,QString findtext, QTextDocument::FindFlags options);
+    static void setLineEdit(QLineEdit *pLineEdit, QString text);
+    static void setLineEditFocus(QLineEdit *pLineEdit);
+    static QString getLineEdit(QLineEdit *pLineEdit);
+    static bool isLineEditEmpty(QLineEdit *pLineEdit);
+    static QString getComBox(QComboBox *pcomboBox);
     static int getTextEditLen(QTextEdit *pEdit);
     static void clearTextEdit(QTextEdit *pEdit);
     static void setTextEdit(QTextEdit *pEdit, QString text);
@@ -76,9 +92,32 @@ public:
     static QString getTextBrowser(QTextBrowser *textBrowser);
     static void hideTextEdit(QTextEdit *pEdit);
     static void showTextEdit(QTextEdit *pEdit);
+    static void hideListWidget(QListWidget *pWdt);
+    static void showListWidget(QListWidget *pWdt);
+    static void clearListWidget(QListWidget *pWdt);
+    static void clearHideListWidget(QListWidget *pWdt);
+    static QListWidgetItem *getListWidgetCurrentItem(QListWidget *pWdt);
+    static QList<QListWidgetItem*> getListWidgetSelectedItems(QListWidget *pWdt);
+    static int getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem);
+    static int getListWidgetCurrentRow(QListWidget *pWdt);
+    static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, int curIndex);
+    static QListWidgetItem *getListWidgetTakeItem(QListWidget *pWdt, QListWidgetItem *pItem);
+    static QString getListWidgetItemText(QListWidget *pWdt, int Index);
+
     static void hidePushButton(QPushButton *pBtn);
     static void showPushButton(QPushButton *pBtn);
+    static void hidePushButtons(QVector<QPushButton *> &vec);
+    static void showPushButtons(QVector<QPushButton *> &vec);
     static void pushButtonEmitClick(QPushButton *pBtn);
+    static void setBtnMenu(QPushButton *pBtn, QMenu *pMenu);
+
+    static void setTextEditFocus(QTextEdit *pEdit);
+    static void setTextEditmoveCursorEnd(QTextEdit *pEdit);
+    static void setTextEditmoveCursorHead(QTextEdit *pEdit);
+    static void setComBoxFocus(QComboBox *pComboBox);
+    static void clearComBoxFocus(QComboBox *pComboBox);
+    static void setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel);
+    static void setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV);
 
     //打开路径
     static int execCmd(QString path);
@@ -92,6 +131,9 @@ public:
     static bool isCheckedQAction(QAction *pAction);
     static void setCheckedQAction(QAction *pAction, bool bflag);
     static bool getCheckedQAction(QAction *pAction);
+    static QString getQActionText(QAction *pAction);
+    //checkbox
+    static bool isCheckedQCheckBox(QCheckBox *pCheckBox);
 
     //messgebox
     static int showBoxWarning(QString tips);
@@ -103,11 +145,22 @@ public:
 
     //time
     static QTimer *createTimer(int &iTimeout, int value);
+    //QListWidget
+    static void addListWidgetItems(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItemsAndShow(QListWidget *pWidget, QStringList list);
+    static void clearAddListWidgetItemsAndShow(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list);
+    static void addListWidgetItem(QListWidget *pWidget, QString item);
+    //QLabel
+    static void setLabelText(QLabel *pLabel, QString text);
+    //StatusBar
+    static void showStatusBar(QStatusBar *statusbar, QString msg);
+    static void showStatusBarTimerBoth(QStatusBar *statusbar, QString msg);
+    static void showStatusBarTimerOnly(QString msg);
+    //QSplitter
+    //分割比例
+    static void setSpliterFactor(QSplitter *pSpliter, int index, int stretch);
 
-    //QTabWidget *tabWidget
-    static void setTabName(QTabWidget *tabWidget, int index, const QString &name);
-    static int addTab(QTabWidget *tabWidget, QWidget *widget, const QString &name);
-    static void clearTab(QTabWidget *tabWidget);
 public:
     enum{
         TYPE_READ = 1,

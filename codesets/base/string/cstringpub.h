@@ -30,15 +30,25 @@ public:
     static QStringList stringSplit(const QString str , const char sign);
     //return list by \n
     static QStringList stringSplitbyNewLine(const QString str);
+    static QStringList stringSplitbyNewLineTrimEnd(const QString str);
+    static QStringList stringSplitbyNewLineTrimHeader(const QString str);
+    static QStringList stringSplitbyNewLineTrimAll(const QString str);
+    static QStringList stringSplitbyNewLineTrimEnd(const QStringList list);
     //return list by \n, filter a line with nothing
+    static QStringList stringSplitbyCharFilterEmpty(const QString str, const char sign);
+    static QStringList stringSplitbySpaceFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUniqueSort(const QString str);
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);
+    static QStringList reverseStringList (QStringList &lists);
+    static void printStringList (QStringList &lists);
     static void addStringUnique(QStringList &lists, QString str);
     static void addStringUniqueMax(QStringList &lists, QString str, int max);
+    static void addStringUniqueInverseMax(QStringList &lists, QString str, int max);
+    static void addStringHeaderUniqueMax(QStringList &lists, QString str, int max);
     static void addStringUniqueSortMax(QStringList &lists, QString str, int max);
     static QStringList stringUniqueSortReverse(QStringList recentfiles);
     static QString getOpenFileNamesFilter(QStringList filters, QString sign);
@@ -54,7 +64,9 @@ public:
     static QStringList actionNameList(QAction *action);
     static QStringList languageNameFilter();
     static QStringList wordNameFilter();
-    static int strSimLen(QString str);
+    static unsigned int strSimLen(QString str);
+    static bool strSimLenZero(QString str);
+    static bool strSimLenFull(QString str);
     static QString strSim(QString str);
     static void clearString(QString &str);
     static void setString(QString &str, QString val);
@@ -67,6 +79,11 @@ public:
     static QString stringSelfMenu();
     static bool atStringList(QString str, QStringList list);
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
+    static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);
+    //replace
+    static QString replaceReg(QString text, QString regexp, QString after);
+    static QString replaceReg2Empty(QString text, QString regexp);
+    static QString replaceRegLRKuohao2Empty(QString text);
 
     //version
     static void printDateTime();
@@ -79,6 +96,20 @@ public:
 
     //cpp string
     static string getDataOfStr(BYTE *pMsg, WORD32 dwLen);
+    //filter list
+    static QStringList filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    static QStringList filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //查找关键字包括多个，以空格分隔
+    static bool filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+
+    //QDir
+    static QString toNativeSeparators(QString dir);
+
+    //进制转换
+    static QString scaleConvertPub(QString text, quint8 from, quint8 to);
+    static QString toUpper(QString text);
+    static QString toLower(QString text);
+    static QString add0xDot(QString text);
 };
 
 #endif // CSTRINGPUB_H

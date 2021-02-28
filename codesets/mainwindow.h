@@ -7,15 +7,17 @@
 #include <QTextEdit>
 #include <QTimer>
 #include <QMutex>
-#include <QMdiArea>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "basedefinepub.h"
 #include "basetypepub.h"
+#include "supertest.h"
+#include "cdialognewnode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 namespace Ui { class CDialogAskText; }
+namespace Ui { class SuperTest; }
 QT_END_NAMESPACE
 
 
@@ -29,44 +31,44 @@ public:
     void closeEvent(QCloseEvent *event);
 
 private:
-    void showVersion();
-    void initDialog();
-    void initActionSets();
-    void initCheckBoxSets();
-    void initVars();
-    void initUiSets();
-    void initPushButtonSets();
-    void readSetting();
-    void procHistorySetting(int type);
-    void readHistorySetting();
-    void writeHistorySetting();
-    WORD32 getAstyleFmt(QStringList filelist);
-    void getAstyleConfig();
-    void getAstyleOrgConfig();
-    void freeArgv();
-    void procAstyleInstance(QStringList filelist);
-    void showStatus(QString msg);
-    void showStatusTimer(QString msg);
-    void showStatusTimerWindowTitle(QString msg);
-    void showTextBrower(QString msg);
-    void showTextBrowerAppend(QString msg);
-    void getNameFilter();
-    void addMenuRecent(QStringList recent, QMenu *pMenu);
-    void addMenuCodeFormatRecent();
-    void addMenuDocumentOpenRecent();
-    void addMenuDocumentSearchRecent();
-    void updateRecent(QStringList &list, QMenu *pMenu);
-    void updateRecentAppend(QStringList &list, QString name, QMenu *pMenu);
+    void show_Version();
+    void init_Dialog();
+    void init_ActionSets();
+    void init_CheckBoxSets();
+    void init_Vars();
+    void init_UiSets();
+    void init_PushButtonSets();
+    void read_Setting();
+    void proc_HistorySetting(int type);
+    void read_HistorySetting();
+    void write_HistorySetting();
+    WORD32 get_AstyleFmt(QStringList filelist);
+    void get_AstyleConfig();
+    void get_AstyleOrgConfig();
+    void free_Argv();
+    void proc_AstyleInstance(QStringList filelist);
+    void show_Status(QString msg);
+    void show_StatusOnly(QString msg);
+    void show_StatusTimer(QString msg);
+    void show_StatusTimerWindowTitle(QString msg);
+    void show_TextBrower(QString msg);
+    void show_TextBrowerAppend(QString msg);
+    void get_NameFilter();
+    void add_MenuRecent(QStringList recent, QMenu *pMenu);
+    void add_MenuCodeFormatRecent();
+    void add_MenuDocumentOpenRecent();
+    void add_MenuDocumentSearchRecent();
+    void update_Recent(QStringList &list, QMenu *pMenu);
+    void update_RecentAppend(QStringList &list, QString name, QMenu *pMenu);
     //获取对话框输入的文字
-    quint8 getDialogFindText(QString &findtext);
-    void setLeftTextEdit(QString str);
-    void clrLeftTextEdit();
-    void setRightTextEdit(QString str);
-    void clrRightTextEdit();
+    quint8 get_DialogFindText(QString &findtext);
+    void set_LeftTextEdit(QString str);
+    void clear_LeftTextEdit();
+    void set_RightTextEdit(QString str);
+    void clear_RightTextEdit();
 
-    // right mouse list to free
-    void appendRightMouseList(QAction *ptr);
-    void freeRightMouseList();
+    //spliter
+    void procRightSplitter();
 
 public:
     enum{
@@ -99,12 +101,18 @@ private:
     Ui::CDialogAskText *uiDialog;
     QDialog *pDialog;
 
+    //test ui
+    Ui::SuperTest *uiTest;
+    SuperTest *pMulWinTest;
 
     /* 右键菜单 */
-    QMenu *pRightMouse;
+    QMenu *pRightMouse_L;
+    QMenu *pRightMouse_R;
     QList<QAction *> m_lstRightMouse;
     //custom menu
     QMenu *pMenuCustom;
+    QString m_FileNameMenu_stand;
+    QString m_FileNameMenu_user;
     QString m_FileNameMenu;
     /**
       ** 模式：
@@ -113,18 +121,21 @@ private:
       ** 多行 单处理
       ** 多行 多处理
       **/
-    QString m_FileMode_SingleL_ExecMulti;
     QString m_FileMode_AllL_ExecMulti;
+    QString m_FileMode_SingleL_ExecMulti;
+    QString m_FileMode_SingleL_ExecSingle;//一行执行对应的行，执行与模式数量不对齐的话，中间项参考前面项
     //常用列表 configfile, 显示的最大数量
     QStringList m_listfrequse;
-    int m_iListFreqUseCnt;
+    quint32 m_dwLstFreqUseCnt;
     QString m_ListFreqUseFile;
     //注意事项
     QString m_AttentionFile;
     //常用文件打开列表
     QStringList m_listNormalUse;
-    int m_iListNormalUseCnt;
+    quint32 m_dwLstNormalUseCnt;
     QString m_ListOpenFile; //文件列表配置文件
+
+    QString m_contentmaxfilename;
 
 private:
     QString openFilePathRecent;
@@ -169,12 +180,14 @@ private:
 
     //程序名
     QString m_apppath;
-    //多文档
+
+    //QMutexLocker
 //    QMutexLocker update_locker;
     QMutex m_lock;
-    //多文档
-    QMdiArea *m_mdiArea;
-	
+
+    //pop menu
+    QMenu *pPopMenu;
+
 private slots:
     void proc_action_codeFormat_File();
     void proc_action_codeFormat_Directory();
@@ -186,8 +199,6 @@ private slots:
     void proc_action_about();
     void proc_action_attention();
 
-    //mysql
-    void proc_action_mysql_testdatabase();
     //office
     QStringList proc_action_office_auto_pub(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist);
     void proc_action_office_open_pub(QString filter, QStringList filterlist, QString &openRecent, quint8 openDiagFlag, QStringList openfilelist);
@@ -228,24 +239,45 @@ private slots:
     void proc_action_DeleteCfgFile(bool checked);
     void proc_action_EditCfgFileMutex();
     void proc_action_edit_pub(QString configfilename, int type);
+    bool proc_action_edit_convertline_pub(QString configfilename);
     void proc_action_editinginfo(QString configfilename, int type);
     void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
     void proc_frequse_config(QString configfilename);
     void proc_action_background_update(bool bFlag);
     void proc_action_update(bool bFlag);
+    void proc_action_scan_test_dir(bool bFlag);
 
+    void proc_actionascii_to_string();
+    void proc_actionascii_to_string_10();
+    void proc_actionascii_to_string_pub(int hexflag);
+    void proc_actionstring_to_ascii();
+    void proc_actionstring_to_ascii_10();
+    void proc_actionstring_to_asciipub(int hexflag);
+
+    void proc_action_newstandnode();
+    void proc_action_newusernode();
+    void proc_newnode_more(CDialogNewNode *pDiaglog);
+    bool proc_newnode_check(CDialogNewNode *pDiaglog);
+    //tools
+    void proc_action_delspace();
+    void proc_action_dellastspacesort();
 
     void update_generate_menu_left();
-    void slot_generate_menu_left(QPoint pos);
-    void slot_generate_menu_right(QPoint pos);
-    void slot_generate_menu_leftbottom(QPoint pos);
-    QMenu *slot_fromfile_menu(QString filename);
-    QMenu *slot_frequse_menu();
-    QMenu *slot_openfilelist_menu();
+    void proc_generate_menu_left(QPoint pos);
+    void proc_generate_menu_right(QPoint pos);
+    void proc_generate_menu_cfgAfter(QPoint pos);
+    void proc_generate_menu_leftbottom(QPoint pos);
+    QMenu *proc_fromfile_menu(QString filename);
+    QMenu *proc_frequse_menu();
+    QMenu *proc_openfilelist_menu();
     void nodes_menu_left(QMenu *pMenu);
+    void nodes_menu_left_little(QMenu *pMenu);
     void nodes_menu_right(QMenu *pMenu);
+    void nodes_menu_cfgAfter(QMenu *pMenu);
     void nodes_menu_leftbottom(QMenu *pMenu);
+    void nodes_menu_rightbottom(QMenu *pMenu);
+    void nodes_menu_find(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();
@@ -254,11 +286,16 @@ private slots:
     void proc_actionPasteRight();
     void proc_actionSelectAllCopyRight();
     void proc_actionClearEmpty();
+    void proc_actionCovertOneLine();
+    void proc_actionCovertMulLine();
     void proc_actionOpenConfigBaseDir();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
+    void proc_actionOpenConfigFileR();
+    void proc_actionOpenConfigDirR();
     void proc_actionOpenCfgMenu();
     void proc_actionReload();
+    void proc_LinePacket();
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();
 
@@ -274,10 +311,26 @@ private slots:
     void proc_pushButton_tryagain    ()  ;
     void proc_pushButton_right_clear ()  ;
     void proc_pushButton_right_copy  ()  ;
-    void hidePushButtonSets();
+    void hide_PushButtonSets();
 
-    //mdi
-    void actNewWindow();
+    void on_pushButton_clearTryAgainExt_clicked();
+    void on_action_search_triggered();
+    void on_action_search_triggered_handle(int flag);
+    void proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey, QStringList &resultlist);
+    void updateListWidgetFrequse();
 
+
+    void proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item);
+    void on_pushButton_left_clear_clicked();
+    void on_actionclearTry_triggered();
+    void proc_character_trim_pub(const QString &pattern);
+    void on_action_trim_line_firstspace_triggered();
+    void on_action_trim_line_endspace_triggered();
+    void on_action_trim_line_space_triggered();
+    void on_action_clear_allspace_triggered();
+    void on_pushButton_mainfind_clicked();
+    void on_pushButton_mainfind_clicked_pub(int reverse);
+    void on_pushButton_mainfindreverse_clicked();
+    void on_lineEdit_mainsearch_returnPressed();
 };
 #endif // MAINWINDOW_H
