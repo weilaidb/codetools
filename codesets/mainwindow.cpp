@@ -45,6 +45,11 @@
   **/
 #define MANYCONTENTMAX    500
 
+/**
+  ** Action 名称
+  **/
+#define STR_PROC_PKG_TO_LINE ("报文成一行")
+
 
 extern int AyStyleMain(int argc, char** argv);
 
@@ -439,6 +444,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
     QAction *pActionReload        = CUIPub::createAction("重新加载");
+    QAction *pActionLinePacket        = CUIPub::createAction(STR_PROC_PKG_TO_LINE);
     QObject::connect(pActionClearLeft, SIGNAL(triggered()), this, SLOT(proc_actionClearLeft()));
     QObject::connect(pActionPaste, SIGNAL(triggered()), this, SLOT(proc_actionPasteLeft()));
     QObject::connect(pActionSelectCopy, SIGNAL(triggered()), this, SLOT(proc_actionSelectCopy()));
@@ -446,6 +452,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigBaseDir()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
     QObject::connect(pActionReload, SIGNAL(triggered()), this, SLOT(proc_actionReload()));
+    QObject::connect(pActionLinePacket, SIGNAL(triggered()), this, SLOT(proc_LinePacket()));
 
     pMenu->addMenu(proc_frequse_menu());
     pMenu->addAction(pActionOpenCfgDir);
@@ -456,6 +463,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionPaste);
     pMenu->addAction(pActionSelectAllCopy);
     pMenu->addAction(pActionReload);
+    pMenu->addAction(pActionLinePacket);
 
 }
 
@@ -469,11 +477,16 @@ void MainWindow::nodes_menu_left_little(QMenu *pMenu)
 
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开配置文件夹");
     QAction *pActionOpenCfgMenu   = CUIPub::createAction("打开配置总表");
+    QAction *pActionLinePacket        = CUIPub::createAction(STR_PROC_PKG_TO_LINE);
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigBaseDir()));
     QObject::connect(pActionOpenCfgMenu, SIGNAL(triggered()), this, SLOT(proc_actionOpenCfgMenu()));
+    QObject::connect(pActionLinePacket, SIGNAL(triggered()), this, SLOT(proc_LinePacket()));
+
+    pActionLinePacket->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+E", nullptr));
 
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
+    pMenu->addAction(pActionLinePacket);
 
 }
 
@@ -1687,6 +1700,16 @@ void MainWindow::proc_actionReload()
 {
     CUIPub::clearTextEdit(ui->textEdit);
     CUIPub::pushButtonEmitClick(ui->pushButton_tryagain);
+}
+
+void MainWindow::proc_LinePacket()
+{
+    //指定处理规则
+    QString configfilename = "PACKET Parse/报文处理成一行规则";
+    QString lefttext  = CUIPub::getTextEdit(ui->textEdit);
+    set_LeftTextEdit(CRegExpPub::procTextByRegExpList(configfilename, EUM_CLASSTYPE::COMMON_OPERATIONS,lefttext));
+    lefttext  = CStringPub::strSim(CUIPub::getTextEdit(ui->textEdit));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("%1 共%2/2=%3字节").arg(configfilename).arg(lefttext.count()).arg(lefttext.count()/2) );
 }
 
 

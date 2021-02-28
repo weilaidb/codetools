@@ -45,6 +45,8 @@ T_SignPub g_ScaleSignPub[] =
 
     {SIGN_CUSTOM_UPP, "[\\w\\s]+"},
     {SIGN_CUSTOM_LOW, "[\\w\\s]+"},
+    {SIGN_CUSTOM_FORFXIE, "[\\d]+"},
+    {SIGN_CUSTOM_FORW, "[\\d]+"},
 
 //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
@@ -252,6 +254,31 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
     {
         dealText = CStringPub::toLower(dealText);
     }
+    else if(QString(SIGN_CUSTOM_FORFXIE) == QString(temp->m_funname))
+    {
+        quint32 dwCount = dealText.toUInt(nullptr, 10);
+        debugApp()<<"dwCount:" << dwCount;
+        WORD32 dwLp =  0;
+        dealText = "";
+        for(dwLp = 1;dwLp <= dwCount;dwLp++)
+        {
+            dealText += QString("\\%1").arg(dwLp);
+        }
+
+    }
+    else if(QString(SIGN_CUSTOM_FORW) == QString(temp->m_funname))
+    {
+        quint32 dwCount = dealText.toUInt(nullptr, 10);
+        debugApp()<<"dwCount:" << dwCount;
+        WORD32 dwLp =  0;
+        dealText = "";
+        for(dwLp = 1;dwLp <= dwCount;dwLp++)
+        {
+            dealText += QString("(\\w{2})").arg(dwLp);
+        }
+        dealText += "(.*)";
+    }
+
 //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
 //    {
 //        dealText = CStringPub::add0xDot(dealText);

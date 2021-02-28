@@ -295,6 +295,7 @@ private slots:
     void proc_actionOpenConfigDirR();
     void proc_actionOpenCfgMenu();
     void proc_actionReload();
+    void proc_LinePacket();
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();
 
