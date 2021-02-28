@@ -19,6 +19,8 @@
 #include "csqlpub.h"
 #ifdef WIN32
 #include "cofficepub.h"
+#else
+#include <unistd.h>
 #endif
 #include "cdialogpub.h"
 #include "cnetpub.h"
@@ -1691,7 +1693,11 @@ void MainWindow::proc_actionOpenCfgMenu()
     foreach (QString item, list) {
         CUIPub::explorerPathExt(CFilePub::getCurrentPath(item));
         if(0 == seq++){
+#ifdef WIN32
             _sleep(1500);
+#else
+            usleep(1500 * 1000);
+#endif
         }
     }
 }
