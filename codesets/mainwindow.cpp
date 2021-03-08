@@ -191,6 +191,7 @@ void MainWindow::init_ActionSets()
     //tools
     QObject::connect(ui->action_delspace, SIGNAL(triggered(bool)), this, SLOT(proc_action_delspace()));
     QObject::connect(ui->action_dellastspacesort, SIGNAL(triggered(bool)), this, SLOT(proc_action_dellastspacesort()));
+    QObject::connect(ui->action_del_BCompare_xml, SIGNAL(triggered(bool)), this, SLOT(proc_action_del_BCompare_xml()));
 
 }
 
@@ -1915,6 +1916,7 @@ void MainWindow::on_pushButton_clearTryAgainExt_clicked()
 {
     CUIPub::clearTextEdit(ui->textEdit);
     emit ui->pushButton_tryagain->clicked();
+
 }
 
 void MainWindow::proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey,QStringList &resultlist)
@@ -2364,6 +2366,13 @@ void MainWindow::proc_action_dellastspacesort()
     });
     result = CStringPub::stringList2StringEnter(list);
     CUIPub::setTextBrowser(ui->textBrowser, result);
+}
+
+
+void MainWindow::proc_action_del_BCompare_xml()
+{
+    //删除BCompare生成的文件
+    CFilePub::deleteDirFiles(CFilePub::getBComparePath());
 }
 
 

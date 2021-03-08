@@ -262,6 +262,7 @@ private slots:
     //tools
     void proc_action_delspace();
     void proc_action_dellastspacesort();
+    void proc_action_del_BCompare_xml();
 
     void update_generate_menu_left();
     void proc_generate_menu_left(QPoint pos);

@@ -22,6 +22,8 @@ public:
     static bool createFileContentNoExist(QString filename, QString content);
     static bool createDirNoExist(QString dirname);
     static bool createDirExt(QString dirname);
+    //删除文件夹及文件
+    static bool deleteDirFiles(QString dirName);
     static bool checkFileExistLine(QString filename, QString line);
     static QString readFileAll(QString filename);
     static QStringList readFileAllFilterEmptyUnique(QString filename);
@@ -53,6 +55,23 @@ public:
     static quint64 dirFileSize(const QString path);
     static qint64 fileSize(const QString path);
     static QString parentDir(QString filepath);
+
+    //const dir path
+    static QString applicationPath();
+    static QString currentPath();
+    static QString homePath();
+    static QStringList homePaths();
+    static QString myDocuPath();
+    static QStringList myDocuPaths();
+    static QString myDeskPath();
+    static QStringList myDeskPaths();
+    static QString appDataPath();
+    static QStringList appDataPaths();
+    static QString tempPath();
+    static QStringList tempPaths();
+
+    //const dir path
+    static QString getBComparePath();
 };
 
 #endif // CFILEPUB_H

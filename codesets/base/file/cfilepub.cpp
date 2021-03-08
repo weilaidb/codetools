@@ -184,6 +184,49 @@ bool CFilePub::createDirExt(QString dirname)
     return ok;
 }
 
+bool CFilePub::deleteDirFiles(QString dirName)
+{
+    QDir directory(dirName);
+    if (!directory.exists())
+    {
+        return true;
+    }
+
+    QString srcPath = QDir::toNativeSeparators(dirName);
+    if (!srcPath.endsWith(QDir::separator()))
+        srcPath += QDir::separator();
+
+
+    QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
+    bool error = false;
+    for (QStringList::size_type i=0; i != fileNames.size(); ++i)
+    {
+        QString filePath = srcPath + fileNames.at(i);
+        QFileInfo fileInfo(filePath);
+        if (fileInfo.isFile() || fileInfo.isSymLink())
+        {
+            QFile::setPermissions(filePath, QFile::WriteOwner);
+            if (!QFile::remove(filePath))
+            {
+                error = true;
+            }
+        }
+        else if (fileInfo.isDir())
+        {
+            if (!deleteDirFiles(fileInfo.filePath()))
+            {
+                error = true;
+            }
+        }
+    }
+
+    if (!directory.rmdir(QDir::toNativeSeparators(directory.path())))
+    {
+        error = true;
+    }
+    return !error;
+}
+
 bool CFilePub::createDirNoExist(QString dirname)
 {
     if(CExpressPub::isZero(CStringPub::strSimLen(dirname)))
@@ -616,3 +659,84 @@ QString CFilePub::parentDir(QString filepath)
     dirPath = QDir::fromNativeSeparators(dirPath);
     return dirPath;
 }
+
+
+
+QString CFilePub::applicationPath()
+{
+    return QCoreApplication::applicationDirPath();
+}
+
+QString CFilePub::currentPath()
+{
+    return QDir::currentPath();
+}
+
+
+QString CFilePub::homePath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+}
+
+QStringList CFilePub::homePaths()
+{
+    return QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+}
+
+QString CFilePub::myDocuPath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+}
+
+QStringList CFilePub::myDocuPaths()
+{
+    return QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+}
+
+QString CFilePub::myDeskPath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+}
+
+QStringList CFilePub::myDeskPaths()
+{
+    return QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+}
+
+
+QString CFilePub::appDataPath()
+{
+//    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+QStringList CFilePub::appDataPaths()
+{
+//    return QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation);
+    return QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);
+}
+
+QString CFilePub::tempPath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+}
+
+QStringList CFilePub::tempPaths()
+{
+    return QStandardPaths::standardLocations(QStandardPaths::TempLocation);
+}
+
+QString CFilePub::getBComparePath()
+{
+    QString tmpData = appDataPath() + QDir::separator();
+    tmpData = tmpData.replace(QRegExp("Roaming.*"), "");
+//    debugApp() << "tmpData:" <<tmpData;
+    tmpData += "Roaming/Scooter Software/Beyond Compare 4";
+    debugApp() << "tmpData:" <<tmpData;
+
+    return QDir::toNativeSeparators(tmpData);
+}
+
+
+
+

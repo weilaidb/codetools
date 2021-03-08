@@ -380,6 +380,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_newwindow_self"/>
     <addaction name="action_search"/>
     <addaction name="action_autoconvertaf"/>
+    <addaction name="action_del_BCompare_xml"/>
    </widget>
    <widget class="QMenu" name="menu_9">
     <property name="title">
@@ -744,6 +745,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_dellastspacesort">
    <property name="text">
     <string>除空格排序</string>
+   </property>
+  </action>
+  <action name="action_del_BCompare_xml">
+   <property name="text">
+    <string>删除BCompare.xml</string>
    </property>
   </action>
  </widget>
