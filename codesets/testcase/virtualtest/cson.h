@@ -9,6 +9,9 @@ class CSon:public CParent
 public:
     CSon();
     void sleep();
+    void hello();
+
+    void iamson();
 };
 
 #endif // CSON_H

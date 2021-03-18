@@ -114,6 +114,7 @@ SOURCES += \
     mainwindow.cpp \
     supertest.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp \
+    testcase/virtualtest/cgrandmaster.cpp \
     testcase/virtualtest/cparent.cpp \
     testcase/virtualtest/cson.cpp
 
@@ -153,6 +154,7 @@ HEADERS += \
     public/include/readmacro.h \
     supertest.h \
     testcase/stringtest/testcase.h \
+    testcase/virtualtest/cgrandmaster.h \
     testcase/virtualtest/cparent.h \
     testcase/virtualtest/cson.h \
     version.h

@@ -11,3 +11,8 @@ void CParent::sleep()
 {
     debugApp() <<"parent " << "sleeping...";
 }
+
+void CParent::hello()
+{
+    debugApp() <<"parent " << "hello...";
+}
