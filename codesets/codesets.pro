@@ -113,7 +113,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
-    testcase/stringtest/cstringpubcpp_main.cpp
+    testcase/stringtest/cstringpubcpp_main.cpp \
+    testcase/virtualtest/cparent.cpp \
+    testcase/virtualtest/cson.cpp
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
@@ -151,6 +153,8 @@ HEADERS += \
     public/include/readmacro.h \
     supertest.h \
     testcase/stringtest/testcase.h \
+    testcase/virtualtest/cparent.h \
+    testcase/virtualtest/cson.h \
     version.h
 
 win32 {
