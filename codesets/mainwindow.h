@@ -136,6 +136,7 @@ private:
     QString m_ListOpenFile; //文件列表配置文件
 
     QString m_contentmaxfilename;
+    QString m_freqmaxfilename;
 
 private:
     QString openFilePathRecent;

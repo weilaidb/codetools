@@ -72,6 +72,10 @@ public:
 
     //const dir path
     static QString getBComparePath();
+
+    //get in file's num
+    static quint32 getNumFirstFromFile(QString filename);
+    static quint32 getNumFirstFromFileLimitMin(QString filename,quint32 dwMax);
 };
 
 #endif // CFILEPUB_H

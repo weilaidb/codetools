@@ -261,7 +261,10 @@ void MainWindow::init_UiSets()
     //    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
     //    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
-    m_dwLstFreqUseCnt = 15;
+    CFilePub::createFileEmptyNoExistAndVar(m_freqmaxfilename, "reg/freqmax.txt");
+//    m_dwLstFreqUseCnt = 15;
+    m_dwLstFreqUseCnt = CFilePub::getNumFirstFromFileLimitMin(m_freqmaxfilename, 15);
+    debugApp() << "m_dwLstFreqUseCnt:" << m_dwLstFreqUseCnt;
     read_FreqUseFile();
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
     CFilePub::createFileEmptyNoExistAndVar(m_contentmaxfilename, "reg/contentmax.txt");
@@ -1433,16 +1436,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(false == CUIPub::isCheckedQAction(ui->action_manycontent_proc))
     {
-        QStringList listContentMax = CFilePub::readFileAllFilterEmptyUnique(m_contentmaxfilename);
-        if(listContentMax.size())
-        {
-            bool ok = false;
-            uint value = listContentMax.at(0).toUInt(&ok,10);
-            if(ok == true)
-            {
-                dwContentMax = value;
-            }
-        }
+        dwContentMax = CFilePub::getNumFirstFromFileLimitMin(m_contentmaxfilename, MANYCONTENTMAX);
         if(CStringPub::strSimLen(proctext) >= dwContentMax)
         {
             show_StatusTimer(QString("内容超过处理范围%1").arg(dwContentMax));

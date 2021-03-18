@@ -12,6 +12,8 @@
 #include "cstringpub.h"
 #include "cexpresspub.h"
 #include "csignpub.h"
+#include "cdefinepub.h"
+
 
 CFilePub::CFilePub()
 {
@@ -737,6 +739,24 @@ QString CFilePub::getBComparePath()
     return QDir::toNativeSeparators(tmpData);
 }
 
+quint32 CFilePub::getNumFirstFromFile(QString filename)
+{
+    QStringList listContentMax = readFileAllFilterEmptyUnique(filename);
+    if(listContentMax.size())
+    {
+        bool ok = false;
+        uint value = listContentMax.at(0).toUInt(&ok,10);
+        if(ok == true)
+        {
+            return value;
+        }
+    }
+    return 0;
+}
 
+quint32 CFilePub::getNumFirstFromFileLimitMin(QString filename,quint32 dwMax)
+{
+    return MAX(dwMax,getNumFirstFromFile(filename));
+}
 
 
