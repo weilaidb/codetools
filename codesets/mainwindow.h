@@ -235,6 +235,7 @@ private slots:
     //generate 添加右键菜单
     void proc_action_gen_pub(QString configfilename, int type);
     void proc_action_gen_custom_action(QAction *pAction);
+    void proc_action_netsearch_custom_action(QAction *pAction);
     void proc_action_openfilelist(QAction *pAction);
     void proc_action_EditCfgFile(bool checked);
     void proc_action_DeleteCfgFile(bool checked);
@@ -272,6 +273,7 @@ private slots:
     void proc_generate_menu_leftbottom(QPoint pos);
     QMenu *proc_fromfile_menu(QString filename);
     QMenu *proc_frequse_menu();
+    QMenu *proc_netsearch_menu();
     QMenu *proc_openfilelist_menu();
     void nodes_menu_left(QMenu *pMenu);
     void nodes_menu_left_little(QMenu *pMenu);

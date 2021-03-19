@@ -51,6 +51,21 @@
 #define STR_PROC_PKG_TO_LINE ("报文成一行")
 
 
+typedef struct T_NetSearchSets{
+    QString name;
+    QString http;
+}T_NetSearchSets, *P_NetSearchSets;
+
+T_NetSearchSets g_netSearch[] =
+{
+    {"百度", "https://www.baidu.com/s?wd="},
+    {"必应", "https://cn.bing.com/search?q="},
+    {"360搜", "https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q="},
+    {"词霸", "http://www.iciba.com/"},
+    {"有道", "http://dict.youdao.com/w/eng/"},
+};
+
+
 extern int AyStyleMain(int argc, char** argv);
 
 
@@ -462,6 +477,7 @@ void MainWindow::nodes_menu_left(QMenu *pMenu)
     pMenu->addAction(pActionOpenCfgDir);
     pMenu->addAction(pActionOpenCfgMenu);
     pMenu->addMenu(proc_openfilelist_menu());
+    pMenu->addMenu(proc_netsearch_menu());
     pMenu->addAction(pActionClearLeft);
     pMenu->addAction(pActionSelectCopy);
     pMenu->addAction(pActionPaste);
@@ -512,6 +528,30 @@ QMenu *MainWindow::proc_frequse_menu()
     }
 
     return pFreqUse;
+}
+
+
+QMenu *MainWindow::proc_netsearch_menu()
+{
+    QMenu *pNetSearch = new QMenu("搜索");
+
+    WORD32 dwLp =  0;;
+    for(dwLp = 0;dwLp < ARRAYSIZE(g_netSearch);dwLp++)
+    {
+        P_NetSearchSets pItem = &g_netSearch[dwLp];
+
+//        printf("No:%-03u -- %-03s\n", dwLp+1, pItem->name.toLocal8Bit().data());
+        QAction *pTmpAction = CUIPub::createActionFull(pItem->name);
+        pTmpAction->setData(pItem->http);
+        pNetSearch->addAction(pTmpAction);
+    }
+
+    if(pNetSearch)
+    {
+        QObject::connect(pNetSearch, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_netsearch_custom_action(QAction *)));
+    }
+
+    return pNetSearch;
 }
 
 QMenu *MainWindow::proc_openfilelist_menu()
@@ -1558,6 +1598,24 @@ void MainWindow::proc_action_gen_custom_action(QAction *pAction)
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
     proc_frequse_config(cfgFirst);
 
+}
+
+void MainWindow::proc_action_netsearch_custom_action(QAction *pAction)
+{
+    ////debugApp() << "custom action:" << pAction->text();
+    ////debugApp() << "custom data  :" << pAction->data();
+
+    QString searchText = CUIPub::getSelectTextEdit(ui->textEdit);
+    QString prefix = pAction->data().toString();
+//    debugApp() << "searchText:" << searchText;
+//    debugApp() << "action name:" << prefix;
+
+    if(0 == CStringPub::strSimLen(searchText))
+    {
+        return;
+    }
+
+    CUIPub::execCmd(CStringPub::getHttpStr(prefix,searchText));
 }
 
 void MainWindow::proc_action_EditCfgFile(bool checked)

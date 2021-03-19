@@ -110,6 +110,10 @@ public:
     static QString toUpper(QString text);
     static QString toLower(QString text);
     static QString add0xDot(QString text);
+
+    //http
+    static QString getHttpStr(QString prefix, QString text);
+
 };
 
 #endif // CSTRINGPUB_H

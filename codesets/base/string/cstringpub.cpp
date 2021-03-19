@@ -658,3 +658,9 @@ QString CStringPub::replaceRegLRKuohao2Empty(QString text)
     return replaceReg(text, "[【[].*[]】]", "");
 }
 
+QString CStringPub::getHttpStr(QString prefix,QString text)
+{
+    QByteArray byteArrayPercentEncoded = text.toLocal8Bit().toPercentEncoding();
+    return  prefix + byteArrayPercentEncoded;
+}
+
