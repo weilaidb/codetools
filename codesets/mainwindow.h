@@ -189,6 +189,10 @@ private:
     //pop menu
     QMenu *pPopMenu;
 
+    QString m_ListNetSearchFile; //搜索数据文件名
+    //net search Text
+    QStringList m_NetSearchList;
+
 private slots:
     void proc_action_codeFormat_File();
     void proc_action_codeFormat_Directory();

@@ -51,21 +51,6 @@
 #define STR_PROC_PKG_TO_LINE ("报文成一行")
 
 
-typedef struct T_NetSearchSets{
-    QString name;
-    QString http;
-}T_NetSearchSets, *P_NetSearchSets;
-
-T_NetSearchSets g_netSearch[] =
-{
-    {"百度", "https://www.baidu.com/s?wd="},
-    {"必应", "https://cn.bing.com/search?q="},
-    {"360搜", "https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q="},
-    {"词霸", "http://www.iciba.com/"},
-    {"有道", "http://dict.youdao.com/w/eng/"},
-};
-
-
 extern int AyStyleMain(int argc, char** argv);
 
 
@@ -287,6 +272,10 @@ void MainWindow::init_UiSets()
     //打开常用文件列表
     m_dwLstNormalUseCnt = 30;
     CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
+
+    CFilePub::createFileEmptyNoExistAndVar(m_ListNetSearchFile, "reg/netsearch.txt");
+    m_NetSearchList = CFilePub::readFileAllFilterEmptyUnique(m_ListNetSearchFile);
+
 
     //search result list widget, default hide
     CUIPub::hideListWidget(ui->listWidget_searchresult);
@@ -534,15 +523,20 @@ QMenu *MainWindow::proc_frequse_menu()
 QMenu *MainWindow::proc_netsearch_menu()
 {
     QMenu *pNetSearch = new QMenu("搜索");
-
     WORD32 dwLp =  0;;
-    for(dwLp = 0;dwLp < ARRAYSIZE(g_netSearch);dwLp++)
-    {
-        P_NetSearchSets pItem = &g_netSearch[dwLp];
-
-//        printf("No:%-03u -- %-03s\n", dwLp+1, pItem->name.toLocal8Bit().data());
-        QAction *pTmpAction = CUIPub::createActionFull(pItem->name);
-        pTmpAction->setData(pItem->http);
+    foreach (QString item, m_NetSearchList) {
+        debugApp() << ++dwLp << ":" << item;
+//        printf("No:%-03u -- %-03s\n", ++dwLp, item.toLocal8Bit().data());
+        QStringList items = CStringPub::stringSplit(item,';');
+        if(item.length() < 2)
+        {
+            debugApp() << "item split by ; count least at 2:" << item;
+            continue;
+        }
+        QString name = items.at(0);
+        QString http = items.at(1);
+        QAction *pTmpAction = CUIPub::createActionFull(name);
+        pTmpAction->setData(http);
         pNetSearch->addAction(pTmpAction);
     }
 
@@ -1612,6 +1606,7 @@ void MainWindow::proc_action_netsearch_custom_action(QAction *pAction)
 
     if(0 == CStringPub::strSimLen(searchText))
     {
+        show_StatusTimer("请选中查询字段");
         return;
     }
 
