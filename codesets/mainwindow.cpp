@@ -1707,7 +1707,7 @@ void MainWindow::proc_actionOpenConfigBaseDir()
 
 void MainWindow::proc_actionOpenConfigFile()
 {
-    CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
+    CUIPub::explorerPathCurrent(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
 }
 
 void MainWindow::proc_actionOpenConfigDir()
@@ -1738,7 +1738,7 @@ void MainWindow::proc_actionOpenCfgMenu()
     list.append(m_FileNameMenu);
     int seq = 0;
     foreach (QString item, list) {
-        CUIPub::explorerPathExt(CFilePub::getCurrentPath(item));
+        CUIPub::explorerPathCurrent((item));
         if(0 == seq++){
 #if defined(Q_OS_WIN32)
             _sleep(1500);

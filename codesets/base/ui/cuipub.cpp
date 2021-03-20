@@ -597,8 +597,17 @@ int CUIPub::execCmd(QString path)
 //    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
 //    delete [] puacPathBuf;
 //#else
+#ifdef WIN32
     //QUrl支持中文打开
+    debugApp() << "open path:" << path;
     CFilePub::openSystemPathOrUrl(path);
+#else
+    //QUrl支持中文打开
+    debugApp() << "open path:" << path;
+//    path = "gio open " + path;
+    CFilePub::openSystemPathOrUrl(path);
+#endif
+
 //#endif
     return 0;
 }
@@ -624,6 +633,11 @@ int CUIPub::explorerPathExt(QString path)
         result = explorerPath(path);
     }
     return result;
+}
+
+int CUIPub::explorerPathCurrent(QString path)
+{
+    return explorerPathExt(CFilePub::getCurrentPath(path));
 }
 
 int CUIPub::explorerPath(QString path)
