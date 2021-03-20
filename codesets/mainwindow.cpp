@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_cdialogasktext.h"
@@ -1739,7 +1740,11 @@ void MainWindow::proc_actionOpenCfgMenu()
     foreach (QString item, list) {
         CUIPub::explorerPathExt(CFilePub::getCurrentPath(item));
         if(0 == seq++){
+#if defined(Q_OS_WIN32)
             _sleep(1500);
+#else
+            sleep(2);
+#endif
         }
     }
 }
