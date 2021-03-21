@@ -5,12 +5,10 @@ CProcessData* CProcessData::m_pInstance = NULL;
 CProcessData::CProcessData()
 {
 
-
 }
 
 CProcessData::~CProcessData()
 {
-
 
 }
 

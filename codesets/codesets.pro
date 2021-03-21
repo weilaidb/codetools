@@ -94,6 +94,7 @@ SOURCES += \
     base/dialog/cdialogpub.cpp \
     base/express/cexpresspub.cpp \
     base/log/clogpub.cpp \
+    base/map/cdataprocess.cpp \
     base/map/cmappub.cpp \
     base/map/cprocessdata.cpp \
     base/msgtips/cmsgtips.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     base/express/cexpresspub.h \
     base/file/cfilepub.h \
     base/map/cbaseinterface.h \
+    base/map/cdataprocess.h \
     base/map/cprocessdata.h \
     base/string/cstringpub.h \
     base/ui/cuipub.h \
