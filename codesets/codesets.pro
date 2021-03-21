@@ -95,6 +95,7 @@ SOURCES += \
     base/express/cexpresspub.cpp \
     base/log/clogpub.cpp \
     base/map/cmappub.cpp \
+    base/map/cprocessdata.cpp \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
@@ -113,6 +114,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
+    testcase/processtest/CProcessDataTest.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp \
     testcase/virtualtest/cgrandmaster.cpp \
     testcase/virtualtest/cparent.cpp \
@@ -128,6 +130,8 @@ HEADERS += \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \
     base/file/cfilepub.h \
+    base/map/cbaseinterface.h \
+    base/map/cprocessdata.h \
     base/string/cstringpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
