@@ -320,6 +320,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_about"/>
     <addaction name="action_attention"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
@@ -700,6 +701,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>自动转</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
   </action>
   <action name="actionascii_to_string">
    <property name="text">
@@ -752,7 +756,29 @@ p, li { white-space: pre-wrap; }
     <string>删除BCompare.xml</string>
    </property>
   </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>退      出</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>469</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

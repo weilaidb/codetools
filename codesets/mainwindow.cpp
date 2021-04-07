@@ -524,7 +524,7 @@ QMenu *MainWindow::proc_frequse_menu()
 QMenu *MainWindow::proc_netsearch_menu()
 {
     QMenu *pNetSearch = new QMenu("搜索");
-    WORD32 dwLp =  0;;
+    WORD32 dwLp =  0;
     foreach (QString item, m_NetSearchList) {
         debugApp() << ++dwLp << ":" << item;
 //        printf("No:%-03u -- %-03s\n", ++dwLp, item.toLocal8Bit().data());
@@ -2029,6 +2029,9 @@ void MainWindow::on_action_search_triggered_handle(int flag)
         CUIPub::showStatusBarTimerOnly(QString("未找到"));
         goto ENDLABEL;
     }
+    //排序
+    resultlist.sort(Qt::CaseSensitive);
+
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
 
@@ -2428,3 +2431,8 @@ void MainWindow::proc_action_del_BCompare_xml()
 }
 
 
+
+void MainWindow::on_action_autoconvertaf_triggered()
+{
+    CUIPub::showStatusBarTimerOnly(QString("自动转变更:%1").arg(ui->action_autoconvertaf->isChecked()));
+}
