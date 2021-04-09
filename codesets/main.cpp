@@ -27,9 +27,15 @@ int main(int argc, char *argv[])
 }
 
 #else
+
+#include "cstringpub.h"
+
 int main(int argc, char **argv)
 {
     qDebug() << "hello";
+    unsigned char uacBuf[10] = {0xee,0xaa,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbe};
+    qDebug() << CStringPub::GetStrOfData(uacBuf,10);
+
     return 0;
 }
 

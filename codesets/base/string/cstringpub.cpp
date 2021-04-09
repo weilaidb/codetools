@@ -480,6 +480,21 @@ QString CStringPub::getDateTime()
     return QString("%1-%2").arg(__DATE__).arg(__TIME__);
 }
 
+QString CStringPub::GetStrOfData(unsigned char *in, int len)
+{
+    int i = 0;
+    QString s;
+    char buf[4];
+
+    for (i=0; i<len; i++)
+    {
+        snprintf(buf,sizeof(buf),"%02x", in[i]);
+        s.append(buf);
+    }
+
+    return s;
+}
+
 QString CStringPub::hexToString(unsigned char *in, int len)
 {
     int i = 0;

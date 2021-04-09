@@ -91,6 +91,7 @@ public:
 
     static QString hexToString(unsigned char *in, int len);
     static QString hexToString(unsigned char *in);
+    static QString GetStrOfData(unsigned char *in, int len);
     static QString getCurrentExePath();
     static bool contain(QString str, QString reg);
 
