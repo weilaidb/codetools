@@ -1377,11 +1377,11 @@ void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_
 
 void MainWindow::proc_action_net_server()
 {
-#if UT_TESTCASE
-    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
-#else
-    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
-        #endif
+//#if UT_TESTCASE
+//    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
+//#else
+//    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
+//        #endif
 }
 
 void MainWindow::proc_threadmessage(const QString& info)
@@ -1406,30 +1406,30 @@ void MainWindow::proc_threadfinished()
 
 void MainWindow::proc_action_net_client()
 {
-#if UT_TESTCASE
-    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
-#else
-    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
-#endif
+//#if UT_TESTCASE
+//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
+//#else
+//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
+//#endif
 }
 
 void MainWindow::proc_action_net_publish()
 {
-#if UT_TESTCASE
-    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
-#else
-    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
-#endif
+//#if UT_TESTCASE
+//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
+//#else
+//    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
+//#endif
 }
 
 
 void MainWindow::proc_action_net_subscribe()
 {
-#if UT_TESTCASE
-    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
-#else
-    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
-#endif
+//#if UT_TESTCASE
+//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
+//#else
+//    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
+//#endif
 }
 
 
