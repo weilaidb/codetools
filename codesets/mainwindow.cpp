@@ -300,6 +300,7 @@ void MainWindow::init_UiSets()
     //自定义点ME弹出菜单
     pPopMenu = new QMenu;
     nodes_menu_find(pPopMenu);
+    nodes_menu_other(pPopMenu);
     nodes_menu_leftbottom(pPopMenu);
     nodes_menu_left_little(pPopMenu);
 
@@ -333,6 +334,7 @@ void MainWindow::update_generate_menu_left()
     {
         pRightMouse_L->addMenu((pMenuCustom));
     }
+    nodes_menu_other(pRightMouse_L);
     nodes_menu_left(pRightMouse_L);
     nodes_menu_leftbottom(pRightMouse_L);
 }
@@ -671,7 +673,21 @@ void MainWindow::nodes_menu_find(QMenu *pMenu)
     }
     QAction *pActionFind    = CUIPub::createAction("查找");
     QObject::connect(pActionFind, SIGNAL(triggered()), this, SLOT(on_action_search_triggered()));
+
     pMenu->addAction(pActionFind);
+}
+
+void MainWindow::nodes_menu_other(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionForward   = CUIPub::createAction("转到");
+
+    QObject::connect(pActionForward, SIGNAL(triggered()), this, SLOT(proc_ActionForward()));
+
+    pMenu->addAction(pActionForward);
 }
 
 
@@ -1763,6 +1779,18 @@ void MainWindow::proc_LinePacket()
     set_LeftTextEdit(CRegExpPub::procTextByRegExpList(configfilename, EUM_CLASSTYPE::COMMON_OPERATIONS,lefttext));
     lefttext  = CStringPub::strSim(CUIPub::getTextEdit(ui->textEdit));
     CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("%1 共%2/2=%3字节").arg(configfilename).arg(lefttext.count()).arg(lefttext.count()/2) );
+}
+
+void MainWindow::proc_ActionForward()
+{
+
+    QString selectText = CUIPub::getSelectTextEdit(ui->textEdit).simplified();
+    if(CStringPub::strSimLen(selectText) == 0 )
+    {
+        return;
+    }
+    CUIPub::explorerPathExt(CStringPub::strSim(selectText));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("打开%1").arg(selectText));
 }
 
 
