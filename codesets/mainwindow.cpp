@@ -1557,6 +1557,10 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
 
     CFilePub::deleteFileSameLineExt(m_FileNameMenu, configfilename);
     CFilePub::deleteFileSameLineExt(m_ListFreqUseFile, configfilename);
+
+    //更新列表
+    //重新执行查找过程
+    on_action_search_triggered_handle(0);
 }
 
 
@@ -2060,6 +2064,7 @@ void MainWindow::on_action_search_triggered_handle(int flag)
     //排序
     resultlist.sort(Qt::CaseSensitive);
 
+    QObject::disconnect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
 
@@ -2083,6 +2088,7 @@ void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
 {
     QAction *tempAction = CUIPub::createActionData("tempAction", item->text());
     proc_action_gen_custom_action(tempAction);
+    debugApp() << "proc_listWidget_searchresult_ItemClicked";
     delete tempAction;
 }
 
@@ -2344,6 +2350,8 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
 {
     QString newNodeName = pDiaglog->getName();
     debugApp() << newNodeName;
+    QString newNodeNameFromCopy = pDiaglog->getNameFromCopy();
+    debugApp() << newNodeNameFromCopy;
     if(CStringPub::strSimLenZero(newNodeName))
     {
         CUIPub::showStatusBarTimerOnly("请输入内容");
@@ -2368,6 +2376,7 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
         else
         {
             CUIPub::showStatusBarTimerOnly(QString("失败[标准] %1").arg(newNodeName));
+            return;
         }
     }
         break;
@@ -2387,6 +2396,7 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
         else
         {
             CUIPub::showStatusBarTimerOnly(QString("失败[用户] %1").arg(newNodeName));
+            return;
         }
     }
         break;
@@ -2396,9 +2406,54 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
         break;
     }
 
+    //从已经存在的配置拷贝数据
+    proc_newnode_copy(pDiaglog);
+
     pDiaglog->write_HistorySetting();
     //重新执行查找过程
     on_action_search_triggered_handle(0);
+
+}
+
+//拷贝节点
+void MainWindow::proc_newnode_copy(CDialogNewNode *pDiaglog)
+{
+    QString newNodeName = pDiaglog->getName();
+    debugApp() << newNodeName;
+    QString newNodeNameFromCopy = pDiaglog->getNameFromCopy();
+    debugApp() << newNodeNameFromCopy;
+
+    if(false == pDiaglog->isChkedBoxfromCopy())
+    {
+        return;
+    }
+
+    if(CExpressPub::isZero(CStringPub::strSimLen(newNodeNameFromCopy)))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("源节点名称为空"));
+        return;
+    }
+
+    if(CExpressPub::isFalse(proc_configexist_check(newNodeNameFromCopy)))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("源节点配置不存在"));
+        return;
+    }
+
+    //源节点
+    QString filenameSrc = CRegExpPub::getRegExpFileNameTips(newNodeNameFromCopy);
+    QString filenameAfterSrc = CRegExpPub::getRegExpFileNameAfter(newNodeNameFromCopy);
+    QString filenameBeforeSrc = CRegExpPub::getRegExpFileNameBefore(newNodeNameFromCopy);
+
+    //目的节点
+    QString filename = CRegExpPub::getRegExpFileNameTips(newNodeName);
+    QString filenameAfter = CRegExpPub::getRegExpFileNameAfter(newNodeName);
+    QString filenameBefore = CRegExpPub::getRegExpFileNameBefore(newNodeName);
+
+    CFilePub::copyFile(filenameSrc,filename);
+    CFilePub::copyFile(filenameAfterSrc, filenameAfter);
+    CFilePub::copyFile(filenameBeforeSrc, filenameBefore);
+    CUIPub::showStatusBarTimerOnly(QString("模板创建文件%1成功,模板%2").arg(newNodeName).arg(newNodeNameFromCopy));
 
 }
 
@@ -2419,6 +2474,22 @@ bool MainWindow::proc_newnode_check(CDialogNewNode *pDiaglog)
 
     return false;
 }
+//检测配置是否存在
+bool MainWindow::proc_configexist_check(QString newNodeName)
+{
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_stand, newNodeName))
+    {
+        return true;
+    }
+
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_user, newNodeName))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 
 void MainWindow::proc_action_delspace()
 {

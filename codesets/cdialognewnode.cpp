@@ -35,6 +35,16 @@ QString CDialogNewNode::getName()
     return CUIPub::getLineEdit(ui->lineEdit);
 }
 
+QString CDialogNewNode::getNameFromCopy()
+{
+    return CUIPub::getLineEdit(ui->lineEdit_fromCopy);
+}
+
+bool CDialogNewNode::isChkedBoxfromCopy()
+{
+    return CUIPub::isCheckedQCheckBox(ui->checkBox);
+}
+
 int CDialogNewNode::getType ()
 {
     return m_type ;
@@ -94,9 +104,10 @@ void CDialogNewNode::proc_HistorySetting(int type)
     quint8 ucType = type;
     m_pSettings = CUIPub::read_HistorySettings(m_organization,m_application);
     CUIPub::procLineEdit(m_pSettings, ui->lineEdit, ucType);
+    CUIPub::procLineEdit(m_pSettings, ui->lineEdit_fromCopy, ucType);
+    CUIPub::procCheckBox(m_pSettings, ui->checkBox,ucType);
     debugApp() << "ucType:" << ucType;
 }
-
 
 void CDialogNewNode::init_Vars()
 {

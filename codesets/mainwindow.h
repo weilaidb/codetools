@@ -265,6 +265,8 @@ private slots:
     void proc_action_newusernode();
     void proc_newnode_more(CDialogNewNode *pDiaglog);
     bool proc_newnode_check(CDialogNewNode *pDiaglog);
+    bool proc_configexist_check(QString newNodeName);
+    void proc_newnode_copy(CDialogNewNode *pDiaglog);
     //tools
     void proc_action_delspace();
     void proc_action_dellastspacesort();

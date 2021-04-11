@@ -731,7 +731,7 @@ bool CUIPub::showBoxInfoIsYes(QString tips)
 bool CUIPub::showBoxInfoIsNo(QString tips)
 {
     return QMessageBox::No == QMessageBox::information(NULL, "Title", tips,
-                                                       QMessageBox::Ok, QMessageBox::Ok);
+                                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 QTimer *CUIPub::createTimer(int &iTimeout, int value)

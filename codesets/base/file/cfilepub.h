@@ -22,6 +22,9 @@ public:
     static bool createFileContentNoExist(QString filename, QString content);
     static bool createDirNoExist(QString dirname);
     static bool createDirExt(QString dirname);
+    //copy
+    static bool copyFile(QString filenameSrc,QString filenameDest);
+
     //删除文件夹及文件
     static bool deleteDirFiles(QString dirName);
     static bool checkFileExistLine(QString filename, QString line);
@@ -43,6 +46,7 @@ public:
     static QStringList getFileAllAbsoluteNames(QStringList nameFilters, const QString filePath);
     static QStringList getFileAllRelateNames(QStringList nameFilters, const QString filePath);
     static QFileInfoList getAllFileList(QStringList nameFilters, QString path);
+
 //file dialog
     static QStringList getOpenDiagFiles(QString &openFilePathRecent, QString filter);
     static QStringList getOpenDiagFilesRecent(QString &openFilePathRecent, QString filter);

@@ -22,6 +22,8 @@ public:
 
     void setName(QString &name);
     QString getName();
+    QString getNameFromCopy();
+    bool isChkedBoxfromCopy();
     int getType ();
     int setType(int _val);
     QString getTypeText();
