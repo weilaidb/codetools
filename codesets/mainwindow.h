@@ -13,6 +13,7 @@
 #include "basetypepub.h"
 #include "supertest.h"
 #include "cdialognewnode.h"
+#include "cdialogsearch.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -125,18 +126,19 @@ private:
     QString m_FileMode_SingleL_ExecMulti;
     QString m_FileMode_SingleL_ExecSingle;//一行执行对应的行，执行与模式数量不对齐的话，中间项参考前面项
     //常用列表 configfile, 显示的最大数量
-    QStringList m_listfrequse;
-    quint32 m_dwLstFreqUseCnt;
-    QString m_ListFreqUseFile;
+    QStringList m_ListFreqUse;
+    quint32 m_ActualFreqUseCnt;
+    QString m_FileNameMenuListFreqUse;
     //注意事项
     QString m_AttentionFile;
     //常用文件打开列表
     QStringList m_listNormalUse;
-    quint32 m_dwLstNormalUseCnt;
-    QString m_ListOpenFile; //文件列表配置文件
+    QString m_ListOpenFile; //配置文件文件列表
 
-    QString m_contentmaxfilename;
-    QString m_freqmaxfilename;
+    QString m_FileNameContentMax; //内容最大数量(BYTES)
+    QString m_FileNameFreqUseMax; //常用左侧内容项最大个数
+    QString m_FileNameRecentOpen;//最近打开文件列表要读取的文件名
+    QStringList m_ListRecentOpen;//最近打开文件列表
 
 private:
     QString openFilePathRecent;
@@ -250,6 +252,7 @@ private slots:
     void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
     void proc_frequse_config(QString configfilename);
+    void proc_frequse_findkey(QString findKey);
     void proc_action_background_update(bool bFlag);
     void proc_action_update(bool bFlag);
     void proc_action_scan_test_dir(bool bFlag);
@@ -328,11 +331,14 @@ private slots:
     void on_pushButton_clearTryAgainExt_clicked();
     void on_action_search_triggered();
     void on_action_search_triggered_handle(int flag);
+    void on_action_search_triggered_handle_quick(QString findKey);
     void proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey, QStringList &resultlist);
     void updateListWidgetFrequse();
+    void updateListWidgetRecentOpen();
 
 
     void proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item);
+    void proc_listWidget_findkey_ItemClicked(QListWidgetItem *item);
     void on_pushButton_left_clear_clicked();
     void on_actionclearTry_triggered();
     void proc_character_trim_pub(const QString &pattern);
@@ -345,5 +351,8 @@ private slots:
     void on_pushButton_mainfindreverse_clicked();
     void on_lineEdit_mainsearch_returnPressed();
     void on_action_autoconvertaf_triggered();
+    //recent open list process
+    void proc_action_recentopen(bool bFlag);
+    void updateListRecentOpenKey(QString findKey);
 };
 #endif // MAINWINDOW_H

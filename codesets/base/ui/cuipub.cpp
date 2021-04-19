@@ -688,6 +688,11 @@ bool CUIPub::isCheckedQAction(QAction *pAction)
     return pAction->isChecked();
 }
 
+bool CUIPub::noCheckedQAction(QAction *pAction)
+{
+    return !pAction->isChecked();
+}
+
 void CUIPub::setCheckedQAction(QAction *pAction, bool bflag)
 {
 
@@ -824,6 +829,7 @@ void CUIPub::clearAddListWidgetItemsAndShow(QListWidget *pWidget, QStringList li
     pWidget->clear();
     pWidget->addItems(list);
     pWidget->show();
+    pWidget->update();
 }
 
 

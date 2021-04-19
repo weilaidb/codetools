@@ -73,6 +73,7 @@ public:
     static QString getString(QString &str);
     static void clearStringList(QStringList &list);
     static QString stringFilterEmpty(const QString str);
+    static void deleteListItem(QStringList &list, QString str);
 
 
     //字符串

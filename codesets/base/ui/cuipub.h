@@ -131,6 +131,7 @@ public:
     static QAction *createActionData(QString name,QString data);
     static QAction *createAction(QString name);
     static bool isCheckedQAction(QAction *pAction);
+    static bool noCheckedQAction(QAction *pAction);
     static void setCheckedQAction(QAction *pAction, bool bflag);
     static bool getCheckedQAction(QAction *pAction);
     static QString getQActionText(QAction *pAction);

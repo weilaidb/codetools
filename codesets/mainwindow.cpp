@@ -194,6 +194,9 @@ void MainWindow::init_ActionSets()
     QObject::connect(ui->action_dellastspacesort, SIGNAL(triggered(bool)), this, SLOT(proc_action_dellastspacesort()));
     QObject::connect(ui->action_del_BCompare_xml, SIGNAL(triggered(bool)), this, SLOT(proc_action_del_BCompare_xml()));
 
+    //
+    QObject::connect(ui->action_recentopen, SIGNAL(triggered(bool)), this, SLOT(proc_action_recentopen(bool)));
+
 }
 
 
@@ -262,16 +265,16 @@ void MainWindow::init_UiSets()
     //    pTimerBackgroundUpdate = CUIPub::createTimer(iTimeoutBackgroundUpdate, 1000 * 60 * 1);
     //    connect(pTimerBackgroundUpdate, SIGNAL(timeout()), this, SLOT(proc_TimerBackgroundUpdate()));
 
-    CFilePub::createFileEmptyNoExistAndVar(m_freqmaxfilename, "reg/freqmax.txt");
-//    m_dwLstFreqUseCnt = 15;
-    m_dwLstFreqUseCnt = CFilePub::getNumFirstFromFileLimitMin(m_freqmaxfilename, 15);
-    debugApp() << "m_dwLstFreqUseCnt:" << m_dwLstFreqUseCnt;
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameFreqUseMax, "reg/freqmax.txt");
+    m_ActualFreqUseCnt = CFilePub::getNumFirstFromFileLimitMin(m_FileNameFreqUseMax, 15);
+    debugApp() << "m_ActualFreqUseCnt:" << m_ActualFreqUseCnt;
     read_FreqUseFile();
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameRecentOpen, "reg/recentopen.txt");
+    m_ListRecentOpen = CFilePub::readFileAllFilterEmptyUnique(m_FileNameRecentOpen);
     CFilePub::createFileEmptyNoExistAndVar(m_AttentionFile, "reg/attention.txt");
-    CFilePub::createFileEmptyNoExistAndVar(m_contentmaxfilename, "reg/contentmax.txt");
+    CFilePub::createFileEmptyNoExistAndVar(m_FileNameContentMax, "reg/contentmax.txt");
 
     //打开常用文件列表
-    m_dwLstNormalUseCnt = 30;
     CFilePub::createFileEmptyNoExistAndVar(m_ListOpenFile, "reg/normalfiles.txt");
 
     CFilePub::createFileEmptyNoExistAndVar(m_ListNetSearchFile, "reg/netsearch.txt");
@@ -315,7 +318,7 @@ void MainWindow::read_CfgFile2List(QStringList &list, QString &filenamevar, QStr
 
 void MainWindow::read_FreqUseFile()
 {
-    read_CfgFile2List(m_listfrequse, m_ListFreqUseFile, "reg/frequse.txt");
+    read_CfgFile2List(m_ListFreqUse, m_FileNameMenuListFreqUse, "reg/frequse.txt");
 }
 
 void MainWindow::update_generate_menu_left()
@@ -508,14 +511,16 @@ QMenu *MainWindow::proc_frequse_menu()
     read_FreqUseFile();
     //更新频繁使用列表
     updateListWidgetFrequse();
-    ////debugApp() << m_listfrequse.count();
-    foreach (QString item, m_listfrequse) {
+    updateListWidgetRecentOpen();
+    ////debugApp() << m_ListFreqUse.count();
+    foreach (QString item, m_ListFreqUse) {
         QAction *pTmpAction = CUIPub::createActionFull(item);
         pFreqUse->addAction(pTmpAction);
     }
 
     if(pFreqUse)
     {
+        QObject::disconnect(pFreqUse, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
         QObject::connect(pFreqUse, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
     }
 
@@ -529,7 +534,7 @@ QMenu *MainWindow::proc_netsearch_menu()
     WORD32 dwLp =  0;
     foreach (QString item, m_NetSearchList) {
         debugApp() << ++dwLp << ":" << item;
-//        printf("No:%-03u -- %-03s\n", ++dwLp, item.toLocal8Bit().data());
+        //        printf("No:%-03u -- %-03s\n", ++dwLp, item.toLocal8Bit().data());
         QStringList items = CStringPub::stringSplit(item,';');
         if(item.length() < 2)
         {
@@ -545,6 +550,7 @@ QMenu *MainWindow::proc_netsearch_menu()
 
     if(pNetSearch)
     {
+        QObject::disconnect(pNetSearch, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_netsearch_custom_action(QAction *)));
         QObject::connect(pNetSearch, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_netsearch_custom_action(QAction *)));
     }
 
@@ -716,6 +722,7 @@ void MainWindow::proc_HistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_hidebuttonswitch, ucType);
     CUIPub::procAction(m_pSettings, ui->action_manycontent_proc, ucType);
     CUIPub::procAction(m_pSettings, ui->action_autoconvertaf, ucType);
+    CUIPub::procAction(m_pSettings, ui->action_recentopen, ucType);
 }
 
 void MainWindow::read_HistorySetting()
@@ -1393,11 +1400,11 @@ void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_
 
 void MainWindow::proc_action_net_server()
 {
-//#if UT_TESTCASE
-//    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
-//#else
-//    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
-//        #endif
+    //#if UT_TESTCASE
+    //    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
+    //#else
+    //    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
+    //        #endif
 }
 
 void MainWindow::proc_threadmessage(const QString& info)
@@ -1422,30 +1429,30 @@ void MainWindow::proc_threadfinished()
 
 void MainWindow::proc_action_net_client()
 {
-//#if UT_TESTCASE
-//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
-//#else
-//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
-//#endif
+    //#if UT_TESTCASE
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
+    //#else
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
+    //#endif
 }
 
 void MainWindow::proc_action_net_publish()
 {
-//#if UT_TESTCASE
-//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
-//#else
-//    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
-//#endif
+    //#if UT_TESTCASE
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
+    //#else
+    //    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
+    //#endif
 }
 
 
 void MainWindow::proc_action_net_subscribe()
 {
-//#if UT_TESTCASE
-//    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
-//#else
-//    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
-//#endif
+    //#if UT_TESTCASE
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
+    //#else
+    //    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
+    //#endif
 }
 
 
@@ -1487,7 +1494,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
 
     if(false == CUIPub::isCheckedQAction(ui->action_manycontent_proc))
     {
-        dwContentMax = CFilePub::getNumFirstFromFileLimitMin(m_contentmaxfilename, MANYCONTENTMAX);
+        dwContentMax = CFilePub::getNumFirstFromFileLimitMin(m_FileNameContentMax, MANYCONTENTMAX);
         if(CStringPub::strSimLen(proctext) >= dwContentMax)
         {
             show_StatusTimer(QString("内容超过处理范围%1").arg(dwContentMax));
@@ -1556,11 +1563,14 @@ void MainWindow::proc_action_deleteinfo(QString configfilename, int type)
     CFilePub::deleteFile(CRegExpPub::getRegExpFileNameTips(CRegExpPub::getFileNameByClassCfgType(configfilename, type)));
 
     CFilePub::deleteFileSameLineExt(m_FileNameMenu, configfilename);
-    CFilePub::deleteFileSameLineExt(m_ListFreqUseFile, configfilename);
+    CFilePub::deleteFileSameLineExt(m_FileNameMenuListFreqUse, configfilename);
+    CStringPub::deleteListItem(m_ListFreqUse,configfilename);
 
     //更新列表
     //重新执行查找过程
     on_action_search_triggered_handle(0);
+    //更新左侧列表
+    updateListWidgetFrequse();
 }
 
 
@@ -1622,8 +1632,8 @@ void MainWindow::proc_action_netsearch_custom_action(QAction *pAction)
 
     QString searchText = CUIPub::getSelectTextEdit(ui->textEdit);
     QString prefix = pAction->data().toString();
-//    debugApp() << "searchText:" << searchText;
-//    debugApp() << "action name:" << prefix;
+    //    debugApp() << "searchText:" << searchText;
+    //    debugApp() << "action name:" << prefix;
 
     if(0 == CStringPub::strSimLen(searchText))
     {
@@ -1911,13 +1921,20 @@ void MainWindow::proc_clipBoard_textChanged()
     oldText = curText;
 }
 
+//具体选中的配置信息记录
 void MainWindow::proc_frequse_config(QString configfilename)
 {
     CLogPub::logDefault("[proc_frequse_config]add config:" + configfilename);
-    CStringPub::addStringHeaderUniqueMax(m_listfrequse, configfilename, m_dwLstFreqUseCnt);
-    //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUseFile:" + configfilename);
-    //    CLogPub::logDefault("[proc_frequse_config]m_listfrequse:" + CStringPub::stringList2StringEnter(m_listfrequse));
-    CFilePub::writeFileWOnly(m_ListFreqUseFile, m_listfrequse);
+    CStringPub::addStringHeaderUniqueMax(m_ListFreqUse, configfilename, m_ActualFreqUseCnt);
+    //    CLogPub::logDefault("[proc_frequse_config]m_FileNameMenuListFreqUse:" + configfilename);
+    //    CLogPub::logDefault("[proc_frequse_config]m_ListFreqUse:" + CStringPub::stringList2StringEnter(m_ListFreqUse));
+    CFilePub::writeFileWOnly(m_FileNameMenuListFreqUse, m_ListFreqUse);
+}
+
+void MainWindow::proc_frequse_findkey(QString findKey)
+{
+    CStringPub::addStringUniqueSortMax(m_ListRecentOpen, findKey, m_ActualFreqUseCnt);
+    CFilePub::writeFileWOnly(m_FileNameRecentOpen, m_ListRecentOpen);
 }
 
 void MainWindow::proc_action_openfilelist(QAction *pAction)
@@ -2020,7 +2037,50 @@ void MainWindow::proc_search_filecontent(QStringList menuList, Qt::CaseSensitivi
     }
 }
 
+//处理查找列表
+void MainWindow::on_action_search_triggered_handle_quick(QString findKey)
+{
+    CDialogSearch *pDiagSearch = new CDialogSearch();
+    //文件中的菜单列表
+    QStringList menuList = CStringPub::emptyStringList();
+    QStringList resultlist = CStringPub::emptyStringList();
+    Qt::CaseSensitivity cs = pDiagSearch->getCaseSentived();
 
+    menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
+    //查看文件内容是否查找，文件名和内容都查找
+    if(pDiagSearch && pDiagSearch->getFileContented())
+    {
+        proc_search_filecontent(menuList,cs,findKey,resultlist);
+    }
+    else
+    {
+        resultlist = CStringPub::filterFileListInclude(findKey, menuList, cs);
+    }
+    debugApp() << "resultlist size:" << resultlist.size();
+
+    if(CExpressPub::isZero(resultlist.size()))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("未找到"));
+        //说明关键字已经失效，删除
+        CStringPub::deleteListItem(m_ListRecentOpen, findKey);
+        updateListWidgetRecentOpen();
+        goto ENDLABEL;
+    }
+    //排序
+    resultlist.sort(Qt::CaseSensitive);
+
+    QObject::disconnect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+    CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
+    QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+
+    delete pDiagSearch;
+    return;
+
+ENDLABEL:
+    QObject::disconnect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+    CUIPub::clearHideListWidget(ui->listWidget_searchresult);
+    delete pDiagSearch;
+}
 void MainWindow::on_action_search_triggered_handle(int flag)
 {
     SHOWCURFUNC;
@@ -2063,13 +2123,15 @@ void MainWindow::on_action_search_triggered_handle(int flag)
     }
     //排序
     resultlist.sort(Qt::CaseSensitive);
-
+    //显示列表(查找出来的数据）
     QObject::disconnect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
     CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_searchresult, resultlist);
     QObject::connect(ui->listWidget_searchresult, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
 
-    //更新左侧常用列表
+    //更新左侧常用列表（选中的项或查询的关键字列表）
     updateListWidgetFrequse();
+    updateListRecentOpenKey(findKey);
+    updateListWidgetRecentOpen();
 
     delete pDiaglogKey;
     return;
@@ -2092,10 +2154,31 @@ void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
     delete tempAction;
 }
 
+void MainWindow::proc_listWidget_findkey_ItemClicked(QListWidgetItem *item)
+{
+    debugApp() << "proc_listWidget_findkey_ItemClicked";
+    debugApp() << "item text:" << item->text();
+    on_action_search_triggered_handle_quick(item->text());
+}
+
+void MainWindow::updateListWidgetRecentOpen()
+{
+    QObject::disconnect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_findkey_ItemClicked(QListWidgetItem *)));
+    if(CUIPub::isCheckedQAction(ui->action_recentopen))
+    {
+        CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_ListRecentOpen);
+        QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_findkey_ItemClicked(QListWidgetItem *)));
+    }
+}
+
 void MainWindow::updateListWidgetFrequse()
 {
-    CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_listfrequse);
-    QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+    QObject::disconnect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+    if(CUIPub::noCheckedQAction(ui->action_recentopen))
+    {
+        CUIPub::clearAddListWidgetItemsAndShow(ui->listWidget_frequse, m_ListFreqUse);
+        QObject::connect(ui->listWidget_frequse, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(proc_listWidget_searchresult_ItemClicked(QListWidgetItem *)));
+    }
 }
 
 
@@ -2250,7 +2333,7 @@ void MainWindow::proc_actionascii_to_string_pub(int hexflag)
         buf[dwLp%2] = input_string.at(dwLp).toLatin1();
         buf[(dwLp + 1)%2] = input_string.at(dwLp + 1).toLatin1();
         buf[2] = '\0';
-//        debugApp() << "buf:" << buf ;
+        //        debugApp() << "buf:" << buf ;
         int num = 0;
         if(16 == hexflag)
         {
@@ -2293,7 +2376,7 @@ void MainWindow::proc_actionstring_to_asciipub(int hexflag)
     for(int i = 0; i < input_string.size(); i++)
 
     {
-//        qDebug() << int(byte.at(i));
+        //        qDebug() << int(byte.at(i));
         pBuffer[i] = int(byte.at(i));
     }
 
@@ -2534,4 +2617,49 @@ void MainWindow::proc_action_del_BCompare_xml()
 void MainWindow::on_action_autoconvertaf_triggered()
 {
     CUIPub::showStatusBarTimerOnly(QString("自动转变更:%1").arg(ui->action_autoconvertaf->isChecked()));
+}
+
+void MainWindow::proc_action_recentopen(bool bFlag)
+{
+    debugApp() << "bFlag:" << bFlag;
+    if(true == bFlag)
+    {
+        CUIPub::showStatusBarTimerOnly(QString("关键字列表"));
+        goto EXIT_LABEL;
+    }
+    CUIPub::showStatusBarTimerOnly(QString("具体项列表"));
+
+EXIT_LABEL:
+    updateListWidgetFrequse();
+    updateListWidgetRecentOpen();
+
+}
+
+void MainWindow::updateListRecentOpenKey(QString findKey)
+{
+    uint8_t bFindFlag = false;
+
+    if(CExpressPub::isZero(CStringPub::strSimLen(findKey)))
+    {
+        return;
+    }
+
+    foreach (QString item, m_ListRecentOpen) {
+        if(CStringPub::strSim(item) == CStringPub::strSim(findKey))
+        {
+            bFindFlag = true;
+            break;
+        }
+    }
+
+    if((0 == m_ListRecentOpen.size()) || (false == bFindFlag))
+    {
+        m_ListRecentOpen.append(findKey);
+    }
+
+    m_ListRecentOpen.sort();
+
+    debugApp() <<"size recent open:" << m_ListRecentOpen.size();
+    proc_frequse_findkey(findKey);
+//    CFilePub::writeFileWR(m_FileNameRecentOpen, CStringPub::stringList2StringEnter(m_ListRecentOpen));
 }

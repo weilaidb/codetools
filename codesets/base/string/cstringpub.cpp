@@ -679,3 +679,7 @@ QString CStringPub::getHttpStr(QString prefix,QString text)
     return  prefix + byteArrayPercentEncoded;
 }
 
+void CStringPub::deleteListItem(QStringList &list, QString str)
+{
+    list.removeAll(str);
+}
