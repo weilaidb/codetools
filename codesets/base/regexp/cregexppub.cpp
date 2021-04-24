@@ -786,12 +786,34 @@ QString CRegExpPub::handlerRegExp_Special(QString text,QStringList regbefore, QS
     return "";
 }
 
+//处理检测
+bool CRegExpPub::handlerRegExp_PubCheck(QString text,QStringList regbefore, QStringList regafter, QString mode)
+{
+    WORD32 dwLp =  0;
+    QString key("");
+    for(dwLp = 0;dwLp < 100;dwLp++)
+    {
+        key = QString("\\%1").arg(dwLp);
+        if(text.contains(key))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
 {
     QString result = CStringPub::emptyString();
     QString error = CStringPub::emptyString();
     QString strtmp = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
+
+    //检测内容是否包含\1等类似的内容
+    if(false == handlerRegExp_PubCheck(text, regbefore, regafter, mode))
+    {
+        return "left text invalid,may contain \\1,\\2,etc";
+    }
 
     //特殊处理
     //十进制转十六进制显示异常
