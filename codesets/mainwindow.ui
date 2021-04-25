@@ -409,6 +409,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_newusernode"/>
     <addaction name="action_newstandnode"/>
     <addaction name="action_recentopen"/>
+    <addaction name="action_procreboot"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -771,6 +772,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+S</string>
+   </property>
+  </action>
+  <action name="action_procreboot">
+   <property name="text">
+    <string>进程重启</string>
    </property>
   </action>
  </widget>

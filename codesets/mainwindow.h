@@ -354,5 +354,7 @@ private slots:
     //recent open list process
     void proc_action_recentopen(bool bFlag);
     void updateListRecentOpenKey(QString findKey);
+    //process reboot
+    void proc_action_procreboot(bool bFlag);
 };
 #endif // MAINWINDOW_H

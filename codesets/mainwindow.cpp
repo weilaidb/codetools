@@ -194,9 +194,11 @@ void MainWindow::init_ActionSets()
     QObject::connect(ui->action_dellastspacesort, SIGNAL(triggered(bool)), this, SLOT(proc_action_dellastspacesort()));
     QObject::connect(ui->action_del_BCompare_xml, SIGNAL(triggered(bool)), this, SLOT(proc_action_del_BCompare_xml()));
 
-    //
+    //最近搜索的key
     QObject::connect(ui->action_recentopen, SIGNAL(triggered(bool)), this, SLOT(proc_action_recentopen(bool)));
 
+    //进程重启
+    QObject::connect(ui->action_procreboot, SIGNAL(triggered(bool)), this, SLOT(proc_action_procreboot(bool)));
 }
 
 
@@ -2662,4 +2664,17 @@ void MainWindow::updateListRecentOpenKey(QString findKey)
     debugApp() <<"size recent open:" << m_ListRecentOpen.size();
     proc_frequse_findkey(findKey);
 //    CFilePub::writeFileWR(m_FileNameRecentOpen, CStringPub::stringList2StringEnter(m_ListRecentOpen));
+}
+
+void MainWindow::proc_action_procreboot(bool bFlag)
+{
+    debugApp() << "bFlag:" << bFlag;
+    qApp->closeAllWindows();
+    //qApp->quit();
+
+    //  如果是在嵌入式arm板子上，需要加入 -qws 的参数
+    //QStringList args;
+    //args.append("-qws");        //  参数信息
+    //args.append("&");           //  后台运行
+    QProcess::startDetached(qApp->applicationFilePath(), QStringList());
 }
