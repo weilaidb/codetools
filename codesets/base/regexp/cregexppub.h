@@ -33,6 +33,7 @@
 #define SIGN_CUSTOM_0XDOT     ("$0XDOT")  //报文添加0x和逗号
 #define SIGN_CUSTOM_FORFXIE   ("$FORFX")  //生成递增的反斜线 \1\2\3...
 #define SIGN_CUSTOM_FORW      ("$FORW")   //生成相同个数的内容(\w{2})(\w{2})...(\w{2})(.*)
+#define SIGN_CUSTOM_BIT       ("$BIT")    //取某个数据的某些bit位，参数为:选择数，起始bit位(从0开始)，长度
 
 #define LASTWITH(ARR)  ARR[ARR.size() - 1]
 #define MIDWITH(ARR, LP)  ARR[LP]

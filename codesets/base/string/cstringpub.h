@@ -26,6 +26,7 @@ public:
     static QStringList toStringListOnly(QString single);
     static QString stringList2String(const QStringList list, const char *pSign);
     static QString stringList2StringEnter(const QStringList list);
+    static int stringListCount(const QStringList list);
     //return list by sign
     static QStringList stringSplit(const QString str , const char sign);
     //return list by \n

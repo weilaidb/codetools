@@ -1,5 +1,6 @@
 #include "cregexppub.h"
 #include "cstringpub.h"
+#include "cnumpub.h"
 #include "cexpresspub.h"
 #include "cdefinepub.h"
 #include "debugApp.h"
@@ -47,6 +48,7 @@ T_SignPub g_ScaleSignPub[] =
     {SIGN_CUSTOM_LOW, "[\\w\\s]+"},
     {SIGN_CUSTOM_FORFXIE, "[\\d]+"},
     {SIGN_CUSTOM_FORW, "[\\d]+"},
+    {SIGN_CUSTOM_BIT, "\\s*[0-9a-fA-F]+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*"},
 
 //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
@@ -277,6 +279,45 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
             dealText += QString("(\\w{2})").arg(dwLp);
         }
         dealText += "(.*)";
+    }
+    else if(QString(SIGN_CUSTOM_BIT) == QString(temp->m_funname))
+    {
+        debugApp() << "-->BIT:"  << temp->m_funname;
+        debugApp() << "dealText:" << dealText;
+        QStringList splitList = CStringPub::stringSplit(dealText,',');
+        if(CStringPub::stringListCount(splitList) < 3)
+        {
+            debugApp() << "Error:Invalid express:" << dealText;
+        }
+        QString selector = splitList.at(0);
+        int startBit = splitList.at(1).toUInt(nullptr,10);
+        int len = splitList.at(2).toUInt(nullptr,10);
+        //十六进制转十进制
+        selector = CStringPub::scaleConvertPub(selector, 16, 10);
+        quint64 dwwNum = selector.toULongLong(nullptr,10);
+
+        debugApp() << "selector:" << selector;
+        debugApp() << "startBit:" << startBit;
+        debugApp() << "len:" << len;
+
+        if(startBit + 1 < len)
+        {
+            return "startBit + 1 < len,please check";
+        }
+
+        int iLp =  0;
+        quint64 resultNum = 0;
+        resultNum = CNumPub::getBitStatus(dwwNum, startBit);
+        debugApp() << "1 resultNum:" << resultNum;
+        for(iLp = 1;(len > 1) && (iLp < len);iLp++)
+        {
+            resultNum <<=1;
+            debugApp() << "loop resultNum 1 :" << resultNum;
+            resultNum |= CNumPub::getBitStatus(dwwNum, startBit - iLp);
+            debugApp() << "loop resultNum 2 :" << resultNum;
+        }
+        debugApp() << "result num:" << resultNum;
+        dealText = QString::number(resultNum);
     }
 
 //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))

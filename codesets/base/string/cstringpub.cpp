@@ -55,6 +55,10 @@ QString CStringPub::stringList2StringEnter(const QStringList list)
     return result;
 }
 
+int CStringPub::stringListCount(const QStringList list)
+{
+    return list.count();
+}
 
 
 QStringList CStringPub::stringSplit(const QString str , const char sign)
