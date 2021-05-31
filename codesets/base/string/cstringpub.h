@@ -42,6 +42,7 @@ public:
     static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUniqueSort(const QString str);
     static QString stringSplitFindText(const QString str , const char sign, QString signadd, QString findtext);
+    static QStringList stringFilterFirstEnd(const QStringList list, QString leftSign, QString rightSign);
     static QStringList stringUniqueSort(QStringList recentfiles);
     static QStringList stringUnique(QStringList recentfiles);
     static QStringList reverseStringList (QStringList &lists);

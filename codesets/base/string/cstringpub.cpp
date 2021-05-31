@@ -687,3 +687,22 @@ void CStringPub::deleteListItem(QStringList &list, QString str)
 {
     list.removeAll(str);
 }
+
+QStringList CStringPub::stringFilterFirstEnd(const QStringList list, QString leftSign, QString rightSign)
+{
+    QStringList resList = emptyStringList();
+    foreach (QString item, list) {
+        item = item.simplified();
+        if(item.length() == 0 )
+        {
+            continue;
+        }
+        if(item.at(0) == leftSign || item.at(item.length() - 1) == rightSign)
+        {
+            continue;
+        }
+        resList.append(item);
+    }
+
+    return resList;
+}

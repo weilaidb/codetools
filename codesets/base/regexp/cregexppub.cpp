@@ -849,6 +849,8 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     QString error = CStringPub::emptyString();
     QString strtmp = CStringPub::emptyString();
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
+    list = CStringPub::stringFilterFirstEnd(list,"[", "]");
+    list = CStringPub::stringFilterFirstEnd(list,"【", "】");
 
     //检测内容是否包含\1等类似的内容
     if(false == handlerRegExp_PubCheck(text, regbefore, regafter, mode))
