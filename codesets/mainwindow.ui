@@ -413,10 +413,11 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>工具</string>
     </property>
     <addaction name="action_delspace"/>
     <addaction name="action_dellastspacesort"/>
+    <addaction name="action_GenRegExpTextSeq"/>
    </widget>
    <addaction name="menu_10"/>
    <addaction name="menuAyStle"/>
@@ -777,6 +778,14 @@ p, li { white-space: pre-wrap; }
   <action name="action_procreboot">
    <property name="text">
     <string>进程重启</string>
+   </property>
+  </action>
+  <action name="action_GenRegExpTextSeq">
+   <property name="text">
+    <string>生成正则文本序号</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+G</string>
    </property>
   </action>
  </widget>

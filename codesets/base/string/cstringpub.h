@@ -68,6 +68,7 @@ public:
     static QStringList wordNameFilter();
     static unsigned int strSimLen(QString str);
     static bool strSimLenZero(QString str);
+    static bool strSimLenBiggerThan(QString str, quint32 dwMax);
     static bool strSimLenFull(QString str);
     static QString strSim(QString str);
     static void clearString(QString &str);
@@ -114,9 +115,17 @@ public:
     static QString toUpper(QString text);
     static QString toLower(QString text);
     static QString add0xDot(QString text);
+    static qulonglong strToHex(QString text);
+    static qulonglong strToDec(QString text);
 
     //http
     static QString getHttpStr(QString prefix, QString text);
+
+    //正则表达式
+    static bool regExpIsDigtals(QString str);
+    static bool regExpMaoHaoAfterDigtals(QString str);
+    static void appendString(QString &result, QString str);
+    static void appendStringEnter(QString &result, QString str);
 
 };
 

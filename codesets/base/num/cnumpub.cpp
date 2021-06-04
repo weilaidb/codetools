@@ -18,3 +18,8 @@ int CNumPub::getBitStatus(quint64 dwwNum, int pos)
         return 0;
     }
 }
+
+bool CNumPub::isNumZero(quint32 dwNum)
+{
+    return (0 == dwNum);
+}

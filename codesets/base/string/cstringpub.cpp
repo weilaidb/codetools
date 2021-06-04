@@ -393,6 +393,11 @@ bool CStringPub::strSimLenZero(QString str)
     return (str.simplified().length() == 0);
 }
 
+bool CStringPub::strSimLenBiggerThan(QString str, quint32 dwMax)
+{
+    return strSimLen(str) > dwMax;
+}
+
 unsigned int CStringPub::strSimLen(QString str)
 {
     return (unsigned int)str.simplified().length();
@@ -661,6 +666,15 @@ QString CStringPub::add0xDot(QString text)
     return "0x" + text + ",";
 }
 
+qulonglong CStringPub::strToHex(QString text)
+{
+    return text.toULongLong(nullptr, 16);
+}
+
+qulonglong CStringPub::strToDec(QString text)
+{
+    return text.toULongLong();
+}
 
 
 QString CStringPub::replaceReg(QString text, QString regexp, QString after)
@@ -705,4 +719,25 @@ QStringList CStringPub::stringFilterFirstEnd(const QStringList list, QString lef
     }
 
     return resList;
+}
+
+//判断字符是数字
+bool CStringPub::regExpIsDigtals(QString str)
+{
+    return str.contains(QRegExp("^\\d+$"));
+}
+//冒号后是数字
+bool CStringPub::regExpMaoHaoAfterDigtals(QString str)
+{
+    return str.contains(QRegExp("^.*:\\d+.*$"));
+}
+
+void CStringPub::appendStringEnter(QString &result, QString str)
+{
+    result.append(str).append("\n");
+}
+
+void CStringPub::appendString(QString &result, QString str)
+{
+    result.append(str);
 }

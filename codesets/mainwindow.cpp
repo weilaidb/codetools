@@ -13,6 +13,7 @@
 #include "csignpub.h"
 #include "cprintpub.h"
 #include "cstringpub.h"
+#include "cnumpub.h"
 #include "cfilepub.h"
 #include "cmsgtips.h"
 #include "looppub.h"
@@ -199,6 +200,9 @@ void MainWindow::init_ActionSets()
 
     //进程重启
     QObject::connect(ui->action_procreboot, SIGNAL(triggered(bool)), this, SLOT(proc_action_procreboot(bool)));
+
+    //生成正则文本序号
+    QObject::connect(ui->action_GenRegExpTextSeq, SIGNAL(triggered()), this, SLOT(proc_action_GenRegExpTextSeq()));
 }
 
 
@@ -2678,3 +2682,87 @@ void MainWindow::proc_action_procreboot(bool bFlag)
     //args.append("&");           //  后台运行
     QProcess::startDetached(qApp->applicationFilePath(), QStringList());
 }
+
+void MainWindow::proc_action_GenRegExpTextSeq()
+{
+    quint8 ucFlag = 0;
+    qulonglong dwStartNum = 0 ;
+    qulonglong dwTotal = 0 ;
+    QString tempText = "";
+    QString result = "";
+    QString leftText = CUIPub::getTextEdit(ui->textEdit);
+    QStringList leftList = CStringPub::stringSplitbyNewLineFilterEmpty(leftText);
+    if(0 == CStringPub::stringListCount(leftList))
+    {
+        CUIPub::showStatusBarTimerOnly("please input data in left textedit!!");
+        return;
+    }
+
+    tempText = leftList.at(0);
+    if(CExpressPub::isFalse(CStringPub::regExpIsDigtals(tempText)))
+    {
+        CUIPub::showStatusBarTimerOnly("the first line must be start num!!");
+        return;
+    }
+
+    dwStartNum = CStringPub::strToDec(tempText);
+    dwTotal += dwStartNum;
+    debugApp() << "start num:" << dwStartNum;
+    debugApp() << "dwTotal num:" << dwTotal;
+    if(CStringPub::strSimLenBiggerThan(tempText, 1) && CNumPub::isNumZero(dwStartNum))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("out of range:%1").arg(tempText));
+        return;
+    }
+
+
+    leftList = CStringPub::stringSplitbyNewLine(leftText);
+    CStringPub::appendStringEnter(result, "============================");
+
+
+    foreach (QString item, leftList) {
+        WORD32 dwLp =  0;
+        QString tempBuffer = "";
+
+        if(0 == ucFlag && CStringPub::strSimLen(item) > 0)
+        {
+            ucFlag++;
+            continue;
+        }
+
+        if(CExpressPub::isFalse(CStringPub::regExpMaoHaoAfterDigtals(item)))
+        {
+            CStringPub::appendStringEnter(result, item);
+            continue;
+        }
+
+        QStringList numList = item.split(QRegExp(":\\d+"));
+        QStringList splitList = item.split(QRegExp(".*:"));
+//        foreach (QString single, numList) {
+//            debugApp() << "num single:" << single;
+//        }
+//        foreach (QString single, splitList) {
+//            debugApp() << "split single:" << single;
+//        }
+//        debugApp() << "split list size:" << splitList.count();
+        qulonglong tempNum = CStringPub::strToDec(splitList.at(1));
+        CStringPub::appendString(tempBuffer, numList.at(0) + ":");
+//        debugApp() << "tempBuffer:" << tempBuffer;
+        for(dwLp = 0;dwLp < tempNum;dwLp++)
+        {
+            CStringPub::appendString(tempBuffer, QString("\\%1").arg(dwTotal + dwLp));
+        }
+
+        CStringPub::appendStringEnter(result, tempBuffer);
+        dwTotal += tempNum;
+    }
+
+
+    CStringPub::appendStringEnter(result, "\n\n\n");
+    CStringPub::appendStringEnter(result, "=====org text:=======");
+    CStringPub::appendStringEnter(result, leftText);
+
+
+    CUIPub::setTextBrowser(ui->textBrowser, result);
+}
+

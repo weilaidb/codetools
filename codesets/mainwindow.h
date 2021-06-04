@@ -356,5 +356,7 @@ private slots:
     void updateListRecentOpenKey(QString findKey);
     //process reboot
     void proc_action_procreboot(bool bFlag);
+    //regexp text sequence
+    void proc_action_GenRegExpTextSeq();
 };
 #endif // MAINWINDOW_H
