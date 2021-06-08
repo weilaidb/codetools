@@ -292,6 +292,7 @@ private slots:
     void nodes_menu_rightbottom(QMenu *pMenu);
     void nodes_menu_find(QMenu *pMenu);
     void nodes_menu_other(QMenu *pMenu);
+    void nodes_menu_forwardright(QMenu *pMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();
@@ -311,6 +312,7 @@ private slots:
     void proc_actionReload();
     void proc_LinePacket();
     void proc_ActionForward();
+    void proc_ActionForwardRight();
     void proc_actionEditCfgFile();
     void proc_actionSaveCfgFile();
 

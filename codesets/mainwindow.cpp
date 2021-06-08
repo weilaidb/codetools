@@ -382,6 +382,7 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
 
     QCursor cur=this->cursor();
     QMenu *pTempRightMouse_L = new QMenu(this);
+    nodes_menu_forwardright(pTempRightMouse_L);
     nodes_menu_right(pTempRightMouse_L);
     nodes_menu_rightbottom(pTempRightMouse_L);
     pTempRightMouse_L->exec(cur.pos()); //关联到光标
@@ -698,6 +699,19 @@ void MainWindow::nodes_menu_other(QMenu *pMenu)
     QAction *pActionForward   = CUIPub::createAction("转到");
 
     QObject::connect(pActionForward, SIGNAL(triggered()), this, SLOT(proc_ActionForward()));
+
+    pMenu->addAction(pActionForward);
+}
+
+void MainWindow::nodes_menu_forwardright(QMenu *pMenu)
+{
+    if(CExpressPub::isNullPtr(pMenu))
+    {
+        return;
+    }
+    QAction *pActionForward   = CUIPub::createAction("转到");
+
+    QObject::connect(pActionForward, SIGNAL(triggered()), this, SLOT(proc_ActionForwardRight()));
 
     pMenu->addAction(pActionForward);
 }
@@ -1813,6 +1827,18 @@ void MainWindow::proc_ActionForward()
     CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("打开%1").arg(selectText));
 }
 
+void MainWindow::proc_ActionForwardRight()
+{
+
+    QString selectText = CUIPub::getSelectTextBrowser(ui->textBrowser).simplified();
+    if(CStringPub::strSimLen(selectText) == 0 )
+    {
+        return;
+    }
+    CUIPub::explorerPathExt(CStringPub::strSim(selectText));
+    CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("打开%1").arg(selectText));
+}
+
 
 void MainWindow::proc_actionEditCfgFile()
 {
@@ -2702,6 +2728,10 @@ void MainWindow::proc_action_GenRegExpTextSeq()
     if(CExpressPub::isFalse(CStringPub::regExpIsDigtals(tempText)))
     {
         CUIPub::showStatusBarTimerOnly("the first line must be start num!!");
+        QString eg = "12\n"
+                "aL:12\n"
+                "aL::12 \n\n";
+        CUIPub::setTextEdit(ui->textEdit, eg + CUIPub::getTextEdit(ui->textEdit));
         return;
     }
 
@@ -2717,7 +2747,7 @@ void MainWindow::proc_action_GenRegExpTextSeq()
 
 
     leftList = CStringPub::stringSplitbyNewLine(leftText);
-    CStringPub::appendStringEnter(result, "============================");
+    CStringPub::appendStringEnter(result, "==========生成结果==================");
 
 
     foreach (QString item, leftList) {
@@ -2738,16 +2768,8 @@ void MainWindow::proc_action_GenRegExpTextSeq()
 
         QStringList numList = item.split(QRegExp(":\\d+"));
         QStringList splitList = item.split(QRegExp(".*:"));
-//        foreach (QString single, numList) {
-//            debugApp() << "num single:" << single;
-//        }
-//        foreach (QString single, splitList) {
-//            debugApp() << "split single:" << single;
-//        }
-//        debugApp() << "split list size:" << splitList.count();
         qulonglong tempNum = CStringPub::strToDec(splitList.at(1));
         CStringPub::appendString(tempBuffer, numList.at(0) + ":");
-//        debugApp() << "tempBuffer:" << tempBuffer;
         for(dwLp = 0;dwLp < tempNum;dwLp++)
         {
             CStringPub::appendString(tempBuffer, QString("\\%1").arg(dwTotal + dwLp));
