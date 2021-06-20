@@ -112,6 +112,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    cdialogabout.cpp \
     cdialognewnode.cpp \
     cdialognewut.cpp \
     cdialogsearch.cpp \
@@ -151,6 +152,7 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
+    cdialogabout.h \
     cdialognewnode.h \
     cdialognewut.h \
     cdialogsearch.h \
@@ -196,6 +198,7 @@ macx {
 
 
 FORMS += \
+    cdialogabout.ui \
     cdialogasktext.ui \
     cdialognewnode.ui \
     cdialognewut.ui \

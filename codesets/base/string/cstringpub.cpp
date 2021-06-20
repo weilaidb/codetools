@@ -602,6 +602,7 @@ bool CStringPub::filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::Ca
         }
     }
 
+//    debugApp() << "cs:"<<cs << ",wCount:"<<wCount << ",keyList size:" << keyList.size()<< ",keySpace:"<<keySpace << ",orgtext:" << orgtext;
     if(wCount == keyList.size())
     {
         return true;

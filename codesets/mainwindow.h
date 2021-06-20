@@ -206,6 +206,7 @@ private slots:
     void proc_action_codeFormat_Del_Config();
     void proc_action_about();
     void proc_action_attention();
+    void proc_action_attentionnew();
 
     //office
     QStringList proc_action_office_auto_pub(QString filter, QStringList filterlist, QString &openRecent, QStringList &recentfiles, quint8 openDiagFlag, QStringList openfilelist);

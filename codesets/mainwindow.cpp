@@ -41,6 +41,7 @@
 #include <QProcess>
 #include <QProgressBar>
 #include <csignpub.h>
+#include "cdialogabout.h"
 
 /**
   **处理内容最大值
@@ -144,7 +145,7 @@ void MainWindow::init_ActionSets()
     QObject::connect(ui->menu_codeFormat_Recent, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_codeFormat_Recent(QAction *)));
     //about
     QObject::connect(ui->action_about, SIGNAL(triggered()), this, SLOT(proc_action_about()));
-    QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attention()));
+    QObject::connect(ui->action_attention, SIGNAL(triggered()), this, SLOT(proc_action_attentionnew()));
 
     //office
     QObject::connect(ui->action_office_open, SIGNAL(triggered()), this, SLOT(proc_action_office_open()));
@@ -826,6 +827,16 @@ void MainWindow::proc_action_about()
 void MainWindow::proc_action_attention()
 {
     CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
+}
+
+void MainWindow::proc_action_attentionnew()
+{
+//    CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
+    QString showtext = CFilePub::readFileAll(m_AttentionFile);
+    CDialogAbout *pDiaglogAbout = new CDialogAbout();
+    pDiaglogAbout->setText(showtext);
+    pDiaglogAbout->exec();
+    delete pDiaglogAbout;
 }
 
 
