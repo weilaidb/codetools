@@ -743,6 +743,7 @@ void MainWindow::proc_HistorySetting(int type)
     CUIPub::procAction(m_pSettings, ui->action_manycontent_proc, ucType);
     CUIPub::procAction(m_pSettings, ui->action_autoconvertaf, ucType);
     CUIPub::procAction(m_pSettings, ui->action_recentopen, ucType);
+    CUIPub::procAction(m_pSettings, ui->actionA_B_multiline_multiproc, ucType);
 }
 
 void MainWindow::read_HistorySetting()
@@ -1475,7 +1476,17 @@ void MainWindow::proc_action_net_subscribe()
     //#endif
 }
 
-
+void MainWindow::proc_mode_AB_multiline_multiproc(T_RegExpParas &tPara)
+{
+    if(CUIPub::getCheckedQAction(ui->actionA_B_multiline_multiproc))
+    {
+        tPara.ucMultLineMultiProcMode = A_MODE_MULTILINE_MULTIPROC;
+    }
+    else
+    {
+        tPara.ucMultLineMultiProcMode = B_MODE_MULTILINE_MULTIPROC;
+    }
+}
 
 
 
@@ -1485,6 +1496,7 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
     QString linewords = CUIPub::getSelectLineTextEdit(ui->textEdit);
     QString lefttext  = CUIPub::getTextEdit(ui->textEdit);
     QString proctext  = CStringPub::emptyString();
+    T_RegExpParas tPara;
 
     ////debugApp() << "keyword:" << keyword;
     ////debugApp() << "linewords:" << linewords;
@@ -1522,7 +1534,13 @@ void MainWindow::proc_action_gen_pub(QString configfilename, int type)
             return;
         }
     }
-    set_RightTextEdit(CRegExpPub::procTextByRegExpList(configfilename, type,proctext));
+
+    tPara.classconfig = configfilename;
+    tPara.dwClasstype = type;
+    tPara.text = proctext;
+    proc_mode_AB_multiline_multiproc(tPara);
+
+    set_RightTextEdit(CRegExpPub::procTextByRegExpList(tPara));
 }
 
 void MainWindow::proc_action_edit_pub(QString configfilename, int type)
@@ -1810,7 +1828,13 @@ void MainWindow::proc_LinePacket()
     //指定处理规则
     QString configfilename = "PACKET Parse/报文处理成一行规则";
     QString lefttext  = CUIPub::getTextEdit(ui->textEdit);
-    set_LeftTextEdit(CRegExpPub::procTextByRegExpList(configfilename, EUM_CLASSTYPE::COMMON_OPERATIONS,lefttext));
+    T_RegExpParas tPara;
+
+    tPara.classconfig = configfilename;
+    tPara.dwClasstype = EUM_CLASSTYPE::COMMON_OPERATIONS;
+    tPara.text = lefttext;
+    proc_mode_AB_multiline_multiproc(tPara);
+    set_LeftTextEdit(CRegExpPub::procTextByRegExpList(tPara));
     lefttext  = CStringPub::strSim(CUIPub::getTextEdit(ui->textEdit));
     CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("%1 共%2/2=%3字节").arg(configfilename).arg(lefttext.count()).arg(lefttext.count()/2) );
 }

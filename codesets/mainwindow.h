@@ -14,6 +14,7 @@
 #include "supertest.h"
 #include "cdialognewnode.h"
 #include "cdialogsearch.h"
+#include "cregexppub.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -360,5 +361,8 @@ private slots:
     void proc_action_procreboot(bool bFlag);
     //regexp text sequence
     void proc_action_GenRegExpTextSeq();
+
+    //A/B模式 多行多处理
+    void proc_mode_AB_multiline_multiproc(T_RegExpParas &tPara);
 };
 #endif // MAINWINDOW_H

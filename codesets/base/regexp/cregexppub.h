@@ -38,9 +38,20 @@
 #define LASTWITH(ARR)  ARR[ARR.size() - 1]
 #define MIDWITH(ARR, LP)  ARR[LP]
 
-typedef QString (*handlerRegExp)(QString text,QStringList regbefore, QStringList regafter, QString mode);
+
+typedef struct T_handlerRegExpParas{
+    QString text;
+    QStringList regbefore;
+    QStringList regafter;
+    QString mode;
+    quint8 ucMultLineMultiProcMode; /* A/B模式 多行多处理 ,见 EUM_MODE_MULTILINE_MULTIPROC */
+}T_handlerRegExpParas, *P_handlerRegExpParas;
+
+
+typedef QString (*handlerRegExp)(T_handlerRegExpParas &tHandlerParas);
 typedef QString (*handlerTip)(QString configfilename, quint32 dwClasstype, int filetype);
 typedef QString (*handlerPost)(QString text);
+
 
 typedef struct T_GenCode{
     WORD32 dwClasstype;    /* 类型 */
@@ -67,11 +78,26 @@ enum EUM_CLASSTYPE{
     EDIT_CFGFILE_OPERATIONS, //编辑配置
 };
 
+/* A/B模式 多行多处理 */
+enum EUM_MODE_MULTILINE_MULTIPROC{
+    A_MODE_MULTILINE_MULTIPROC,
+    B_MODE_MULTILINE_MULTIPROC,
+};
+
+
 typedef struct T_SignPub{
     const char *m_funname; //函数名
     const char *m_filterregexp; //过滤正则表达式
-//    const char *m_funname; //函数名
+    //    const char *m_funname; //函数名
 }T_SignPub, *P_SignPub;
+
+//参数列表
+typedef struct T_RegExpParas{
+    QString classconfig;
+    quint32 dwClasstype;
+    QString text;
+    quint8 ucMultLineMultiProcMode; /* A/B模式 多行多处理 ,见 EUM_MODE_MULTILINE_MULTIPROC */
+}T_RegExpParas, *P_RegExpParas;
 
 
 
@@ -107,7 +133,7 @@ public:
     static QString getRegExpByFile(QString filename, QString content);
     static QStringList getRegExpsByFile(QString filename,QString content);
     static QString getFileNameByClassType(quint32 dwClasstype);
-    static QString procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text);
+    static QString procTextByRegExpList(T_RegExpParas &tPara);
     static QString checkRegExpFile(QString classconfig, quint32 dwClasstype
                                    , QStringList &regexpsbef
                                    , QStringList &regexpsaft
@@ -121,18 +147,18 @@ public:
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
     static QString replaceSeqMultiPub(QString text, QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match, int &index);
     static bool handlerRegExp_PubCheck(QString text, QStringList regbefore, QStringList regafter, QString mode);
-    static QString handlerRegExp_Pub(QString text, QStringList regbefore, QStringList regafter, QString mode);
+    static QString handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara);
     static QString handlerRegExp_Special(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QString regbefore, QString regafter, QString mode);
-    static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error);
+    static QString handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error, quint8 ucModeExt);
     static QString procRegExpLineLack(QStringList strlisttmp, QStringList &reg2list, QStringList regcmplist);
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);
     static QString handlerPost_Pub(QString text);
-//    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
-//    static QString handlerTip_Setter();
+    //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
+    //    static QString handlerTip_Setter();
 
     static const QString getConfigBefore();
     static const QString getConfigBase();

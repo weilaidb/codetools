@@ -50,7 +50,7 @@ T_SignPub g_ScaleSignPub[] =
     {SIGN_CUSTOM_FORW, "[\\d]+"},
     {SIGN_CUSTOM_BIT, "\\s*[0-9a-fA-F]+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*"},
 
-//    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
+    //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
 
 const QString CRegExpPub::dirbase    = ("reg/");
@@ -207,7 +207,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
             ;
 
     text = replaceSignsItemPub(text);
-//    replaceSignsItemTestPub(text);
+    //    replaceSignsItemTestPub(text);
     return text;
 }
 
@@ -216,7 +216,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
 QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
 {
     CHECK_NULLPOINTER_RETURN_STR(temp, dealText);
-//    g_ScaleSignPub;
+    //    g_ScaleSignPub;
     if(QString(SIGN_CUSTOM_H2D) == QString(temp->m_funname))
     {
         //十六进制转十进制
@@ -320,10 +320,10 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         dealText = QString::number(resultNum);
     }
 
-//    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
-//    {
-//        dealText = CStringPub::add0xDot(dealText);
-//    }
+    //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
+    //    {
+    //        dealText = CStringPub::add0xDot(dealText);
+    //    }
 
     return dealText;
 }
@@ -350,7 +350,7 @@ QString CRegExpPub::replaceSignsItemPub(QString text)
 
             QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption
                                                  | QRegularExpression::DotMatchesEverythingOption
-//                                                 | QRegularExpression::DontCaptureOption
+                                                 //                                                 | QRegularExpression::DontCaptureOption
                                                  );
             int index = 0;
             QRegularExpressionMatch match;
@@ -435,7 +435,7 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
     QString toreplace = regafter;
     //>=10时，替换出现异常
     //反向替换
-//    for(iLp = iStartSeq; iLp <= iCount; iLp++)
+    //    for(iLp = iStartSeq; iLp <= iCount; iLp++)
     for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
         //内容替换
@@ -454,27 +454,27 @@ QString CRegExpPub::replaceSeqMultiPub(QString text,QString regafter, int iStart
                 toreplace = toreplace.replace(QString("\\%1").arg(iLp),match.captured(iLp));
             }while(toreplace.contains(QString("\\%1").arg(iLp)));
 
-//            debugApp() << ">>> in:";
-//            debugApp() << "match.captured(iLp)  bf:" << match.captured(iLp);
-//            debugApp() << "toreplace  bf:" << toreplace;
-//            debugApp() << "result  bf:" << result;
+            //            debugApp() << ">>> in:";
+            //            debugApp() << "match.captured(iLp)  bf:" << match.captured(iLp);
+            //            debugApp() << "toreplace  bf:" << toreplace;
+            //            debugApp() << "result  bf:" << result;
         }
     }
 
     if(iCount)
     {
-////        result = result.replace(match.captured(0),toreplace);
-//        debugApp() << "result  bf:" << result;
-//        debugApp() << "toreplace:" << toreplace;
-//        debugApp() << "match.capturedStart():" << match.capturedStart();
-//        debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
-//        result = result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
+        ////        result = result.replace(match.captured(0),toreplace);
+        //        debugApp() << "result  bf:" << result;
+        //        debugApp() << "toreplace:" << toreplace;
+        //        debugApp() << "match.capturedStart():" << match.capturedStart();
+        //        debugApp() << "match.capturedEnd()  :" << match.capturedEnd();
+        //        result = result.replace(match.capturedStart(), match.capturedEnd(),toreplace);
         //replace替换后的字符比替换前的长的话，后会后面的给覆盖掉呢？
         result = result.replace(match.capturedStart(), match.capturedLength(),toreplace);
-//        result = result.left(match.capturedStart()) + toreplace + result.mid(match.capturedEnd(), result.length());
+        //        result = result.left(match.capturedStart()) + toreplace + result.mid(match.capturedEnd(), result.length());
         index = MAX(match.capturedEnd(),match.capturedStart() + toreplace.length());
-//        debugApp() << "new index  :" << index;
-//        debugApp() << "result  af:" << result;
+        //        debugApp() << "new index  :" << index;
+        //        debugApp() << "result  af:" << result;
     }
 
 
@@ -488,7 +488,7 @@ QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegu
 {
     QString result(text);
     int iLp = 0;
-//    for(iLp = iStartSeq; iLp < iCount; iLp++)
+    //    for(iLp = iStartSeq; iLp < iCount; iLp++)
     for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
         //内容替换
@@ -545,9 +545,13 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
  * @param text
  * @return
  */
-QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstype, QString text)
+QString CRegExpPub::procTextByRegExpList(T_RegExpParas &tPara)
 {
     QString result("");
+    QString classconfig = tPara.classconfig;
+    quint32 dwClasstype = tPara.dwClasstype;
+    QString text        = tPara.text;
+    T_handlerRegExpParas tHandlerParas;
 
     QStringList regexpsbef = CStringPub::emptyStringList();
     QStringList regexpsaft = CStringPub::emptyStringList();
@@ -572,13 +576,20 @@ QString CRegExpPub::procTextByRegExpList(QString classconfig, quint32 dwClasstyp
 
     quint32 dwLp = 0;
     result = text;
+
+    tHandlerParas.text = text;
+    tHandlerParas.regbefore = regexpsbef;
+    tHandlerParas.regafter = regexpsaft;
+    tHandlerParas.mode     = regexpsmode;
+    tHandlerParas.ucMultLineMultiProcMode = tPara.ucMultLineMultiProcMode;
+
     for(dwLp = 0; dwLp < ARRAYSIZE(g_GenCode);++dwLp)
     {
         if(dwClasstype == g_GenCode[dwLp].dwClasstype)
         {
             if(g_GenCode[dwLp].m_handler)
             {
-                result =  g_GenCode[dwLp].m_handler(text, regexpsbef, regexpsaft, regexpsmode);
+                result =  g_GenCode[dwLp].m_handler(tHandlerParas);
             }
 
             if(g_GenCode[dwLp].m_handler_post)
@@ -629,7 +640,8 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QStringList regbefore
     return result;
 }
 
-QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter, QString mode, QString &error)
+QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore, QString regafter
+                                                , QString mode, QString &error, quint8 ucModeExt)
 {
     Q_UNUSED(mode);
     QString result = text;
@@ -649,25 +661,34 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
     quint32 dwMaxLoopCnt = 10000;
     while(index < result.length() && --dwMaxLoopCnt)
     {
-        index = 0;
+        if(B_MODE_MULTILINE_MULTIPROC == ucModeExt)
+        {
+            index = 0;
+        }
         match = regularExpression.match(result, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-//            debugApp() << "------------------ out loop-------------";
-//            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
-////            debugApp() << "match.capturedLength:" << match.capturedLength();
-////            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
-//            debugApp() << "match.capturedTexts :" << match.capturedTexts();
-////            debugApp() << "match.capturedStart :" << match.capturedStart();
-////            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
-////            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
-//            debugApp() << "reg after :" << regafter;
-//            debugApp() << "result  bf:" << result;
-//            debugApp() << "regularExpression.captureCount():" << regularExpression.captureCount();
+            //            debugApp() << "------------------ out loop-------------";
+            //            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            ////            debugApp() << "match.capturedLength:" << match.capturedLength();
+            ////            debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+            //            debugApp() << "match.capturedTexts :" << match.capturedTexts();
+            ////            debugApp() << "match.capturedStart :" << match.capturedStart();
+            ////            debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+            ////            debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+            //            debugApp() << "reg after :" << regafter;
+            //            debugApp() << "result  bf:" << result;
+            //            debugApp() << "regularExpression.captureCount():" << regularExpression.captureCount();
 
-//            result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match,index);
-            result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match,index2);
-//            debugApp() << "result  af:" << result;
+            if(A_MODE_MULTILINE_MULTIPROC == ucModeExt)
+            {
+                result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match,index);
+            }
+            else if(B_MODE_MULTILINE_MULTIPROC == ucModeExt)
+            {
+                result = replaceSeqMultiPub(result, regafter, 1, regularExpression.captureCount(), match,index2);
+            }
+            //            debugApp() << "result  af:" << result;
         }
         else
             break;
@@ -679,20 +700,20 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         return CStringPub::errorRegExpInvalid();
     }
 
-//    debugApp() << "================lalst";
-//    debugApp() << "match.capturedLength:" << match.capturedLength();
-//    debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
-//    debugApp() << "match.capturedTexts :" << match.capturedTexts();
-//    debugApp() << "match.capturedStart :" << match.capturedStart();
-//    debugApp() << "match.capturedEnd   :" << match.capturedEnd();
-//    debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
+    //    debugApp() << "================lalst";
+    //    debugApp() << "match.capturedLength:" << match.capturedLength();
+    //    debugApp() << "match.capturedTexts.len :" << match.capturedTexts().length();
+    //    debugApp() << "match.capturedTexts :" << match.capturedTexts();
+    //    debugApp() << "match.capturedStart :" << match.capturedStart();
+    //    debugApp() << "match.capturedEnd   :" << match.capturedEnd();
+    //    debugApp() << "dwMaxLoopCnt        :" << dwMaxLoopCnt;
 
-//    if(match.capturedTexts().length() < 2)
-//    {
-//        return CStringPub::errorListLenthNg();
-//    }
+    //    if(match.capturedTexts().length() < 2)
+    //    {
+    //        return CStringPub::errorListLenthNg();
+    //    }
 
-//    result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
+    //    result = replaceSeqMultiPub(result, regafter, 0, match.capturedTexts().length(), match);
 
 #else
     QRegularExpression re(regbefore);
@@ -710,14 +731,14 @@ QString CRegExpPub::handlerRegExp_Pub_MultiLine(QString text, QString regbefore,
         QRegularExpressionMatch match = iter.next();
         /* 打印获取每次匹配到的结果 */
         ////debugApp() << "Index: " << QString::number(count)
-                 << "Result: " << match.captured(0);
+        << "Result: " << match.captured(0);
 
         QStringList capturedTexts = match.capturedTexts();
         /* 去除结果列表的第一个后得到组捕获列表。 */
         capturedTexts.removeFirst();
 
         ////debugApp() << "Index: " << QString::number(count)
-                 << "Capture List: " << capturedTexts;
+        << "Capture List: " << capturedTexts;
         result = result.replace(match.captured(0),regafter);
         count++;
     }
@@ -848,8 +869,15 @@ bool CRegExpPub::handlerRegExp_PubCheck(QString text,QStringList regbefore, QStr
     return true;
 }
 
-QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStringList regafter, QString mode)
+QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)
 {
+
+    QString text = tHandlerRegExpPara.text;
+    QStringList regbefore = tHandlerRegExpPara.regbefore;
+    QStringList regafter = tHandlerRegExpPara.regafter;
+    QString mode = tHandlerRegExpPara.mode;
+    quint8 ucModeMultLineMultiProc = tHandlerRegExpPara.ucMultLineMultiProcMode;
+
     QString result = CStringPub::emptyString();
     QString error = CStringPub::emptyString();
     QString strtmp = CStringPub::emptyString();
@@ -865,10 +893,10 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
 
     //特殊处理
     //十进制转十六进制显示异常
-//    if(handlerRegExp_Special(text, regbefore, regafter, mode).size() > 0)
-//    {
-//        return text;
-//    }
+    //    if(handlerRegExp_Special(text, regbefore, regafter, mode).size() > 0)
+    //    {
+    //        return text;
+    //    }
     debugApp() << "mode:" << mode;
     //默认为一对一
     if(CExpressPub::isEmpty(mode))
@@ -912,7 +940,7 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
         foreach (QString reg, regbefore) {
             QString to2regaftertemp = replaceSignsPub(toregafter.at(iLp));
             debugApp() << "to2regaftertemp:" << to2regaftertemp;
-            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, to2regaftertemp, mode,error);
+            strtmp = handlerRegExp_Pub_MultiLine(strtmp, reg, to2regaftertemp, mode,error, ucModeMultLineMultiProc);
             debugApp() << "strtmp:" << strtmp;
             if(CExpressPub::isFull(CStringPub::strSimLen(error)))
             {
@@ -927,7 +955,7 @@ QString CRegExpPub::handlerRegExp_Pub(QString text,QStringList regbefore, QStrin
     {
         //不自动转$NL和\n的转换。
         int iLp = 0;
-//        strtmp = text;
+        //        strtmp = text;
         QStringList strlisttmp = CStringPub::stringSplitbyNewLine(text);
         QStringList reg2beforenew = CStringPub::emptyStringList();
         QStringList reg2afternew = CStringPub::emptyStringList();

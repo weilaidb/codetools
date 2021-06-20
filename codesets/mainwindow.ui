@@ -367,6 +367,12 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>配置操作</string>
     </property>
+    <widget class="QMenu" name="menu_11">
+     <property name="title">
+      <string>其他</string>
+     </property>
+     <addaction name="actionA_B_multiline_multiproc"/>
+    </widget>
     <addaction name="action_EditCfgFile"/>
     <addaction name="action_SwitchClearLeftText"/>
     <addaction name="action_TryAgain"/>
@@ -382,6 +388,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_search"/>
     <addaction name="action_autoconvertaf"/>
     <addaction name="action_del_BCompare_xml"/>
+    <addaction name="menu_11"/>
    </widget>
    <widget class="QMenu" name="menu_9">
     <property name="title">
@@ -786,6 +793,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+G</string>
+   </property>
+  </action>
+  <action name="actionA_B_multiline_multiproc">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>A/B模式 多行多处理</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
    </property>
   </action>
  </widget>
