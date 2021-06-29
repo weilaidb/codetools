@@ -272,6 +272,9 @@ private slots:
     bool proc_newnode_check(CDialogNewNode *pDiaglog);
     bool proc_configexist_check(QString newNodeName);
     void proc_newnode_copy(CDialogNewNode *pDiaglog);
+    void proc_newnode_rename(QString preNodeName, QString toNamedNodeName);
+    void proc_newnode_rename_update_menulist(QString preNodeName, QString toNamedNodeName);
+    void update_menulist_byitem(QString m_FileName, QString preNodeName, QString newNodeName);
     //tools
     void proc_action_delspace();
     void proc_action_dellastspacesort();
@@ -336,6 +339,7 @@ private slots:
     void on_action_search_triggered();
     void on_action_search_triggered_handle(int flag);
     void on_action_search_triggered_handle_quick(QString findKey);
+    bool check_findKey_exist(QString findKey);
     void proc_search_filecontent(QStringList menuList, Qt::CaseSensitivity cs, QString findKey, QStringList &resultlist);
     void updateListWidgetFrequse();
     void updateListWidgetRecentOpen();
@@ -365,5 +369,13 @@ private slots:
 
     //A/B模式 多行多处理
     void proc_mode_AB_multiline_multiproc(T_RegExpParas &tPara);
+    void on_listWidget_searchresult_customContextMenuRequested(const QPoint &pos);
+    void proc_action_rename();
+    void proc_onNameChanged(QListWidgetItem* item);
+
+private:
+    QString m_preName;
+    QString m_curName;
+    bool m_rename;
 };
 #endif // MAINWINDOW_H

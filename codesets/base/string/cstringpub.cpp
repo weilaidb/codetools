@@ -567,6 +567,19 @@ string CStringPub::getDataOfStr(BYTE *pMsg, WORD32 dwLen)
 }
 
 //support multikey by space in filter
+QStringList CStringPub::SameListInclude(QString filter, QStringList list)
+{
+    QStringList relist;
+    foreach (QString item, list) {
+        if(CStringPub::strSim(item) == CStringPub::strSim(filter))
+        {
+            relist.append(item);
+        }
+    }
+    return relist;
+}
+
+//support multikey by space in filter
 QStringList CStringPub::filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
 {
     QStringList relist;
@@ -577,6 +590,7 @@ QStringList CStringPub::filterFileListInclude(QString filter, QStringList list, 
     }
     return relist;
 }
+
 //不包含字符串filter
 QStringList CStringPub::filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs)
 {
@@ -690,6 +704,11 @@ QString CStringPub::replaceReg2Empty(QString text, QString regexp)
 QString CStringPub::replaceRegLRKuohao2Empty(QString text)
 {
     return replaceReg(text, "[【[].*[]】]", "");
+}
+
+int CStringPub::removeAll(QStringList &list, QString str)
+{
+    return list.removeAll(str);
 }
 
 QString CStringPub::getHttpStr(QString prefix,QString text)

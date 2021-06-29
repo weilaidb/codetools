@@ -6,7 +6,7 @@
 #include "supertest.h"
 //#include "testui.h"
 
-#if 1
+#if 0
 int main(int argc, char *argv[])
 {
     CTextCodecPub::setTextCodecUtf8();
@@ -29,12 +29,17 @@ int main(int argc, char *argv[])
 #else
 
 #include "cstringpub.h"
+#include "cswitchpub.h"
+#include "clogswpub.h"
 
 int main(int argc, char **argv)
 {
     qDebug() << "hello";
     unsigned char uacBuf[10] = {0xee,0xaa,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbe};
     qDebug() << CStringPub::GetStrOfData(uacBuf,10);
+
+    diagShowDrvSw ();
+    diagShowLogSw();
 
     return 0;
 }

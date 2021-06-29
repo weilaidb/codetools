@@ -24,6 +24,8 @@ public:
     static bool createDirExt(QString dirname);
     //copy
     static bool copyFile(QString filenameSrc,QString filenameDest);
+    //rename
+    static bool renameFile(QString filenameSrc,QString filenameDest);
 
     //删除文件夹及文件
     static bool deleteDirFiles(QString dirName);

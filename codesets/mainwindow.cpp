@@ -204,6 +204,9 @@ void MainWindow::init_ActionSets()
 
     //生成正则文本序号
     QObject::connect(ui->action_GenRegExpTextSeq, SIGNAL(triggered()), this, SLOT(proc_action_GenRegExpTextSeq()));
+
+    //listwidget searchresult rename
+    ui->listWidget_searchresult->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 
@@ -831,7 +834,7 @@ void MainWindow::proc_action_attention()
 
 void MainWindow::proc_action_attentionnew()
 {
-//    CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
+    //    CUIPub::showBoxInfoIsNo(CFilePub::readFileAll(m_AttentionFile));
     QString showtext = CFilePub::readFileAll(m_AttentionFile);
     CDialogAbout *pDiaglogAbout = new CDialogAbout();
     pDiaglogAbout->setText(showtext);
@@ -2103,6 +2106,24 @@ void MainWindow::proc_search_filecontent(QStringList menuList, Qt::CaseSensitivi
         }
     }
 }
+//判断查找的key在菜单中是否存在
+bool MainWindow::check_findKey_exist(QString findKey)
+{
+    QStringList menuList = CStringPub::emptyStringList();
+    QStringList resultlist = CStringPub::emptyStringList();
+    menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
+    resultlist = CStringPub::SameListInclude(findKey, menuList);
+
+    if(CExpressPub::isZero(resultlist.size()))
+    {
+        goto ENDLABEL;
+    }
+
+    return true;
+
+ENDLABEL:
+    return false;
+}
 
 //处理查找列表
 void MainWindow::on_action_search_triggered_handle_quick(QString findKey)
@@ -2215,6 +2236,23 @@ void MainWindow::on_action_search_triggered()
 
 void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
 {
+    QStringList menuList = CStringPub::emptyStringList();
+    Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+    QStringList resultlist = CStringPub::emptyStringList();
+    QString findKey = item->text();
+
+    menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
+    resultlist = CStringPub::filterFileListInclude(findKey, menuList, cs);
+
+    if(CExpressPub::isZero(resultlist.size()))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("节点不存在[%1]").arg(findKey));
+        CStringPub::removeAll(m_ListFreqUse, findKey);
+        CFilePub::writeFileWOnly(m_FileNameMenuListFreqUse, m_ListFreqUse);
+        updateListWidgetFrequse();
+        return;
+    }
+
     QAction *tempAction = CUIPub::createActionData("tempAction", item->text());
     proc_action_gen_custom_action(tempAction);
     debugApp() << "proc_listWidget_searchresult_ItemClicked";
@@ -2607,6 +2645,78 @@ void MainWindow::proc_newnode_copy(CDialogNewNode *pDiaglog)
 
 }
 
+//重命名节点
+void MainWindow::proc_newnode_rename(QString preNodeName, QString toNamedNodeName)
+{
+    debugApp() << toNamedNodeName;
+    debugApp() << preNodeName;
+
+    if(CExpressPub::isZero(CStringPub::strSimLen(preNodeName)))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("源节点名称为空"));
+        return;
+    }
+
+    if(CExpressPub::isFalse(proc_configexist_check(preNodeName)))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("源节点配置不存在"));
+        return;
+    }
+
+    //源节点
+    QString filenameSrc = CRegExpPub::getRegExpFileNameTips(preNodeName);
+    QString filenameAfterSrc = CRegExpPub::getRegExpFileNameAfter(preNodeName);
+    QString filenameBeforeSrc = CRegExpPub::getRegExpFileNameBefore(preNodeName);
+
+    //目的节点
+    QString filename = CRegExpPub::getRegExpFileNameTips(toNamedNodeName);
+    QString filenameAfter = CRegExpPub::getRegExpFileNameAfter(toNamedNodeName);
+    QString filenameBefore = CRegExpPub::getRegExpFileNameBefore(toNamedNodeName);
+
+    CFilePub::renameFile(filenameSrc,filename);
+    CFilePub::renameFile(filenameAfterSrc, filenameAfter);
+    CFilePub::renameFile(filenameBeforeSrc, filenameBefore);
+    CUIPub::showStatusBarTimerOnly(QString("模板重命名文件%1-->%2成功").arg(preNodeName).arg(toNamedNodeName));
+
+}
+
+void MainWindow::update_menulist_byitem(QString m_FileName, QString preNodeName, QString newNodeName)
+{
+    CFilePub::deleteFileSameLine(m_FileName, preNodeName);
+    QStringList filelines = CFilePub::readFileAllFilterEmptyUniqueSort(m_FileName);
+    filelines.append(newNodeName);
+    filelines.sort();
+    if(CStringPub::strSimLen(CFilePub::writeFileWOnly(m_FileName,filelines)))
+    {
+        CUIPub::showStatusBarTimerOnly(QString("成功[标准] %1").arg(newNodeName));
+    }
+    else
+    {
+        CUIPub::showStatusBarTimerOnly(QString("失败[标准] %1").arg(newNodeName));
+    }
+
+}
+
+//重命名节点更新配置文件
+void MainWindow::proc_newnode_rename_update_menulist(QString preNodeName, QString toNamedNodeName)
+{
+    debugApp() << toNamedNodeName;
+    debugApp() << preNodeName;
+
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_stand, preNodeName))
+    {
+        update_menulist_byitem(m_FileNameMenu_stand, preNodeName, toNamedNodeName);
+    }
+
+    if(CFilePub::checkFileExistLine(m_FileNameMenu_user, preNodeName))
+    {
+        update_menulist_byitem(m_FileNameMenu_user, preNodeName, toNamedNodeName);
+    }
+
+    CUIPub::showStatusBarTimerOnly(QString("模板重命名文件%1-->%2成功").arg(preNodeName).arg(toNamedNodeName));
+
+}
+
 bool MainWindow::proc_newnode_check(CDialogNewNode *pDiaglog)
 {
     QString newNodeName = pDiaglog->getName();
@@ -2728,7 +2838,7 @@ void MainWindow::updateListRecentOpenKey(QString findKey)
 
     debugApp() <<"size recent open:" << m_ListRecentOpen.size();
     proc_frequse_findkey(findKey);
-//    CFilePub::writeFileWR(m_FileNameRecentOpen, CStringPub::stringList2StringEnter(m_ListRecentOpen));
+    //    CFilePub::writeFileWR(m_FileNameRecentOpen, CStringPub::stringList2StringEnter(m_ListRecentOpen));
 }
 
 void MainWindow::proc_action_procreboot(bool bFlag)
@@ -2764,8 +2874,8 @@ void MainWindow::proc_action_GenRegExpTextSeq()
     {
         CUIPub::showStatusBarTimerOnly("the first line must be start num!!");
         QString eg = "12\n"
-                "aL:12\n"
-                "aL::12 \n\n";
+                     "aL:12\n"
+                     "aL::12 \n\n";
         CUIPub::setTextEdit(ui->textEdit, eg + CUIPub::getTextEdit(ui->textEdit));
         return;
     }
@@ -2823,3 +2933,70 @@ void MainWindow::proc_action_GenRegExpTextSeq()
     CUIPub::setTextBrowser(ui->textBrowser, result);
 }
 
+
+void MainWindow::on_listWidget_searchresult_customContextMenuRequested(const QPoint &pos)
+{
+    QListWidgetItem* _curItem = ui->listWidget_searchresult->itemAt(pos);
+    if (_curItem == nullptr)
+        return;
+
+    QAction* action_rename = new QAction("重命名", this);
+    QObject::connect(action_rename, SIGNAL(triggered()), this, SLOT(proc_action_rename()));
+    QMenu* popMenuResult = new QMenu(this);
+    popMenuResult->addAction(action_rename);
+    popMenuResult->exec(QCursor::pos());
+    delete popMenuResult;
+    popMenuResult = nullptr;
+    delete action_rename;
+    action_rename = nullptr;
+
+}
+
+void MainWindow::proc_action_rename()
+{
+    debugApp() << "rename ";
+
+    m_rename = true;
+    m_preName = ui->listWidget_searchresult->currentItem()->text();
+    ui->listWidget_searchresult->currentItem()->setFlags(ui->listWidget_searchresult->currentItem()->flags() | Qt::ItemIsEditable);
+    ui->listWidget_searchresult->editItem(ui->listWidget_searchresult->currentItem());
+    connect(ui->listWidget_searchresult, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(proc_onNameChanged(QListWidgetItem*)));
+
+}
+
+void MainWindow::proc_onNameChanged(QListWidgetItem* item)
+{
+    if (m_rename)
+    {
+        m_curName = ui->listWidget_searchresult->currentItem()->text();
+        debugApp() << "prename:" << m_preName << ",newname:" << m_curName;
+        if (m_preName != m_curName)
+        {
+            if(check_findKey_exist(m_curName))
+            {
+                CUIPub::showStatusBarTimerOnly(QString("节点已存在:%1").arg(m_curName));
+                ui->listWidget_searchresult->currentItem()->setText(m_preName);
+                m_rename = false;
+            }
+            else
+            {
+                disconnect(ui->listWidget_searchresult, &QListWidget::itemChanged, this, &MainWindow::proc_onNameChanged);
+                ui->listWidget_searchresult->currentItem()->setText(m_curName);
+                proc_newnode_rename(m_preName,m_curName);
+                proc_newnode_rename_update_menulist(m_preName,m_curName);
+                CUIPub::showStatusBarTimerOnly(QString("重命名成功 %1-->%2").arg(m_preName).arg(m_curName));
+                m_rename = false;
+            }
+
+            //            QMessageBox _warninigDia(QMessageBox::Warning, "警告", "名称已存在，请重新编辑！", QMessageBox::Apply);
+            //            _warninigDia.setButtonText(QMessageBox::Apply, "确定");
+            //            int _retDel = _warninigDia.exec();
+            //            if (_retDel == QMessageBox::Apply)
+            //            {
+            //                m_rename = false;
+            //            }
+
+            return;
+        }
+    }
+}

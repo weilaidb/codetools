@@ -88,6 +88,8 @@ public:
     static QString replaceReg(QString text, QString regexp, QString after);
     static QString replaceReg2Empty(QString text, QString regexp);
     static QString replaceRegLRKuohao2Empty(QString text);
+    //remove
+    static int removeAll(QStringList &list, QString str);
 
     //version
     static void printDateTime();
@@ -104,6 +106,8 @@ public:
     //filter list
     static QStringList filterFileListInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
     static QStringList filterFileListNoInclude(QString filter, QStringList list, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //判断是否相同
+    static QStringList SameListInclude(QString filter, QStringList list);
     //查找关键字包括多个，以空格分隔
     static bool filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 

@@ -46,6 +46,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/ui/ \
     base/string/ \
     base/num/ \
+    base/switch/ \
     base/algorithm/ \
     base/net/zeromq/ \
     cppbase/string/ \
@@ -108,6 +109,9 @@ SOURCES += \
     base/sign/csignpub.cpp \
     base/file/cfilepub.cpp \
     base/string/cstringpub.cpp \
+    base/switch/clogsw.cpp \
+    base/switch/clogswpub.cpp \
+    base/switch/cswitchpub.cpp \
     base/ui/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
@@ -140,6 +144,9 @@ HEADERS += \
     base/map/cprocessdata.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
+    base/switch/clogsw.h \
+    base/switch/clogswpub.h \
+    base/switch/cswitchpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
     base/map/cmappub.h \

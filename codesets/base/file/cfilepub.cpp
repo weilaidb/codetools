@@ -201,6 +201,21 @@ bool CFilePub::copyFile(QString filenameSrc,QString filenameDest)
     return QFile::copy(filenameSrc, filenameDest);
 }
 
+bool CFilePub::renameFile(QString filenameSrc,QString filenameDest)
+{
+    if(CExpressPub::isFalse(fileExist(filenameSrc)))
+    {
+        debugApp() << "file not exist:" << filenameSrc;
+        return false;
+    }
+
+    debugApp() << "file src :" << filenameSrc;
+    debugApp() << "file dest:" << filenameDest;
+    createFileEmptyNoExist(filenameDest);
+    deleteFile(filenameDest);
+    return QFile::rename(filenameSrc, filenameDest);
+}
+
 bool CFilePub::deleteDirFiles(QString dirName)
 {
     QDir directory(dirName);
