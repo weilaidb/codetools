@@ -29,6 +29,8 @@ public:
 
     //删除文件夹及文件
     static bool deleteDirFiles(QString dirName);
+    static bool deleteDirIfNoFiles(QString dirName);
+    static bool deleteFileOrFolder(const QString &strPath);
     static bool checkFileExistLine(QString filename, QString line);
     static QString readFileAll(QString filename);
     static QStringList readFileAllFilterEmptyUnique(QString filename);

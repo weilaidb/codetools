@@ -337,6 +337,7 @@ private slots:
 
     void on_pushButton_clearTryAgainExt_clicked();
     void on_action_search_triggered();
+    void on_action_researchresult_triggered();
     void on_action_search_triggered_handle(int flag);
     void on_action_search_triggered_handle_quick(QString findKey);
     bool check_findKey_exist(QString findKey);

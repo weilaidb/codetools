@@ -688,9 +688,14 @@ void MainWindow::nodes_menu_find(QMenu *pMenu)
     {
         return;
     }
+    QAction *pActionReSearchResult    = CUIPub::createAction("重查结果");
+    QObject::connect(pActionReSearchResult, SIGNAL(triggered()), this, SLOT(on_action_researchresult_triggered()));
+    pActionReSearchResult->setShortcut(QCoreApplication::translate("MainWindow", "ALT+R", nullptr));
+
     QAction *pActionFind    = CUIPub::createAction("查找");
     QObject::connect(pActionFind, SIGNAL(triggered()), this, SLOT(on_action_search_triggered()));
 
+    pMenu->addAction(pActionReSearchResult);
     pMenu->addAction(pActionFind);
 }
 
@@ -2134,6 +2139,12 @@ void MainWindow::on_action_search_triggered_handle_quick(QString findKey)
     QStringList resultlist = CStringPub::emptyStringList();
     Qt::CaseSensitivity cs = pDiagSearch->getCaseSentived();
 
+
+    if(CExpressPub::isZero(CStringPub::strSimLen(findKey)))
+    {
+        findKey = pDiagSearch->getKey();
+    }
+
     menuList = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileNameMenu);
     //查看文件内容是否查找，文件名和内容都查找
     if(pDiagSearch && pDiagSearch->getFileContented())
@@ -2232,6 +2243,10 @@ ENDLABEL:
 void MainWindow::on_action_search_triggered()
 {
     on_action_search_triggered_handle(1);
+}
+void MainWindow::on_action_researchresult_triggered()
+{
+    on_action_search_triggered_handle_quick(CStringPub::emptyString());
 }
 
 void MainWindow::proc_listWidget_searchresult_ItemClicked(QListWidgetItem *item)
@@ -2676,6 +2691,11 @@ void MainWindow::proc_newnode_rename(QString preNodeName, QString toNamedNodeNam
     CFilePub::renameFile(filenameSrc,filename);
     CFilePub::renameFile(filenameAfterSrc, filenameAfter);
     CFilePub::renameFile(filenameBeforeSrc, filenameBefore);
+    //如果源文件夹没有内容则删除
+    CFilePub::deleteDirIfNoFiles(CFilePub::dirName(filenameSrc));
+    CFilePub::deleteDirIfNoFiles(CFilePub::dirName(filenameAfterSrc));
+    CFilePub::deleteDirIfNoFiles(CFilePub::dirName(filenameBeforeSrc));
+
     CUIPub::showStatusBarTimerOnly(QString("模板重命名文件%1-->%2成功").arg(preNodeName).arg(toNamedNodeName));
 
 }

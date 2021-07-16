@@ -216,6 +216,43 @@ bool CFilePub::renameFile(QString filenameSrc,QString filenameDest)
     return QFile::rename(filenameSrc, filenameDest);
 }
 
+
+bool CFilePub::deleteFileOrFolder(const QString &strPath)//要删除的文件夹或文件的路径
+{
+    if (strPath.isEmpty() || !QDir().exists(strPath))//是否传入了空的路径||路径是否存在
+        return false;
+
+    QFileInfo FileInfo(strPath);
+
+    if (FileInfo.isFile())//如果是文件
+        QFile::remove(strPath);
+    else if (FileInfo.isDir())//如果是文件夹
+    {
+        QDir qDir(strPath);
+        qDir.removeRecursively();
+    }
+    return true;
+}
+
+bool CFilePub::deleteDirIfNoFiles(QString dirName)
+{
+    QDir directory(dirName);
+    if (!directory.exists())
+    {
+        return true;
+    }
+
+    QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
+    bool error = false;
+    debugApp() << "fileNames count:" << fileNames.size();
+    if(0 == fileNames.size())
+    {
+        debugApp() << "rmdir :" <<dirName;
+        return deleteFileOrFolder(dirName);
+    }
+    return !error;
+}
+
 bool CFilePub::deleteDirFiles(QString dirName)
 {
     QDir directory(dirName);
