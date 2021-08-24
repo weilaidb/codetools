@@ -203,6 +203,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
             .replace(SIGN_CUSTOM_TB, "    ")
             .replace(SIGN_CUSTOM_SP, " ")
             .replace(SIGN_CUSTOM_DATEX, curDateTime.toString("yyyy-MM-dd_hhmmss"))
+            .replace(SIGN_CUSTOM_DATEY, curDateTime.toString("yyyyMMddhhmmss"))
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 

@@ -22,6 +22,7 @@
 #define SIGN_CUSTOM_SP        ("$SP")
 #define SIGN_CUSTOM_DATE      ("$DATE")
 #define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
+#define SIGN_CUSTOM_DATEY     ("$DATEY")  //日期以_号连接
 #define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
 #define SIGN_CUSTOM_D2H       ("$D2H")    //decimal to hexadecimal
 #define SIGN_CUSTOM_H2B       ("$H2B")    //hexadecimal to binary
