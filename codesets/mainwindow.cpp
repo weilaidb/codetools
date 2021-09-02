@@ -207,6 +207,7 @@ void MainWindow::init_ActionSets()
 
     //listwidget searchresult rename
     ui->listWidget_searchresult->setContextMenuPolicy(Qt::CustomContextMenu);
+
 }
 
 
@@ -2065,7 +2066,20 @@ void MainWindow::proc_pushButton_left_clear()
 void MainWindow::proc_pushButton_left_paste()
 {
     CUIPub::setTextEdit(ui->textEdit, CUIPub::getClipBoardText());
+    //连续处理模式
+    proc_action_MulProcMode();
 }
+
+void MainWindow::proc_action_MulProcMode()
+{
+    //连续处理模式
+    if(CUIPub::getCheckedQAction(ui->action_MulProcMode))
+    {
+        emit ui->pushButton_tryagain->clicked();
+        emit ui->pushButton_right_copy->click();
+    }
+}
+
 
 void MainWindow::proc_pushButton_tryagain()
 {

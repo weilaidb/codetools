@@ -367,6 +367,8 @@ private slots:
     void proc_action_procreboot(bool bFlag);
     //regexp text sequence
     void proc_action_GenRegExpTextSeq();
+    //mul process mode
+    void proc_action_MulProcMode();
 
     //A/B模式 多行多处理
     void proc_mode_AB_multiline_multiproc(T_RegExpParas &tPara);

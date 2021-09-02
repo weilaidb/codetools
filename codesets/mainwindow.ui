@@ -70,6 +70,12 @@
                   <height>29</height>
                  </size>
                 </property>
+                <property name="toolTip">
+                 <string/>
+                </property>
+                <property name="statusTip">
+                 <string/>
+                </property>
                 <property name="text">
                  <string>粘贴</string>
                 </property>
@@ -372,6 +378,7 @@ p, li { white-space: pre-wrap; }
       <string>其他</string>
      </property>
      <addaction name="actionA_B_multiline_multiproc"/>
+     <addaction name="action_MulProcMode"/>
     </widget>
     <addaction name="action_EditCfgFile"/>
     <addaction name="action_SwitchClearLeftText"/>
@@ -804,6 +811,20 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+E</string>
+   </property>
+  </action>
+  <action name="action_MulProcMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>连续处理模式</string>
+   </property>
+   <property name="toolTip">
+    <string>连续处理模式</string>
+   </property>
+   <property name="statusTip">
+    <string>选中时，当点击左侧粘贴时，以下动作:1)左侧tryagain;2)右侧粘上</string>
    </property>
   </action>
  </widget>
