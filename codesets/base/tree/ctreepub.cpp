@@ -11,6 +11,7 @@
 QMap<QString, T_SubNode> CTreePub::m_menuSubNode;
 QMap<QString, T_SubNode>::Iterator CTreePub::m_menuIter;
 QMap<QString, T_SubNode>::Iterator CTreePub::m_menuFindIter;
+
 QMenu *CTreePub::m_RootMenu = nullptr;
 
 
@@ -77,8 +78,8 @@ void CTreePub::initSubNode(T_SubNode &node)
 
 void CTreePub::printSubNode(T_SubNode &node)
 {
-    ////debugApp() << "isMenu:" << node.m_isMenu << ", name:" << node.m_name << ", path:" << node.m_path
-//               << ", parent:" << node.m_parent  ;
+    debugApp() << "isMenu:" << node.m_isMenu << ", name:" << node.m_name << ", path:" << node.m_path
+               << ", parent:" << node.m_parent  ;
 }
 
 bool CTreePub::setSubNode(T_SubNode &node, bool isMenu, QString path)
@@ -117,7 +118,7 @@ void CTreePub::showMenuSubNode()
         T_SubNode tNode;
         initSubNode(tNode);
         tNode = m_menuIter.value();
-        printSubNode(tNode);
+//        printSubNode(tNode);
     }
 }
 
@@ -128,10 +129,10 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
     {
         T_SubNode &tNode = m_menuIter.value();
         /**
-  *生成多级菜单
-  *根路径
-  */
-        //        printSubNode(tNode);
+        *生成多级菜单
+        *根路径
+        */
+//        printSubNode(tNode);
         //root node
         if(CExpressPub::isZero(tNode.m_parent.length()))
         {
@@ -146,7 +147,16 @@ QMenu *CTreePub::getTreeMenu(QString rootname)
         m_menuFindIter = m_menuSubNode.find(tNode.m_parent);
         if(m_menuIter != m_menuSubNode.end())
         {
-            if(tNode.m_isMenu)
+            //子节点为菜单，但是父节点去不是菜单，将本子节点处理为非菜单节点
+            if(tNode.m_isMenu && !m_menuFindIter.value().m_isMenu)
+            {
+//                printSubNode(m_menuFindIter.value());
+//                ShowTipsInfo(QString("%1 node invalid!! 2").arg(tNode.m_path));
+                tNode.m_isMenu = false;
+                continue;
+            }
+
+            if(tNode.m_isMenu && m_menuFindIter.value().m_isMenu)
             {
                 procMenuAction(m_menuFindIter.value().u.m_pMenu,tNode);
             }

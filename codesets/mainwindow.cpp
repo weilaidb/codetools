@@ -419,6 +419,9 @@ void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
 QMenu *MainWindow::proc_fromfile_menu(QString filename)
 {
     QStringList list = CFilePub::readFileAllFilterEmptyUniqueMulti(filename);
+    list.sort();
+//    CStringPub::printStringList(list);
+
     QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_AllL_ExecMulti);
     QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_SingleL_ExecMulti);
     QStringList modelist_singl_execsingle = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_SingleL_ExecSingle);
@@ -448,6 +451,7 @@ QMenu *MainWindow::proc_fromfile_menu(QString filename)
     pMenu = CTreePub::getTreeMenu(CStringPub::stringSelfMenu());
     if(pMenu)
     {
+        QObject::disconnect(pMenu, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
         QObject::connect(pMenu, SIGNAL(triggered(QAction *)), this, SLOT(proc_action_gen_custom_action(QAction *)));
     }
 
