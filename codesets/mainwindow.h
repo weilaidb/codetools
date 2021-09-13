@@ -7,6 +7,11 @@
 #include <QTextEdit>
 #include <QTimer>
 #include <QMutex>
+#include <QWidget>
+#include <QLabel>
+#include <QProgressBar>
+#include <QSpinBox>
+#include <QFontComboBox>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "basedefinepub.h"
@@ -26,6 +31,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    Q_CLASSINFO("author", "WeiLai")
+    Q_CLASSINFO("company","WeiLaiDB")
+    Q_CLASSINFO("version","1.0")
 
 public:
     MainWindow(char *appexe, QWidget *parent = nullptr);
@@ -195,6 +204,16 @@ private:
     QString m_ListNetSearchFile; //搜索数据文件名
     //net search Text
     QStringList m_NetSearchList;
+
+    //
+    QLabel *fLabCurFile;//状态栏显示当前文件的Label
+    QProgressBar *progressBar1;//状态栏上的进度条
+    QSpinBox *spinFontSize;//字体大小spinBox
+    QFontComboBox *comboFont;//字体名称combBox
+
+private:
+    void iniUiOther();
+
 
 private slots:
     void proc_action_codeFormat_File();
@@ -375,6 +394,24 @@ private slots:
     void on_listWidget_searchresult_customContextMenuRequested(const QPoint &pos);
     void proc_action_rename();
     void proc_onNameChanged(QListWidgetItem* item);
+
+    void on_textEdit_copyAvailable(bool b);
+
+    //
+    void on_spinBoxFontSize_valueChanged(int aFontSize);//字体大小
+    void on_combFont_currentIndexChanged(const QString &arg1);//选择字体
+
+    void on_action_FontBold_triggered(bool checked);
+
+    void on_textEdit_textChanged();
+
+    void on_action_FontItalic_triggered(bool checked);
+
+    void on_action_FontUnder_triggered(bool checked);
+
+    void on_action_clear_triggered();
+
+    void on_action_CurOpen_triggered();
 
 private:
     QString m_preName;

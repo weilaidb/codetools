@@ -984,6 +984,16 @@ void CUIPub::setSpliterFactor(QSplitter *pSpliter, int index, int stretch)
     pSpliter->setStretchFactor(index, stretch);
 }
 
+void CUIPub::addWidget2StatusBar(QStatusBar *statusbar, QWidget *pWidget)
+{
+    statusbar->addWidget(pWidget);
+}
+
+void CUIPub::addWidget2ToolBar(QToolBar *toolbar, QWidget *pWidget)
+{
+    toolbar->addWidget(pWidget);
+}
+
 
 void CUIPub::setComBoxFocus(QComboBox *pComboBox)
 {

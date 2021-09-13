@@ -67,6 +67,7 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
 
     ui->setupUi(this);
     show_Version();
+    iniUiOther();
     init_ActionSets();
     init_CheckBoxSets();
     init_PushButtonSets();
@@ -207,6 +208,12 @@ void MainWindow::init_ActionSets()
 
     //listwidget searchresult rename
     ui->listWidget_searchresult->setContextMenuPolicy(Qt::CustomContextMenu);
+
+
+    //自定义
+    QObject::connect(spinFontSize, SIGNAL(valueChanged(int)),this, SLOT(on_spinBoxFontSize_valueChanged(int)));
+    QObject::connect(comboFont, SIGNAL(currentIndexChanged(const QString &)),this, SLOT(on_combFont_currentIndexChanged(const QString &)));
+
 
 }
 
@@ -420,7 +427,7 @@ QMenu *MainWindow::proc_fromfile_menu(QString filename)
 {
     QStringList list = CFilePub::readFileAllFilterEmptyUniqueMulti(filename);
     list.sort();
-//    CStringPub::printStringList(list);
+    //    CStringPub::printStringList(list);
 
     QStringList modelist_alll_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_AllL_ExecMulti);
     QStringList modelist_singl_execmulti = CFilePub::readFileAllFilterEmptyUniqueMulti(m_FileMode_SingleL_ExecMulti);
@@ -2373,6 +2380,38 @@ void MainWindow::procRightSplitter()
 
 }
 
+void MainWindow::iniUiOther()
+{
+    //在状态栏上添加组件
+    fLabCurFile = new QLabel;
+    fLabCurFile->setMaximumWidth(150);
+    fLabCurFile->setText("当前文件:");
+    //无法显示是因为状态栏有其它信息显示
+    CUIPub::addWidget2StatusBar(ui->statusbar, fLabCurFile);
+
+    progressBar1 = new QProgressBar;
+    progressBar1->setMaximumWidth(200);
+    progressBar1->setMinimum(5);
+    progressBar1->setValue(ui->textEdit->font().pointSize());
+    CUIPub::addWidget2StatusBar(ui->statusbar, progressBar1);
+    //工具栏上添加组件
+    spinFontSize = new QSpinBox;//文字大小SpinBox
+    spinFontSize->setValue(ui->textEdit->font().pointSize());
+    spinFontSize->setMinimumWidth(30);
+    spinFontSize->setMaximumWidth(150);
+    CUIPub::addWidget2ToolBar(ui->toolBar, new QLabel("字体大小"));
+    CUIPub::addWidget2ToolBar(ui->toolBar, spinFontSize);
+
+    ui->toolBar->addSeparator();
+    CUIPub::addWidget2ToolBar(ui->toolBar, new QLabel("字体"));
+    comboFont = new QFontComboBox;
+    comboFont->setMinimumWidth(100);
+    comboFont->setMaximumWidth(150);
+    CUIPub::addWidget2ToolBar(ui->toolBar, comboFont);
+
+
+}
+
 
 void MainWindow::on_pushButton_mainfind_clicked()
 {
@@ -3037,4 +3076,81 @@ void MainWindow::proc_onNameChanged(QListWidgetItem* item)
             return;
         }
     }
+}
+
+void MainWindow::on_textEdit_copyAvailable(bool b)
+{
+    ui->action_Cut->setEnabled(b);
+    ui->action_Copy->setEnabled(b);
+    ui->action_Paste->setEnabled(ui->textEdit->canPaste());
+}
+
+void MainWindow::on_spinBoxFontSize_valueChanged(int aFontSize)
+{
+
+    //改变字体大小的spinBox
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(aFontSize);
+    ui->textEdit->mergeCurrentCharFormat(fmt);
+    progressBar1->setValue(aFontSize);
+}
+
+void MainWindow::on_combFont_currentIndexChanged(const QString &arg1)
+{
+    QTextCharFormat fmt;
+    fmt.setFontFamily(arg1);
+    ui->textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void MainWindow::on_action_FontBold_triggered(bool checked)
+{
+    QTextCharFormat fmt;
+    fmt = ui->textEdit->currentCharFormat();
+    if(checked)
+    {
+        fmt.setFontWeight(QFont::Bold);
+    }
+    else
+    {
+        fmt.setFontWeight(QFont::Normal);
+    }
+
+    ui->textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void MainWindow::on_textEdit_textChanged()
+{
+    QTextCharFormat fmt;
+    fmt = ui->textEdit->currentCharFormat();
+
+    ui->action_FontBold->setChecked(fmt.font().bold());
+    ui->action_FontItalic->setChecked(fmt.fontItalic());
+    ui->action_FontUnder->setChecked(fmt.fontUnderline());
+
+}
+
+void MainWindow::on_action_FontItalic_triggered(bool checked)
+{
+    QTextCharFormat fmt;
+    fmt = ui->textEdit->currentCharFormat();
+    fmt.setFontItalic(checked);
+    ui->textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void MainWindow::on_action_FontUnder_triggered(bool checked)
+{
+    QTextCharFormat fmt;
+    fmt = ui->textEdit->currentCharFormat();
+    fmt.setFontUnderline(checked);
+    ui->textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void MainWindow::on_action_clear_triggered()
+{
+    CUIPub::clearTextEdit(ui->textEdit);
+}
+
+void MainWindow::on_action_CurOpen_triggered()
+{
+    proc_actionOpenConfigFile();
 }

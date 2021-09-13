@@ -1,5 +1,21 @@
 <RCC>
     <qresource prefix="/">
         <file>title.ico</file>
+        <file>tools/new2.bmp</file>
+        <file>tools/120.bmp</file>
+        <file>tools/cut.bmp</file>
+        <file>tools/paste.bmp</file>
+        <file>tools/open3.bmp</file>
+        <file>tools/exit.bmp</file>
+        <file>tools/20.ico</file>
+        <file>tools/103.bmp</file>
+        <file>tools/430.bmp</file>
+        <file>tools/BLD.BMP</file>
+        <file>tools/DBLUNDR.BMP</file>
+        <file>tools/ITL.BMP</file>
+        <file>tools/UNDRLN.BMP</file>
+        <file>tools/WORDUNDR.BMP</file>
+        <file>tools/ByCmp.bmp</file>
+        <file>tools/Cur.bmp</file>
     </qresource>
 </RCC>

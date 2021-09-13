@@ -424,6 +424,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_newstandnode"/>
     <addaction name="action_recentopen"/>
     <addaction name="action_procreboot"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -448,12 +450,28 @@ p, li { white-space: pre-wrap; }
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_office_open"/>
+   <addaction name="separator"/>
+   <addaction name="action_Copy"/>
+   <addaction name="action_Cut"/>
+   <addaction name="action_Paste"/>
+   <addaction name="action_Clear"/>
+   <addaction name="separator"/>
+   <addaction name="action_FontBold"/>
+   <addaction name="action_FontItalic"/>
+   <addaction name="action_FontUnder"/>
+   <addaction name="action_CurOpen"/>
+   <addaction name="action_del_BCompare_xml"/>
+   <addaction name="separator"/>
   </widget>
   <action name="action_codeFormat_File">
    <property name="text">
@@ -501,6 +519,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="action_office_open">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/open3.bmp</normaloff>:/tools/open3.bmp</iconset>
+   </property>
    <property name="text">
     <string>打开</string>
    </property>
@@ -769,11 +791,19 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="action_del_BCompare_xml">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/ByCmp.bmp</normaloff>:/tools/ByCmp.bmp</iconset>
+   </property>
    <property name="text">
     <string>删除BCompare.xml</string>
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/exit.bmp</normaloff>:/tools/exit.bmp</iconset>
+   </property>
    <property name="text">
     <string>退      出</string>
    </property>
@@ -791,7 +821,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_procreboot">
    <property name="text">
-    <string>进程重启</string>
+    <string>重启</string>
    </property>
   </action>
   <action name="action_GenRegExpTextSeq">
@@ -827,8 +857,91 @@ p, li { white-space: pre-wrap; }
     <string>选中时，当点击左侧粘贴时，以下动作:1)左侧tryagain;2)右侧粘上</string>
    </property>
   </action>
+  <action name="action_Copy">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/120.bmp</normaloff>:/tools/120.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="action_Cut">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/cut.bmp</normaloff>:/tools/cut.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="action_Paste">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/paste.bmp</normaloff>:/tools/paste.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+  </action>
+  <action name="action_FontBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/BLD.BMP</normaloff>:/tools/BLD.BMP</iconset>
+   </property>
+   <property name="text">
+    <string>FontBold</string>
+   </property>
+  </action>
+  <action name="action_FontItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/ITL.BMP</normaloff>:/tools/ITL.BMP</iconset>
+   </property>
+   <property name="text">
+    <string>FontItalic</string>
+   </property>
+  </action>
+  <action name="action_FontUnder">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/UNDRLN.BMP</normaloff>:/tools/UNDRLN.BMP</iconset>
+   </property>
+   <property name="text">
+    <string>FontUnder</string>
+   </property>
+  </action>
+  <action name="action_Clear">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/103.bmp</normaloff>:/tools/103.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </action>
+  <action name="action_CurOpen">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/Cur.bmp</normaloff>:/tools/Cur.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>CurOpen</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images/app.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
@@ -843,6 +956,70 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>469</x>
      <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Copy</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Cut</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>cut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Paste</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Clear</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>220</y>
     </hint>
    </hints>
   </connection>

@@ -17,6 +17,7 @@
 #include <QCheckBox>
 #include <QSplitter>
 #include <QComboBox>
+#include <QToolBar>
 
 /**
   ** 自定义右键菜单
@@ -164,6 +165,8 @@ public:
     //QSplitter
     //分割比例
     static void setSpliterFactor(QSplitter *pSpliter, int index, int stretch);
+    static void addWidget2StatusBar(QStatusBar *statusbar, QWidget *pWidget);
+    static void addWidget2ToolBar(QToolBar *toolbar, QWidget *pWidget);
 
 public:
     enum{
