@@ -20,6 +20,7 @@
 #include "cdialognewnode.h"
 #include "cdialogsearch.h"
 #include "cregexppub.h"
+#include "cthreadextpub.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -272,6 +273,7 @@ private slots:
     void proc_action_editinginfo(QString configfilename, int type);
     void proc_action_deleteinfo(QString configfilename, int type);
     void proc_action_TryAgain();
+    void proc_action_TryAgain_Thread();
     void proc_frequse_config(QString configfilename);
     void proc_frequse_findkey(QString findKey);
     void proc_action_background_update(bool bFlag);
@@ -417,5 +419,18 @@ private:
     QString m_preName;
     QString m_curName;
     bool m_rename;
+
+
+private:
+       CThreadExtPub threadMonitor;
+
+private slots:
+    void    onthreadM_started();
+    void    onthreadM_finished();
+    void    onthreadM_newValue(int seq, int diceValue);
+    //控制线程
+    void on_ThreadM_Start();
+    void on_ThreadM_Stop();
+
 };
 #endif // MAINWINDOW_H

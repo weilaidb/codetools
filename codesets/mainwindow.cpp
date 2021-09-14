@@ -215,6 +215,11 @@ void MainWindow::init_ActionSets()
     QObject::connect(comboFont, SIGNAL(currentIndexChanged(const QString &)),this, SLOT(on_combFont_currentIndexChanged(const QString &)));
 
 
+    //Thread
+    connect(&threadMonitor,SIGNAL(started()),this,SLOT(onthreadM_started()));
+    connect(&threadMonitor,SIGNAL(finished()),this,SLOT(onthreadM_finished()));
+    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)));
+
 }
 
 
@@ -1414,6 +1419,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     ////debugApp() << "closeEvent";
     write_HistorySetting();
+    //窗口关闭事件，必须结束线程
+    if (threadMonitor.isRunning())
+    {
+        threadMonitor.stopThread();
+        threadMonitor.wait();
+    }
     event->accept();
 }
 
@@ -1939,7 +1950,7 @@ void MainWindow::proc_actionCovertMulLine()
 }
 
 
-void MainWindow::proc_action_TryAgain()
+void MainWindow::proc_action_TryAgain_Thread()
 {
     //编辑配置文件模式
     if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
@@ -1950,6 +1961,23 @@ void MainWindow::proc_action_TryAgain()
 
     setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
     proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
+
+    on_ThreadM_Stop();
+}
+
+void MainWindow::proc_action_TryAgain()
+{
+    on_ThreadM_Start();
+
+//    //编辑配置文件模式
+//    if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
+//            || CExpressPub::isEmpty(m_EditConfig))
+//    {
+//        return;
+//    }
+
+//    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
+//    proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
 
 }
 
@@ -2094,7 +2122,8 @@ void MainWindow::proc_action_MulProcMode()
 
 void MainWindow::proc_pushButton_tryagain()
 {
-    proc_action_TryAgain();
+    on_ThreadM_Start();
+    //    proc_action_TryAgain();
 }
 
 void MainWindow::proc_pushButton_right_clear()
@@ -3153,4 +3182,51 @@ void MainWindow::on_action_clear_triggered()
 void MainWindow::on_action_CurOpen_triggered()
 {
     proc_actionOpenConfigFile();
+}
+
+void MainWindow::onthreadM_started()
+{
+    //线程的started()信号的响应槽函数
+    CUIPub::showStatusBar(ui->statusbar, "线程开始");
+}
+
+void MainWindow::onthreadM_finished()
+{
+    //线程的 finished()信号的响应槽函数
+    CUIPub::showStatusBar(ui->statusbar, "线程结束");
+}
+
+void MainWindow::onthreadM_newValue(int seq, int diceValue)
+{
+    //的newValue()信号的响应槽函数，显示内容
+//    CUIPub::showStatusBar(ui->statusbar, QString("seq:%1").arg(seq));
+//    qDebug() << QString("seq:%1").arg(seq);
+
+    if(1 == seq)
+    {
+        proc_action_TryAgain_Thread();
+    }
+    else if(10 == seq)
+    {
+        on_ThreadM_Stop();
+    }
+    else
+    {
+
+    }
+
+}
+
+void MainWindow::on_ThreadM_Start()
+{
+    //启动线程 按钮
+    threadMonitor.start();
+    threadMonitor.diceBegin();
+}
+
+void MainWindow::on_ThreadM_Stop()
+{
+    //结束线程 按钮
+    threadMonitor.stopThread();//结束线程的run()函数执行
+    threadMonitor.wait();//
 }

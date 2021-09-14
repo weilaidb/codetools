@@ -112,6 +112,7 @@ SOURCES += \
     base/switch/clogsw.cpp \
     base/switch/clogswpub.cpp \
     base/switch/cswitchpub.cpp \
+    base/thread/cthreadextpub.cpp \
     base/ui/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
@@ -147,6 +148,7 @@ HEADERS += \
     base/switch/clogsw.h \
     base/switch/clogswpub.h \
     base/switch/cswitchpub.h \
+    base/thread/cthreadextpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
     base/map/cmappub.h \
