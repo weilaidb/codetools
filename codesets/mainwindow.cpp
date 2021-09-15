@@ -21,6 +21,7 @@
 #include "csqlpub.h"
 #ifdef WIN32
 #include "cofficepub.h"
+#include <windows.h>
 #endif
 #include "cdialogpub.h"
 #include "cnetpub.h"
@@ -219,6 +220,9 @@ void MainWindow::init_ActionSets()
     connect(&threadMonitor,SIGNAL(started()),this,SLOT(onthreadM_started()));
     connect(&threadMonitor,SIGNAL(finished()),this,SLOT(onthreadM_finished()));
     connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)));
+//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::DirectConnection);
+//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::QueuedConnection);
+//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::BlockingQueuedConnection);
 
 }
 
@@ -3200,11 +3204,20 @@ void MainWindow::onthreadM_newValue(int seq, int diceValue)
 {
     //的newValue()信号的响应槽函数，显示内容
 //    CUIPub::showStatusBar(ui->statusbar, QString("seq:%1").arg(seq));
-//    qDebug() << QString("seq:%1").arg(seq);
+    qDebug() << QString("seq:%1").arg(seq);
 
     if(1 == seq)
     {
+#if 0
+        //dead loop test
+        while(1)
+        {
+            Sleep(1000);
+            qDebug() << "dead loop here";
+        }
+#endif
         proc_action_TryAgain_Thread();
+
     }
     else if(10 == seq)
     {
