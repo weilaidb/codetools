@@ -41,6 +41,7 @@ public:
     MainWindow(char *appexe, QWidget *parent = nullptr);
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
+    bool eventFilter(QObject *target, QEvent *event);
 
 private:
     void show_Version();
@@ -50,6 +51,7 @@ private:
     void init_Vars();
     void init_UiSets();
     void init_PushButtonSets();
+    void init_UiKeys();
     void read_Setting();
     void proc_HistorySetting(int type);
     void read_HistorySetting();
@@ -432,5 +434,6 @@ private slots:
     void on_ThreadM_Start();
     void on_ThreadM_Stop();
 
+    void on_action_CurRightOpen_triggered();
 };
 #endif // MAINWINDOW_H

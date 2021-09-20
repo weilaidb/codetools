@@ -17,5 +17,6 @@
         <file>tools/WORDUNDR.BMP</file>
         <file>tools/ByCmp.bmp</file>
         <file>tools/Cur.bmp</file>
+        <file>tools/CurRt.bmp</file>
     </qresource>
 </RCC>

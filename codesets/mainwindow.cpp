@@ -137,6 +137,11 @@ void MainWindow::init_PushButtonSets()
     QObject::connect(ui->action_hidebuttonswitch, SIGNAL(triggered()), this, SLOT(hide_PushButtonSets()));
 }
 
+void MainWindow::init_UiKeys()
+{
+    ui->textEdit->installEventFilter(this);
+}
+
 void MainWindow::init_ActionSets()
 {
     QObject::connect(ui->action_codeFormat_File, SIGNAL(triggered()), this, SLOT(proc_action_codeFormat_File()));
@@ -220,9 +225,9 @@ void MainWindow::init_ActionSets()
     connect(&threadMonitor,SIGNAL(started()),this,SLOT(onthreadM_started()));
     connect(&threadMonitor,SIGNAL(finished()),this,SLOT(onthreadM_finished()));
     connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)));
-//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::DirectConnection);
-//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::QueuedConnection);
-//    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::BlockingQueuedConnection);
+    //    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::DirectConnection);
+    //    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::QueuedConnection);
+    //    connect(&threadMonitor,SIGNAL(newValue(int,int)),this,SLOT(onthreadM_newValue(int,int)), Qt::BlockingQueuedConnection);
 
 }
 
@@ -1432,6 +1437,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
+bool MainWindow::eventFilter(QObject *target, QEvent *event)
+{
+    if (target == ui->textEdit) {
+        if (event->type() == QEvent::KeyPress) {
+            //            QKeyEvent *keyEvent = static_cast(event);
+            //            if (keyEvent->key() == Qt::Key_Space) {
+            //                focusNextChild();
+            //                return true;
+            //            }
+        }
+    }
+    //    return eventFilter(target, event);
+    //    return QDialog::eventFilter(target, event);
+    return FALSE;
+}
+
 
 void MainWindow::clearDialogText()
 {
@@ -1973,15 +1994,15 @@ void MainWindow::proc_action_TryAgain()
 {
     on_ThreadM_Start();
 
-//    //编辑配置文件模式
-//    if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
-//            || CExpressPub::isEmpty(m_EditConfig))
-//    {
-//        return;
-//    }
+    //    //编辑配置文件模式
+    //    if(CUIPub::isCheckedQAction(ui->action_EditCfgFile)
+    //            || CExpressPub::isEmpty(m_EditConfig))
+    //    {
+    //        return;
+    //    }
 
-//    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
-//    proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
+    //    setWindowTitle(QString("生成代码【%1】").arg(m_EditConfig));
+    //    proc_action_gen_pub(m_EditConfig, EUM_CLASSTYPE::COMMON_OPERATIONS);
 
 }
 
@@ -3191,19 +3212,19 @@ void MainWindow::on_action_CurOpen_triggered()
 void MainWindow::onthreadM_started()
 {
     //线程的started()信号的响应槽函数
-    CUIPub::showStatusBar(ui->statusbar, "线程开始");
+    //    CUIPub::showStatusBar(ui->statusbar, "线程开始");
 }
 
 void MainWindow::onthreadM_finished()
 {
     //线程的 finished()信号的响应槽函数
-    CUIPub::showStatusBar(ui->statusbar, "线程结束");
+    //    CUIPub::showStatusBar(ui->statusbar, "线程结束");
 }
 
 void MainWindow::onthreadM_newValue(int seq, int diceValue)
 {
     //的newValue()信号的响应槽函数，显示内容
-//    CUIPub::showStatusBar(ui->statusbar, QString("seq:%1").arg(seq));
+    //    CUIPub::showStatusBar(ui->statusbar, QString("seq:%1").arg(seq));
     qDebug() << QString("seq:%1").arg(seq);
 
     if(1 == seq)
@@ -3242,4 +3263,9 @@ void MainWindow::on_ThreadM_Stop()
     //结束线程 按钮
     threadMonitor.stopThread();//结束线程的run()函数执行
     threadMonitor.wait();//
+}
+
+void MainWindow::on_action_CurRightOpen_triggered()
+{
+    proc_actionOpenConfigFileR();
 }

@@ -470,6 +470,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="action_FontItalic"/>
    <addaction name="action_FontUnder"/>
    <addaction name="action_CurOpen"/>
+   <addaction name="action_CurRightOpen"/>
    <addaction name="action_del_BCompare_xml"/>
    <addaction name="separator"/>
   </widget>
@@ -936,6 +937,15 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>CurOpen</string>
+   </property>
+  </action>
+  <action name="action_CurRightOpen">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/CurRt.bmp</normaloff>:/tools/CurRt.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>CurRightOpen</string>
    </property>
   </action>
  </widget>
