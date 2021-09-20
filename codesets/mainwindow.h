@@ -42,6 +42,7 @@ public:
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
     bool eventFilter(QObject *target, QEvent *event);
+    bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
 
 private:
     void show_Version();
@@ -51,7 +52,7 @@ private:
     void init_Vars();
     void init_UiSets();
     void init_PushButtonSets();
-    void init_UiKeys();
+    void InstallEventFilterSets();
     void read_Setting();
     void proc_HistorySetting(int type);
     void read_HistorySetting();

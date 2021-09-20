@@ -74,6 +74,7 @@ MainWindow::MainWindow(char *appexe, QWidget *parent)
     init_PushButtonSets();
     init_Vars();
     init_UiSets();
+    InstallEventFilterSets();
 
     read_Setting();
 }
@@ -137,7 +138,7 @@ void MainWindow::init_PushButtonSets()
     QObject::connect(ui->action_hidebuttonswitch, SIGNAL(triggered()), this, SLOT(hide_PushButtonSets()));
 }
 
-void MainWindow::init_UiKeys()
+void MainWindow::InstallEventFilterSets()
 {
     ui->textEdit->installEventFilter(this);
 }
@@ -1437,20 +1438,49 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-bool MainWindow::eventFilter(QObject *target, QEvent *event)
+
+bool MainWindow::eventFilter_ui_textEdit(QObject *target, QEvent *event)
 {
-    if (target == ui->textEdit) {
-        if (event->type() == QEvent::KeyPress) {
-            //            QKeyEvent *keyEvent = static_cast(event);
-            //            if (keyEvent->key() == Qt::Key_Space) {
-            //                focusNextChild();
-            //                return true;
-            //            }
+//    qDebug("eventFilter_ui_textEdit");
+
+    if (target == ui->textEdit)
+    {
+        //双击出现listView界面
+        if (event->type() == QEvent::MouseButtonDblClick) {
+            return true;
+        }
+        //单击隐藏listView界面
+        if (event->type() == QEvent::MouseButtonPress) {
+            return true;
+        }
+        //按键处理
+        if(event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            int key = keyEvent->key();
+            if (Qt::Key_Down == key) {
+                qDebug()<<"Key_Down !!";
+            } else if (Qt::Key_Up == key) {
+                qDebug()<<"Key_Up !!";
+            } else if (Qt::Key_Escape == key) {
+                qDebug()<<"Key_Escape !!";
+
+            } else if (Qt::Key_Enter == key || Qt::Key_Return == key) {
+                qDebug()<<"Key_Enter   Key_Return!!";
+            }
+            else {
+                qDebug()<<"else Key !!";
+            }
         }
     }
-    //    return eventFilter(target, event);
-    //    return QDialog::eventFilter(target, event);
-    return FALSE;
+    return QObject::eventFilter(target, event);
+}
+
+bool MainWindow::eventFilter(QObject *target, QEvent *event)
+{
+    eventFilter_ui_textEdit(target, event);
+
+    return QObject::eventFilter(target, event);
 }
 
 
