@@ -42,7 +42,6 @@ public:
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
     bool eventFilter(QObject *target, QEvent *event);
-    bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
 
 private:
     void show_Version();
@@ -436,5 +435,12 @@ private slots:
     void on_ThreadM_Stop();
 
     void on_action_CurRightOpen_triggered();
+
+private:
+    bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
+    bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);
+    bool duplicate_current_line_ui_textEdit();
+    bool duplicate_current_line_ui_textEdit_Tips();
+
 };
 #endif // MAINWINDOW_H

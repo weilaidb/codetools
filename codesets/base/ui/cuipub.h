@@ -75,6 +75,7 @@ public:
     static QString getSelectTextBrowser(QTextBrowser *pBrowser);
     static QString getSelectLineTextEdit(QTextEdit *pEdit);
     static int getSelectLine(QTextEdit *pEdit);
+    static int duplicateSelectLine(QTextEdit *pTextEdit);
     static QString getTextEdit(QTextEdit *pEdit);
     static bool findTextEdit(QTextEdit *pEdit,QString findtext, QTextDocument::FindFlags options);
     static void setLineEdit(QLineEdit *pLineEdit, QString text);

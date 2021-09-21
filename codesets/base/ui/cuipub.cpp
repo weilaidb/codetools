@@ -476,6 +476,15 @@ int CUIPub::getSelectLine(QTextEdit *pTextEdit)
     return nTextline;
 }
 
+int CUIPub::duplicateSelectLine(QTextEdit *pTextEdit)
+{
+    //当前光标
+    QTextCursor tc = pTextEdit->textCursor();
+    QString curText = getSelectLineTextEdit(pTextEdit);
+    tc.insertText("\n"+curText);
+    return 0;
+}
+
 QString CUIPub::getSelectLineTextEdit(QTextEdit *pEdit)
 {
     //    ////debugApp() << "getSelectLine  :" << getSelectLine(pEdit);

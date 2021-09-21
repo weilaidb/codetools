@@ -141,6 +141,7 @@ void MainWindow::init_PushButtonSets()
 void MainWindow::InstallEventFilterSets()
 {
     ui->textEdit->installEventFilter(this);
+    ui->textEdit_cfgTips->installEventFilter(this);
 }
 
 void MainWindow::init_ActionSets()
@@ -1441,44 +1442,85 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 bool MainWindow::eventFilter_ui_textEdit(QObject *target, QEvent *event)
 {
-//    qDebug("eventFilter_ui_textEdit");
+    //    qDebug("eventFilter_ui_textEdit");
 
     if (target == ui->textEdit)
     {
-        //双击出现listView界面
-        if (event->type() == QEvent::MouseButtonDblClick) {
-            return true;
-        }
-        //单击隐藏listView界面
-        if (event->type() == QEvent::MouseButtonPress) {
-            return true;
-        }
+//        //双击出现listView界面
+//        if (event->type() == QEvent::MouseButtonDblClick) {
+//            return true;
+//        }
+//        //单击隐藏listView界面
+//        if (event->type() == QEvent::MouseButtonPress) {
+//            return true;
+//        }
         //按键处理
         if(event->type() == QEvent::KeyPress)
         {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            Qt::KeyboardModifiers modifiers = keyEvent->modifiers();
             int key = keyEvent->key();
-            if (Qt::Key_Down == key) {
-                qDebug()<<"Key_Down !!";
-            } else if (Qt::Key_Up == key) {
-                qDebug()<<"Key_Up !!";
-            } else if (Qt::Key_Escape == key) {
-                qDebug()<<"Key_Escape !!";
 
-            } else if (Qt::Key_Enter == key || Qt::Key_Return == key) {
-                qDebug()<<"Key_Enter   Key_Return!!";
+            // 应该写成
+            if(modifiers == Qt::ControlModifier || modifiers & Qt::ControlModifier)
+            {
+                // 再判断按键
+                // 这里需要判断小键盘的情况
+                if(key == Qt::Key_J)  // 这里有两种触发形式直接按end键、或者shift+小键盘1--小键盘也可能不响应
+                {
+                    qDebug()<<"Ctrl+J";
+                    duplicate_current_line_ui_textEdit();
+                }
             }
-            else {
-                qDebug()<<"else Key !!";
-            }
+
         }
     }
     return QObject::eventFilter(target, event);
 }
 
+bool MainWindow::eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event)
+{
+    if (target == ui->textEdit_cfgTips)
+    {
+        //按键处理
+        if(event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            Qt::KeyboardModifiers modifiers = keyEvent->modifiers();
+            int key = keyEvent->key();
+
+            // 应该写成
+            if(modifiers == Qt::ControlModifier || modifiers & Qt::ControlModifier)
+            {
+                // 再判断按键
+                // 这里需要判断小键盘的情况
+                if(key == Qt::Key_J)  // 这里有两种触发形式直接按end键、或者shift+小键盘1--小键盘也可能不响应
+                {
+                    qDebug()<<"Ctrl+J";
+                    duplicate_current_line_ui_textEdit_Tips();
+                }
+            }
+
+        }
+    }
+    return QObject::eventFilter(target, event);
+}
+
+bool MainWindow::duplicate_current_line_ui_textEdit()
+{
+    return CUIPub::duplicateSelectLine(ui->textEdit);
+}
+
+bool MainWindow::duplicate_current_line_ui_textEdit_Tips()
+{
+    return CUIPub::duplicateSelectLine(ui->textEdit_cfgTips);
+}
+
+
 bool MainWindow::eventFilter(QObject *target, QEvent *event)
 {
     eventFilter_ui_textEdit(target, event);
+    eventFilter_ui_textEdit_Tips(target, event);
 
     return QObject::eventFilter(target, event);
 }
