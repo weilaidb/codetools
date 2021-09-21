@@ -3341,3 +3341,8 @@ void MainWindow::on_action_CurRightOpen_triggered()
 {
     proc_actionOpenConfigFileR();
 }
+
+void MainWindow::on_action_IP_triggered()
+{
+    CUIPub::setTextEdit(ui->textEdit, CNetWorkPub::getAllInterface());
+}

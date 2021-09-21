@@ -368,6 +368,7 @@ p, li { white-space: pre-wrap; }
     </widget>
     <addaction name="menu_6"/>
     <addaction name="menu_7"/>
+    <addaction name="action_IP"/>
    </widget>
    <widget class="QMenu" name="menu_8">
     <property name="title">
@@ -946,6 +947,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>CurRightOpen</string>
+   </property>
+  </action>
+  <action name="action_IP">
+   <property name="text">
+    <string>本地IP</string>
    </property>
   </action>
  </widget>
