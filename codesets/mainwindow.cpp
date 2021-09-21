@@ -24,7 +24,7 @@
 #include <windows.h>
 #endif
 #include "cdialogpub.h"
-#include "cnetpub.h"
+#include "cnetworkpub.h"
 #include "cregexppub.h"
 #include "cexpresspub.h"
 #include "cprintpub.h"
@@ -1561,9 +1561,9 @@ void MainWindow::create_thread_network(CNetThreadPub *&pTthread, handler_retint_
 void MainWindow::proc_action_net_server()
 {
     //#if UT_TESTCASE
-    //    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),100);
+    //    EXECLOOP(create_thread_network(m_thread_server, CNetWorkPub::startServer),100);
     //#else
-    //    EXECLOOP(create_thread_network(m_thread_server, CNetPub::startServer),1)
+    //    EXECLOOP(create_thread_network(m_thread_server, CNetWorkPub::startServer),1)
     //        #endif
 }
 
@@ -1590,18 +1590,18 @@ void MainWindow::proc_threadfinished()
 void MainWindow::proc_action_net_client()
 {
     //#if UT_TESTCASE
-    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),100);
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetWorkPub::startClient),100);
     //#else
-    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startClient),1);
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetWorkPub::startClient),1);
     //#endif
 }
 
 void MainWindow::proc_action_net_publish()
 {
     //#if UT_TESTCASE
-    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startPublish),100);
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetWorkPub::startPublish),100);
     //#else
-    //    EXECLOOP(create_thread_network(m_thread_publish,CNetPub::startPublish),1);
+    //    EXECLOOP(create_thread_network(m_thread_publish,CNetWorkPub::startPublish),1);
     //#endif
 }
 
@@ -1609,9 +1609,9 @@ void MainWindow::proc_action_net_publish()
 void MainWindow::proc_action_net_subscribe()
 {
     //#if UT_TESTCASE
-    //    EXECLOOP(create_thread_network(m_thread_client,CNetPub::startSubscribe),100);
+    //    EXECLOOP(create_thread_network(m_thread_client,CNetWorkPub::startSubscribe),100);
     //#else
-    //    EXECLOOP(create_thread_network(m_thread_subscribe,CNetPub::startSubscribe,false),1);
+    //    EXECLOOP(create_thread_network(m_thread_subscribe,CNetWorkPub::startSubscribe,false),1);
     //#endif
 }
 

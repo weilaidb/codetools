@@ -1,5 +1,6 @@
 QT       += core gui
 QT       += sql
+QT       += network
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
@@ -49,6 +50,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/switch/ \
     base/algorithm/ \
     base/net/zeromq/ \
+    base/network/ \
     cppbase/string/ \
     cppbase/mutex/ \
     testcase/stringtest/ \
@@ -103,6 +105,7 @@ SOURCES += \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
+    base/network/cnetworkpub.cpp \
     base/num/cnumpub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
@@ -143,6 +146,7 @@ HEADERS += \
     base/map/cbaseinterface.h \
     base/map/cdataprocess.h \
     base/map/cprocessdata.h \
+    base/network/cnetworkpub.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
     base/switch/clogsw.h \
