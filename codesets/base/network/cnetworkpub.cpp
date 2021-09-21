@@ -35,3 +35,36 @@ QString CNetWorkPub::getAllInterface()
 
     return result;
 }
+
+QString CNetWorkPub::getAllAddress()
+{
+    QString result;
+
+    //QNetworkInterface::allAddresses()的使用
+    QList<QHostAddress> addList=QNetworkInterface::allAddresses();
+    if (!addList.isEmpty())
+        for (int i=0;i<addList.count();i++)
+        {
+            QHostAddress aHost=addList.at(i);
+            CStringPub::appendStringEnter(result, "协  议："+ protocolName(aHost.protocol()));
+            CStringPub::appendStringEnter(result, "IP地址："+aHost.toString());
+            CStringPub::appendStringEnter(result, "");
+        }
+
+    return result;
+}
+
+QString CNetWorkPub::protocolName(QAbstractSocket::NetworkLayerProtocol protocol)
+{//通过协议类型返回协议名称
+    switch(protocol)
+    {
+    case QAbstractSocket::IPv4Protocol:
+        return "IPv4 Protocol";
+    case QAbstractSocket::IPv6Protocol:
+        return "IPv6 Protocol";
+    case QAbstractSocket::AnyIPProtocol:
+        return "Any IP Protocol";
+    default:
+        return "Unknown Network Layer Protocol";
+    }
+}

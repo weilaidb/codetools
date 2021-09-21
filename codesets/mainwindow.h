@@ -438,6 +438,8 @@ private slots:
 
     void on_action_IP_triggered();
 
+    void on_action_interfaces_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

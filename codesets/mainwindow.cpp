@@ -1446,14 +1446,14 @@ bool MainWindow::eventFilter_ui_textEdit(QObject *target, QEvent *event)
 
     if (target == ui->textEdit)
     {
-//        //双击出现listView界面
-//        if (event->type() == QEvent::MouseButtonDblClick) {
-//            return true;
-//        }
-//        //单击隐藏listView界面
-//        if (event->type() == QEvent::MouseButtonPress) {
-//            return true;
-//        }
+        //        //双击出现listView界面
+        //        if (event->type() == QEvent::MouseButtonDblClick) {
+        //            return true;
+        //        }
+        //        //单击隐藏listView界面
+        //        if (event->type() == QEvent::MouseButtonPress) {
+        //            return true;
+        //        }
         //按键处理
         if(event->type() == QEvent::KeyPress)
         {
@@ -3343,6 +3343,11 @@ void MainWindow::on_action_CurRightOpen_triggered()
 }
 
 void MainWindow::on_action_IP_triggered()
+{
+    CUIPub::setTextEdit(ui->textEdit, CNetWorkPub::getAllAddress());
+}
+
+void MainWindow::on_action_interfaces_triggered()
 {
     CUIPub::setTextEdit(ui->textEdit, CNetWorkPub::getAllInterface());
 }
