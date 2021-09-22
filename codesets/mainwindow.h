@@ -443,6 +443,8 @@ private slots:
 
     void on_actionTcp_Client_triggered();
 
+    void on_actionUDP_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

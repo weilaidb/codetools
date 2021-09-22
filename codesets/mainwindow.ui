@@ -377,6 +377,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menu_7"/>
     <addaction name="action_interfaces"/>
     <addaction name="menuTCP"/>
+    <addaction name="actionUDP"/>
    </widget>
    <widget class="QMenu" name="menu_8">
     <property name="title">
@@ -970,6 +971,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionTcp_Client">
    <property name="text">
     <string>Tcp Client</string>
+   </property>
+  </action>
+  <action name="actionUDP">
+   <property name="text">
+    <string>UDP测试</string>
    </property>
   </action>
  </widget>

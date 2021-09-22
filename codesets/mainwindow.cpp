@@ -46,6 +46,7 @@
 #include "cnetdiaglog.h"
 #include "ctcpserverwindow.h"
 #include "ctcpclientwindow.h"
+#include "cudpwindow.h"
 
 /**
   **处理内容最大值
@@ -3371,4 +3372,13 @@ void MainWindow::on_actionTcp_Client_triggered()
 
     pTcpClientWindow->show();
 
+}
+
+void MainWindow::on_actionUDP_triggered()
+{
+    CUdpWindow *pUdpWindow = NULL;
+
+    pUdpWindow = new CUdpWindow();
+
+    pUdpWindow->show();
 }
