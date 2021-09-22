@@ -1,5 +1,6 @@
 #include "cnetworkpub.h"
 
+#include <QHostInfo>
 #include <QNetworkInterface>
 #include "cstringpub.h"
 
@@ -67,4 +68,25 @@ QString CNetWorkPub::protocolName(QAbstractSocket::NetworkLayerProtocol protocol
     default:
         return "Unknown Network Layer Protocol";
     }
+}
+
+
+QString CNetWorkPub::lookedUpHostInfo(const QHostInfo &host)
+{
+    QString result;
+
+    qDebug() << "hostname:" << host.hostName();
+
+    //查找主机信息的槽函数
+    QList<QHostAddress> addList=host.addresses();//
+    if (!addList.isEmpty())
+        for (int i=0;i<addList.count();i++)
+        {
+            QHostAddress aHost=addList.at(i);
+            CStringPub::appendStringEnter(result, ("协 议："+protocolName(aHost.protocol())));
+            CStringPub::appendStringEnter(result, aHost.toString());
+            CStringPub::appendStringEnter(result, "");
+        }
+
+    return result;
 }

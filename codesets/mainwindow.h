@@ -12,6 +12,7 @@
 #include <QProgressBar>
 #include <QSpinBox>
 #include <QFontComboBox>
+#include <QHostInfo>
 #include "cnetthreadpub.h"
 #include "version.h"
 #include "basedefinepub.h"
@@ -435,8 +436,6 @@ private slots:
     void on_ThreadM_Stop();
 
     void on_action_CurRightOpen_triggered();
-
-    void on_action_IP_triggered();
 
     void on_action_interfaces_triggered();
 

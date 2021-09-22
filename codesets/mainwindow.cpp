@@ -43,6 +43,7 @@
 #include <QProgressBar>
 #include <csignpub.h>
 #include "cdialogabout.h"
+#include "cnetdiaglog.h"
 
 /**
   **处理内容最大值
@@ -3342,12 +3343,8 @@ void MainWindow::on_action_CurRightOpen_triggered()
     proc_actionOpenConfigFileR();
 }
 
-void MainWindow::on_action_IP_triggered()
-{
-    CUIPub::setTextEdit(ui->textEdit, CNetWorkPub::getAllAddress());
-}
-
 void MainWindow::on_action_interfaces_triggered()
 {
-    CUIPub::setTextEdit(ui->textEdit, CNetWorkPub::getAllInterface());
+    CNetDiaglog tDiag(this);
+    tDiag.exec();
 }

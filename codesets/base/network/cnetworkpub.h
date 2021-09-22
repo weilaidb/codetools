@@ -2,6 +2,7 @@
 #define CNETWORKPUB_H
 
 #include <QAbstractSocket>
+#include <QHostInfo>
 #include <QString>
 
 
@@ -16,6 +17,7 @@ public:
 
 
     static QString protocolName(QAbstractSocket::NetworkLayerProtocol protocol);
+    static QString lookedUpHostInfo(const QHostInfo &host);
 };
 
 #endif // CNETWORKPUB_H

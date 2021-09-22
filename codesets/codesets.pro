@@ -105,6 +105,7 @@ SOURCES += \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
+    base/network/cnetdiaglog.cpp \
     base/network/cnetworkpub.cpp \
     base/num/cnumpub.cpp \
     base/print/cprintpub.cpp \
@@ -146,6 +147,7 @@ HEADERS += \
     base/map/cbaseinterface.h \
     base/map/cdataprocess.h \
     base/map/cprocessdata.h \
+    base/network/cnetdiaglog.h \
     base/network/cnetworkpub.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
@@ -216,6 +218,7 @@ FORMS += \
     cdialognewnode.ui \
     cdialognewut.ui \
     cdialogsearch.ui \
+    cnetdialog.ui \
     mainwindow.ui \
     supertest.ui
 
