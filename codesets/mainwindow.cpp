@@ -3354,11 +3354,10 @@ void MainWindow::on_action_interfaces_triggered()
 
 void MainWindow::on_actionTcp_Server_triggered()
 {
-    static CTcpServerWindow *pTcpServerWindow = NULL;
-    if(NULL == pTcpServerWindow)
-    {
-        pTcpServerWindow = new CTcpServerWindow();
-    }
+    CTcpServerWindow *pTcpServerWindow = NULL;
+
+    pTcpServerWindow = new CTcpServerWindow();
+
     pTcpServerWindow->show();
 
 }
