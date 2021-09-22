@@ -449,6 +449,10 @@ private slots:
 
     void on_actionHTTP_triggered();
 
+    void on_actionCalc_triggered();
+
+    void on_actionCmd_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

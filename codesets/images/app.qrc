@@ -18,5 +18,7 @@
         <file>tools/ByCmp.bmp</file>
         <file>tools/Cur.bmp</file>
         <file>tools/CurRt.bmp</file>
+        <file>tools/calc.bmp</file>
+        <file>tools/cmd.bmp</file>
     </qresource>
 </RCC>

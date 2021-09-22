@@ -483,6 +483,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="action_FontUnder"/>
    <addaction name="action_CurOpen"/>
    <addaction name="action_CurRightOpen"/>
+   <addaction name="actionCalc"/>
+   <addaction name="actionCmd"/>
    <addaction name="action_del_BCompare_xml"/>
    <addaction name="separator"/>
   </widget>
@@ -988,6 +990,24 @@ p, li { white-space: pre-wrap; }
   <action name="actionHTTP">
    <property name="text">
     <string>HTTP</string>
+   </property>
+  </action>
+  <action name="actionCalc">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/calc.bmp</normaloff>:/tools/calc.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Calc</string>
+   </property>
+  </action>
+  <action name="actionCmd">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/cmd.bmp</normaloff>:/tools/cmd.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Cmd</string>
    </property>
   </action>
  </widget>

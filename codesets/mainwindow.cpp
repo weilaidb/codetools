@@ -3403,3 +3403,13 @@ void MainWindow::on_actionHTTP_triggered()
 
     pHttpWindow->show();
 }
+
+void MainWindow::on_actionCalc_triggered()
+{
+    system("calc");
+}
+
+void MainWindow::on_actionCmd_triggered()
+{
+   system("cmd");
+}
