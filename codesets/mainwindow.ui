@@ -493,6 +493,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="action_CurRightOpen"/>
    <addaction name="actionCalc"/>
    <addaction name="actionCmd"/>
+   <addaction name="actionCmd_Window"/>
    <addaction name="action_del_BCompare_xml"/>
    <addaction name="separator"/>
   </widget>
@@ -1026,6 +1027,15 @@ p, li { white-space: pre-wrap; }
   <action name="action_VideoPlayer">
    <property name="text">
     <string>视频播放器</string>
+   </property>
+  </action>
+  <action name="actionCmd_Window">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/cmd.bmp</normaloff>:/tools/cmd.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>Cmd</string>
    </property>
   </action>
  </widget>

@@ -125,6 +125,7 @@ SOURCES += \
     base/switch/clogsw.cpp \
     base/switch/clogswpub.cpp \
     base/switch/cswitchpub.cpp \
+    base/system/ccmdwindow.cpp \
     base/system/csystempub.cpp \
     base/thread/cthreadextpub.cpp \
     base/ui/cuipub.cpp \
@@ -170,6 +171,7 @@ HEADERS += \
     base/switch/clogsw.h \
     base/switch/clogswpub.h \
     base/switch/cswitchpub.h \
+    base/system/ccmdwindow.h \
     base/system/csystempub.h \
     base/thread/cthreadextpub.h \
     base/ui/cuipub.h \
@@ -243,7 +245,8 @@ FORMS += \
     ui/network/tcpclient.ui \
     ui/network/tcpserver.ui \
     ui/network/udp.ui \
-    ui/network/udpmcast.ui
+    ui/network/udpmcast.ui \
+    ui/system/cmd.ui
 
 
 # Default rules for deployment.

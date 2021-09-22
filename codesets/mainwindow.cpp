@@ -51,6 +51,7 @@
 #include "chttpwindow.h"
 #include "caudioplayer.h"
 #include "csystempub.h"
+#include "ccmdwindow.h"
 
 /**
   **处理内容最大值
@@ -3424,4 +3425,14 @@ void MainWindow::on_action_AudioPlayer_triggered()
     pAudioPlayerWindow = new CAudioPlayer();
 
     pAudioPlayerWindow->show();
+}
+
+void MainWindow::on_actionCmd_Window_triggered()
+{
+    CCmdWindow *pCmdWindow = NULL;
+
+    pCmdWindow = new CCmdWindow();
+
+    pCmdWindow->show();
+
 }
