@@ -439,6 +439,8 @@ private slots:
 
     void on_action_interfaces_triggered();
 
+    void on_actionTcp_Server_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

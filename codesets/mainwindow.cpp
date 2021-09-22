@@ -44,6 +44,7 @@
 #include <csignpub.h>
 #include "cdialogabout.h"
 #include "cnetdiaglog.h"
+#include "ctcpserverwindow.h"
 
 /**
   **处理内容最大值
@@ -3170,6 +3171,8 @@ void MainWindow::proc_action_rename()
 
 void MainWindow::proc_onNameChanged(QListWidgetItem* item)
 {
+    Q_UNUSED(item)
+
     if (m_rename)
     {
         m_curName = ui->listWidget_searchresult->currentItem()->text();
@@ -3347,4 +3350,15 @@ void MainWindow::on_action_interfaces_triggered()
 {
     CNetDiaglog tDiag(this);
     tDiag.exec();
+}
+
+void MainWindow::on_actionTcp_Server_triggered()
+{
+    static CTcpServerWindow *pTcpServerWindow = NULL;
+    if(NULL == pTcpServerWindow)
+    {
+        pTcpServerWindow = new CTcpServerWindow();
+    }
+    pTcpServerWindow->show();
+
 }

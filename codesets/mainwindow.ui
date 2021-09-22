@@ -366,9 +366,17 @@ p, li { white-space: pre-wrap; }
      <addaction name="action_net_publish"/>
      <addaction name="action_net_subscribe"/>
     </widget>
+    <widget class="QMenu" name="menuTCP">
+     <property name="title">
+      <string>TCP测试</string>
+     </property>
+     <addaction name="actionTcp_Server"/>
+     <addaction name="actionTcp_Client"/>
+    </widget>
     <addaction name="menu_6"/>
     <addaction name="menu_7"/>
     <addaction name="action_interfaces"/>
+    <addaction name="menuTCP"/>
    </widget>
    <widget class="QMenu" name="menu_8">
     <property name="title">
@@ -952,6 +960,16 @@ p, li { white-space: pre-wrap; }
   <action name="action_interfaces">
    <property name="text">
     <string>网络接口信息</string>
+   </property>
+  </action>
+  <action name="actionTcp_Server">
+   <property name="text">
+    <string>Tcp Server</string>
+   </property>
+  </action>
+  <action name="actionTcp_Client">
+   <property name="text">
+    <string>Tcp Client</string>
    </property>
   </action>
  </widget>

@@ -107,6 +107,7 @@ SOURCES += \
     base/net/zeromq/cnetpub.cpp \
     base/network/cnetdiaglog.cpp \
     base/network/cnetworkpub.cpp \
+    base/network/ctcpserverwindow.cpp \
     base/num/cnumpub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
@@ -149,6 +150,7 @@ HEADERS += \
     base/map/cprocessdata.h \
     base/network/cnetdiaglog.h \
     base/network/cnetworkpub.h \
+    base/network/ctcpserverwindow.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
     base/switch/clogsw.h \
@@ -220,7 +222,8 @@ FORMS += \
     cdialogsearch.ui \
     cnetdialog.ui \
     mainwindow.ui \
-    supertest.ui
+    supertest.ui \
+    ui/tcpserver.ui
 
 
 # Default rules for deployment.
@@ -229,7 +232,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    images/app.qrc
+    images/app.qrc \
+    ui/res.qrc
 
 RC_FILE = \
     images/myapp.rc
@@ -245,4 +249,10 @@ DISTFILES += \
     libs/libzmq-v141-4_3_2/libsodium.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
-    libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib
+    libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib \
+    ui/images/110.JPG \
+    ui/images/132.bmp \
+    ui/images/212.bmp \
+    ui/images/620.bmp \
+    ui/images/624.bmp \
+    ui/images/828.bmp
