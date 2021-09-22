@@ -50,6 +50,7 @@
 #include "cudpmcastwindow.h"
 #include "chttpwindow.h"
 #include "caudioplayer.h"
+#include "csystempub.h"
 
 /**
   **处理内容最大值
@@ -3407,12 +3408,13 @@ void MainWindow::on_actionHTTP_triggered()
 
 void MainWindow::on_actionCalc_triggered()
 {
-    system("calc");
+    CSystemPub::execCmd("calc.exe");
+
 }
 
 void MainWindow::on_actionCmd_triggered()
 {
-   system("cmd");
+    CSystemPub::execCmd("cmd.exe");
 }
 
 void MainWindow::on_action_AudioPlayer_triggered()

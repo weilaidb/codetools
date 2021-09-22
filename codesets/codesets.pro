@@ -53,6 +53,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/net/zeromq/ \
     base/network/ \
     base/multimedia/ \
+    base/system/ \
     cppbase/string/ \
     cppbase/mutex/ \
     testcase/stringtest/ \
@@ -124,6 +125,7 @@ SOURCES += \
     base/switch/clogsw.cpp \
     base/switch/clogswpub.cpp \
     base/switch/cswitchpub.cpp \
+    base/system/csystempub.cpp \
     base/thread/cthreadextpub.cpp \
     base/ui/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
@@ -168,6 +170,7 @@ HEADERS += \
     base/switch/clogsw.h \
     base/switch/clogswpub.h \
     base/switch/cswitchpub.h \
+    base/system/csystempub.h \
     base/thread/cthreadextpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
