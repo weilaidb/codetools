@@ -373,6 +373,13 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionTcp_Server"/>
      <addaction name="actionTcp_Client"/>
     </widget>
+    <widget class="QMenu" name="menu_12">
+     <property name="title">
+      <string>多媒体</string>
+     </property>
+     <addaction name="action_AudioPlayer"/>
+     <addaction name="action_VideoPlayer"/>
+    </widget>
     <addaction name="menu_6"/>
     <addaction name="menu_7"/>
     <addaction name="action_interfaces"/>
@@ -380,6 +387,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionUDP"/>
     <addaction name="actionUDP_Mcast"/>
     <addaction name="actionHTTP"/>
+    <addaction name="menu_12"/>
    </widget>
    <widget class="QMenu" name="menu_8">
     <property name="title">
@@ -1008,6 +1016,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Cmd</string>
+   </property>
+  </action>
+  <action name="action_AudioPlayer">
+   <property name="text">
+    <string>音频播放器</string>
+   </property>
+  </action>
+  <action name="action_VideoPlayer">
+   <property name="text">
+    <string>视频播放器</string>
    </property>
   </action>
  </widget>

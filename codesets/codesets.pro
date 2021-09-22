@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += sql
 QT       += network
+QT       += multimedia
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
@@ -51,6 +52,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/algorithm/ \
     base/net/zeromq/ \
     base/network/ \
+    base/multimedia/ \
     cppbase/string/ \
     cppbase/mutex/ \
     testcase/stringtest/ \
@@ -103,6 +105,7 @@ SOURCES += \
     base/map/cmappub.cpp \
     base/map/cprocessdata.cpp \
     base/msgtips/cmsgtips.cpp \
+    base/multimedia/caudioplayer.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
     base/network/chttpwindow.cpp \
@@ -152,6 +155,7 @@ HEADERS += \
     base/map/cbaseinterface.h \
     base/map/cdataprocess.h \
     base/map/cprocessdata.h \
+    base/multimedia/caudioplayer.h \
     base/network/chttpwindow.h \
     base/network/cnetdiaglog.h \
     base/network/cnetworkpub.h \
@@ -231,6 +235,7 @@ FORMS += \
     cnetdialog.ui \
     mainwindow.ui \
     supertest.ui \
+    ui/audio/AudioPlayer.ui \
     ui/network/http.ui \
     ui/network/tcpclient.ui \
     ui/network/tcpserver.ui \
@@ -245,6 +250,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images/app.qrc \
+    ui/audio/res.qrc \
     ui/network/res.qrc
 
 RC_FILE = \
@@ -264,6 +270,37 @@ DISTFILES += \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib \
+    ui/audio/images/001.GIF \
+    ui/audio/images/110.JPG \
+    ui/audio/images/132.bmp \
+    ui/audio/images/212.bmp \
+    ui/audio/images/214.bmp \
+    ui/audio/images/22.ico \
+    ui/audio/images/224.bmp \
+    ui/audio/images/23.ico \
+    ui/audio/images/237.GIF \
+    ui/audio/images/316.bmp \
+    ui/audio/images/318.bmp \
+    ui/audio/images/430.bmp \
+    ui/audio/images/5.ico \
+    ui/audio/images/610.bmp \
+    ui/audio/images/612.bmp \
+    ui/audio/images/616.bmp \
+    ui/audio/images/620.bmp \
+    ui/audio/images/622.bmp \
+    ui/audio/images/624.bmp \
+    ui/audio/images/630.bmp \
+    ui/audio/images/632.bmp \
+    ui/audio/images/828.bmp \
+    ui/audio/images/Audio CD.ico \
+    ui/audio/images/Movie Clip.ico \
+    ui/audio/images/Recycle Bin empty.ico \
+    ui/audio/images/Wave Sound.ico \
+    ui/audio/images/audio_file.ico \
+    ui/audio/images/music.ico \
+    ui/audio/images/mute.bmp \
+    ui/audio/images/volumn.bmp \
+    ui/audio/music.ico \
     ui/network/images/051.JPG \
     ui/network/images/072.JPG \
     ui/network/images/075.JPG \

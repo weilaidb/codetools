@@ -49,6 +49,7 @@
 #include "cudpwindow.h"
 #include "cudpmcastwindow.h"
 #include "chttpwindow.h"
+#include "caudioplayer.h"
 
 /**
   **处理内容最大值
@@ -3412,4 +3413,13 @@ void MainWindow::on_actionCalc_triggered()
 void MainWindow::on_actionCmd_triggered()
 {
    system("cmd");
+}
+
+void MainWindow::on_action_AudioPlayer_triggered()
+{
+    CAudioPlayer *pAudioPlayerWindow = NULL;
+
+    pAudioPlayerWindow = new CAudioPlayer();
+
+    pAudioPlayerWindow->show();
 }

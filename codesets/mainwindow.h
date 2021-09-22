@@ -453,6 +453,8 @@ private slots:
 
     void on_actionCmd_triggered();
 
+    void on_action_AudioPlayer_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);
