@@ -45,6 +45,7 @@
 #include "cdialogabout.h"
 #include "cnetdiaglog.h"
 #include "ctcpserverwindow.h"
+#include "ctcpclientwindow.h"
 
 /**
   **处理内容最大值
@@ -3359,5 +3360,15 @@ void MainWindow::on_actionTcp_Server_triggered()
     pTcpServerWindow = new CTcpServerWindow();
 
     pTcpServerWindow->show();
+
+}
+
+void MainWindow::on_actionTcp_Client_triggered()
+{
+    CTcpClientWindow *pTcpClientWindow = NULL;
+
+    pTcpClientWindow = new CTcpClientWindow();
+
+    pTcpClientWindow->show();
 
 }

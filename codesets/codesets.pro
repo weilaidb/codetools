@@ -107,6 +107,7 @@ SOURCES += \
     base/net/zeromq/cnetpub.cpp \
     base/network/cnetdiaglog.cpp \
     base/network/cnetworkpub.cpp \
+    base/network/ctcpclientwindow.cpp \
     base/network/ctcpserverwindow.cpp \
     base/num/cnumpub.cpp \
     base/print/cprintpub.cpp \
@@ -150,6 +151,7 @@ HEADERS += \
     base/map/cprocessdata.h \
     base/network/cnetdiaglog.h \
     base/network/cnetworkpub.h \
+    base/network/ctcpclientwindow.h \
     base/network/ctcpserverwindow.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
@@ -223,6 +225,7 @@ FORMS += \
     cnetdialog.ui \
     mainwindow.ui \
     supertest.ui \
+    ui/tcpclient.ui \
     ui/tcpserver.ui
 
 
@@ -250,9 +253,13 @@ DISTFILES += \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib \
+    ui/images/051.JPG \
+    ui/images/072.JPG \
+    ui/images/075.JPG \
     ui/images/110.JPG \
     ui/images/132.bmp \
     ui/images/212.bmp \
     ui/images/620.bmp \
     ui/images/624.bmp \
+    ui/images/826.bmp \
     ui/images/828.bmp
