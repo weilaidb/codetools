@@ -379,6 +379,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuTCP"/>
     <addaction name="actionUDP"/>
     <addaction name="actionUDP_Mcast"/>
+    <addaction name="actionHTTP"/>
    </widget>
    <widget class="QMenu" name="menu_8">
     <property name="title">
@@ -982,6 +983,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionUDP_Mcast">
    <property name="text">
     <string>UDP组播</string>
+   </property>
+  </action>
+  <action name="actionHTTP">
+   <property name="text">
+    <string>HTTP</string>
    </property>
   </action>
  </widget>

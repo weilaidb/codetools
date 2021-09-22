@@ -105,6 +105,7 @@ SOURCES += \
     base/msgtips/cmsgtips.cpp \
     base/mysql/csqlpub.cpp \
     base/net/zeromq/cnetpub.cpp \
+    base/network/chttpwindow.cpp \
     base/network/cnetdiaglog.cpp \
     base/network/cnetworkpub.cpp \
     base/network/ctcpclientwindow.cpp \
@@ -151,6 +152,7 @@ HEADERS += \
     base/map/cbaseinterface.h \
     base/map/cdataprocess.h \
     base/map/cprocessdata.h \
+    base/network/chttpwindow.h \
     base/network/cnetdiaglog.h \
     base/network/cnetworkpub.h \
     base/network/ctcpclientwindow.h \
@@ -229,6 +231,7 @@ FORMS += \
     cnetdialog.ui \
     mainwindow.ui \
     supertest.ui \
+    ui/http.ui \
     ui/tcpclient.ui \
     ui/tcpserver.ui \
     ui/udp.ui \
