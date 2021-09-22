@@ -109,6 +109,7 @@ SOURCES += \
     base/network/cnetworkpub.cpp \
     base/network/ctcpclientwindow.cpp \
     base/network/ctcpserverwindow.cpp \
+    base/network/cudpmcastwindow.cpp \
     base/network/cudpwindow.cpp \
     base/num/cnumpub.cpp \
     base/print/cprintpub.cpp \
@@ -154,6 +155,7 @@ HEADERS += \
     base/network/cnetworkpub.h \
     base/network/ctcpclientwindow.h \
     base/network/ctcpserverwindow.h \
+    base/network/cudpmcastwindow.h \
     base/network/cudpwindow.h \
     base/num/cnumpub.h \
     base/string/cstringpub.h \
@@ -229,7 +231,8 @@ FORMS += \
     supertest.ui \
     ui/tcpclient.ui \
     ui/tcpserver.ui \
-    ui/udp.ui
+    ui/udp.ui \
+    ui/udpmcast.ui
 
 
 # Default rules for deployment.

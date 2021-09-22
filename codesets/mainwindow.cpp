@@ -47,6 +47,7 @@
 #include "ctcpserverwindow.h"
 #include "ctcpclientwindow.h"
 #include "cudpwindow.h"
+#include "cudpmcastwindow.h"
 
 /**
   **处理内容最大值
@@ -3381,4 +3382,13 @@ void MainWindow::on_actionUDP_triggered()
     pUdpWindow = new CUdpWindow();
 
     pUdpWindow->show();
+}
+
+void MainWindow::on_actionUDP_Mcast_triggered()
+{
+    CUdpMcastWindow *pUdpMcastWindow = NULL;
+
+    pUdpMcastWindow = new CUdpMcastWindow();
+
+    pUdpMcastWindow->show();
 }
