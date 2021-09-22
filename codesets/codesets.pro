@@ -231,11 +231,11 @@ FORMS += \
     cnetdialog.ui \
     mainwindow.ui \
     supertest.ui \
-    ui/http.ui \
-    ui/tcpclient.ui \
-    ui/tcpserver.ui \
-    ui/udp.ui \
-    ui/udpmcast.ui
+    ui/network/http.ui \
+    ui/network/tcpclient.ui \
+    ui/network/tcpserver.ui \
+    ui/network/udp.ui \
+    ui/network/udpmcast.ui
 
 
 # Default rules for deployment.
@@ -245,7 +245,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images/app.qrc \
-    ui/res.qrc
+    ui/network/res.qrc
 
 RC_FILE = \
     images/myapp.rc
@@ -264,13 +264,13 @@ DISTFILES += \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib \
-    ui/images/051.JPG \
-    ui/images/072.JPG \
-    ui/images/075.JPG \
-    ui/images/110.JPG \
-    ui/images/132.bmp \
-    ui/images/212.bmp \
-    ui/images/620.bmp \
-    ui/images/624.bmp \
-    ui/images/826.bmp \
-    ui/images/828.bmp
+    ui/network/images/051.JPG \
+    ui/network/images/072.JPG \
+    ui/network/images/075.JPG \
+    ui/network/images/110.JPG \
+    ui/network/images/132.bmp \
+    ui/network/images/212.bmp \
+    ui/network/images/620.bmp \
+    ui/network/images/624.bmp \
+    ui/network/images/826.bmp \
+    ui/network/images/828.bmp
