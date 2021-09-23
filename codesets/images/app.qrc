@@ -20,5 +20,6 @@
         <file>tools/CurRt.bmp</file>
         <file>tools/calc.bmp</file>
         <file>tools/cmd.bmp</file>
+        <file>tools/ENV.bmp</file>
     </qresource>
 </RCC>

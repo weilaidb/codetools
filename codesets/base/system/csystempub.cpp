@@ -1,4 +1,5 @@
 #include "csystempub.h"
+#include <QProcess>
 #include <QTextCodec>
 
 CSystemPub::CSystemPub()
@@ -30,4 +31,9 @@ void CSystemPub::setCodecUTF_8()
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     QTextCodec::setCodecForLocale(codec);
     QTextCodec::setCodecForLocale(QTextCodec::codecForLocale()); //设置UTF-8到本地
+}
+
+QString CSystemPub::getSystemEnvironment()
+{
+    return QProcessEnvironment::systemEnvironment().value("PATH");
 }

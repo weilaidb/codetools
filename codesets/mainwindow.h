@@ -457,6 +457,8 @@ private slots:
 
     void on_actionCmd_Window_triggered();
 
+    void on_actionenvironment_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

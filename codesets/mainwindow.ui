@@ -494,6 +494,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionCalc"/>
    <addaction name="actionCmd"/>
    <addaction name="actionCmd_Window"/>
+   <addaction name="actionenvironment"/>
    <addaction name="action_del_BCompare_xml"/>
    <addaction name="separator"/>
   </widget>
@@ -1036,6 +1037,15 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Cmd</string>
+   </property>
+  </action>
+  <action name="actionenvironment">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/ENV.bmp</normaloff>:/tools/ENV.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>environment</string>
    </property>
   </action>
  </widget>

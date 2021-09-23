@@ -270,6 +270,7 @@ DISTFILES += \
     images/fohand.ico \
     images/myapp.rc \
     images/tools/CurRt.bmp \
+    images/tools/ENV.bmp \
     images/tools/calc.bmp \
     images/tools/cmd.bmp \
     libs/libzmq-v141-4_3_2/libsodium.dll \

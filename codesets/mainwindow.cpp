@@ -3436,3 +3436,8 @@ void MainWindow::on_actionCmd_Window_triggered()
     pCmdWindow->show();
 
 }
+
+void MainWindow::on_actionenvironment_triggered()
+{
+    CUIPub::setTextEdit(ui->textEdit, CSystemPub::getSystemEnvironment());
+}
