@@ -21,5 +21,6 @@
         <file>tools/calc.bmp</file>
         <file>tools/cmd.bmp</file>
         <file>tools/ENV.bmp</file>
+        <file>tools/excel.bmp</file>
     </qresource>
 </RCC>

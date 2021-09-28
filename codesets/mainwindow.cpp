@@ -3446,11 +3446,23 @@ void MainWindow::on_actionenvironment_triggered()
 //生成Excel并打开
 void MainWindow::on_action_TestCaseCreateWithTime_triggered()
 {
-    QString filename = CStringPub::getCurrentExePath() + "/"  + CStringPub::getSystemDate2() + ".xls";
-    CExcelPub *pExcel = new CExcelPub;
-    pExcel->open(filename);
-    delete pExcel;
+    QString filename = CStringPub::getCurrentExePath() + "/"  + CStringPub::getSystemDate2() + ".csv";
+//    CExcelPub *pExcel = new CExcelPub;
+//    pExcel->open(filename);
+//    delete pExcel;
+
+    CFilePub::createFileEmptyNoExist(filename);
 
     CSystemPub::explorer(filename);
 
+}
+
+void MainWindow::on_action_OpenCurExcel_triggered()
+{
+//    QString filename = CStringPub::getCurrentExePath() + "/" + CUIPub::getTextBrowser(ui->textBrowser);
+    QString filename = CStringPub::getCurrentExePath() + "/" + CUIPub::getTextEdit(ui->textEdit);
+    CFilePub::createFileEmptyNoExist(filename);
+    CSystemPub::explorer(filename);
+
+//    on_action_TestCaseCreateWithTime_triggered();
 }

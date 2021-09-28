@@ -504,6 +504,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionCmd_Window"/>
    <addaction name="actionenvironment"/>
    <addaction name="action_del_BCompare_xml"/>
+   <addaction name="action_OpenCurExcel"/>
    <addaction name="separator"/>
   </widget>
   <action name="action_codeFormat_File">
@@ -970,6 +971,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>CurOpen</string>
    </property>
+   <property name="toolTip">
+    <string>打开左侧文件</string>
+   </property>
   </action>
   <action name="action_CurRightOpen">
    <property name="icon">
@@ -978,6 +982,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>CurRightOpen</string>
+   </property>
+   <property name="toolTip">
+    <string>打开右侧文件</string>
    </property>
   </action>
   <action name="action_interfaces">
@@ -1059,6 +1066,18 @@ p, li { white-space: pre-wrap; }
   <action name="action_TestCaseCreateWithTime">
    <property name="text">
     <string>带时间名称</string>
+   </property>
+  </action>
+  <action name="action_OpenCurExcel">
+   <property name="icon">
+    <iconset resource="images/app.qrc">
+     <normaloff>:/tools/excel.bmp</normaloff>:/tools/excel.bmp</iconset>
+   </property>
+   <property name="text">
+    <string>OpenCurExcel</string>
+   </property>
+   <property name="toolTip">
+    <string>打开右侧的Excel的路径</string>
    </property>
   </action>
  </widget>

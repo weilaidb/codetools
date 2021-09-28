@@ -275,6 +275,7 @@ DISTFILES += \
     images/tools/ENV.bmp \
     images/tools/calc.bmp \
     images/tools/cmd.bmp \
+    images/tools/excel.bmp \
     libs/libzmq-v141-4_3_2/libsodium.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
