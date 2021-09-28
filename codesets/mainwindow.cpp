@@ -3459,10 +3459,7 @@ void MainWindow::on_action_TestCaseCreateWithTime_triggered()
 
 void MainWindow::on_action_OpenCurExcel_triggered()
 {
-//    QString filename = CStringPub::getCurrentExePath() + "/" + CUIPub::getTextBrowser(ui->textBrowser);
-    QString filename = CStringPub::getCurrentExePath() + "/" + CUIPub::getTextEdit(ui->textEdit);
+    QString filename = CStringPub::getCurrentExePath() + "/doc/" + CUIPub::getTextEdit(ui->textEdit);
     CFilePub::createFileEmptyNoExist(filename);
     CSystemPub::explorer(filename);
-
-//    on_action_TestCaseCreateWithTime_triggered();
 }
