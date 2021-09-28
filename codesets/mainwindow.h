@@ -459,6 +459,8 @@ private slots:
 
     void on_actionenvironment_triggered();
 
+    void on_action_TestCaseCreateWithTime_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

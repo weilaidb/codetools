@@ -99,6 +99,7 @@ public:
     static QString hexToString(unsigned char *in);
     static QString GetStrOfData(unsigned char *in, int len);
     static QString getCurrentExePath();
+    static QString getSeperator();
     static bool contain(QString str, QString reg);
 
     //cpp string
@@ -112,7 +113,7 @@ public:
     static bool filterKeySpaceInclude(QString keySpace, QString orgtext, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 
     //QDir
-    static QString toNativeSeparators(QString dir);
+    static QString toNativeSeparators(QString pathName);
 
     //进制转换
     static QString scaleConvertPub(QString text, quint8 from, quint8 to);
@@ -131,6 +132,13 @@ public:
     static void appendString(QString &result, QString str);
     static void appendStringEnter(QString &result, QString str);
 
+    //QDate QTime 时间
+    static QString getSystemTimePub(QString fmt);
+    static QString getSystemTime();
+    static QString getSystemTime2();
+    static QString getSystemDatePub(QString fmt);
+    static QString getSystemDate();
+    static QString getSystemDate2();
 };
 
 #endif // CSTRINGPUB_H

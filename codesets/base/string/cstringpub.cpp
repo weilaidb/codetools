@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <QDir>
+#include <QTime>
 
 
 CStringPub::CStringPub()
@@ -547,6 +548,12 @@ QString CStringPub::getCurrentExePath()
     return fileName;
 }
 
+QString CStringPub::getSeperator()
+{
+    return QDir::separator();
+}
+
+
 bool CStringPub::contain(QString str, QString reg)
 {
     return str.contains(QRegExp(reg));
@@ -755,6 +762,36 @@ bool CStringPub::regExpMaoHaoAfterDigtals(QString str)
 void CStringPub::appendStringEnter(QString &result, QString str)
 {
     result.append(str).append("\n");
+}
+
+QString CStringPub::getSystemTimePub(QString fmt)
+{
+    return  QTime::currentTime().toString(fmt);
+}
+
+QString CStringPub::getSystemTime()
+{
+    return getSystemTimePub("hh:mm:ss");
+}
+
+QString CStringPub::getSystemTime2()
+{
+    return getSystemTimePub("hh_mm_ss");
+}
+
+QString CStringPub::getSystemDatePub(QString fmt)
+{
+    return QDateTime::currentDateTime().toString(fmt);
+}
+
+QString CStringPub::getSystemDate()
+{
+    return getSystemDatePub("yyyy-MM-dd hh:mm:ss");
+}
+
+QString CStringPub::getSystemDate2()
+{
+    return getSystemDatePub("yyyy-MM-dd hh_mm_ss");
 }
 
 void CStringPub::appendString(QString &result, QString str)

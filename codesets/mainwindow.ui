@@ -421,7 +421,15 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>测试</string>
     </property>
+    <widget class="QMenu" name="menu_13">
+     <property name="title">
+      <string>测试用例模板</string>
+     </property>
+     <addaction name="action_TestCaseCreateWithTime"/>
+    </widget>
     <addaction name="action_scan_test_dir"/>
+    <addaction name="separator"/>
+    <addaction name="menu_13"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -1046,6 +1054,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>environment</string>
+   </property>
+  </action>
+  <action name="action_TestCaseCreateWithTime">
+   <property name="text">
+    <string>带时间名称</string>
    </property>
   </action>
  </widget>

@@ -117,6 +117,7 @@ SOURCES += \
     base/network/cudpmcastwindow.cpp \
     base/network/cudpwindow.cpp \
     base/num/cnumpub.cpp \
+    base/office/cexcelpub.cpp \
     base/print/cprintpub.cpp \
     base/regexp/cregexppub.cpp \
     base/sign/csignpub.cpp \
@@ -167,6 +168,7 @@ HEADERS += \
     base/network/cudpmcastwindow.h \
     base/network/cudpwindow.h \
     base/num/cnumpub.h \
+    base/office/cexcelpub.h \
     base/string/cstringpub.h \
     base/switch/clogsw.h \
     base/switch/clogswpub.h \

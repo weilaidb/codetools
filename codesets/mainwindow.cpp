@@ -21,6 +21,7 @@
 #include "csqlpub.h"
 #ifdef WIN32
 #include "cofficepub.h"
+#include "cexcelpub.h"
 #include <windows.h>
 #endif
 #include "cdialogpub.h"
@@ -3440,4 +3441,16 @@ void MainWindow::on_actionCmd_Window_triggered()
 void MainWindow::on_actionenvironment_triggered()
 {
     CUIPub::setTextEdit(ui->textEdit, CSystemPub::getSystemEnvironment());
+}
+
+//生成Excel并打开
+void MainWindow::on_action_TestCaseCreateWithTime_triggered()
+{
+    QString filename = CStringPub::getCurrentExePath() + "/"  + CStringPub::getSystemDate2() + ".xls";
+    CExcelPub *pExcel = new CExcelPub;
+    pExcel->open(filename);
+    delete pExcel;
+
+    CSystemPub::explorer(filename);
+
 }
