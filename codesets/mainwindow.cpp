@@ -3465,6 +3465,20 @@ void MainWindow::on_action_OpenCurExcel_triggered()
     QString filename = CStringPub::getCurrentExePath() + CStringPub::constStringLeftXieHao()
             +CStringPub::constStringDoc() + CStringPub::constStringLeftXieHao()
             + CUIPub::getTextEdit(ui->textEdit);
-    CFilePub::createFileEmptyNoExist(filename);
+
+    if(CFilePub::pathNoExist(filename))
+    {
+        if(CStringPub::endWithExcel(filename))
+        {
+            CExcelPub *pExcel = new CExcelPub;
+            pExcel->open(filename);
+            delete pExcel;
+        }
+        else
+        {
+            CFilePub::createFileEmptyNoExist(filename);
+        }
+    }
+
     CSystemPub::explorer(filename);
 }

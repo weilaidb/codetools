@@ -671,6 +671,11 @@ QString CStringPub::getStringOfData(unsigned char *pStr, unsigned int dwLen, int
     return result;
 }
 
+bool CStringPub::endWithExcel(QString filename)
+{
+    return filename.endsWith("xls") || filename.endsWith("xlsx");
+}
+
 QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
 {
     bool ok;

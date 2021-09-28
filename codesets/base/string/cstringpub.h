@@ -87,6 +87,8 @@ public:
     static bool atStringList(QString str, QStringList list);
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
     static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);
+    static bool endWithExcel(QString filename);
+
     //replace
     static QString replaceReg(QString text, QString regexp, QString after);
     static QString replaceReg2Empty(QString text, QString regexp);
