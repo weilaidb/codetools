@@ -414,6 +414,21 @@ QString CStringPub::stringSelfMenu()
     return STRING_SELF_MENU;
 }
 
+QString CStringPub::constStringDoc()
+{
+    return "doc";
+}
+
+QString CStringPub::constStringTestCase()
+{
+    return "TestCase";
+}
+
+QString CStringPub::constStringLeftXieHao()
+{
+    return "/";
+}
+
 void CStringPub::clearString(QString &str)
 {
     str.clear();

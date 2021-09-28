@@ -81,6 +81,9 @@ public:
 
     //字符串
     static QString stringSelfMenu();
+    static QString constStringDoc();
+    static QString constStringTestCase();
+    static QString constStringLeftXieHao();
     static bool atStringList(QString str, QStringList list);
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
     static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);

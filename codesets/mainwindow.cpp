@@ -3446,10 +3446,13 @@ void MainWindow::on_actionenvironment_triggered()
 //生成Excel并打开
 void MainWindow::on_action_TestCaseCreateWithTime_triggered()
 {
-    QString filename = CStringPub::getCurrentExePath() + "/"  + CStringPub::getSystemDate2() + ".csv";
-//    CExcelPub *pExcel = new CExcelPub;
-//    pExcel->open(filename);
-//    delete pExcel;
+    QString filename = CStringPub::getCurrentExePath() + CStringPub::constStringLeftXieHao()
+            + CStringPub::constStringDoc() + CStringPub::constStringLeftXieHao()
+            + CStringPub::constStringTestCase()
+            + CStringPub::getSystemDate2() + ".csv";
+    //    CExcelPub *pExcel = new CExcelPub;
+    //    pExcel->open(filename);
+    //    delete pExcel;
 
     CFilePub::createFileEmptyNoExist(filename);
 
@@ -3459,7 +3462,9 @@ void MainWindow::on_action_TestCaseCreateWithTime_triggered()
 
 void MainWindow::on_action_OpenCurExcel_triggered()
 {
-    QString filename = CStringPub::getCurrentExePath() + "/doc/" + CUIPub::getTextEdit(ui->textEdit);
+    QString filename = CStringPub::getCurrentExePath() + CStringPub::constStringLeftXieHao()
+            +CStringPub::constStringDoc() + CStringPub::constStringLeftXieHao()
+            + CUIPub::getTextEdit(ui->textEdit);
     CFilePub::createFileEmptyNoExist(filename);
     CSystemPub::explorer(filename);
 }
