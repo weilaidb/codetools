@@ -11,6 +11,8 @@
 #define WORD16MAX (unsigned short)(~0)
 #define BYTEMAX (unsigned char)(~0)
 
+#define ENTERTIPS     debugApp() << __FUNCTION__;
+
 class CDefinePub
 {
 public:

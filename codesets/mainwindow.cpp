@@ -1831,6 +1831,13 @@ void MainWindow::proc_action_netsearch_custom_action(QAction *pAction)
     CUIPub::execCmd(CStringPub::getHttpStr(prefix,searchText));
 }
 
+//编辑配置文件
+/**
+ * @brief MainWindow::proc_action_EditCfgFile
+ * @param checked
+ * 选中表示编辑
+ * 未选中表示退出编辑
+ */
 void MainWindow::proc_action_EditCfgFile(bool checked)
 {
     if(CExpressPub::isFalse(checked))

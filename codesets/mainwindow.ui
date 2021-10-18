@@ -463,6 +463,18 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_dellastspacesort"/>
     <addaction name="action_GenRegExpTextSeq"/>
    </widget>
+   <widget class="QMenu" name="menu_14">
+    <property name="title">
+     <string>设置</string>
+    </property>
+    <widget class="QMenu" name="menu_15">
+     <property name="title">
+      <string>模式</string>
+     </property>
+     <addaction name="action_for_dispro_singleline_execsingle"/>
+    </widget>
+    <addaction name="menu_15"/>
+   </widget>
    <addaction name="menu_10"/>
    <addaction name="menuAyStle"/>
    <addaction name="menu_4"/>
@@ -471,6 +483,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menu_9"/>
    <addaction name="menu_3"/>
    <addaction name="menuTools"/>
+   <addaction name="menu_14"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1078,6 +1091,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>打开右侧的Excel的路径</string>
+   </property>
+  </action>
+  <action name="action_for_dispro_singleline_execsingle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>关闭处理换行 for singleline_execsingle</string>
    </property>
   </action>
  </widget>
