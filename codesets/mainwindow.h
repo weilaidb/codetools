@@ -463,6 +463,10 @@ private slots:
 
     void on_action_OpenCurExcel_triggered();
 
+    void on_pushButton_saveas_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

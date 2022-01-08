@@ -242,6 +242,19 @@ p, li { white-space: pre-wrap; }
               <string>粘上</string>
              </property>
             </widget>
+            <widget class="QPushButton" name="pushButton_saveas">
+             <property name="text">
+              <string>另存为</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="pushButton">
+             <property name="toolTip">
+              <string>按日期格式保存</string>
+             </property>
+             <property name="text">
+              <string>自动保存</string>
+             </property>
+            </widget>
            </widget>
           </item>
           <item>

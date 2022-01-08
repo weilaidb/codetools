@@ -1003,6 +1003,11 @@ void CUIPub::addWidget2ToolBar(QToolBar *toolbar, QWidget *pWidget)
     toolbar->addWidget(pWidget);
 }
 
+QString CUIPub::desktopPath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + CFilePub::getSeparator();
+}
+
 
 void CUIPub::setComBoxFocus(QComboBox *pComboBox)
 {

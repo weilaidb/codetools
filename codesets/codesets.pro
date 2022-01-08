@@ -33,6 +33,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/msgtips/ \
     base/mysql/ \
     base/dialog/ \
+    base/datetime/ \
     base/thread/ \
     base/regexp/ \
     base/express/ \
@@ -98,6 +99,7 @@ SOURCES += \
     AStyle_3_1_windows/AStyle/src/astyle_main.cpp \
     base/algorithm/calgorithmpub.cpp \
     base/codec/ctextcodecpub.cpp \
+    base/datetime/cdatetime.cpp \
     base/define/cdefinepub.cpp \
     base/dialog/cdialogpub.cpp \
     base/express/cexpresspub.cpp \
@@ -152,6 +154,7 @@ HEADERS += \
     AStyle_3_1_windows/AStyle/src/astyle_main.h \
     base/algorithm/calgorithmpub.h \
     base/codec/ctextcodecpub.h \
+    base/datetime/cdatetime.h \
     base/define/cdefinepub.h \
     base/dialog/cdialogpub.h \
     base/express/cexpresspub.h \

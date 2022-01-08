@@ -53,6 +53,7 @@
 #include "caudioplayer.h"
 #include "csystempub.h"
 #include "ccmdwindow.h"
+#include "cdatetime.h"
 
 /**
   **处理内容最大值
@@ -3489,3 +3490,37 @@ void MainWindow::on_action_OpenCurExcel_triggered()
 
     CSystemPub::explorer(filename);
 }
+
+void MainWindow::on_pushButton_saveas_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("保存文件"),
+                                                    "",
+                                                    tr("Txt Files (*.txt);;All Files (*.*)"));
+
+    if (!fileName.isNull())
+    {
+        //fileName是文件名
+        qDebug() << "fileName:" << fileName;
+        CFilePub::writeFileWR(fileName, CUIPub::getTextBrowser(ui->textBrowser));
+
+    }
+    else
+    {
+        //点的是取消
+    }
+
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString fileName =  CFilePub::toNativeSeparators(CUIPub::desktopPath() + CDateTime::format1().append(".txt"));
+    qDebug() << "fileName:" << fileName;
+    CFilePub::writeFileWR(fileName, CUIPub::getTextBrowser(ui->textBrowser));
+}
+
+
+
+
+
+

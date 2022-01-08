@@ -690,6 +690,11 @@ QString CFilePub::getSeparator()
     return QDir::separator();
 }
 
+QString CFilePub::toNativeSeparators(QString filePath)
+{
+    return QDir::toNativeSeparators(filePath);
+}
+
 quint64 CFilePub::dirFileSize(const QString path)
 {
     QDir dir(path);

@@ -169,6 +169,8 @@ public:
     static void addWidget2StatusBar(QStatusBar *statusbar, QWidget *pWidget);
     static void addWidget2ToolBar(QToolBar *toolbar, QWidget *pWidget);
 
+    //路径
+    static QString desktopPath();
 public:
     enum{
         TYPE_READ = 1,

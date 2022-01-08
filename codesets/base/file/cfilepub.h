@@ -59,6 +59,7 @@ public:
     static QString getCurrentPath();
     static QString getCurrentPath(QString filename);
     static QString getSeparator();
+    static QString toNativeSeparators(QString filePath);
     static void openSystemPathOrUrl(QString filenameOrUrl);
     static quint64 dirFileSize(const QString path);
     static qint64 fileSize(const QString path);
