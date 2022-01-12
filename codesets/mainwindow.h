@@ -335,6 +335,7 @@ private slots:
     void proc_actionOpenConfigBaseDir();
     void proc_actionOpenConfigFile();
     void proc_actionOpenConfigDir();
+    void proc_pActionOpenSelectDir();
     void proc_actionOpenConfigFileR();
     void proc_actionOpenConfigDirR();
     void proc_actionOpenCfgMenu();

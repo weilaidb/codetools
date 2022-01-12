@@ -697,13 +697,16 @@ void MainWindow::nodes_menu_leftbottom(QMenu *pMenu)
     }
     QAction *pActionOpenCfgFile    = CUIPub::createAction("打开当前配置文件");
     QAction *pActionOpenCfgDir    = CUIPub::createAction("打开当前配置文件夹");
+    QAction *pActionOpenSelectDir    = CUIPub::createAction("打开选中路径");
     QObject::connect(pActionOpenCfgFile, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigFile()));
     QObject::connect(pActionOpenCfgDir, SIGNAL(triggered()), this, SLOT(proc_actionOpenConfigDir()));
+    QObject::connect(pActionOpenSelectDir, SIGNAL(triggered()), this, SLOT(proc_pActionOpenSelectDir()));
 
     pActionOpenCfgFile->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+O", nullptr));
 
     pMenu->addAction(pActionOpenCfgFile);
     pMenu->addAction(pActionOpenCfgDir);
+    pMenu->addAction(pActionOpenSelectDir);
 }
 
 void MainWindow::nodes_menu_rightbottom(QMenu *pMenu)
@@ -1940,6 +1943,18 @@ void MainWindow::proc_actionOpenConfigDir()
     QString dirPath = CFilePub::parentDir(CRegExpPub::getRegExpFileNameTips(m_EditConfig));
     CUIPub::explorerPathExt(dirPath);
 }
+
+void MainWindow::proc_pActionOpenSelectDir()
+{
+    QString selectPath = CUIPub::getSelectTextEdit(ui->textEdit);
+    if(CFilePub::isFile(selectPath))
+    {
+         selectPath = CFilePub::parentDir(selectPath);
+    }
+    CUIPub::explorerPathExt(selectPath);
+}
+
+
 
 void MainWindow::proc_actionOpenConfigFileR()
 {
