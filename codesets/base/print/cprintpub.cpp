@@ -10,6 +10,9 @@
 #include <QFile>
 #include <QDebug>
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+
 
 using namespace std;
 
@@ -120,6 +123,26 @@ void CPrintPub::printString(QString str)
 {
     ////debugApp() << str;
 }
+
+void CPrintPub::printStringData(QString str)
+{
+    QByteArray byte = str.toLocal8Bit().data();
+
+    char *ch = byte.data();
+    unsigned int dwLp =  0;
+    for(dwLp = 0;dwLp < strlen(ch);dwLp++)
+    {
+//        cout <<"No:" << dwLp << ", " << ch[dwLp] << ",";
+
+//        printf("0X%X", (unsigned char)ch[dwLp]);
+        printf("No:%-3u, 0X%X, %c", dwLp, (unsigned char)ch[dwLp], ch[dwLp]);
+        cout << endl;
+    }
+
+    ////debugApp() << str;
+}
+
+
 void CPrintPub::printStringTip(QString str, QString tip)
 {
     ////debugApp() << tip << " : " << str;

@@ -37,6 +37,7 @@ public:
     static QStringList stringSplitbyNewLineTrimEnd(const QStringList list);
     //return list by \n, filter a line with nothing
     static QStringList stringSplitbyCharFilterEmpty(const QString str, const char sign);
+    static QStringList stringSplitbyCharFilterEmpty(const QString str, QString sign);
     static QStringList stringSplitbySpaceFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmpty(const QString str);
     static QStringList stringSplitbyNewLineFilterEmptyUnique(const QString str);

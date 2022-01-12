@@ -98,6 +98,21 @@ QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, const ch
     return result;
 }
 
+QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, QString sign)
+{
+    QStringList result;
+    QStringList strlist = str.split(sign);
+    foreach (QString item, strlist) {
+        if(item.simplified().isEmpty())
+        {
+            continue;
+        }
+        result.append(item);
+    }
+
+    return result;
+}
+
 
 QStringList CStringPub::stringSplitbyNewLineTrimEnd(const QString str)
 {

@@ -95,6 +95,19 @@ bool CFilePub::pathNoExist(QString filename)
     return true;
 }
 
+bool CFilePub::pathNoExistFileOrDir(QString filename)
+{
+    QFile file(filename);
+    QDir dir(filename);
+
+    if(file.exists() || dir.exists())
+    {
+        return false;
+    }
+
+    return true;
+}
+
 
 QString CFilePub::baseName(QString filename)
 {

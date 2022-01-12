@@ -19,6 +19,7 @@ public:
     static void printStringList(QStringList list);
     static void printStringListTip(QStringList list, QString tip);
     static void printString(QString str);
+    static void printStringData(QString str);
     static void printStringTip(QString str, QString tip);
 private:
     static QString m_filename;

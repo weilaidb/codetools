@@ -1946,12 +1946,31 @@ void MainWindow::proc_actionOpenConfigDir()
 
 void MainWindow::proc_pActionOpenSelectDir()
 {
-    QString selectPath = CUIPub::getSelectTextEdit(ui->textEdit);
-    if(CFilePub::isFile(selectPath))
-    {
-         selectPath = CFilePub::parentDir(selectPath);
+    QString selectPath = CUIPub::getSelectTextEditEnter(ui->textEdit);
+//    CPrintPub::printStringData(selectPath);
+
+    QStringList listPath = CStringPub::stringSplitbyNewLineFilterEmpty(selectPath);
+    qDebug() << "selectPath:" << selectPath;
+
+
+    qDebug() << "listPath.size():" << listPath.size();
+
+
+
+    foreach (QString item, listPath) {
+        if(CFilePub::pathNoExistFileOrDir(item))
+        {
+            CUIPub::showStatusBarTimerBoth(ui->statusbar, QString("文件不存在:%1").arg(item));
+            continue;
+        }
+
+        if(CFilePub::isFile(item))
+        {
+             selectPath = CFilePub::parentDir(item);
+        }
+        CUIPub::explorerPathExt(item);
     }
-    CUIPub::explorerPathExt(selectPath);
+
 }
 
 

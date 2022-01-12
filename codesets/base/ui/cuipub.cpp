@@ -222,7 +222,7 @@ void CUIPub::procMap(QSettings *pSetting, QString name, QMap<QString, QStringLis
  * @brief CUIPub::ReadHistorySettings
  */
 QSettings * CUIPub::read_HistorySettings(QString &organization,
-                                        const QString &application)
+                                         const QString &application)
 {
     auto find_index = m_settingMap.find(bindKey(organization, application));
     if(find_index == m_settingMap.end())
@@ -272,25 +272,25 @@ void CUIPub::clearMenuAll(QMenu **ppMenu)
         }
     }
 
-//    QObjectList q = pMenu->children();
-//    pMenu->addMenu()
-//    for(int i=0;i<q.length();i++)
-//    {
-//        if(!q.at(i)->children().empty())
-//        {
-//            QMenu* pInMenu = qobject_cast<QMenu*>(q.at(i));
-//            clearMenuAll(&pInMenu);
-//        }
-//        else
-//        {
-//            QObject* qObject = q.at(i);
-//            if(qObject->inherits("QAction"))
-//            {
-//                QAction* b = qobject_cast<QAction*>(qObject);
-//                delete b;
-//            }
-//        }
-//    }
+    //    QObjectList q = pMenu->children();
+    //    pMenu->addMenu()
+    //    for(int i=0;i<q.length();i++)
+    //    {
+    //        if(!q.at(i)->children().empty())
+    //        {
+    //            QMenu* pInMenu = qobject_cast<QMenu*>(q.at(i));
+    //            clearMenuAll(&pInMenu);
+    //        }
+    //        else
+    //        {
+    //            QObject* qObject = q.at(i);
+    //            if(qObject->inherits("QAction"))
+    //            {
+    //                QAction* b = qobject_cast<QAction*>(qObject);
+    //                delete b;
+    //            }
+    //        }
+    //    }
 
     pMenu->clear();
     delete pMenu;
@@ -461,7 +461,25 @@ QString CUIPub::getSelectTextBrowser(QTextBrowser *pBrowser)
 
 QString CUIPub::getSelectTextEdit(QTextEdit *pEdit)
 {
+    //仅选中一行
+//    QTextCursor textCursor = pEdit->textCursor();
+//    textCursor.movePosition(QTextCursor::Start);   //将光标移动到起始位置
+//    textCursor.select(QTextCursor::LineUnderCursor);
+//    return textCursor.selectedText();
+
+//    return pEdit->textCursor().selection().
+
+//一行没有问题多行就有一个？号
     return pEdit->textCursor().selectedText();
+}
+
+//选中的内容带段分隔符，使用此符号进行替换\n
+QString CUIPub::getSelectTextEditEnter(QTextEdit *pEdit)
+{
+    QString selectPath = getSelectTextEdit(pEdit);
+    selectPath = selectPath.replace(QChar::ParagraphSeparator,'\n');
+
+    return selectPath;
 }
 
 int CUIPub::getSelectLine(QTextEdit *pTextEdit)
@@ -603,14 +621,14 @@ int CUIPub::execCmd(QString path)
     }
     CLogPub::msgDefault(path);
 
-//#ifndef WIN32
-//    LPCSTR filepath2 = NULL;
-//    char* puacPathBuf = new char[MAX_LENGTH];
-//    memset(puacPathBuf, 0, MAX_LENGTH);
-//    filepath2 = CTextCodecPub::convertQString2buf(path, puacPathBuf);
-//    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
-//    delete [] puacPathBuf;
-//#else
+    //#ifndef WIN32
+    //    LPCSTR filepath2 = NULL;
+    //    char* puacPathBuf = new char[MAX_LENGTH];
+    //    memset(puacPathBuf, 0, MAX_LENGTH);
+    //    filepath2 = CTextCodecPub::convertQString2buf(path, puacPathBuf);
+    //    ShellExecuteA(NULL, "open", filepath2, NULL, NULL, SW_SHOWNORMAL | SW_NORMAL | SW_SHOW);
+    //    delete [] puacPathBuf;
+    //#else
 #ifdef WIN32
     //QUrl支持中文打开
     debugApp() << "open path:" << path;
@@ -618,11 +636,11 @@ int CUIPub::execCmd(QString path)
 #else
     //QUrl支持中文打开
     debugApp() << "open path:" << path;
-//    path = "gio open " + path;
+    //    path = "gio open " + path;
     CFilePub::openSystemPathOrUrl(path);
 #endif
 
-//#endif
+    //#endif
     return 0;
 }
 
