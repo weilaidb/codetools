@@ -40,6 +40,36 @@
 #define MIDWITH(ARR, LP)  ARR[LP]
 
 
+
+/**是否包含要转换的符号(嵌套) */
+#define CHECK_INCLUDE(text,express) \
+    while(\
+    0\
+    ||text.contains (SIGN_CUSTOM_NL      )\
+    ||text.contains (SIGN_CUSTOM_TB      )\
+    ||text.contains (SIGN_CUSTOM_SP      )\
+    ||text.contains (SIGN_CUSTOM_DATE    )\
+    ||text.contains (SIGN_CUSTOM_DATEX   )\
+    ||text.contains (SIGN_CUSTOM_DATEY   )\
+    ||text.contains (SIGN_CUSTOM_H2D     )\
+    ||text.contains (SIGN_CUSTOM_D2H     )\
+    ||text.contains (SIGN_CUSTOM_H2B     )\
+    ||text.contains (SIGN_CUSTOM_B2H     )\
+    ||text.contains (SIGN_CUSTOM_D2B     )\
+    ||text.contains (SIGN_CUSTOM_B2D     )\
+    ||text.contains (SIGN_CUSTOM_UPP     )\
+    ||text.contains (SIGN_CUSTOM_LOW     )\
+    ||text.contains (SIGN_CUSTOM_0XDOT   )\
+    ||text.contains (SIGN_CUSTOM_FORFXIE )\
+    ||text.contains (SIGN_CUSTOM_FORW    )\
+    ||text.contains (SIGN_CUSTOM_BIT     )\
+)\
+{\
+    (express);\
+}
+
+
+
 typedef struct T_handlerRegExpParas{
     QString text;
     QStringList regbefore;

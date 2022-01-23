@@ -207,7 +207,12 @@ QString CRegExpPub::replaceSignsPub(QString text)
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 
-    text = replaceSignsItemPub(text);
+//支持嵌套循环
+    CHECK_INCLUDE(text, text = replaceSignsItemPub(text));
+
+
+//    text = replaceSignsItemPub(text);
+
     //    replaceSignsItemTestPub(text);
     return text;
 }
@@ -300,6 +305,7 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         debugApp() << "selector:" << selector;
         debugApp() << "startBit:" << startBit;
         debugApp() << "len:" << len;
+        debugApp() << "dwwNum:" << dwwNum;
 
         if(startBit + 1 < len)
         {
