@@ -43,6 +43,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     base/print/ \
     base/tree/ \
     base/map/ \
+    base/vector/ \
     base/codec/ \
     base/log/ \
     base/file/ \
@@ -136,6 +137,7 @@ SOURCES += \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
     base/tree/ctreepub.cpp \
+    base/vector/cvecpub.cpp \
     cdialogabout.cpp \
     cdialognewnode.cpp \
     cdialognewut.cpp \
@@ -193,6 +195,7 @@ HEADERS += \
     base/thread/cnetthreadpub.h \
     base/thread/cthreadpub.h \
     base/tree/ctreepub.h \
+    base/vector/cvecpub.h \
     cdialogabout.h \
     cdialognewnode.h \
     cdialognewut.h \

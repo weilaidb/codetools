@@ -476,5 +476,9 @@ private:
     bool duplicate_current_line_ui_textEdit();
     bool duplicate_current_line_ui_textEdit_Tips();
 
+
+
+
+
 };
 #endif // MAINWINDOW_H

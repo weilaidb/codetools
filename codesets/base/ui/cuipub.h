@@ -70,6 +70,7 @@ public:
     static void startProgress();
 
     //获取选中文本
+    static QTextEdit *newTextEdit();
     static QString getLabelEdit(QLabel *pLabel);
     static QString getSelectTextEdit(QTextEdit *pEdit);
     static QString getSelectTextEditEnter(QTextEdit *pEdit);

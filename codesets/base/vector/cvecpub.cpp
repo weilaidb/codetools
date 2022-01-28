@@ -1,9 +1,9 @@
 /***************************************************************************
 ** 版权所有:  WeiLai Copyright (c) 2020-2030  ******************************
-** 文件名称:  cuiextpub.cpp
+** 文件名称:  cvecpub.cpp
 ** 当前版本:  v1.0
 ** 作    者:
-** 完成日期: 2022-01-28_07_39_01
+** 完成日期: 2022-01-28_08_47_41
 ** 修改记录:
 ** 修改记录:
 ** 修改日期:
@@ -12,8 +12,9 @@
 ** 修改内容:
 ***************************************************************************/
 
+
 /*****************************头文件****************************************/
-#include "cuiextpub.h"
+#include "cvecpub.h"
 
 /*****************************宏定义****************************************/
 
@@ -31,52 +32,21 @@
 
 /*****************************函数或类实现****************************************/
 
-CUIExtPub::CUIExtPub()
+
+
+
+CVecPub::CVecPub()
 {
 
 }
 
-QTabWidget *CUIExtPub::newTabWidget()
+void CVecPub::insertVec(QVector<QLabel *> &vec, QLabel *label)
 {
-    return new QTabWidget();
+    vec.push_back(label);
 }
 
-void CUIExtPub::addTab(QTabWidget *pWidget, QLabel *label, QString text)
+void CVecPub::insertVec(QVector<QPushButton *> &vec, QPushButton *button)
 {
-    pWidget->addTab(label,text);
+    vec.push_back(button);
 }
-
-void CUIExtPub::setTabPositionWest(QTabWidget *pWidget)
-{
-    pWidget->setTabPosition(QTabWidget::West);
-}
-
-void CUIExtPub::setTabPositionNorth(QTabWidget *pWidget)
-{
-    pWidget->setTabPosition(QTabWidget::North);
-}
-
-void CUIExtPub::setTabPositionSouth(QTabWidget *pWidget)
-{
-    pWidget->setTabPosition(QTabWidget::South);
-}
-
-void CUIExtPub::setTabPositionEast(QTabWidget *pWidget)
-{
-    pWidget->setTabPosition(QTabWidget::East);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

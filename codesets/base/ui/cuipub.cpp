@@ -452,6 +452,11 @@ void CUIPub::startProgress()
 
 }
 
+QTextEdit *CUIPub::newTextEdit()
+{
+    return new QTextEdit();
+}
+
 
 
 QString CUIPub::getSelectTextBrowser(QTextBrowser *pBrowser)
