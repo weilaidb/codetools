@@ -153,7 +153,10 @@ public:
     //font
     static void setFontDefault(QWidget *pwidget);
     static void setFont(QWidget *pwidget, QString fontname, int fontsize);
-
+    //view
+    static void setSizeDefault(QWidget *pWidget);
+    static void setSize(QWidget *pWidget, int w, int h);
+    static void setWindowTitle(QWidget *pWidget, QString str);
 
     //time
     static QTimer *createTimer(int &iTimeout, int value);

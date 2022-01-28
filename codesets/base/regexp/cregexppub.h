@@ -154,6 +154,7 @@ public:
     CRegExpPub();
     //set
     static QString setRegExpByFile(QString filename, QString content);
+    static QString setRegExpByFileAppend(QString filename, QString content);
     //get
     static QString getFileSuffix(QString filename);
     static QString getRenameFile(QString filename);
@@ -187,6 +188,7 @@ public:
     static QString handlerTip_Getter(QString configfilename, quint32 dwClasstype, int filetype);
     static QString handlerTip(QString classconfig, quint32 dwClasstype, int filetype);
     static void handlerTipSave(QString classconfig, quint32 dwClasstype, QString content, int filetype);
+    static void handlerTipSaveAppend(QString classconfig, quint32 dwClasstype, QString content, int filetype);
     static QString handlerPost_Pub(QString text);
     //    static QString handlerRegExp_Setter(QString text,QStringList regbefore, QStringList regafter);
     //    static QString handlerTip_Setter();

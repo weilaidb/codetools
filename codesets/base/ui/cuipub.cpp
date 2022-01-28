@@ -780,6 +780,21 @@ void CUIPub::setFont(QWidget *pwidget, QString fontname, int fontsize)
     pwidget->setFont(font);
 }
 
+void CUIPub::setSizeDefault(QWidget *pWidget)
+{
+    pWidget->resize(800,600);
+}
+
+void CUIPub::setSize(QWidget *pWidget, int w, int h)
+{
+    pWidget->resize(w,h);
+}
+
+void CUIPub::setWindowTitle(QWidget *pWidget, QString str)
+{
+    pWidget->setWindowTitle(str);
+}
+
 
 bool CUIPub::showBoxInfoIsYes(QString tips)
 {

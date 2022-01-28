@@ -119,6 +119,11 @@ QString CRegExpPub::setRegExpByFile(QString filename, QString content)
     return  CFilePub::writeFileWOnly(filename, content);
 }
 
+QString CRegExpPub::setRegExpByFileAppend(QString filename, QString content)
+{
+    return  CFilePub::writeFileAppend(filename, content);
+}
+
 QString CRegExpPub::getRegExpByFile(QString filename,QString content)
 {
     //创建空文件如果文件不存在
@@ -176,6 +181,17 @@ void CRegExpPub::handlerTipSave(QString classconfig, quint32 dwClasstype
     if(CExpressPub::isFull(CStringPub::strSimLen(classconfig)))
     {
         setRegExpByFile(getRegExpFileNamePub(classconfig, filetype), content);
+    }
+}
+
+void CRegExpPub::handlerTipSaveAppend(QString classconfig, quint32 dwClasstype
+                                , QString content , int filetype = FILE_TIPS)
+{
+    Q_UNUSED(dwClasstype);
+
+    if(CExpressPub::isFull(CStringPub::strSimLen(classconfig)))
+    {
+        setRegExpByFileAppend(getRegExpFileNamePub(classconfig, filetype), content);
     }
 }
 

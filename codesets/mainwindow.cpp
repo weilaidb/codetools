@@ -269,6 +269,7 @@ void MainWindow::init_Vars()
     pMulWinTest = nullptr;
     pMulTab = nullptr;
     vecMulTabMem.clear();
+    cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -3202,8 +3203,13 @@ void MainWindow::on_listWidget_searchresult_customContextMenuRequested(const QPo
 
     QAction* action_rename = new QAction("重命名", this);
     QObject::connect(action_rename, SIGNAL(triggered()), this, SLOT(proc_action_rename()));
+
+    QAction* action_usemanytab = new QAction("收藏到多标签", this);
+    QObject::connect(action_usemanytab, SIGNAL(triggered()), this, SLOT(proc_action_usemanytab()));
+
     QMenu* popMenuResult = new QMenu(this);
     popMenuResult->addAction(action_rename);
+    popMenuResult->addAction(action_usemanytab);
     popMenuResult->exec(QCursor::pos());
     delete popMenuResult;
     popMenuResult = nullptr;
@@ -3223,6 +3229,19 @@ void MainWindow::proc_action_rename()
     connect(ui->listWidget_searchresult, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(proc_onNameChanged(QListWidgetItem*)));
 
 }
+
+void MainWindow::proc_action_usemanytab()
+{
+    debugApp() << "usemanytab";
+
+    QString configname = ui->listWidget_searchresult->currentItem()->text();
+    configname = configname + ";" + configname + CSignPub::signEnter();
+    /*cfgfilenameTabSetting*/;
+    CRegExpPub::handlerTipSaveAppend(cfgfilenameTabSetting, 0, configname, CRegExpPub::FILE_TIPS  );
+    CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNamePub(cfgfilenameTabSetting,CRegExpPub::FILE_TIPS));
+}
+
+
 
 void MainWindow::proc_onNameChanged(QListWidgetItem* item)
 {
@@ -3578,6 +3597,7 @@ void MainWindow::on_actionMultiLabel_triggered()
         delete pMulTab;
     }
     pMulTab = CUIExtPub::newTabWidget();
+    CUIPub::setWindowTitle(pMulTab,"常用项");
     CUIPub::setFontDefault(pMulTab);
     QStringList textList;
 
@@ -3592,9 +3612,9 @@ void MainWindow::on_actionMultiLabel_triggered()
     list.append("d");
 #else
     //读取内容 "Setting/网页显示常用Tab切换" 的内容
-    QString configfilename = "Setting/网页显示常用Tab切换";
+//    QString cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
     QStringList inconfigfilenameList = CStringPub::emptyStringList();
-    QString fileinfo = CRegExpPub::handlerTip(configfilename, COMMON_OPERATIONS, CRegExpPub::FILE_TIPS);
+    QString fileinfo = CRegExpPub::handlerTip(cfgfilenameTabSetting, COMMON_OPERATIONS, CRegExpPub::FILE_TIPS);
     QStringList todoList = CStringPub::stringSplitbyNewLineTrimAll(fileinfo);
 //    CPrintPub::printStringList(todoList);
 //    debugApp() << "fileinfo:" << fileinfo;
@@ -3615,5 +3635,6 @@ void MainWindow::on_actionMultiLabel_triggered()
 #endif
 
     CUIExtPub::addTabVec(pMulTab, vecMulTabMem,textList);
+    CUIPub::setSizeDefault(pMulTab);
     pMulTab->show();
 }

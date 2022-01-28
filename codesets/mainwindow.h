@@ -399,6 +399,7 @@ private slots:
     void proc_mode_AB_multiline_multiproc(T_RegExpParas &tPara);
     void on_listWidget_searchresult_customContextMenuRequested(const QPoint &pos);
     void proc_action_rename();
+    void proc_action_usemanytab();
     void proc_onNameChanged(QListWidgetItem* item);
 
     void on_textEdit_copyAvailable(bool b);
@@ -480,7 +481,7 @@ private:
 private:
     QTabWidget *pMulTab;
     QVector<QTextEdit *> vecMulTabMem;
-
+    QString cfgfilenameTabSetting;
 
 };
 #endif // MAINWINDOW_H
