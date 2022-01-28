@@ -105,7 +105,7 @@ void CPrintPub::printArray(char **argv, int size)
 void CPrintPub::printStringList(QStringList list)
 {
     foreach (QString item, list) {
-        ////debugApp() << item;
+        debugApp() << item;
     }
 }
 

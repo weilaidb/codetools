@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QTabWidget>
 #include <QStackedWidget>
+#include <QVector>
 /*****************************宏定义****************************************/
 
 /*****************************结构体或类型定义*******************************/
@@ -48,7 +49,10 @@ public:
     CUIExtPub();
 
     static QTabWidget *newTabWidget();
+    static void setTabWidget(QTabWidget *pWidget);
     static void addTab(QTabWidget *pWidget, QLabel *label, QString text);
+    static void addTab(QTabWidget *pWidget, QTextEdit *textedit, QString text);
+    static void addTabVec(QTabWidget *pWidget, QVector<QTextEdit *> &vec, QStringList list);
     static void setTabPositionWest(QTabWidget *pWidget);
     static void setTabPositionNorth(QTabWidget *pWidget);
     static void setTabPositionSouth(QTabWidget *pWidget);

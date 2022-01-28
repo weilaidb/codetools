@@ -41,9 +41,34 @@ QTabWidget *CUIExtPub::newTabWidget()
     return new QTabWidget();
 }
 
+void CUIExtPub::setTabWidget(QTabWidget *pWidget)
+{
+    pWidget->setStyleSheet("QHeaderView::section{background-color:rgb(40,143,218);font:20pt '宋体';color: white;};");
+}
+
 void CUIExtPub::addTab(QTabWidget *pWidget, QLabel *label, QString text)
 {
     pWidget->addTab(label,text);
+}
+
+void CUIExtPub::addTab(QTabWidget *pWidget, QTextEdit *textedit, QString text)
+{
+    pWidget->addTab(textedit,text);
+}
+
+void CUIExtPub::addTabVec(QTabWidget *pWidget, QVector<QTextEdit *> &vec, QStringList list)
+{
+    int i = 0;
+
+    if(vec.size() != list.size())
+    {
+        return;
+    }
+
+    foreach (QTextEdit *textedit, vec) {
+        addTab(pWidget, textedit, list.at(i));
+        i++;
+    }
 }
 
 void CUIExtPub::setTabPositionWest(QTabWidget *pWidget)

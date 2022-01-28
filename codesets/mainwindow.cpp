@@ -45,6 +45,7 @@
 #include <QProcess>
 #include <QProgressBar>
 #include <csignpub.h>
+#include <cvecpub.h>
 #include "cdialogabout.h"
 #include "cnetdiaglog.h"
 #include "ctcpserverwindow.h"
@@ -266,6 +267,8 @@ void MainWindow::init_Vars()
     m_thread_publish = nullptr;
     m_thread_subscribe = nullptr;
     pMulWinTest = nullptr;
+    pMulTab = nullptr;
+    vecMulTabMem.clear();
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -3558,6 +3561,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_actionMultiLabel_triggered()
 {
+#if 0
     QTabWidget *pNew = CUIExtPub::newTabWidget();
     pNew->addTab(CUIPub::newTextEdit(), "xxx");
     pNew->addTab(CUIPub::newTextEdit(), "xxx");
@@ -3565,5 +3569,54 @@ void MainWindow::on_actionMultiLabel_triggered()
     pNew->addTab(CUIPub::newTextEdit(), "xxx");
     pNew->show();
 
+#endif
+
+    if(nullptr != pMulTab)
+    {
+        //释放内部存储的数据
+        CVecPub::deleteVec(vecMulTabMem);
+        delete pMulTab;
+    }
+    pMulTab = CUIExtPub::newTabWidget();
+    CUIExtPub::setTabWidget(pMulTab);
+    QStringList textList;
+
+#if TESTSHOW
+    CVecPub::insertVec(vecMulTabMem, CUIPub::newTextEdit());
+    CVecPub::insertVec(vecMulTabMem, CUIPub::newTextEdit());
+    CVecPub::insertVec(vecMulTabMem, CUIPub::newTextEdit());
+    CVecPub::insertVec(vecMulTabMem, CUIPub::newTextEdit());
+    list.append("a");
+    list.append("b");
+    list.append("c");
+    list.append("d");
+#else
+    //读取内容 "Setting/网页显示常用Tab切换" 的内容
+    QString configfilename = "Setting/网页显示常用Tab切换";
+    QStringList inconfigfilenameList = CStringPub::emptyStringList();
+    QString fileinfo = CRegExpPub::handlerTip(configfilename, COMMON_OPERATIONS, CRegExpPub::FILE_TIPS);
+    QStringList todoList = CStringPub::stringSplitbyNewLineTrimAll(fileinfo);
+//    CPrintPub::printStringList(todoList);
+//    debugApp() << "fileinfo:" << fileinfo;
+
+    foreach (QString item, todoList) {
+        QStringList inList = CStringPub::stringSplitbyCharFilterEmpty(item, ";");
+        if(inList.size() < 2)
+        {
+            continue;
+        }
+        textList.push_back(inList.at(0));
+        QTextEdit *pInTextEdit = CUIPub::newTextEdit();
+        CUIPub::setTextEdit(pInTextEdit, CRegExpPub::handlerTip(inList.at(1), COMMON_OPERATIONS, CRegExpPub::FILE_TIPS));
+        CVecPub::insertVec(vecMulTabMem, pInTextEdit);
+    }
+
+#endif
+
+    CUIExtPub::addTabVec(pMulTab, vecMulTabMem,textList);
+
+
+
+    pMulTab->show();
 
 }

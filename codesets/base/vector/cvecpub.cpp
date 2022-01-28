@@ -50,3 +50,35 @@ void CVecPub::insertVec(QVector<QPushButton *> &vec, QPushButton *button)
     vec.push_back(button);
 }
 
+void CVecPub::insertVec(QVector<QTextEdit *> &vec, QTextEdit *textedit)
+{
+    vec.push_back(textedit);
+}
+
+void CVecPub::deleteVec(QVector<QLabel *> &vec)
+{
+    foreach (QLabel *label, vec) {
+        delete label;
+    }
+    vec.clear();
+}
+
+void CVecPub::deleteVec(QVector<QPushButton *> &vec)
+{
+    foreach (QPushButton *button, vec) {
+        delete button;
+    }
+    vec.clear();
+}
+
+void CVecPub::deleteVec(QVector<QTextEdit *> &vec)
+{
+    foreach (QTextEdit *textedit, vec) {
+        delete textedit;
+    }
+    vec.clear();
+}
+
+
+
+

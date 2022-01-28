@@ -476,8 +476,10 @@ private:
     bool duplicate_current_line_ui_textEdit();
     bool duplicate_current_line_ui_textEdit_Tips();
 
-
-
+//多标签
+private:
+    QTabWidget *pMulTab;
+    QVector<QTextEdit *> vecMulTabMem;
 
 
 };
