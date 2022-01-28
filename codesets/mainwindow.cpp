@@ -270,6 +270,7 @@ void MainWindow::init_Vars()
     pMulTab = nullptr;
     vecMulTabMem.clear();
     cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
+    ucCurTabPos = 0;
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -1534,6 +1535,20 @@ bool MainWindow::duplicate_current_line_ui_textEdit()
 bool MainWindow::duplicate_current_line_ui_textEdit_Tips()
 {
     return CUIPub::duplicateSelectLine(ui->textEdit_cfgTips);
+}
+
+void MainWindow::procTabCurrentChanged(int curtab)
+{
+    ENTERTIPS;
+    QIcon iconEmpty;
+    CUIExtPub::setTabIcon(pMulTab, ucCurTabPos, iconEmpty);
+    CUIExtPub::setTabIcon(pMulTab, curtab, CUIPub::icon(":/images/images/828.bmp"));
+    ucCurTabPos = curtab;
+}
+
+void MainWindow::procTabCloseRequested(int)
+{
+    ENTERTIPS;
 }
 
 
@@ -3597,8 +3612,14 @@ void MainWindow::on_actionMultiLabel_triggered()
         delete pMulTab;
     }
     pMulTab = CUIExtPub::newTabWidget();
+    CUIPub::setTabShape(pMulTab,QTabWidget::Triangular);
     CUIPub::setWindowTitle(pMulTab,"常用项");
+    CUIPub::setLayoutDirectionDefault(pMulTab);
     CUIPub::setFontDefault(pMulTab);
+
+    connect(pMulTab, SIGNAL(currentChanged(int)), this, SLOT(procTabCurrentChanged(int)));
+    connect(pMulTab, SIGNAL(tabCloseRequested(int)), this, SLOT(procTabCloseRequested(int)));
+
     QStringList textList;
 
 #if TESTSHOW

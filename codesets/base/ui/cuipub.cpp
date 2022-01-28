@@ -795,6 +795,21 @@ void CUIPub::setWindowTitle(QWidget *pWidget, QString str)
     pWidget->setWindowTitle(str);
 }
 
+void CUIPub::setTabShape(QTabWidget *pWidget, QTabWidget::TabShape shape)
+{
+    pWidget->setTabShape(shape);
+}
+
+void CUIPub::setLayoutDirectionDefault(QWidget *pWidget)
+{
+    pWidget->setLayoutDirection(Qt::LayoutDirectionAuto);
+}
+
+void CUIPub::setLayoutDirection(QWidget *pWidget, Qt::LayoutDirection direction)
+{
+    pWidget->setLayoutDirection(direction);
+}
+
 
 bool CUIPub::showBoxInfoIsYes(QString tips)
 {
@@ -1066,6 +1081,13 @@ void CUIPub::addWidget2ToolBar(QToolBar *toolbar, QWidget *pWidget)
 QString CUIPub::desktopPath()
 {
     return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + CFilePub::getSeparator();
+}
+
+QIcon CUIPub::icon(QString file)
+{
+    QIcon icon;
+    icon.addFile(file, QSize(), QIcon::Normal, QIcon::Off);
+    return icon;
 }
 
 

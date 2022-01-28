@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>688</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,17 +18,39 @@
     <rect>
      <x>70</x>
      <y>60</y>
-     <width>127</width>
-     <height>80</height>
+     <width>321</width>
+     <height>111</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Courier New</family>
-     <pointsize>36</pointsize>
+     <pointsize>16</pointsize>
     </font>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <property name="elideMode">
+    <enum>Qt::ElideMiddle</enum>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+   <property name="tabBarAutoHide">
+    <bool>false</bool>
+   </property>
    <widget class="QWidget" name="tab">
+    <attribute name="icon">
+     <iconset resource="ui/network/res.qrc">
+      <normaloff>:/images/images/828.bmp</normaloff>:/images/images/828.bmp</iconset>
+    </attribute>
     <attribute name="title">
      <string>Tab 1</string>
     </attribute>
@@ -40,6 +62,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="ui/network/res.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -66,6 +66,11 @@ void CUIExtPub::addTabVec(QTabWidget *pWidget, QVector<QTextEdit *> &vec, QStrin
     }
 }
 
+void CUIExtPub::setTabIcon(QTabWidget *pWidget, int curtab, QIcon icon)
+{
+    pWidget->setTabIcon(curtab, icon);
+}
+
 void CUIExtPub::setTabPositionWest(QTabWidget *pWidget)
 {
     pWidget->setTabPosition(QTabWidget::West);

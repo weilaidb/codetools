@@ -482,6 +482,11 @@ private:
     QTabWidget *pMulTab;
     QVector<QTextEdit *> vecMulTabMem;
     QString cfgfilenameTabSetting;
+    quint8 ucCurTabPos;
+
+private slots:
+    void procTabCurrentChanged(int curtab);
+    void procTabCloseRequested(int);
 
 };
 #endif // MAINWINDOW_H

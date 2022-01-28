@@ -9,6 +9,7 @@
 #define QT_NO_DEBUG_OUTPUT
 #define debugApp qDebug
 #define ENTERTIPS ;
+//#define ENTERTIPS debugApp() << __FUNCTION__ << ":" << __LINE__ ;
 
 #else
 #define debugApp qDebug

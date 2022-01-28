@@ -157,7 +157,10 @@ public:
     static void setSizeDefault(QWidget *pWidget);
     static void setSize(QWidget *pWidget, int w, int h);
     static void setWindowTitle(QWidget *pWidget, QString str);
-
+    static void setLayoutDirectionDefault(QWidget *pWidget);
+    static void setLayoutDirection(QWidget *pWidget, Qt::LayoutDirection direction);
+    //tab widget
+    static void setTabShape(QTabWidget *pWidget, QTabWidget::TabShape shape);
     //time
     static QTimer *createTimer(int &iTimeout, int value);
     //QListWidget
@@ -181,6 +184,11 @@ public:
 
     //路径
     static QString desktopPath();
+
+    //icon
+    static QIcon icon(QString file);
+
+
 public:
     enum{
         TYPE_READ = 1,
