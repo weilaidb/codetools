@@ -150,6 +150,10 @@ public:
     static bool showBoxInfoIsNo(QString tips);
     static int showBoxCritical(QString tips);
 
+    //font
+    static void setFontDefault(QWidget *pwidget);
+    static void setFont(QWidget *pwidget, QString fontname, int fontsize);
+
 
     //time
     static QTimer *createTimer(int &iTimeout, int value);

@@ -3578,7 +3578,7 @@ void MainWindow::on_actionMultiLabel_triggered()
         delete pMulTab;
     }
     pMulTab = CUIExtPub::newTabWidget();
-    CUIExtPub::setTabWidget(pMulTab);
+    CUIPub::setFontDefault(pMulTab);
     QStringList textList;
 
 #if TESTSHOW
@@ -3607,6 +3607,7 @@ void MainWindow::on_actionMultiLabel_triggered()
         }
         textList.push_back(inList.at(0));
         QTextEdit *pInTextEdit = CUIPub::newTextEdit();
+        CUIPub::setFontDefault(pInTextEdit);
         CUIPub::setTextEdit(pInTextEdit, CRegExpPub::handlerTip(inList.at(1), COMMON_OPERATIONS, CRegExpPub::FILE_TIPS));
         CVecPub::insertVec(vecMulTabMem, pInTextEdit);
     }
@@ -3614,9 +3615,5 @@ void MainWindow::on_actionMultiLabel_triggered()
 #endif
 
     CUIExtPub::addTabVec(pMulTab, vecMulTabMem,textList);
-
-
-
     pMulTab->show();
-
 }

@@ -41,11 +41,6 @@ QTabWidget *CUIExtPub::newTabWidget()
     return new QTabWidget();
 }
 
-void CUIExtPub::setTabWidget(QTabWidget *pWidget)
-{
-    pWidget->setStyleSheet("QHeaderView::section{background-color:rgb(40,143,218);font:20pt '宋体';color: white;};");
-}
-
 void CUIExtPub::addTab(QTabWidget *pWidget, QLabel *label, QString text)
 {
     pWidget->addTab(label,text);

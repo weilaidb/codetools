@@ -145,6 +145,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     supertest.cpp \
+    test1.cpp \
     testcase/processtest/CProcessDataTest.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp \
     testcase/virtualtest/cgrandmaster.cpp \
@@ -209,6 +210,7 @@ HEADERS += \
     public/include/looppub.h \
     public/include/readmacro.h \
     supertest.h \
+    test1.h \
     testcase/stringtest/testcase.h \
     testcase/virtualtest/cgrandmaster.h \
     testcase/virtualtest/cparent.h \
@@ -250,6 +252,7 @@ FORMS += \
     cnetdialog.ui \
     mainwindow.ui \
     supertest.ui \
+    test1.ui \
     ui/audio/AudioPlayer.ui \
     ui/network/http.ui \
     ui/network/tcpclient.ui \

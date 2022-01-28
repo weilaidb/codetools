@@ -764,6 +764,23 @@ int CUIPub::showBoxCritical(QString tips)
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
+void CUIPub::setFontDefault(QWidget *pwidget)
+{
+    QFont font;
+    font.setFamily(QString::fromUtf8("Courier New"));
+    font.setPointSize(16);
+    pwidget->setFont(font);
+}
+
+void CUIPub::setFont(QWidget *pwidget, QString fontname, int fontsize)
+{
+    QFont font;
+    font.setFamily(fontname);
+    font.setPointSize(fontsize);
+    pwidget->setFont(font);
+}
+
+
 bool CUIPub::showBoxInfoIsYes(QString tips)
 {
     return QMessageBox::Yes == QMessageBox::information(NULL, "Title", tips,

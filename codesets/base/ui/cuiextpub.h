@@ -49,7 +49,6 @@ public:
     CUIExtPub();
 
     static QTabWidget *newTabWidget();
-    static void setTabWidget(QTabWidget *pWidget);
     static void addTab(QTabWidget *pWidget, QLabel *label, QString text);
     static void addTab(QTabWidget *pWidget, QTextEdit *textedit, QString text);
     static void addTabVec(QTabWidget *pWidget, QVector<QTextEdit *> &vec, QStringList list);
