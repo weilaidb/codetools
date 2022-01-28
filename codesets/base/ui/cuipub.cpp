@@ -885,6 +885,11 @@ void CUIPub::addListWidgetItem(QListWidget *pWidget, QString item)
     pWidget->addItem(item);
 }
 
+QLabel *CUIPub::newLabel(QString text)
+{
+    return new QLabel(text);
+}
+
 void CUIPub::setLabelText(QLabel *pLabel, QString text)
 {
     pLabel->setText(text);

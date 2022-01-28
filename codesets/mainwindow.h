@@ -468,6 +468,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_actionMultiLabel_triggered();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

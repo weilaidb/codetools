@@ -131,6 +131,7 @@ SOURCES += \
     base/system/ccmdwindow.cpp \
     base/system/csystempub.cpp \
     base/thread/cthreadextpub.cpp \
+    base/ui/cuiextpub.cpp \
     base/ui/cuipub.cpp \
     base/thread/cnetthreadpub.cpp \
     base/thread/cthreadpub.cpp \
@@ -179,6 +180,7 @@ HEADERS += \
     base/system/ccmdwindow.h \
     base/system/csystempub.h \
     base/thread/cthreadextpub.h \
+    base/ui/cuiextpub.h \
     base/ui/cuipub.h \
     base/log/clogpub.h \
     base/map/cmappub.h \

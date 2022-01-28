@@ -464,6 +464,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_newusernode"/>
     <addaction name="action_newstandnode"/>
     <addaction name="action_recentopen"/>
+    <addaction name="actionMultiLabel"/>
     <addaction name="action_procreboot"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -1115,6 +1116,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>关闭处理换行 for singleline_execsingle</string>
+   </property>
+  </action>
+  <action name="actionMultiLabel">
+   <property name="text">
+    <string>多标签</string>
    </property>
   </action>
  </widget>

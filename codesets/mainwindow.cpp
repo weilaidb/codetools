@@ -18,6 +18,7 @@
 #include "cmsgtips.h"
 #include "looppub.h"
 #include "cuipub.h"
+#include "cuiextpub.h"
 #include "csqlpub.h"
 #ifdef WIN32
 #include "cofficepub.h"
@@ -3554,7 +3555,12 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-
-
-
-
+void MainWindow::on_actionMultiLabel_triggered()
+{
+    QTabWidget *pNew = CUIExtPub::newTabWidget();
+    pNew->addTab(CUIPub::newLabel("abc"), "xxx");
+    pNew->addTab(CUIPub::newLabel("abc"), "xxx");
+    pNew->addTab(CUIPub::newLabel("abc"), "xxx");
+    pNew->addTab(CUIPub::newLabel("abc"), "xxx");
+    pNew->show();
+}

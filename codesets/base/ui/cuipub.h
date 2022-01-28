@@ -159,6 +159,7 @@ public:
     static void addListWidgetItems_ClearFirst(QListWidget *pWidget, QStringList list);
     static void addListWidgetItem(QListWidget *pWidget, QString item);
     //QLabel
+    static QLabel *newLabel(QString text);
     static void setLabelText(QLabel *pLabel, QString text);
     //StatusBar
     static void showStatusBar(QStatusBar *statusbar, QString msg);
