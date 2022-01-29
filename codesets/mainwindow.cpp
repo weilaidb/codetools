@@ -3657,5 +3657,6 @@ void MainWindow::on_actionMultiLabel_triggered()
 
     CUIExtPub::addTabVec(pMulTab, vecMulTabMem,textList);
     CUIPub::setSizeDefault(pMulTab);
+    CUIPub::showMaximized(pMulTab);
     pMulTab->show();
 }

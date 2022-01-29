@@ -810,6 +810,16 @@ void CUIPub::setLayoutDirection(QWidget *pWidget, Qt::LayoutDirection direction)
     pWidget->setLayoutDirection(direction);
 }
 
+void CUIPub::showMaximized(QWidget *pWidget)
+{
+    pWidget->showMaximized();
+}
+
+void CUIPub::showMinimized(QWidget *pWidget)
+{
+    pWidget->showMinimized();
+}
+
 
 bool CUIPub::showBoxInfoIsYes(QString tips)
 {

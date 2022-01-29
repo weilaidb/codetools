@@ -159,6 +159,8 @@ public:
     static void setWindowTitle(QWidget *pWidget, QString str);
     static void setLayoutDirectionDefault(QWidget *pWidget);
     static void setLayoutDirection(QWidget *pWidget, Qt::LayoutDirection direction);
+    static void showMaximized(QWidget *pWidget);
+    static void showMinimized(QWidget *pWidget);
     //tab widget
     static void setTabShape(QTabWidget *pWidget, QTabWidget::TabShape shape);
     //time

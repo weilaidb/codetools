@@ -1122,6 +1122,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>多标签</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+M</string>
+   </property>
   </action>
  </widget>
  <resources>
