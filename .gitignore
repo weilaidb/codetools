@@ -40,3 +40,6 @@ build-codesets-Desktop_Qt_5_14_2_clang_64bit-Release
 /codesets_UML.dia~
 build-codesets-Desktop_Qt_5_14_2_MinGW_64_bit-Debug
 64
+*.o
+/TelnetClient/TelnetClient.pro.user.f0c7467.4.8-pre1
+/TelnetClient/debug/TelnetClient.exe
