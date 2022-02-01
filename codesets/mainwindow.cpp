@@ -268,6 +268,7 @@ void MainWindow::init_Vars()
     m_thread_subscribe = nullptr;
     pMulWinTest = nullptr;
     pMulTab = nullptr;
+    action_multab_hide = nullptr;
     vecMulTabMem.clear();
     cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
     ucCurTabPos = 0;
@@ -3609,14 +3610,16 @@ void MainWindow::on_actionMultiLabel_triggered()
     {
         //释放内部存储的数据
         CVecPub::deleteVec(vecMulTabMem);
+        QObject::disconnect(action_multab_hide, SIGNAL(triggered()), this, SLOT(proc_action_multab_hide()));
         delete pMulTab;
+        delete action_multab_hide;
     }
     pMulTab = CUIExtPub::newTabWidget();
     CUIPub::setTabShape(pMulTab,QTabWidget::Triangular);
     CUIPub::setWindowTitle(pMulTab,"常用项");
     CUIPub::setLayoutDirectionDefault(pMulTab);
     CUIPub::setFontDefault(pMulTab);
-    QAction* action_multab_hide = new QAction("显示或隐藏", this);
+    action_multab_hide = new QAction("显示或隐藏", this);
     CUIPub::setShortcut(action_multab_hide, "Alt+M");
     QObject::connect(action_multab_hide, SIGNAL(triggered()), this, SLOT(proc_action_multab_hide()));
     pMulTab->addAction(action_multab_hide);//没有添加组件，快捷键不好使

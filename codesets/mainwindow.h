@@ -482,6 +482,7 @@ private:
 //多标签
 private:
     QTabWidget *pMulTab;
+    QAction* action_multab_hide;
     QVector<QTextEdit *> vecMulTabMem;
     QString cfgfilenameTabSetting;
     quint8 ucCurTabPos;
