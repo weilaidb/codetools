@@ -36,9 +36,9 @@ CUIExtPub::CUIExtPub()
 
 }
 
-QTabWidget *CUIExtPub::newTabWidget()
+QTabWidget *CUIExtPub::newTabWidget(QWidget *parent)
 {
-    return new QTabWidget();
+    return new QTabWidget(parent);
 }
 
 void CUIExtPub::addTab(QTabWidget *pWidget, QLabel *label, QString text)

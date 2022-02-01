@@ -149,6 +149,8 @@ public:
     static bool showBoxInfoIsYes(QString tips);
     static bool showBoxInfoIsNo(QString tips);
     static int showBoxCritical(QString tips);
+    //shortcut
+    static void setShortcut(QAction *pAction, QString shortcut);
 
     //font
     static void setFontDefault(QWidget *pwidget);

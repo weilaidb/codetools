@@ -764,6 +764,11 @@ int CUIPub::showBoxCritical(QString tips)
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
+void CUIPub::setShortcut(QAction *pAction, QString shortcut)
+{
+    pAction->setShortcut(shortcut);
+}
+
 void CUIPub::setFontDefault(QWidget *pwidget)
 {
     QFont font;

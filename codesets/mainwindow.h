@@ -471,6 +471,8 @@ private slots:
 
     void on_actionMultiLabel_triggered();
 
+    void proc_action_multab_hide();
+
 private:
     bool eventFilter_ui_textEdit(QObject *target, QEvent *event);
     bool eventFilter_ui_textEdit_Tips(QObject *target, QEvent *event);

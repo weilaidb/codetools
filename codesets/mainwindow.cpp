@@ -3616,6 +3616,10 @@ void MainWindow::on_actionMultiLabel_triggered()
     CUIPub::setWindowTitle(pMulTab,"常用项");
     CUIPub::setLayoutDirectionDefault(pMulTab);
     CUIPub::setFontDefault(pMulTab);
+    QAction* action_multab_hide = new QAction("显示或隐藏", this);
+    CUIPub::setShortcut(action_multab_hide, "Alt+M");
+    QObject::connect(action_multab_hide, SIGNAL(triggered()), this, SLOT(proc_action_multab_hide()));
+    pMulTab->addAction(action_multab_hide);//没有添加组件，快捷键不好使
 
     connect(pMulTab, SIGNAL(currentChanged(int)), this, SLOT(procTabCurrentChanged(int)));
     connect(pMulTab, SIGNAL(tabCloseRequested(int)), this, SLOT(procTabCloseRequested(int)));
@@ -3659,4 +3663,15 @@ void MainWindow::on_actionMultiLabel_triggered()
     CUIPub::setSizeDefault(pMulTab);
     CUIPub::showMaximized(pMulTab);
     pMulTab->show();
+}
+
+void MainWindow::proc_action_multab_hide()
+{
+    ENTERTIPS;
+    if(pMulTab)
+    {
+        CUIPub::showMinimized(pMulTab);
+        pMulTab->hide();
+        return;
+    }
 }
