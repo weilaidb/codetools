@@ -440,9 +440,16 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="action_TestCaseCreateWithTime"/>
     </widget>
+    <widget class="QMenu" name="menuTelnet">
+     <property name="title">
+      <string>Telnet</string>
+     </property>
+     <addaction name="actionMainPage"/>
+    </widget>
     <addaction name="action_scan_test_dir"/>
     <addaction name="separator"/>
     <addaction name="menu_13"/>
+    <addaction name="menuTelnet"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -1124,6 +1131,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+M</string>
+   </property>
+  </action>
+  <action name="actionMainPage">
+   <property name="text">
+    <string>MainPage</string>
    </property>
   </action>
  </widget>

@@ -59,6 +59,7 @@ INCLUDEPATH += AStyle_3_1_windows/AStyle/src \
     cppbase/string/ \
     cppbase/mutex/ \
     testcase/stringtest/ \
+    module/telnet \
 
 win32 {
 #顾名思义，这里就是设置WIndows下的连接库，以及Visual C++2010编译器的的设置选项
@@ -144,6 +145,9 @@ SOURCES += \
     cdialogsearch.cpp \
     main.cpp \
     mainwindow.cpp \
+    module/telnet/QCmdWidget.cpp \
+    module/telnet/QTelnet.cpp \
+    module/telnet/QTelnetTester.cpp \
     supertest.cpp \
     test1.cpp \
     testcase/processtest/CProcessDataTest.cpp \
@@ -203,6 +207,9 @@ HEADERS += \
     cdialogsearch.h \
     libs/libzmq-v141-4_3_2/zmq.h \
     mainwindow.h \
+    module/telnet/QCmdWidget.h \
+    module/telnet/QTelnet.h \
+    module/telnet/QTelnetTester.h \
     public/include/basedefinepub.h \
     public/include/basepub.h \
     public/include/basetypepub.h \
@@ -251,6 +258,7 @@ FORMS += \
     cdialogsearch.ui \
     cnetdialog.ui \
     mainwindow.ui \
+    module/telnet/QTelnetTester.ui \
     supertest.ui \
     test1.ui \
     ui/audio/AudioPlayer.ui \
@@ -269,6 +277,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     images/app.qrc \
+    module/telnet/resources.qrc \
     ui/audio/res.qrc \
     ui/network/res.qrc
 
@@ -291,6 +300,7 @@ DISTFILES += \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.dll \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-4_3_2.lib \
     libs/libzmq-v141-4_3_2/libzmq-v141-mt-s-4_3_2.lib \
+    module/telnet/Cella.ttf \
     ui/audio/images/001.GIF \
     ui/audio/images/110.JPG \
     ui/audio/images/132.bmp \

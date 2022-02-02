@@ -22,6 +22,7 @@
 #include "cdialogsearch.h"
 #include "cregexppub.h"
 #include "cthreadextpub.h"
+#include "QTelnetTester.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -491,5 +492,9 @@ private slots:
     void procTabCurrentChanged(int curtab);
     void procTabCloseRequested(int);
 
+    void on_actionMainPage_triggered();
+
+private:
+    QTelnetTester *pTelnet;
 };
 #endif // MAINWINDOW_H

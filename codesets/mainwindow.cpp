@@ -272,6 +272,7 @@ void MainWindow::init_Vars()
     vecMulTabMem.clear();
     cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
     ucCurTabPos = 0;
+    pTelnet = nullptr;
 
     CStringPub::clearString(m_EditConfig);
 }
@@ -3677,4 +3678,14 @@ void MainWindow::proc_action_multab_hide()
         pMulTab->hide();
         return;
     }
+}
+
+void MainWindow::on_actionMainPage_triggered()
+{
+    ENTERTIPS;
+    if(nullptr == pTelnet)
+    {
+        pTelnet = new QTelnetTester();
+    }
+    pTelnet->show();
 }
