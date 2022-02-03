@@ -185,7 +185,7 @@ void CRegExpPub::handlerTipSave(QString classconfig, quint32 dwClasstype
 }
 
 void CRegExpPub::handlerTipSaveAppend(QString classconfig, quint32 dwClasstype
-                                , QString content , int filetype = FILE_TIPS)
+                                      , QString content , int filetype = FILE_TIPS)
 {
     Q_UNUSED(dwClasstype);
 
@@ -220,14 +220,15 @@ QString CRegExpPub::replaceSignsPub(QString text)
             .replace(SIGN_CUSTOM_SP, " ")
             .replace(SIGN_CUSTOM_DATEX, curDateTime.toString("yyyy-MM-dd_hhmmss"))
             .replace(SIGN_CUSTOM_DATEY, curDateTime.toString("yyyyMMddhhmmss"))
+            .replace(SIGN_CUSTOM_DATEZ, curDateTime.toString("yyyyMMdd"))
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 
-//支持嵌套循环
+    //支持嵌套循环
     CHECK_INCLUDE(text, text = replaceSignsItemPub(text));
 
 
-//    text = replaceSignsItemPub(text);
+    //    text = replaceSignsItemPub(text);
 
     //    replaceSignsItemTestPub(text);
     return text;
@@ -880,8 +881,9 @@ QString CRegExpPub::handlerRegExp_Special(QString text,QStringList regbefore, QS
 bool CRegExpPub::handlerRegExp_PubCheck(QString text,QStringList regbefore, QStringList regafter, QString mode)
 {
     WORD32 dwLp =  0;
+    WORD32 dwMax =  handlerRegExp_NumMax(text, regbefore, regafter, mode);
     QString key("");
-    for(dwLp = 0;dwLp < 100;dwLp++)
+    for(dwLp = 0;dwLp < dwMax;dwLp++)
     {
         key = QString("\\%1").arg(dwLp);
         if(text.contains(key))
@@ -890,6 +892,59 @@ bool CRegExpPub::handlerRegExp_PubCheck(QString text,QStringList regbefore, QStr
         }
     }
     return true;
+}
+
+quint32 CRegExpPub::handlerRegExp_NumMax(QString text, QStringList regbefore, QStringList regafter, QString mode)
+{
+    quint32 dwMax = 0;
+    //查找\1等类似的最大值
+    debugApp() << "-->regafter:" << regafter;
+    QString filterstr = "(\\\\\\d+)";
+    QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption | QRegularExpression::DotMatchesEverythingOption);
+
+//    foreach (QString item, regafter) {
+
+//    }
+
+    QString toDoText = CStringPub::stringList2StringEnter(regafter);
+
+    int index = 0;
+
+    QRegularExpressionMatch match;
+
+    do {
+
+        match = regularExpression.match(toDoText, index);
+
+        if(match.hasMatch()) {
+
+            index = match.capturedEnd();
+
+//            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+
+            quint32 temp = CNumPub::string2UInt(match.captured(0).replace("\\",""));
+            if(temp > dwMax)
+            {
+                dwMax = temp;
+            }
+
+        }
+
+        else
+
+            break;
+
+    } while(index < toDoText.length());
+
+//    debugApp() << "match.caput1:" << match.capturedTexts();
+    debugApp() << "dwMax:" << dwMax;
+
+    if(0 == dwMax)
+    {
+        dwMax = 100;
+    }
+
+    return dwMax;
 }
 
 QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)

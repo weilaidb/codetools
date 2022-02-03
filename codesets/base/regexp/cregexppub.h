@@ -23,6 +23,7 @@
 #define SIGN_CUSTOM_DATE      ("$DATE")
 #define SIGN_CUSTOM_DATEX     ("$DATEX")  //日期以_号连接
 #define SIGN_CUSTOM_DATEY     ("$DATEY")  //日期以_号连接
+#define SIGN_CUSTOM_DATEZ     ("$DATEZ")  //日期以_号连接(到日)
 #define SIGN_CUSTOM_H2D       ("$H2D")    //hexadecimal to decimal
 #define SIGN_CUSTOM_D2H       ("$D2H")    //decimal to hexadecimal
 #define SIGN_CUSTOM_H2B       ("$H2B")    //hexadecimal to binary
@@ -51,6 +52,7 @@
     ||text.contains (SIGN_CUSTOM_DATE    )\
     ||text.contains (SIGN_CUSTOM_DATEX   )\
     ||text.contains (SIGN_CUSTOM_DATEY   )\
+    ||text.contains (SIGN_CUSTOM_DATEZ   )\
     ||text.contains (SIGN_CUSTOM_H2D     )\
     ||text.contains (SIGN_CUSTOM_D2H     )\
     ||text.contains (SIGN_CUSTOM_H2B     )\
@@ -179,6 +181,7 @@ public:
     static QString replaceSeqPub(QString text, int iStartSeq, int dwCount, QRegularExpressionMatch match);
     static QString replaceSeqMultiPub(QString text, QString regafter, int iStartSeq, int iCount, QRegularExpressionMatch match, int &index);
     static bool handlerRegExp_PubCheck(QString text, QStringList regbefore, QStringList regafter, QString mode);
+    static quint32 handlerRegExp_NumMax(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara);
     static QString handlerRegExp_Special(QString text, QStringList regbefore, QStringList regafter, QString mode);
     static QString handlerRegExp_Pub_Single(QString text, QStringList regbefore, QStringList regafter, QString mode);

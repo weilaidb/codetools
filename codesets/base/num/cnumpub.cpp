@@ -23,3 +23,18 @@ bool CNumPub::isNumZero(quint32 dwNum)
 {
     return (0 == dwNum);
 }
+
+quint32 CNumPub::string2UInt(QString str)
+{
+    return str.toUInt();
+}
+
+int CNumPub::string2Int(QString str)
+{
+    return str.toInt();
+}
+
+float CNumPub::string2Float(QString str)
+{
+    return str.toFloat();
+}
