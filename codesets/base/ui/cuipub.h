@@ -125,6 +125,8 @@ public:
     static void setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel);
     static void setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV);
     static void appendTextMoveCursorEnd(QPlainTextEdit *pEdit, QString str);
+    static void insertPlainText(QPlainTextEdit *pEdit, QString str);
+    static void moveCursorEnd(QPlainTextEdit *pEdit);
 
     //打开路径
     static int execCmd(QString path);

@@ -1,4 +1,5 @@
 #include "QCmdWidget.h"
+#include "debugApp.h"
 #include <QLineEdit>
 
 QCmdWidget::QCmdWidget(QWidget *papi) : QComboBox(papi)
@@ -37,8 +38,10 @@ QStringList QCmdWidget::getHistorial() const
  */
 void QCmdWidget::keyPressEvent(QKeyEvent *e)
 {
-	if( ((e->key() == Qt::Key_Return) || (e->key() == Qt::Key_Enter)) && !currentText().isEmpty() )
+//	if( ((e->key() == Qt::Key_Return) || (e->key() == Qt::Key_Enter)) && !currentText().isEmpty() )
+    if( ((e->key() == Qt::Key_Return) || (e->key() == Qt::Key_Enter)))
 	{
+        debugApp() << "currentText():" << currentText();
 		addItem(currentText());
 		lineEdit()->selectAll();
 		emit command(currentText());

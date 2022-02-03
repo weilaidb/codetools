@@ -1132,6 +1132,16 @@ void CUIPub::appendTextMoveCursorEnd(QPlainTextEdit *pEdit, QString str)
     pEdit->moveCursor(QTextCursor::End);
 }
 
+void CUIPub::insertPlainText(QPlainTextEdit *pEdit, QString str)
+{
+    pEdit->insertPlainText(str);
+}
+
+void CUIPub::moveCursorEnd(QPlainTextEdit *pEdit)
+{
+    pEdit->moveCursor(QTextCursor::End);
+}
+
 QString CUIPub::getLabelEdit(QLabel *pLabel)
 {
     return pLabel->text();

@@ -1,6 +1,7 @@
 #include "QTelnetTester.h"
 #include "ui_QTelnetTester.h"
 #include "cuipub.h"
+#include "debugApp.h"
 #include <QScrollBar>
 
 QTelnetTester::QTelnetTester(QWidget *parent) :
@@ -74,6 +75,8 @@ void QTelnetTester::onCommand(const QString &cmd)
 	if( telnet.isConnected() )
 	{
         QString newCmd = cmd + "\n";
+        debugApp() << "cmd:" << cmd;
+        debugApp() << "newCmd:" << newCmd;
         telnet.sendData(newCmd.toLatin1());
 	}
 }
@@ -88,5 +91,8 @@ void QTelnetTester::on_btConnect_clicked()
 
 void QTelnetTester::addText(const char *msg, int count)
 {
-    CUIPub::appendTextMoveCursorEnd(ui->teOutput, QByteArray(msg, count));
+//    ui->teOutput->insertPlainText( QByteArray(msg, count) );
+    CUIPub::insertPlainText(ui->teOutput, QByteArray(msg, count));
+    CUIPub::moveCursorEnd(ui->teOutput);
+//    CUIPub::appendTextMoveCursorEnd(ui->teOutput, QByteArray(msg, count));
 }
