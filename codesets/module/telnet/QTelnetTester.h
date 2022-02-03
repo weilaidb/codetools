@@ -26,6 +26,10 @@ private slots:
 	void on_btConnect_clicked();
 	void onCommand(const QString &cmd);
 
+    void on_action_focus_to_cmd_triggered();
+
+    void on_action_clear_cmd_triggered();
+
 public slots:
 	void setStatusText(const QString &msg, bool onMainWindow = false);
 	void addText(const char *msg, int count);

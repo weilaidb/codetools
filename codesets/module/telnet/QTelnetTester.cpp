@@ -91,8 +91,16 @@ void QTelnetTester::on_btConnect_clicked()
 
 void QTelnetTester::addText(const char *msg, int count)
 {
-//    ui->teOutput->insertPlainText( QByteArray(msg, count) );
     CUIPub::insertPlainText(ui->teOutput, QByteArray(msg, count));
     CUIPub::moveCursorEnd(ui->teOutput);
-//    CUIPub::appendTextMoveCursorEnd(ui->teOutput, QByteArray(msg, count));
+}
+
+void QTelnetTester::on_action_focus_to_cmd_triggered()
+{
+    CUIPub::setFocus(ui->cbCmd);
+}
+
+void QTelnetTester::on_action_clear_cmd_triggered()
+{
+    CUIPub::clear(ui->cbCmd);
 }

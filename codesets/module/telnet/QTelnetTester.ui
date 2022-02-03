@@ -85,9 +85,33 @@
      <x>0</x>
      <y>0</y>
      <width>682</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFiile">
+    <property name="title">
+     <string>配置</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>快捷键</string>
+    </property>
+    <addaction name="action_focus_to_cmd"/>
+    <addaction name="action_clear_cmd"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>关于</string>
+    </property>
+    <addaction name="action_4"/>
+   </widget>
+   <addaction name="menuFiile"/>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -98,6 +122,42 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="action">
+   <property name="text">
+    <string>执行配置</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>恢复配置</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>保存配置</string>
+   </property>
+  </action>
+  <action name="action_focus_to_cmd">
+   <property name="text">
+    <string>聚焦到命令行</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F</string>
+   </property>
+  </action>
+  <action name="action_clear_cmd">
+   <property name="text">
+    <string>清空命令行</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>注意事项</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

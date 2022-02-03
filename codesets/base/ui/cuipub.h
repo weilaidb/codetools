@@ -196,6 +196,9 @@ public:
     //icon
     static QIcon icon(QString file);
 
+    static void setFocus(QComboBox *cbBox);
+    static void clear(QComboBox *cbBox);
+
 
 public:
     enum{

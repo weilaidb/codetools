@@ -1105,6 +1105,16 @@ QIcon CUIPub::icon(QString file)
     return icon;
 }
 
+void CUIPub::setFocus(QComboBox *cbBox)
+{
+    cbBox->setFocus();
+}
+
+void CUIPub::clear(QComboBox *cbBox)
+{
+    cbBox->clear();
+}
+
 
 void CUIPub::setComBoxFocus(QComboBox *pComboBox)
 {
