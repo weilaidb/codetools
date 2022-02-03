@@ -95,6 +95,7 @@
     <addaction name="action"/>
     <addaction name="action_2"/>
     <addaction name="action_3"/>
+    <addaction name="action_5"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -102,6 +103,7 @@
     </property>
     <addaction name="action_focus_to_cmd"/>
     <addaction name="action_clear_cmd"/>
+    <addaction name="action_clear_workarea"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -156,6 +158,16 @@
   <action name="action_4">
    <property name="text">
     <string>注意事项</string>
+   </property>
+  </action>
+  <action name="action_clear_workarea">
+   <property name="text">
+    <string>清空工作区</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>保存工作区</string>
    </property>
   </action>
  </widget>

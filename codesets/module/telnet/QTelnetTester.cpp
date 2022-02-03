@@ -17,7 +17,6 @@ QTelnetTester::QTelnetTester(QWidget *parent) :
 
     pCmdTimer = new QTimer();
     connect(pCmdTimer,SIGNAL(timeout()),this,SLOT(onCmdTimeOut()));
-    pCmdTimer->start(1000);
 
 }
 
@@ -75,17 +74,6 @@ void QTelnetTester::setStatusText(const QString &msg, bool onQTelnetTester)
 	ui->statusBar->showMessage(msg);
 }
 
-void QTelnetTester::onCommand(const QString &cmd)
-{
-	if( telnet.isConnected() )
-	{
-        QString newCmd = cmd + "\n";
-        debugApp() << "cmd:" << cmd;
-        debugApp() << "newCmd:" << newCmd;
-        telnet.sendData(newCmd.toLatin1());
-	}
-}
-
 void QTelnetTester::on_btConnect_clicked()
 {
 	if( telnet.isConnected() )
@@ -94,15 +82,53 @@ void QTelnetTester::on_btConnect_clicked()
 		telnet.connectToHost(ui->leAddr->text(), ui->sbPort->value());
 }
 
+void QTelnetTester::onCommand(const QString &cmd)
+{
+    if( telnet.isConnected() )
+    {
+//        debugApp() << "cmd:" << cmd;
+        if(bDone != true)
+        {
+            debugApp() << "==>early interResult:" << interResult << endl;
+        }
+
+        interResult.clear();
+        bDone = false;
+        QString newCmd = cmd + "\n";
+        startCmdTime();
+        debugApp() << ">>send:" << newCmd;
+        telnet.sendData(newCmd.toLatin1());
+    }
+}
+
 void QTelnetTester::addText(const char *msg, int count)
 {
-    CUIPub::insertPlainText(ui->teOutput, QByteArray(msg, count));
+    QString recvStr = QByteArray(msg, count);
+    CUIPub::insertPlainText(ui->teOutput, recvStr);
     CUIPub::moveCursorEnd(ui->teOutput);
+    startCmdTime();
+    interResult += recvStr;
+//    debugApp() << "<<recvStr:" << recvStr;
 }
 
 void QTelnetTester::onCmdTimeOut()
 {
-    debugApp() << "onCmdTimeOut";
+//    debugApp() << "onCmdTimeOut";
+    debugApp() << "==>interResult:" << interResult << endl;
+    stopCmdTime();
+    bDone = true;
+}
+
+void QTelnetTester::startCmdTime()
+{
+//    onCmdTimeOut();
+    pCmdTimer->start(300);
+}
+
+void QTelnetTester::stopCmdTime()
+{
+//    debugApp() << "stopCmdTime";
+    pCmdTimer->stop();
 }
 
 void QTelnetTester::on_action_focus_to_cmd_triggered()
@@ -113,4 +139,9 @@ void QTelnetTester::on_action_focus_to_cmd_triggered()
 void QTelnetTester::on_action_clear_cmd_triggered()
 {
     CUIPub::clear(ui->cbCmd);
+}
+
+void QTelnetTester::on_action_clear_workarea_triggered()
+{
+    CUIPub::clear(ui->teOutput);
 }

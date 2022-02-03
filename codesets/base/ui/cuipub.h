@@ -198,6 +198,7 @@ public:
 
     static void setFocus(QComboBox *cbBox);
     static void clear(QComboBox *cbBox);
+    static void clear(QPlainTextEdit *pEdit);
 
 
 public:

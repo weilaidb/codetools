@@ -1115,6 +1115,11 @@ void CUIPub::clear(QComboBox *cbBox)
     cbBox->clear();
 }
 
+void CUIPub::clear(QPlainTextEdit *pEdit)
+{
+    pEdit->clear();
+}
+
 
 void CUIPub::setComBoxFocus(QComboBox *pComboBox)
 {

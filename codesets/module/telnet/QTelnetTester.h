@@ -31,15 +31,21 @@ private slots:
 
     void on_action_clear_cmd_triggered();
 
+    void on_action_clear_workarea_triggered();
+
 public slots:
 	void setStatusText(const QString &msg, bool onMainWindow = false);
 	void addText(const char *msg, int count);
 
 private:
     QTimer *pCmdTimer;
+    QString interResult;
+    bool bDone;
 
 public slots:
     void onCmdTimeOut();
+    void startCmdTime();
+    void stopCmdTime();
 };
 
 #endif // QTELNETTESTER_H
