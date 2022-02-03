@@ -2,6 +2,7 @@
 #define QTELNETTESTER_H
 
 #include <QMainWindow>
+#include <QTimer>
 #include "QTelnet.h"
 
 namespace Ui
@@ -33,6 +34,12 @@ private slots:
 public slots:
 	void setStatusText(const QString &msg, bool onMainWindow = false);
 	void addText(const char *msg, int count);
+
+private:
+    QTimer *pCmdTimer;
+
+public slots:
+    void onCmdTimeOut();
 };
 
 #endif // QTELNETTESTER_H

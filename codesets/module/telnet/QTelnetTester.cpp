@@ -14,6 +14,11 @@ QTelnetTester::QTelnetTester(QWidget *parent) :
 	connect( &telnet, SIGNAL(newData(const char*,int)), this, SLOT(addText(const char*,int)) );
 	connect( &telnet, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onStateChanged(QAbstractSocket::SocketState)) );
 	connect( ui->cbCmd, SIGNAL(command(QString)), this, SLOT(onCommand(QString)));
+
+    pCmdTimer = new QTimer();
+    connect(pCmdTimer,SIGNAL(timeout()),this,SLOT(onCmdTimeOut()));
+    pCmdTimer->start(1000);
+
 }
 
 QTelnetTester::~QTelnetTester()
@@ -93,6 +98,11 @@ void QTelnetTester::addText(const char *msg, int count)
 {
     CUIPub::insertPlainText(ui->teOutput, QByteArray(msg, count));
     CUIPub::moveCursorEnd(ui->teOutput);
+}
+
+void QTelnetTester::onCmdTimeOut()
+{
+    debugApp() << "onCmdTimeOut";
 }
 
 void QTelnetTester::on_action_focus_to_cmd_triggered()
