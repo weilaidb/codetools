@@ -72,8 +72,11 @@ void QTelnetTester::onCommand(const QString &cmd)
 {
 	if( telnet.isConnected() )
 	{
-		telnet.sendData(cmd.toLatin1());
-		telnet.sendData("\n");
+        QString newCmd = cmd + "\n";
+        telnet.sendData(newCmd.toLatin1());
+
+//        telnet.sendData(cmd.toLatin1());
+//		telnet.sendData("\n");
 	}
 }
 
@@ -87,6 +90,6 @@ void QTelnetTester::on_btConnect_clicked()
 
 void QTelnetTester::addText(const char *msg, int count)
 {
-	ui->teOutput->insertPlainText( QByteArray(msg, count) );
-	ui->teOutput->verticalScrollBar()->setValue(0xFFFFFFF);
+    ui->teOutput->appendPlainText(QByteArray(msg, count));
+    ui->teOutput->moveCursor(QTextCursor::End);
 }
