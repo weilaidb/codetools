@@ -1126,9 +1126,13 @@ void CUIPub::setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV)
     pComboBox->setView(pV);
 }
 
+void CUIPub::appendTextMoveCursorEnd(QPlainTextEdit *pEdit, QString str)
+{
+    pEdit->appendPlainText(str);
+    pEdit->moveCursor(QTextCursor::End);
+}
 
 QString CUIPub::getLabelEdit(QLabel *pLabel)
 {
     return pLabel->text();
 }
-

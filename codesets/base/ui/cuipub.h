@@ -18,6 +18,7 @@
 #include <QSplitter>
 #include <QComboBox>
 #include <QToolBar>
+#include <QtWidgets>
 
 /**
   ** 自定义右键菜单
@@ -123,6 +124,7 @@ public:
     static void clearComBoxFocus(QComboBox *pComboBox);
     static void setComBoxModel(QComboBox *pComboBox, QAbstractItemModel *pModel);
     static void setComBoxView(QComboBox *pComboBox, QAbstractItemView *pV);
+    static void appendTextMoveCursorEnd(QPlainTextEdit *pEdit, QString str);
 
     //打开路径
     static int execCmd(QString path);
