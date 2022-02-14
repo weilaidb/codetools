@@ -89,6 +89,11 @@ public:
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
     static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);
     static bool endWithExcel(QString filename);
+    //random
+    static int randomData();
+    static quint8 randomData8();
+    static quint16 randomData16();
+    static quint32 randomData32();
 
     //replace
     static QString replaceReg(QString text, QString regexp, QString after);

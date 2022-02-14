@@ -36,6 +36,9 @@
 #define SIGN_CUSTOM_FORFXIE   ("$FORFX")  //生成递增的反斜线 \1\2\3...
 #define SIGN_CUSTOM_FORW      ("$FORW")   //生成相同个数的内容(\w{2})(\w{2})...(\w{2})(.*)
 #define SIGN_CUSTOM_BIT       ("$BIT")    //取某个数据的某些bit位，参数为:选择数，起始bit位(从0开始)，长度
+#define SIGN_CUSTOM_RANDOM_DATA8       ("$RANDOMDATA8")     //生成随机数据
+#define SIGN_CUSTOM_RANDOM_DATA16       ("$RANDOMDATA16")     //生成随机数据
+#define SIGN_CUSTOM_RANDOM_DATA32       ("$RANDOMDATA32")     //生成随机数据
 
 #define LASTWITH(ARR)  ARR[ARR.size() - 1]
 #define MIDWITH(ARR, LP)  ARR[LP]
@@ -65,6 +68,9 @@
     ||text.contains (SIGN_CUSTOM_FORFXIE )\
     ||text.contains (SIGN_CUSTOM_FORW    )\
     ||text.contains (SIGN_CUSTOM_BIT     )\
+    ||text.contains (SIGN_CUSTOM_RANDOM_DATA8     )\
+    ||text.contains (SIGN_CUSTOM_RANDOM_DATA16     )\
+    ||text.contains (SIGN_CUSTOM_RANDOM_DATA32     )\
 )\
 {\
     (express);\

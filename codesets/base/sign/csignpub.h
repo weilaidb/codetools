@@ -47,6 +47,7 @@ public:
     static QString signEnterNL();
     static QString signRESpace();
     static QString signSpace();
+    static QString signSpaceR();
     static char signLXie();
     static QString signFenHao();
     static char signFenHaoC();

@@ -49,6 +49,9 @@ T_SignPub g_ScaleSignPub[] =
     {SIGN_CUSTOM_FORFXIE, "[\\d]+"},
     {SIGN_CUSTOM_FORW, "[\\d]+"},
     {SIGN_CUSTOM_BIT, "\\s*[0-9a-fA-F]+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*"},
+    {SIGN_CUSTOM_RANDOM_DATA8, "[\\d]+"},
+    {SIGN_CUSTOM_RANDOM_DATA16, "[\\d]+"},
+    {SIGN_CUSTOM_RANDOM_DATA32, "[\\d]+"},
 
     //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
@@ -342,6 +345,42 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         }
         debugApp() << "result num:" << resultNum;
         dealText = QString::number(resultNum);
+    }
+    else if(QString(SIGN_CUSTOM_RANDOM_DATA16) == QString(temp->m_funname))
+    {
+        quint32 dwCount = dealText.toUInt(nullptr, 10);
+        debugApp()<<"SIGN_CUSTOM_RANDOM_DATA16 dwCount:" << dwCount;
+        WORD32 dwLp =  0;
+        dealText = "";
+        for(dwLp = 1;dwLp <= dwCount;dwLp++)
+        {
+            dealText += QString("%1").arg(CStringPub::randomData16(), 4, 16, QLatin1Char('0'));
+            dealText += CSignPub::signSpaceR();
+        }
+    }
+    else if(QString(SIGN_CUSTOM_RANDOM_DATA8) == QString(temp->m_funname))
+    {
+        quint32 dwCount = dealText.toUInt(nullptr, 10);
+        debugApp()<<"SIGN_CUSTOM_RANDOM_DATA8 dwCount:" << dwCount;
+        WORD32 dwLp =  0;
+        dealText = "";
+        for(dwLp = 1;dwLp <= dwCount;dwLp++)
+        {
+            dealText += QString("%1").arg(CStringPub::randomData8(), 2, 16, QLatin1Char('0'));
+            dealText += CSignPub::signSpaceR();
+        }
+    }
+    else if(QString(SIGN_CUSTOM_RANDOM_DATA32) == QString(temp->m_funname))
+    {
+        quint32 dwCount = dealText.toUInt(nullptr, 10);
+        debugApp()<<"SIGN_CUSTOM_RANDOM_DATA32 dwCount:" << dwCount;
+        WORD32 dwLp =  0;
+        dealText = "";
+        for(dwLp = 1;dwLp <= dwCount;dwLp++)
+        {
+            dealText += QString("%1").arg(CStringPub::randomData32(), 8, 16, QLatin1Char('0'));
+            dealText += CSignPub::signSpaceR();
+        }
     }
 
     //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))

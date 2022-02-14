@@ -691,6 +691,31 @@ bool CStringPub::endWithExcel(QString filename)
     return filename.endsWith("xls") || filename.endsWith("xlsx");
 }
 
+int CStringPub::randomData()
+{
+    static quint32 dwLp = 0;
+    QTime time;
+    time= QTime::currentTime();
+    qsrand(time.msec()+time.second()*1000 + qrand() * dwLp++);
+    return qrand();
+}
+
+quint8 CStringPub::randomData8()
+{
+    return  randomData() % 0xFF;    //产生0xFF以内的随机数
+}
+
+quint16 CStringPub::randomData16()
+{
+    return  randomData() % 0xFFFF;    //产生0xFFFF以内的随机数
+}
+
+quint32 CStringPub::randomData32()
+{
+    return  randomData() % 0xFFFF << 16 | randomData() % 0xFFFF;    //产生0xFFFFFFFF以内的随机数
+}
+
+
 QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
 {
     bool ok;

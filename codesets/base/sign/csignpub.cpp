@@ -39,6 +39,11 @@ QString CSignPub::signSpace()
     return SIGNSPACENONE;
 }
 
+QString CSignPub::signSpaceR()
+{
+    return SIGNSPACE;
+}
+
 char CSignPub::signLXie()
 {
     return SIGLEFTXIELINE;
