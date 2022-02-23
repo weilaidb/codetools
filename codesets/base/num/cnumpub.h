@@ -13,6 +13,14 @@ public:
     static quint32 string2UInt(QString str);
     static int string2Int(QString str);
     static float string2Float(QString str);
+
+    static quint32 getDwStaticNum();
+    static quint32 getAddOneDwStaticNum(quint32 dwDefaultVal);
+    static QString getAddOneDwStaticNumString(quint32 dwDefault);
+    static void setDwStaticNum(const quint32 &dwStaticNum);
+
+private:
+    static quint32 m_sdwStaticNum;
 };
 
 #endif // CNUMPUB_H

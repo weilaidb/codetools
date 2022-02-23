@@ -39,6 +39,7 @@
 #define SIGN_CUSTOM_RANDOM_DATA8       ("$RANDOMDATA8")     //生成随机数据
 #define SIGN_CUSTOM_RANDOM_DATA16       ("$RANDOMDATA16")     //生成随机数据
 #define SIGN_CUSTOM_RANDOM_DATA32       ("$RANDOMDATA32")     //生成随机数据
+#define SIGN_CUSTOM_AUTOINC       ("$AUTOINC")     //自动增1
 
 #define LASTWITH(ARR)  ARR[ARR.size() - 1]
 #define MIDWITH(ARR, LP)  ARR[LP]
@@ -71,6 +72,7 @@
     ||text.contains (SIGN_CUSTOM_RANDOM_DATA8     )\
     ||text.contains (SIGN_CUSTOM_RANDOM_DATA16     )\
     ||text.contains (SIGN_CUSTOM_RANDOM_DATA32     )\
+    ||text.contains (SIGN_CUSTOM_AUTOINC     )\
 )\
 {\
     (express);\

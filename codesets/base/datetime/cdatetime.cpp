@@ -22,3 +22,8 @@ QString CDateTime::format2()
 
     return begin;
 }
+
+qint64 CDateTime::getCurTime()
+{
+    return QDateTime::currentDateTime().toSecsSinceEpoch();
+}

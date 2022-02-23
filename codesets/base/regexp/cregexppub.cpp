@@ -52,6 +52,7 @@ T_SignPub g_ScaleSignPub[] =
     {SIGN_CUSTOM_RANDOM_DATA8, "[\\d]+"},
     {SIGN_CUSTOM_RANDOM_DATA16, "[\\d]+"},
     {SIGN_CUSTOM_RANDOM_DATA32, "[\\d]+"},
+    {SIGN_CUSTOM_AUTOINC, "[\\d]+"},
 
     //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
@@ -381,6 +382,12 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
             dealText += QString("%1").arg(CStringPub::randomData32(), 8, 16, QLatin1Char('0'));
             dealText += CSignPub::signSpaceR();
         }
+    }
+    else if(QString(SIGN_CUSTOM_AUTOINC) == QString(temp->m_funname))
+    {
+        quint32 dwStartNum = dealText.toUInt(nullptr, 10);
+        debugApp()<<"SIGN_CUSTOM_AUTOINC dwStartNum:" << dwStartNum;
+        dealText = QString("%1").arg(CNumPub::getAddOneDwStaticNum(dwStartNum));
     }
 
     //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
