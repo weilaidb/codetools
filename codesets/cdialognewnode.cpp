@@ -7,6 +7,8 @@
 #include <cuipub.h>
 #include <cuipub.h>
 
+QString CDialogNewNode::m_NodeCustomName("");
+
 CDialogNewNode::CDialogNewNode(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CDialogNewNode)
@@ -38,6 +40,11 @@ QString CDialogNewNode::getName()
 QString CDialogNewNode::getNameFromCopy()
 {
     return CUIPub::getLineEdit(ui->lineEdit_fromCopy);
+}
+
+void CDialogNewNode::setNameFromCopy(QString &name)
+{
+    CUIPub::setLineEdit(ui->lineEdit_fromCopy, name);
 }
 
 bool CDialogNewNode::isChkedBoxfromCopy()
@@ -120,4 +127,19 @@ void CDialogNewNode::init_Vars()
 void CDialogNewNode::init_UiSets()
 {
 
+}
+
+QString CDialogNewNode::getNodeCustomName()
+{
+    return m_NodeCustomName;
+}
+
+void CDialogNewNode::clearNodeCustomName()
+{
+    m_NodeCustomName.clear();
+}
+
+void CDialogNewNode::setNodeCustomName(const QString &NodeCustomName)
+{
+    m_NodeCustomName = NodeCustomName;
 }

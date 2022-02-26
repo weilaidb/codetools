@@ -401,6 +401,8 @@ private slots:
     void on_listWidget_searchresult_customContextMenuRequested(const QPoint &pos);
     void proc_action_rename();
     void proc_action_usemanytab();
+    void proc_action_newCopyStand();
+    void proc_action_newCopyUser();
     void proc_onNameChanged(QListWidgetItem* item);
 
     void on_textEdit_copyAvailable(bool b);

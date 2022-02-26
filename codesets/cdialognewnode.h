@@ -23,6 +23,7 @@ public:
     void setName(QString &name);
     QString getName();
     QString getNameFromCopy();
+    void setNameFromCopy(QString &name);
     bool isChkedBoxfromCopy();
     int getType ();
     int setType(int _val);
@@ -31,6 +32,10 @@ public:
 
 public:
     void closeEvent(QCloseEvent *event);
+
+    static QString getNodeCustomName();
+    static void clearNodeCustomName();
+    static void setNodeCustomName(const QString &NodeCustomName);
 
 private:
     void read_Setting();
@@ -47,6 +52,10 @@ private:
     QSettings *m_pSettings;
     QString m_organization;
     QString m_application;
+
+
+private:
+    static QString m_NodeCustomName;
 };
 
 #endif // CDIALOGNEWNODE_H

@@ -2783,6 +2783,12 @@ void MainWindow::proc_action_newstandnode()
 {
     CDialogNewNode *pDiaglog = new CDialogNewNode();
     pDiaglog->setType(CDialogNewNode::NEWSTANDMODE);
+    //判断是否有自定义数据
+    if(CExpressPub::isFull(CDialogNewNode::getNodeCustomName()))
+    {
+        QString custom = CDialogNewNode::getNodeCustomName();
+        pDiaglog->setNameFromCopy(custom);
+    }
 
     if(QDialog::Rejected == pDiaglog->exec())
     {
@@ -2797,6 +2803,12 @@ void MainWindow::proc_action_newusernode()
 
     CDialogNewNode *pDiaglog = new CDialogNewNode();
     pDiaglog->setType(CDialogNewNode::NEWUSERMODE);
+    //判断是否有自定义数据
+    if(CExpressPub::isFull(CDialogNewNode::getNodeCustomName()))
+    {
+        QString custom = CDialogNewNode::getNodeCustomName();
+        pDiaglog->setNameFromCopy(custom);
+    }
 
     if(QDialog::Rejected == pDiaglog->exec())
     {
@@ -2811,8 +2823,10 @@ void MainWindow::proc_newnode_more(CDialogNewNode *pDiaglog)
 {
     QString newNodeName = pDiaglog->getName();
     debugApp() << newNodeName;
+
     QString newNodeNameFromCopy = pDiaglog->getNameFromCopy();
     debugApp() << newNodeNameFromCopy;
+
     if(CStringPub::strSimLenZero(newNodeName))
     {
         CUIPub::showStatusBarTimerOnly("请输入内容");
@@ -3224,9 +3238,18 @@ void MainWindow::on_listWidget_searchresult_customContextMenuRequested(const QPo
     QAction* action_usemanytab = new QAction("收藏到多标签", this);
     QObject::connect(action_usemanytab, SIGNAL(triggered()), this, SLOT(proc_action_usemanytab()));
 
+    QAction* action_newCopyUser = new QAction("新建拷贝节点(用户)", this);
+    QObject::connect(action_newCopyUser, SIGNAL(triggered()), this, SLOT(proc_action_newCopyUser()));
+
+    QAction* action_newCopyStand = new QAction("新建拷贝节点(标准)", this);
+    QObject::connect(action_newCopyStand, SIGNAL(triggered()), this, SLOT(proc_action_newCopyStand()));
+
+
     QMenu* popMenuResult = new QMenu(this);
     popMenuResult->addAction(action_rename);
     popMenuResult->addAction(action_usemanytab);
+    popMenuResult->addAction(action_newCopyUser);
+    popMenuResult->addAction(action_newCopyStand);
     popMenuResult->exec(QCursor::pos());
     delete popMenuResult;
     popMenuResult = nullptr;
@@ -3256,6 +3279,23 @@ void MainWindow::proc_action_usemanytab()
     /*cfgfilenameTabSetting*/;
     CRegExpPub::handlerTipSaveAppend(cfgfilenameTabSetting, 0, configname, CRegExpPub::FILE_TIPS  );
     CUIPub::explorerPathExt(CRegExpPub::getRegExpFileNamePub(cfgfilenameTabSetting,CRegExpPub::FILE_TIPS));
+}
+
+void MainWindow::proc_action_newCopyStand()
+{
+    qDebug() << "CUIPub::getListWidgetCurrentItemText(ui->listWidget_searchresult):" << CUIPub::getListWidgetCurrentItemText(ui->listWidget_searchresult);
+
+
+    CDialogNewNode::setNodeCustomName(CUIPub::getListWidgetCurrentItemText(ui->listWidget_searchresult));
+    proc_action_newstandnode();
+    CDialogNewNode::clearNodeCustomName();
+}
+
+void MainWindow::proc_action_newCopyUser()
+{
+    CDialogNewNode::setNodeCustomName(CUIPub::getListWidgetCurrentItemText(ui->listWidget_searchresult));
+    proc_action_newusernode();
+    CDialogNewNode::clearNodeCustomName();
 }
 
 

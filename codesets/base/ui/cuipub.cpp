@@ -1046,6 +1046,11 @@ QListWidgetItem * CUIPub::getListWidgetCurrentItem(QListWidget *pWdt)
     return pWdt->currentItem();
 }
 
+QString CUIPub::getListWidgetCurrentItemText(QListWidget *pWdt)
+{
+    return pWdt->currentItem()->text();
+}
+
 QList<QListWidgetItem*> CUIPub::getListWidgetSelectedItems(QListWidget *pWdt)
 {
     return pWdt->selectedItems();

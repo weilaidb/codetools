@@ -103,6 +103,7 @@ public:
     static void clearListWidget(QListWidget *pWdt);
     static void clearHideListWidget(QListWidget *pWdt);
     static QListWidgetItem *getListWidgetCurrentItem(QListWidget *pWdt);
+    static QString getListWidgetCurrentItemText(QListWidget *pWdt);
     static QList<QListWidgetItem*> getListWidgetSelectedItems(QListWidget *pWdt);
     static int getListWidgetRow(QListWidget *pWdt, QListWidgetItem *pItem);
     static int getListWidgetCurrentRow(QListWidget *pWdt);
