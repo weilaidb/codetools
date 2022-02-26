@@ -78,6 +78,11 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmpty(const QString str)
     return stringSplitbyCharFilterEmpty(str, '\n');
 }
 
+QStringList CStringPub::stringSplitbyNewLineModeFilterEmpty(const QString str)
+{
+    return stringSplitbyCharFilterEmpty(str, "$MODE_NL");
+}
+
 QStringList CStringPub::stringSplitbySpaceFilterEmpty(const QString str)
 {
     return stringSplitbyCharFilterEmpty(str, ' ');
@@ -212,6 +217,15 @@ void CStringPub::printStringList(QStringList &lists)
         debugApp() << "No:" << ++dwCnt << ", " << item;
     }
 
+}
+
+void CStringPub::printStringList(QString tips, QStringList &lists)
+{
+    debugApp() <<"tips:" << tips <<",lists count:" << lists.count();
+    quint32 dwCnt = 0;
+    foreach (QString item, lists) {
+        debugApp() << "No:" << ++dwCnt << ", " << item;
+    }
 }
 
 

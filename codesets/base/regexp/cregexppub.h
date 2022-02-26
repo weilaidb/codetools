@@ -84,6 +84,7 @@ typedef struct T_handlerRegExpParas{
     QString text;
     QStringList regbefore;
     QStringList regafter;
+    QStringList regafterSplitModeNL;
     QString mode;
     quint8 ucMultLineMultiProcMode; /* A/B模式 多行多处理 ,见 EUM_MODE_MULTILINE_MULTIPROC */
 }T_handlerRegExpParas, *P_handlerRegExpParas;
@@ -174,11 +175,13 @@ public:
     static QString getRegExpFileNamePub(QString filename, int filetype);
     static QString getRegExpByFile(QString filename, QString content);
     static QStringList getRegExpsByFile(QString filename,QString content);
+    static QStringList getRegExpsByFileModeNL(QString filename,QString content);
     static QString getFileNameByClassType(quint32 dwClasstype);
     static QString procTextByRegExpList(T_RegExpParas &tPara);
     static QString checkRegExpFile(QString classconfig, quint32 dwClasstype
                                    , QStringList &regexpsbef
                                    , QStringList &regexpsaft
+                                   , QStringList &regexpsaftmnl
                                    , QStringList &regexpstip
                                    , QString &regexpmode);
     static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);

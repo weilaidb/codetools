@@ -145,5 +145,5 @@ void CPrintPub::printStringData(QString str)
 
 void CPrintPub::printStringTip(QString str, QString tip)
 {
-    ////debugApp() << tip << " : " << str;
+    debugApp() << tip << " : " << str;
 }

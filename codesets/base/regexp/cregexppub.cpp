@@ -140,6 +140,11 @@ QStringList CRegExpPub::getRegExpsByFile(QString filename,QString content)
     return  CStringPub::stringSplitbyNewLineFilterEmpty(getRegExpByFile(filename, content));
 }
 
+QStringList CRegExpPub::getRegExpsByFileModeNL(QString filename, QString content)
+{
+    return  CStringPub::stringSplitbyNewLineModeFilterEmpty(getRegExpByFile(filename, content));
+}
+
 QString CRegExpPub::getFileNameByClassType(quint32 dwClasstype)
 {
     quint32 dwLp = 0;
@@ -161,9 +166,10 @@ QString CRegExpPub::handlerTip(QString classconfig, quint32 dwClasstype, int fil
     {
         QStringList regexpsbef = CStringPub::emptyStringList();
         QStringList regexpsaft = CStringPub::emptyStringList();
+        QStringList regexpsaftmnl = CStringPub::emptyStringList();
         QStringList regexpstip = CStringPub::emptyStringList();
         QString regexpsmode    = CStringPub::emptyString();
-        checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip, regexpsmode);
+        checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpsaftmnl, regexpstip, regexpsmode);
 
         return getRegExpByFile(getRegExpFileNamePub(classconfig, filetype), CStringPub::emptyString());
     }
@@ -559,8 +565,14 @@ QString CRegExpPub::replaceSeqPub(QString text, int iStartSeq, int iCount, QRegu
     QString result(text);
     int iLp = 0;
     //    for(iLp = iStartSeq; iLp < iCount; iLp++)
+
+    qDebug() << "text:" << text;
+    qDebug() << "iCount:" << iCount;
+    qDebug() << "iStartSeq:" << iStartSeq;
+
     for(iLp = iCount; iLp >= iStartSeq; iLp--)
     {
+        qDebug() << "iLp:" << iLp;
         //内容替换
         do{
             result = result.replace(QString("\\%1").arg(iLp), match.captured(iLp));
@@ -591,6 +603,7 @@ QString CRegExpPub::getFileNameByClassCfgType(QString classconfig, quint32 dwCla
 QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
                                     , QStringList &regexpsbef
                                     , QStringList &regexpsaft
+                                    , QStringList &regexpsaftmnl
                                     , QStringList &regexpstip
                                     , QString &regexpmode
                                     )
@@ -599,6 +612,7 @@ QString CRegExpPub::checkRegExpFile(QString classconfig, quint32 dwClasstype
     QString filename  = getFileNameByClassCfgType(classconfig, dwClasstype);
     regexpsbef = getRegExpsByFile(getRegExpFileNameBefore(filename), CStringPub::stringRegExpBefore());
     regexpsaft = getRegExpsByFile(getRegExpFileNameAfter(filename), CStringPub::stringRegExpAfter());
+    regexpsaftmnl = getRegExpsByFileModeNL(getRegExpFileNameAfter(filename), CStringPub::stringRegExpAfter());
     regexpstip = getRegExpsByFile(getRegExpFileNameTips(filename), CStringPub::emptyString());
     QMap<QString, QString> *pMap = CMapPub::getMapFileMode();
     if(pMap->end() != pMap->find(classconfig))
@@ -625,9 +639,10 @@ QString CRegExpPub::procTextByRegExpList(T_RegExpParas &tPara)
 
     QStringList regexpsbef = CStringPub::emptyStringList();
     QStringList regexpsaft = CStringPub::emptyStringList();
+    QStringList regexpsaftmnl = CStringPub::emptyStringList(); //以MODE_NL分隔的数据
     QStringList regexpstip = CStringPub::emptyStringList();
     QString regexpsmode    = CStringPub::emptyString();
-    checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpstip,regexpsmode);
+    checkRegExpFile(classconfig, dwClasstype, regexpsbef, regexpsaft, regexpsaftmnl, regexpstip,regexpsmode);
 
     if(CExpressPub::isZero(regexpsbef.length()))
     {
@@ -650,6 +665,7 @@ QString CRegExpPub::procTextByRegExpList(T_RegExpParas &tPara)
     tHandlerParas.text = text;
     tHandlerParas.regbefore = regexpsbef;
     tHandlerParas.regafter = regexpsaft;
+    tHandlerParas.regafterSplitModeNL = regexpsaftmnl;
     tHandlerParas.mode     = regexpsmode;
     tHandlerParas.ucMultLineMultiProcMode = tPara.ucMultLineMultiProcMode;
 
@@ -827,8 +843,8 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QS
 
     Q_UNUSED(mode);
     QString result = regafter;
-    ////debugApp() << "reg before:" << regbefore;
-    ////debugApp() << "reg after :" << regafter;
+    debugApp() << "reg before:" << regbefore;
+    debugApp() << "reg after :" << regafter;
 
     QRegularExpression regularExpression(regbefore);
     int index = 0;
@@ -837,13 +853,13 @@ QString CRegExpPub::handlerRegExp_Pub_Single(QString text, QString regbefore, QS
         match = regularExpression.match(text, index);
         if(match.hasMatch()) {
             index = match.capturedEnd();
-            ////debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
+            debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
         }
         else
             break;
     } while(index < text.length());
 
-    ////debugApp() << "match.caput1:" << match.capturedTexts();
+    debugApp() << "match.caput1:" << match.capturedTexts();
 
     if(match.capturedTexts().length() < 2)
     {
@@ -999,6 +1015,7 @@ QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)
     QString text = tHandlerRegExpPara.text;
     QStringList regbefore = tHandlerRegExpPara.regbefore;
     QStringList regafter = tHandlerRegExpPara.regafter;
+    QStringList regaftermnl = tHandlerRegExpPara.regafterSplitModeNL;
     QString mode = tHandlerRegExpPara.mode;
     quint8 ucModeMultLineMultiProc = tHandlerRegExpPara.ucMultLineMultiProcMode;
 
@@ -1008,6 +1025,8 @@ QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)
     QStringList list = CStringPub::stringSplitbyNewLineFilterEmpty(text);
     list = CStringPub::stringFilterFirstEnd(list,"[", "]");
     list = CStringPub::stringFilterFirstEnd(list,"【", "】");
+
+    CStringPub::printStringList("regaftermnl", regaftermnl);
 
     //检测内容是否包含\1等类似的内容
     if(false == handlerRegExp_PubCheck(text, regbefore, regafter, mode))
@@ -1034,8 +1053,13 @@ QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)
         foreach (QString item, list) {
             int iLp = 0;
             strtmp = item;
+            if(regbefore.size() != regaftermnl.size())
+            {
+                result = "maybe invlid, please check have $MODE_NL at end!!";
+                break;
+            }
             foreach (QString reg, regbefore) {
-                strtmp = handlerRegExp_Pub_Single(strtmp, reg, regafter.at(iLp), mode);
+                strtmp = handlerRegExp_Pub_Single(strtmp, reg, regaftermnl.at(iLp), mode);
                 iLp++;
             }
             result += strtmp + SIGNENTER;
