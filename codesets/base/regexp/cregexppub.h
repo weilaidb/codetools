@@ -18,6 +18,7 @@
   ** 自定义特殊符
   **/
 #define SIGN_CUSTOM_NL        ("$NL")
+#define SIGN_CUSTOM_MODE_NL        ("$MODE_NL")
 #define SIGN_CUSTOM_TB        ("$TB")
 #define SIGN_CUSTOM_SP        ("$SP")
 #define SIGN_CUSTOM_DATE      ("$DATE")
@@ -186,6 +187,7 @@ public:
                                    , QString &regexpmode);
     static QString getFileNameByClassCfgType(QString classconfig, quint32 dwClasstype);
     static QString replaceSignsPub(QString text);
+    static QString replaceSignsPubExt(QString text);
     static QString replaceSignsItemPub(QString text);
     static QString replaceSignsItemFuncPub(QString dealText, P_SignPub temp);
     static QString replaceSignsItemTestPub(QString text);

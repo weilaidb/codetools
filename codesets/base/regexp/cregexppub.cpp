@@ -244,6 +244,14 @@ QString CRegExpPub::replaceSignsPub(QString text)
     return text;
 }
 
+QString CRegExpPub::replaceSignsPubExt(QString text)
+{
+    text = replaceSignsPub(text);
+    text = text.replace(SIGN_CUSTOM_MODE_NL, "\n")
+           ;
+    return text;
+}
+
 //按函数处理
 //g_ScaleSignPub
 QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
@@ -1133,6 +1141,7 @@ QString CRegExpPub::handlerRegExp_Pub(T_handlerRegExpParas &tHandlerRegExpPara)
             iLp++;
         }
         debugApp() << "proc count:" << iLp;
+        result = replaceSignsPubExt(result);
 
     }
 
