@@ -6,28 +6,30 @@
 #include "supertest.h"
 //#include "testui.h"
 
-#if 1
-int main(int argc, char *argv[])
-{
-    CTextCodecPub::setTextCodecUtf8();
-    QApplication a(argc, argv);
-#if 1
-    MainWindow w(argv[0]);
-    w.show();
-#else
-    SuperTest w;
-    w.show();
+//#ifndef GMOCKTEST
+//int main(int argc, char *argv[])
+//{
+//    CTextCodecPub::setTextCodecUtf8();
+//    QApplication a(argc, argv);
+//#if 1
+//    MainWindow w(argv[0]);
+//    w.show();
+//#else
+//    SuperTest w;
+//    w.show();
 
-    //    testui w;
-    //    w.show();
-#endif
+//    //    testui w;
+//    //    w.show();
+//#endif
 
 
-    return a.exec();
-}
+//    return a.exec();
+//}
 
-#else
+//#endif
 
+
+#if 0
 #include "cstringpub.h"
 #include "cswitchpub.h"
 #include "clogswpub.h"

@@ -24,6 +24,7 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+
 ## release版本不输出
 #DEFINES += QT_NO_DEBUG_OUTPUT
 
@@ -92,6 +93,43 @@ macx {
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+# here run gmock test or normal main by compile method(debug or release)
+debug{
+#Gmock添加源代码
+INCLUDEPATH += "module/gmock_170/src/gmock/gtest/include/"
+INCLUDEPATH += "module/gmock_170/src/gmock/gtest/"
+#INCLUDEPATH += "module/gmock_170/src/../../"
+INCLUDEPATH += "module/gmock_170/src/gmock/include/gmock/"
+INCLUDEPATH += "module/gmock_170/src/gmock/include/"
+INCLUDEPATH += "module/gmock_170/src/gmock/"
+
+
+DEFINES += GMOCKTEST
+
+SOURCES += \
+    module/gmock_170/src/gmock/gtest/src/gtest-typed-test.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-test-part.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-printers.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-port.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-filepath.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-death-test.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest-all.cc \
+    module/gmock_170/src/gmock/gtest/src/gtest.cc \
+    module/gmock_170/src/gmock/src/gmock-spec-builders.cc \
+    module/gmock_170/src/gmock/src/gmock-matchers.cc \
+    module/gmock_170/src/gmock/src/gmock-cardinalities.cc \
+    module/gmock_170/src/gmock/src/gmock-all.cc \
+    module/gmock_170/src/gmock/src/gmock.cc \
+    module/gmock_170/src/gmock/src/gmock-internal-utils.cc
+
+}
+
+release{
+
+#TARGET = XX
+
+}
+
 SOURCES += \
     AStyle_3_1_windows/AStyle/src/ASBeautifier.cpp \
     AStyle_3_1_windows/AStyle/src/ASEnhancer.cpp \
@@ -152,9 +190,11 @@ SOURCES += \
     test1.cpp \
     testcase/processtest/CProcessDataTest.cpp \
     testcase/stringtest/cstringpubcpp_main.cpp \
+    testcase/testmain.cpp \
     testcase/virtualtest/cgrandmaster.cpp \
     testcase/virtualtest/cparent.cpp \
     testcase/virtualtest/cson.cpp
+
 
 HEADERS += \
     AStyle_3_1_windows/AStyle/src/ASLocalizer.h \
