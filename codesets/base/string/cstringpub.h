@@ -80,6 +80,7 @@ public:
     static void clearStringList(QStringList &list);
     static QString stringFilterEmpty(const QString str);
     static void deleteListItem(QStringList &list, QString str);
+    static QString getStringByMidStringList(QStringList strlist, int beginPos, char splitSign);
 
 
     //字符串
@@ -91,6 +92,7 @@ public:
     static bool inStringList(QString str, QStringList list, Qt::CaseSensitivity cs);
     static QString getStringOfData(unsigned char *pStr, unsigned int dwLen, int hexflag);
     static bool endWithExcel(QString filename);
+    static QString splaceMul(quint32 dwLen);
     //random
     static int randomData();
     static quint8 randomData8();
@@ -130,6 +132,7 @@ public:
 
     //进制转换
     static QString scaleConvertPub(QString text, quint8 from, quint8 to);
+    static QString scaleConvertSignPub(QString text, quint8 from, quint8 to);
     static QString toUpper(QString text);
     static QString toLower(QString text);
     static QString add0xDot(QString text);

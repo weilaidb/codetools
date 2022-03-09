@@ -41,6 +41,7 @@
 #define SIGN_CUSTOM_RANDOM_DATA16       ("$RANDOMDATA16")     //生成随机数据
 #define SIGN_CUSTOM_RANDOM_DATA32       ("$RANDOMDATA32")     //生成随机数据
 #define SIGN_CUSTOM_AUTOINC       ("$AUTOINC")     //自动增1
+#define SIGN_CUSTOM_FORMATLEN       ("$FORMATLEN")     //格式化打印
 
 #define LASTWITH(ARR)  ARR[ARR.size() - 1]
 #define MIDWITH(ARR, LP)  ARR[LP]
@@ -49,6 +50,8 @@
 
 /**是否包含要转换的符号(嵌套) */
 #define CHECK_INCLUDE(text,express) \
+    int iMaxCnt = 10;\
+    int iLp = 0;\
     while(\
     0\
     ||text.contains (SIGN_CUSTOM_NL      )\
@@ -74,9 +77,11 @@
     ||text.contains (SIGN_CUSTOM_RANDOM_DATA16     )\
     ||text.contains (SIGN_CUSTOM_RANDOM_DATA32     )\
     ||text.contains (SIGN_CUSTOM_AUTOINC     )\
+    ||text.contains (SIGN_CUSTOM_FORMATLEN   )\
 )\
 {\
     (express);\
+    if(++iLp > iMaxCnt)break;\
 }
 
 

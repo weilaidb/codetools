@@ -705,6 +705,18 @@ bool CStringPub::endWithExcel(QString filename)
     return filename.endsWith("xls") || filename.endsWith("xlsx");
 }
 
+QString CStringPub::splaceMul(quint32 dwLen)
+{
+    QString result("");
+    WORD32 dwLp =  0;
+    for(dwLp = 0;dwLp < dwLen;dwLp++)
+    {
+        result.append(CSignPub::signSpaceR());
+    }
+
+    return result;
+}
+
 int CStringPub::randomData()
 {
     static quint32 dwLp = 0;
@@ -739,6 +751,23 @@ QString CStringPub::scaleConvertPub(QString text, quint8 from, quint8 to)
         text = QString::number(dec,to);
 //        debugApp() << "text:" << text;
 //        text = QString::number(dec,to).right(4); //裁剪字符串前面多余的f
+    }
+    else
+    {
+        text = QString::number(dec,to);
+    }
+    return text;
+}
+
+QString CStringPub::scaleConvertSignPub(QString text, quint8 from, quint8 to)
+{
+    bool ok;
+    qlonglong dec = text.toLongLong(&ok, from);
+    if(16 == to)
+    {
+        text = QString::number(dec,to);
+        //        debugApp() << "text:" << text;
+        //        text = QString::number(dec,to).right(4); //裁剪字符串前面多余的f
     }
     else
     {
@@ -801,6 +830,31 @@ QString CStringPub::getHttpStr(QString prefix,QString text)
 void CStringPub::deleteListItem(QStringList &list, QString str)
 {
     list.removeAll(str);
+}
+
+QString CStringPub::getStringByMidStringList(QStringList strlist, int beginPos, char splitSign)
+{
+    if(strlist.size() < beginPos)
+    {
+        return "";
+    }
+    int pos = 0;
+    QString result("");
+    foreach (QString item, strlist) {
+        if(pos++ < beginPos)
+        {
+            continue;
+        }
+        if(strlist.size() == pos)
+        {
+            result += item;
+        }
+        else
+        {
+            result += item + splitSign;
+        }
+    }
+    return result;
 }
 
 QStringList CStringPub::stringFilterFirstEnd(const QStringList list, QString leftSign, QString rightSign)

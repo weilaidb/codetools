@@ -104,7 +104,7 @@ INCLUDEPATH += "module/gmock_170/src/gmock/include/"
 INCLUDEPATH += "module/gmock_170/src/gmock/"
 
 
-DEFINES += GMOCKTEST
+#DEFINES += GMOCKTEST
 
 SOURCES += \
     module/gmock_170/src/gmock/gtest/src/gtest-typed-test.cc \

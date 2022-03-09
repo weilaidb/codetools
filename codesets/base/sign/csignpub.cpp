@@ -59,3 +59,13 @@ char CSignPub::signFenHaoC()
     return SIGNFENHAOC;
 }
 
+char CSignPub::signDouHaoC()
+{
+    return SIGNDOUHAOS;
+}
+
+QString CSignPub::signDouHao()
+{
+    return SIGNDOUHAO;
+}
+

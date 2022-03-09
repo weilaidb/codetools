@@ -11,6 +11,10 @@
 
 #include <QDateTime>
 #include <cmappub.h>
+#include <stdio.h>
+#include <string.h>
+//#include <iomanip>
+//using namespace std;
 
 //原始的替换存在bug，目前使用10个循环来替换掉可能没有替换掉的内容
 #define REGINLOOPMAX (10)
@@ -53,6 +57,7 @@ T_SignPub g_ScaleSignPub[] =
     {SIGN_CUSTOM_RANDOM_DATA16, "[\\d]+"},
     {SIGN_CUSTOM_RANDOM_DATA32, "[\\d]+"},
     {SIGN_CUSTOM_AUTOINC, "[\\d]+"},
+    {SIGN_CUSTOM_FORMATLEN, "-?[\\d]+,[\\w\\W()]+"},
 
     //    {SIGN_CUSTOM_0XDOT, "\\w{2}+"},
 };
@@ -234,11 +239,11 @@ QString CRegExpPub::replaceSignsPub(QString text)
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 
-    //支持嵌套循环
+    //支持嵌套循环,最多支持10层
     CHECK_INCLUDE(text, text = replaceSignsItemPub(text));
 
 
-    //    text = replaceSignsItemPub(text);
+//    text = replaceSignsItemPub(text);
 
     //    replaceSignsItemTestPub(text);
     return text;
@@ -403,6 +408,40 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
         debugApp()<<"SIGN_CUSTOM_AUTOINC dwStartNum:" << dwStartNum;
         dealText = QString("%1").arg(CNumPub::getAddOneDwStaticNum(dwStartNum));
     }
+    else if(QString(SIGN_CUSTOM_FORMATLEN) == QString(temp->m_funname))
+    {
+        debugApp() << "-->"  << temp->m_funname << ":";
+        debugApp() << "SIGN_CUSTOM_FORMATLEN dealText:" << dealText;
+        QStringList splitList = CStringPub::stringSplit(dealText,CSignPub::signDouHaoC());
+        if(CStringPub::stringListCount(splitList) < 2)
+        {
+            debugApp() << "Error:Invalid express:" << dealText;
+            return dealText;
+        }
+        QString selector = splitList.at(0);
+        QString lastString = CStringPub::getStringByMidStringList(splitList, 1,CSignPub::signDouHaoC());
+        //十进制
+        selector = CStringPub::scaleConvertSignPub(selector, 10, 10);
+        qint64 swwNum = selector.toLongLong(nullptr,10);
+
+        debugApp() << "selector:" << selector;
+        debugApp() << "swwNum:" << swwNum;
+        debugApp() << "splitList.size():" << splitList.size();
+        debugApp() << "lastString:" << lastString;
+        if(swwNum < 0)
+        {
+            quint32 width = -swwNum > lastString.length() ?(-swwNum - lastString.length()):0;
+            dealText= QString("%1%2").arg(lastString)
+                    .arg(CStringPub::splaceMul(width));
+        }
+        else
+        {
+            quint32 width = swwNum > lastString.length() ?(swwNum - lastString.length()):0;
+            dealText= QString("%1%2").arg(CStringPub::splaceMul(width))
+                    .arg(lastString);
+        }
+        debugApp() << "dealText:" << dealText;
+    }
 
     //    else if(QString(SIGN_CUSTOM_0XDOT) == QString(temp->m_funname))
     //    {
@@ -415,23 +454,36 @@ QString CRegExpPub::replaceSignsItemFuncPub(QString dealText, P_SignPub temp)
 //特殊符号处理，比如进制转换，大小写等
 QString CRegExpPub::replaceSignsItemPub(QString text)
 {
+#define MAXDEADCNT (2000)
+#define CHECKDEADLOOP \
+do{\
+    dwMaxSeq++;\
+    if(dwMaxSeq > MAXDEADCNT)\
+        return "";\
+    debugApp() << "dwMaxSeq:" << dwMaxSeq;\
+}while(0)
+
+
     debugApp() << "bftext:" << text;
 
     //处理进制转换
     P_SignPub temp = NULL;
     QString filterstr("");
     WORD32 dwLp =  0;
+    WORD32 dwMaxSeq =  0;
     for(dwLp = 0;dwLp < ARRAYSIZE(g_ScaleSignPub);dwLp++)
     {
         temp = &g_ScaleSignPub[dwLp];
-        filterstr = QString("\\%1\\(%2\\)").arg(temp->m_funname).arg(temp->m_filterregexp);
+//        filterstr = QString("\\%1\\(%2\\)").arg(temp->m_funname).arg(temp->m_filterregexp);
+        filterstr = QString("\\%1<<<%2>>>").arg(temp->m_funname).arg(temp->m_filterregexp);
         debugApp() << "filterstr:" << filterstr;
-
+        CHECKDEADLOOP;
         //原始的替换存在bug，目前使用10个循环来替换掉可能没有替换掉的内容
         WORD32 dwLp2 =  0;
         for(dwLp2 = 0;dwLp2 < REGINLOOPMAX;dwLp2++)
         {
 
+            CHECKDEADLOOP;
             QRegularExpression regularExpression(filterstr, QRegularExpression::MultilineOption
                                                  | QRegularExpression::DotMatchesEverythingOption
                                                  //                                                 | QRegularExpression::DontCaptureOption
@@ -446,7 +498,9 @@ QString CRegExpPub::replaceSignsItemPub(QString text)
                     debugApp()<<"("<<match.capturedStart() <<","<<index<<") "<<match.captured(0);
                     QString dealText = match.captured(0);
                     QString afText = dealText;
-                    afText = afText.replace(temp->m_funname,"").replace("(", "").replace(")","");
+//                    afText = afText.replace(temp->m_funname,"").replace("(", "").replace(")","");
+                    afText = afText.replace(temp->m_funname,"").replace("<<<", "").replace(">>>","");
+//                    afText = afText.replace(temp->m_funname,"").replace("((", "(").replace("))",")");
                     debugApp() << "afText1:" << afText;
                     afText = replaceSignsItemFuncPub(afText, temp);
                     debugApp() << "afText2:" << afText;
@@ -457,6 +511,8 @@ QString CRegExpPub::replaceSignsItemPub(QString text)
                 }
                 else
                     break;
+
+                CHECKDEADLOOP;
             } while(index < text.length());
 
             debugApp() << "match.caput1:" << match.capturedTexts();

@@ -7,10 +7,11 @@
 #define SIGNENTER           "\n"
 #define SIGNENTERLR         "\r\n"
 #define SIGN_RE_SPACE         "\\s+"
-#define SIGNSPACE         "  "
+#define SIGNSPACE         " "
 #define SIGNSPACENONE     ""
 #define SIGNDOUBLEFENHAO  ";;"
 #define SIGNDOUHAO  ","
+#define SIGNDOUHAOS  ','
 #define SIGNFENHAO  ";"
 #define SIGNDOT  "."
 #define SIGNFENHAOC  ';'
@@ -51,6 +52,8 @@ public:
     static char signLXie();
     static QString signFenHao();
     static char signFenHaoC();
+    static char signDouHaoC();
+    static QString signDouHao();
 
 
 };
