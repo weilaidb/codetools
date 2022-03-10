@@ -50,8 +50,8 @@
 
 /**是否包含要转换的符号(嵌套) */
 #define CHECK_INCLUDE(text,express) \
-    int iMaxCnt = 10;\
-    int iLp = 0;\
+    int iOldLen = text.length();\
+    int iNewLen = 0;\
     while(\
     0\
     ||text.contains (SIGN_CUSTOM_NL      )\
@@ -81,7 +81,15 @@
 )\
 {\
     (express);\
-    if(++iLp > iMaxCnt)break;\
+    iNewLen = text.length();\
+    if(iOldLen == iNewLen)\
+    {\
+        break;\
+    }\
+    else\
+    {\
+        iOldLen = iNewLen;\
+    }\
 }
 
 

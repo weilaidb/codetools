@@ -239,7 +239,7 @@ QString CRegExpPub::replaceSignsPub(QString text)
             .replace(SIGN_CUSTOM_DATE, curDateTime.toString("yyyy-MM-dd hh:mm:ss"))
             ;
 
-    //支持嵌套循环,最多支持10层
+    //支持嵌套循环
     CHECK_INCLUDE(text, text = replaceSignsItemPub(text));
 
 
