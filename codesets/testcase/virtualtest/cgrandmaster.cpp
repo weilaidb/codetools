@@ -10,3 +10,8 @@ void CGrandMaster::song()
 {
     debugApp() << "grandmaster songing...";
 }
+
+void CGrandMaster::noherit()
+{
+    debugApp() << "grandmaster noherit...";
+}

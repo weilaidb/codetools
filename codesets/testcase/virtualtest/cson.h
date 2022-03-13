@@ -8,10 +8,11 @@ class CSon:public CParent
 {
 public:
     CSon();
-    void sleep();
-    void hello();
+    virtual void sleep();
+    virtual void hello();
 
-    void iamson();
+    virtual void iamson();
+    void noherit();
 };
 
 #endif // CSON_H

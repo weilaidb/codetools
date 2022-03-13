@@ -8,7 +8,8 @@ public:
     CGrandMaster();
     virtual void hello() = 0;
 
-    void song();
+    virtual void song();
+    void noherit();
 
 private:
     int m_height;

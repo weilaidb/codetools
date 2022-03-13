@@ -21,6 +21,11 @@ void CSon::iamson()
     debugApp() <<"i am son ";
 }
 
+void CSon::noherit()
+{
+    debugApp() <<"son " << "noherit...";
+}
+
 
 #if 0
 

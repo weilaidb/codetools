@@ -95,6 +95,8 @@ macx {
 
 # here run gmock test or normal main by compile method(debug or release)
 debug{
+DEFINES += GMOCKTEST
+
 #Gmock添加源代码
 INCLUDEPATH += "module/gmock_170/src/gmock/gtest/include/"
 INCLUDEPATH += "module/gmock_170/src/gmock/gtest/"
@@ -104,7 +106,6 @@ INCLUDEPATH += "module/gmock_170/src/gmock/include/"
 INCLUDEPATH += "module/gmock_170/src/gmock/"
 
 
-#DEFINES += GMOCKTEST
 
 SOURCES += \
     module/gmock_170/src/gmock/gtest/src/gtest-typed-test.cc \
@@ -193,7 +194,8 @@ SOURCES += \
     testcase/testmain.cpp \
     testcase/virtualtest/cgrandmaster.cpp \
     testcase/virtualtest/cparent.cpp \
-    testcase/virtualtest/cson.cpp
+    testcase/virtualtest/cson.cpp \
+    testcase/virtualtest/csontest.cpp
 
 
 HEADERS += \
@@ -262,6 +264,7 @@ HEADERS += \
     testcase/virtualtest/cgrandmaster.h \
     testcase/virtualtest/cparent.h \
     testcase/virtualtest/cson.h \
+    testcase/virtualtest/csontest.h \
     version.h
 
 win32 {

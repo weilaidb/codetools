@@ -10,7 +10,8 @@ public:
     virtual void sleep();
 //    void sleep();
 
-    void hello();
+    virtual void hello();
+    void noherit();
 };
 
 #endif // CPARENT_H
