@@ -47,6 +47,11 @@ void CDialogNewNode::setNameFromCopy(QString &name)
     CUIPub::setLineEdit(ui->lineEdit_fromCopy, name);
 }
 
+void CDialogNewNode::setNameDst(QString &name)
+{
+    CUIPub::setLineEdit(ui->lineEdit, name);
+}
+
 bool CDialogNewNode::isChkedBoxfromCopy()
 {
     return CUIPub::isCheckedQCheckBox(ui->checkBox);

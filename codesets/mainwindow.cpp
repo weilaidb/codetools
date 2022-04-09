@@ -2788,6 +2788,7 @@ void MainWindow::proc_action_newstandnode()
     {
         QString custom = CDialogNewNode::getNodeCustomName();
         pDiaglog->setNameFromCopy(custom);
+        pDiaglog->setNameDst(custom);
     }
 
     if(QDialog::Rejected == pDiaglog->exec())
@@ -2808,6 +2809,7 @@ void MainWindow::proc_action_newusernode()
     {
         QString custom = CDialogNewNode::getNodeCustomName();
         pDiaglog->setNameFromCopy(custom);
+        pDiaglog->setNameDst(custom);
     }
 
     if(QDialog::Rejected == pDiaglog->exec())

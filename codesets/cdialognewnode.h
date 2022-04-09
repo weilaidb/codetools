@@ -24,6 +24,7 @@ public:
     QString getName();
     QString getNameFromCopy();
     void setNameFromCopy(QString &name);
+    void setNameDst(QString &name);
     bool isChkedBoxfromCopy();
     int getType ();
     int setType(int _val);
