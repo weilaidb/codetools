@@ -435,7 +435,16 @@ unsigned int CStringPub::strSimLen(QString str)
 
 QString CStringPub::strSim(QString str)
 {
-    return str.simplified();
+    //此接口会去除\r,文本内重复的空格替换成一个空格
+    //导致文件名中包含多空格的无法正常读取
+//    return str.simplified();
+
+//    QString strtmp = str;
+
+//    strtmp.remove(QRegExp("^ +\\s*"));
+//    strtmp.remove(QRegExp("\\s* +$"));
+
+    return str.trimmed();
 }
 
 QString CStringPub::stringSelfMenu()
