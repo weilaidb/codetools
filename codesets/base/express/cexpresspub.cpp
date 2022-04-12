@@ -20,12 +20,12 @@ bool CExpressPub::isZero(int length)
 
 bool CExpressPub::isEmpty(QString str)
 {
-    return (0 == str.simplified().length());
+    return (0 == str.trimmed().length());
 }
 
 bool CExpressPub::isFull(QString str)
 {
-    return (0 != str.simplified().length());
+    return (0 != str.trimmed().length());
 }
 
 bool CExpressPub::isFull(int length)
