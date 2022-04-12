@@ -6,7 +6,7 @@
 #include "supertest.h"
 //#include "testui.h"
 
-#ifndef GMOCKTEST
+#ifdef GMOCKTEST
 int main(int argc, char *argv[])
 {
     CTextCodecPub::setTextCodecUtf8();
