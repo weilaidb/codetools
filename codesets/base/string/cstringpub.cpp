@@ -93,7 +93,7 @@ QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, const ch
     QStringList result;
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
-        if(item.simplified().isEmpty())
+        if(item.trimmed().isEmpty())
         {
             continue;
         }
@@ -108,7 +108,7 @@ QStringList CStringPub::stringSplitbyCharFilterEmpty(const QString str, QString 
     QStringList result;
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
-        if(item.simplified().isEmpty())
+        if(item.trimmed().isEmpty())
         {
             continue;
         }
@@ -144,7 +144,7 @@ QStringList CStringPub::stringSplitbyNewLineTrimAll(const QString str)
     QStringList listresult = CStringPub::emptyStringList();
     QStringList listtemp = CStringPub::stringSplitbyNewLine(str);
     foreach (QString item, listtemp) {
-        listresult.append(item.simplified());
+        listresult.append(item.trimmed());
     }
     return listresult;
 }
@@ -164,7 +164,7 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmptyUnique(const QString str)
     const char sign = '\n';
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
-        if(item.simplified().isEmpty())
+        if(item.trimmed().isEmpty())
         {
             continue;
         }
@@ -182,7 +182,7 @@ QStringList CStringPub::stringSplitbyNewLineFilterEmptyUniqueSort(const QString 
     const char sign = '\n';
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
-        if(item.simplified().isEmpty())
+        if(item.trimmed().isEmpty())
         {
             continue;
         }
@@ -415,12 +415,12 @@ QStringList CStringPub::wordNameFilter()
 
 bool CStringPub::strSimLenFull(QString str)
 {
-    return (str.simplified().length() > 0);
+    return (str.trimmed().length() > 0);
 }
 
 bool CStringPub::strSimLenZero(QString str)
 {
-    return (str.simplified().length() == 0);
+    return (str.trimmed().length() == 0);
 }
 
 bool CStringPub::strSimLenBiggerThan(QString str, quint32 dwMax)
@@ -430,12 +430,12 @@ bool CStringPub::strSimLenBiggerThan(QString str, quint32 dwMax)
 
 unsigned int CStringPub::strSimLen(QString str)
 {
-    return (unsigned int)str.simplified().length();
+    return (unsigned int)str.trimmed().length();
 }
 
 QString CStringPub::strSim(QString str)
 {
-    return str.simplified();
+    return str.trimmed();
 }
 
 QString CStringPub::stringSelfMenu()
@@ -485,7 +485,7 @@ QString CStringPub::stringFilterEmpty(const QString str)
     const char sign = '\n';
     QStringList strlist = str.split(sign);
     foreach (QString item, strlist) {
-        if(item.simplified().isEmpty())
+        if(item.trimmed().isEmpty())
         {
             continue;
         }
@@ -807,7 +807,7 @@ QStringList CStringPub::stringFilterFirstEnd(const QStringList list, QString lef
 {
     QStringList resList = emptyStringList();
     foreach (QString item, list) {
-        item = item.simplified();
+        item = item.trimmed();
         if(item.length() == 0 )
         {
             continue;

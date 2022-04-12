@@ -2056,7 +2056,7 @@ void MainWindow::proc_LinePacket()
 void MainWindow::proc_ActionForward()
 {
 
-    QString selectText = CUIPub::getSelectTextEdit(ui->textEdit).simplified();
+    QString selectText = CUIPub::getSelectTextEdit(ui->textEdit).trimmed();
     if(CStringPub::strSimLen(selectText) == 0 )
     {
         return;
@@ -2068,7 +2068,7 @@ void MainWindow::proc_ActionForward()
 void MainWindow::proc_ActionForwardRight()
 {
 
-    QString selectText = CUIPub::getSelectTextBrowser(ui->textBrowser).simplified();
+    QString selectText = CUIPub::getSelectTextBrowser(ui->textBrowser).trimmed();
     if(CStringPub::strSimLen(selectText) == 0 )
     {
         return;
