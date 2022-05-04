@@ -698,6 +698,35 @@ void CUIPub::setMenuPolicyCustom(QWidget *pWidget)
 
 }
 
+void CUIPub::setMenuAttribute(QMenu *pMenu)
+{
+    pMenu->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+QMenu *CUIPub::newMenu(QString name)
+{
+    QMenu *pMenu = new QMenu(name,nullptr);
+    //nullptr的指针不能配置此属性，配置就有异常挂起
+//    setMenuAttribute(pMenu);
+    return pMenu;
+}
+QMenu *CUIPub::newMenu(QWidget *parent)
+{
+    QMenu *pMenu = new QMenu(parent);
+    setMenuAttribute(pMenu);
+    return pMenu;
+}
+
+void CUIPub::addAction(QMenu *pMenu, QAction *pAction)
+{
+    pMenu->addAction(pAction);
+}
+
+void CUIPub::execCurPos(QMenu *pMenu, QPoint pos)
+{
+    pMenu->exec(pos); //关联到光标
+}
+
 QAction *CUIPub::createActionFull(QString name)
 {
     QAction *pAction = new QAction(name);
@@ -1160,6 +1189,19 @@ void CUIPub::insertPlainText(QPlainTextEdit *pEdit, QString str)
 void CUIPub::moveCursorEnd(QPlainTextEdit *pEdit)
 {
     pEdit->moveCursor(QTextCursor::End);
+}
+
+void CUIPub::clearActionList(QList<QAction *> &lst)
+{
+    foreach (QAction *pAction, lst) {
+        delete pAction;
+    }
+    lst.clear();
+}
+
+void CUIPub::insertActionList(QList<QAction *> &lst, QAction *pAction)
+{
+    lst.push_back(pAction);
 }
 
 QString CUIPub::getLabelEdit(QLabel *pLabel)

@@ -275,6 +275,7 @@ void MainWindow::init_Vars()
     pTelnet = nullptr;
 
     CStringPub::clearString(m_EditConfig);
+    CUIPub::clearActionList(m_lstAction_RightMouse_L);
 }
 
 
@@ -355,7 +356,7 @@ void MainWindow::init_UiSets()
     CUIPub::setSpliterFactor(ui->splitter,1,5);
 
     //自定义点ME弹出菜单
-    pPopMenu = new QMenu;
+    pPopMenu = CUIPub::newMenu(nullptr);
     nodes_menu_find(pPopMenu);
     nodes_menu_other(pPopMenu);
     nodes_menu_leftbottom(pPopMenu);
@@ -382,7 +383,8 @@ void MainWindow::update_generate_menu_left()
     //此处删除会异常，正在显示的内容突然被删除
     CUIPub::clearMenuAll(&pRightMouse_L);
 
-    pRightMouse_L = new QMenu(this);
+    pRightMouse_L = CUIPub::newMenu(this);
+
     //可能与此处有关，因为ui->menuGenerate不能释放掉，一直在用，所以此处应该用拷贝
     //    pRightMouse_L->addMenu(CUIPub::copyMenu(ui->menuGenerate));
 
@@ -405,7 +407,9 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
 {
     Q_UNUSED(pos)
     ////debugApp() << "right mouse clicked!!";
-    QCursor cur=this->cursor();
+    ///
+    CUIPub::clearActionList(m_lstAction_RightMouse_L);
+
     if((CExpressPub::isFalse(CUIPub::isCheckedQAction(ui->action_background_update)))
             || (CExpressPub::isNullPtr(pRightMouse_L)))
     {
@@ -415,8 +419,13 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
     {
         return;
     }
-    pRightMouse_L->exec(cur.pos()); //关联到光标
-    free_menu(&pRightMouse_L);
+    CUIPub::execCurPos(pRightMouse_L, this->cursor().pos());//关联到光标
+
+//    free_menu(&pRightMouse_L);
+//    free_menu_with_sub(&pRightMouse_L);
+    pRightMouse_L->close();
+//    delete pRightMouse_L;
+    pRightMouse_L = nullptr;
 }
 
 /**
@@ -430,7 +439,7 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
     CUIPub::clearMenuAll(&pRightMouse_R);
 
     QCursor cur=this->cursor();
-    QMenu *pTempRightMouse_L = new QMenu(this);
+    QMenu *pTempRightMouse_L = CUIPub::newMenu(this);
     nodes_menu_forwardright(pTempRightMouse_L);
     nodes_menu_right(pTempRightMouse_L);
     nodes_menu_rightbottom(pTempRightMouse_L);
@@ -444,7 +453,7 @@ void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
     //    CUIPub::clearMenuAll(&pRightMouse_L);
 
     QCursor cur=this->cursor();
-    QMenu *pTempRightMouse_L = new QMenu(this);
+    QMenu *pTempRightMouse_L = CUIPub::newMenu(this);
     nodes_menu_cfgAfter(pTempRightMouse_L);
     pTempRightMouse_L->exec(cur.pos()); //关联到光标
     free_menu(&pTempRightMouse_L);
@@ -456,7 +465,7 @@ void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
     CUIPub::clearMenuAll(&pRightMouse_L);
 
     QCursor cur=this->cursor();
-    pRightMouse_L = new QMenu(this);
+    pRightMouse_L = CUIPub::newMenu(this);
     nodes_menu_leftbottom(pRightMouse_L);
     pRightMouse_L->exec(cur.pos()); //关联到光标
     free_menu(&pRightMouse_L);
@@ -570,7 +579,7 @@ void MainWindow::nodes_menu_left_little(QMenu *pMenu)
 
 QMenu *MainWindow::proc_frequse_menu()
 {
-    QMenu *pFreqUse = new QMenu("常用配置列表");
+    QMenu *pFreqUse = CUIPub::newMenu("常用配置列表");
     read_FreqUseFile();
     //更新频繁使用列表
     updateListWidgetFrequse();
@@ -593,7 +602,7 @@ QMenu *MainWindow::proc_frequse_menu()
 
 QMenu *MainWindow::proc_netsearch_menu()
 {
-    QMenu *pNetSearch = new QMenu("搜索");
+    QMenu *pNetSearch =  CUIPub::newMenu("搜索");
     WORD32 dwLp =  0;
     foreach (QString item, m_NetSearchList) {
         debugApp() << ++dwLp << ":" << item;
@@ -622,7 +631,7 @@ QMenu *MainWindow::proc_netsearch_menu()
 
 QMenu *MainWindow::proc_openfilelist_menu()
 {
-    QMenu *pOpenFile = new QMenu("文件列表");
+    QMenu *pOpenFile = CUIPub::newMenu("文件列表");
     m_listNormalUse = CFilePub::readFileAllFilterEmptyUniqueSort(m_ListOpenFile);
     //定义排序算法，按长度大小 +字符大小
     //想去除特殊符号后排序
@@ -790,6 +799,87 @@ void MainWindow::free_menu(QMenu **ppMenu)
     delete *ppMenu;
     *ppMenu = nullptr;
 }
+
+void MainWindow::free_menu_with_sub(QMenu **ppMenu)
+{
+    QMenu *pMenu = *ppMenu;
+
+    QList<QAction *> list = pMenu->actions();
+    foreach (QAction *pAction, list) {
+        debugApp() << "free_menu_with_sub text:" << pAction->text() << endl;
+        debugApp() << "pAction->data().toString().length():" << pAction->data().toString().length() << endl;
+//        QMenu *pSubMenu = qobject_cast<QMenu*>(pAction);
+
+        QObjectList lst = pAction->children();
+        debugApp() << "lst.length():" << lst.length() << endl;
+
+
+        //        if(pSubMenu->children())
+
+
+
+//        if(pAction->data().toString().length() == 0)
+//        {
+//            debugApp() << "    submenu title:" << pSubMenu->title() << endl;
+//            debugApp() << "    children length:" << pSubMenu->children().length() << endl;
+//            free_menu_item(&pSubMenu);
+//        }
+//        else
+//        {
+//            debugApp() << "    action text:" << pAction->text() << endl;
+//            delete pAction;
+//        }
+
+
+
+//        QMenu *pSubMenu = qobject_cast<QMenu*>(pAction);
+//        debugApp() << "children length:" << pSubMenu->children().length() << endl;
+//        if(pSubMenu->children().length() > 1)
+//        {
+//            debugApp() << "    submenu text:" << pAction->text() << endl;
+//            free_menu_item(&pSubMenu);
+//        }
+//        else
+//        {
+//            debugApp() << "    action text:" << pAction->text() << endl;
+//            delete pAction;
+//        }
+    }
+
+    delete *ppMenu;
+    *ppMenu = nullptr;
+}
+
+void MainWindow::free_menu_item(QMenu **ppMenu)
+{
+    QMenu *pMenu = *ppMenu;
+    QObjectList q = pMenu->children();
+    debugApp() << "free q length:" << q.length() << endl;
+    debugApp() << "free q size  :" << q.size() << endl;
+    for(int i=0;i<q.length();i++)
+    {
+        if(!q.at(i)->children().empty())
+        {
+            QMenu* pInMenu = qobject_cast<QMenu*>(q.at(i));
+            free_menu_with_sub(&pInMenu);
+            debugApp() << "free submenu:" << pInMenu->title() << endl;
+        }
+        else
+        {
+            QObject* qObject = q.at(i);
+            if(qObject->inherits("QAction"))
+            {
+                QAction* b = qobject_cast<QAction*>(qObject);
+                debugApp() << "free action:" << b->data().toString() << endl;
+                debugApp() << "free action:" << b->text() << endl;
+                delete b;
+            }
+        }
+    }
+    delete *ppMenu;
+    *ppMenu = nullptr;
+}
+
 
 
 void MainWindow::read_Setting()
@@ -1985,7 +2075,7 @@ void MainWindow::proc_actionOpenConfigDir()
 void MainWindow::proc_pActionOpenSelectDir()
 {
     QString selectPath = CUIPub::getSelectTextEditEnter(ui->textEdit);
-//    CPrintPub::printStringData(selectPath);
+    //    CPrintPub::printStringData(selectPath);
 
     QStringList listPath = CStringPub::stringSplitbyNewLineFilterEmpty(selectPath);
     qDebug() << "selectPath:" << selectPath;
@@ -2004,7 +2094,7 @@ void MainWindow::proc_pActionOpenSelectDir()
 
         if(CFilePub::isFile(item))
         {
-             selectPath = CFilePub::parentDir(item);
+            selectPath = CFilePub::parentDir(item);
         }
         CUIPub::explorerPathExt(item);
     }
@@ -3260,7 +3350,7 @@ void MainWindow::on_listWidget_searchresult_customContextMenuRequested(const QPo
     QObject::connect(action_newCopyStand, SIGNAL(triggered()), this, SLOT(proc_action_newCopyStand()));
 
 
-    QMenu* popMenuResult = new QMenu(this);
+    QMenu* popMenuResult = CUIPub::newMenu(this);
     popMenuResult->addAction(action_rename);
     popMenuResult->addAction(action_usemanytab);
     popMenuResult->addAction(action_newCopyUser);
@@ -3696,12 +3786,12 @@ void MainWindow::on_actionMultiLabel_triggered()
     list.append("d");
 #else
     //读取内容 "Setting/网页显示常用Tab切换" 的内容
-//    QString cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
+    //    QString cfgfilenameTabSetting = "Setting/网页显示常用Tab切换";
     QStringList inconfigfilenameList = CStringPub::emptyStringList();
     QString fileinfo = CRegExpPub::handlerTip(cfgfilenameTabSetting, COMMON_OPERATIONS, CRegExpPub::FILE_TIPS);
     QStringList todoList = CStringPub::stringSplitbyNewLineTrimAll(fileinfo);
-//    CPrintPub::printStringList(todoList);
-//    debugApp() << "fileinfo:" << fileinfo;
+    //    CPrintPub::printStringList(todoList);
+    //    debugApp() << "fileinfo:" << fileinfo;
 
     foreach (QString item, todoList) {
         QStringList inList = CStringPub::stringSplitbyCharFilterEmpty(item, ";");

@@ -56,6 +56,11 @@ public:
     static QAction *copyActionOfMenu(QMenu *pMenu,QString findstr);
     static void addMenu(QMenu *pMenu,QString item);
     static void setMenuPolicyCustom(QWidget *pWidget);
+    static void setMenuAttribute(QMenu *pMenu);
+    static QMenu *newMenu(QString name);
+    static QMenu *newMenu(QWidget *parent = nullptr);
+    static void addAction(QMenu *pMenu, QAction *pAction);
+    static void execCurPos(QMenu *pMenu, QPoint pos);
 
     static int deskWidth();
     static int deskHeigth();
@@ -128,6 +133,10 @@ public:
     static void appendTextMoveCursorEnd(QPlainTextEdit *pEdit, QString str);
     static void insertPlainText(QPlainTextEdit *pEdit, QString str);
     static void moveCursorEnd(QPlainTextEdit *pEdit);
+
+    //QAction
+    static void clearActionList(QList<QAction *> &lst);
+    static void insertActionList(QList<QAction *> &lst,QAction *pAction);
 
     //打开路径
     static int execCmd(QString path);

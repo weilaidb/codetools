@@ -123,6 +123,7 @@ private:
 
     /* 右键菜单 */
     QMenu *pRightMouse_L;
+    QList<QAction *> m_lstAction_RightMouse_L;
     QMenu *pRightMouse_R;
     QList<QAction *> m_lstRightMouse;
     //custom menu
@@ -324,6 +325,8 @@ private slots:
     void nodes_menu_other(QMenu *pMenu);
     void nodes_menu_forwardright(QMenu *pMenu);
     void free_menu(QMenu **ppMenu);
+    void free_menu_with_sub(QMenu **ppMenu);
+    void free_menu_item(QMenu **ppMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();

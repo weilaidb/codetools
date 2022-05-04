@@ -6,6 +6,7 @@
 #include "cmsgtips.h"
 #include "cregexppub.h"
 #include "cmappub.h"
+#include "cuipub.h"
 #include<stdio.h>
 
 QMap<QString, T_SubNode> CTreePub::m_menuSubNode;
@@ -124,7 +125,7 @@ void CTreePub::showMenuSubNode()
 
 QMenu *CTreePub::getTreeMenu(QString rootname)
 {
-    m_RootMenu = new QMenu(rootname);
+    m_RootMenu = CUIPub::newMenu(rootname);
     for(m_menuIter = m_menuSubNode.begin(); m_menuIter != m_menuSubNode.end(); m_menuIter++)
     {
         T_SubNode &tNode = m_menuIter.value();
@@ -219,7 +220,7 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
     QString mode = CStringPub::emptyString();
     if(tNode.m_isMenu)
     {
-        tNode.u.m_pMenu = new QMenu(tNode.m_name);
+        tNode.u.m_pMenu = CUIPub::newMenu(tNode.m_name);
         pMenu->addMenu(tNode.u.m_pMenu);
         return;
     }
@@ -247,8 +248,7 @@ void CTreePub::procMenuAction(QMenu *pMenu, T_SubNode &tNode)
 #if 0
 //测试
 Q_UNUSED(pos);
-pRightMouse = new QMenu(this);
-
+pRightMouse = CUIPub::newMenu(this);
 CTreePub::freeTreeMenu();
 
 CTreePub::procSubNode("A/B/C/D/E/F");

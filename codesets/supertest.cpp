@@ -59,10 +59,10 @@ void SuperTest::init_UiSets()
     GEN_MENU_PUB(ui->textEdit_test_content, proc_generate_menu_left);
     CUIPub::clearMenuAll(&pRightMouse);
 
-    pRightMouse = new QMenu(this);
+    pRightMouse = CUIPub::newMenu(this);
     nodes_menu_leftbottom(pRightMouse);
 
-    pRightMouseListWidget = new QMenu(this);
+    pRightMouseListWidget = CUIPub::newMenu(this);
     nodes_menu_listwidget(pRightMouseListWidget);
     QObject::connect(pRightMouseListWidget, SIGNAL(triggered(QAction *)), this, SLOT(proc_menu_RightMouseListWidget(QAction *)));
 
