@@ -416,6 +416,7 @@ void MainWindow::proc_generate_menu_left(QPoint pos)
         return;
     }
     pRightMouse_L->exec(cur.pos()); //关联到光标
+    free_menu(&pRightMouse_L);
 }
 
 /**
@@ -434,6 +435,7 @@ void MainWindow::proc_generate_menu_right(QPoint pos)
     nodes_menu_right(pTempRightMouse_L);
     nodes_menu_rightbottom(pTempRightMouse_L);
     pTempRightMouse_L->exec(cur.pos()); //关联到光标
+    free_menu(&pTempRightMouse_L);
 }
 
 void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
@@ -445,6 +447,7 @@ void MainWindow::proc_generate_menu_cfgAfter(QPoint pos)
     QMenu *pTempRightMouse_L = new QMenu(this);
     nodes_menu_cfgAfter(pTempRightMouse_L);
     pTempRightMouse_L->exec(cur.pos()); //关联到光标
+    free_menu(&pTempRightMouse_L);
 }
 
 void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
@@ -456,6 +459,7 @@ void MainWindow::proc_generate_menu_leftbottom(QPoint pos)
     pRightMouse_L = new QMenu(this);
     nodes_menu_leftbottom(pRightMouse_L);
     pRightMouse_L->exec(cur.pos()); //关联到光标
+    free_menu(&pRightMouse_L);
 }
 
 
@@ -774,6 +778,17 @@ void MainWindow::nodes_menu_forwardright(QMenu *pMenu)
     QObject::connect(pActionForward, SIGNAL(triggered()), this, SLOT(proc_ActionForwardRight()));
 
     pMenu->addAction(pActionForward);
+}
+
+void MainWindow::free_menu(QMenu **ppMenu)
+{
+    //free mem
+    QList<QAction *> list = (*ppMenu)->actions();
+    foreach (QAction *pAction, list) {
+        delete pAction;
+    }
+    delete *ppMenu;
+    *ppMenu = nullptr;
 }
 
 

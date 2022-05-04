@@ -323,6 +323,7 @@ private slots:
     void nodes_menu_find(QMenu *pMenu);
     void nodes_menu_other(QMenu *pMenu);
     void nodes_menu_forwardright(QMenu *pMenu);
+    void free_menu(QMenu **ppMenu);
     void proc_actionClearLeft();
     void proc_actionClearRight();
     void proc_actionPasteLeft();

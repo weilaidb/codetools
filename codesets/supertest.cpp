@@ -88,7 +88,19 @@ void SuperTest::proc_generate_menu_left(QPoint pos)
     if(pRightMouse)
     {
         pRightMouse->exec(cur.pos()); //关联到光标
+        free_menu(&pRightMouse);
     }
+}
+
+void SuperTest::free_menu(QMenu **ppMenu)
+{
+    //free mem
+    QList<QAction *> list = (*ppMenu)->actions();
+    foreach (QAction *pAction, list) {
+        delete pAction;
+    }
+    delete *ppMenu;
+    *ppMenu = nullptr;
 }
 
 
@@ -451,6 +463,7 @@ void SuperTest::proc_customContextMenuRequested(QPoint)
     if(pRightMouseListWidget)
     {
         pRightMouseListWidget->exec(cur.pos()); //关联到光标
+        free_menu(&pRightMouseListWidget);
     }
 }
 

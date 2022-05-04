@@ -58,6 +58,7 @@ private slots:
     void proc_checkBox_fullPath_stateChaned(int);
 
     void proc_generate_menu_left(QPoint pos);
+    void free_menu(QMenu **ppMenu);
     void on_action_new_ut_instance_triggered();
 
     void on_actionSave_triggered();
